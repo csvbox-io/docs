@@ -80,7 +80,14 @@
         "pages": [
           "destinations",
           "destinations/bubble-io",
-          "destinations/hasura"
+          "destinations/hasura",
+          "destinations/openapi",
+          "destinations/neon",
+          "destinations/zapier",
+          "destinations/notion",
+          "destinations/webflow",
+          "destinations/softr",
+          "destinations/google-bigquery"
         ]
       },
       {
