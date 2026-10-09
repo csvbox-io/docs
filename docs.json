@@ -116,6 +116,7 @@
         "icon": "scale-balanced",
         "pages": [
           "legal/privacy",
+          "legal/terms",
           "legal/cookie-policy"
         ]
       }
