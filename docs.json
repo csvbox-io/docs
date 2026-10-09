@@ -63,7 +63,8 @@
           "advanced-installation/virtual-columns",
           "advanced-installation/unmapped-columns",
           "advanced-installation/ignored-columns",
-          "advanced-installation/import-links"
+          "advanced-installation/import-links",
+          "advanced-installation/validation-functions"
         ]
       },
       {
