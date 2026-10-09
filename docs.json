@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "palm",
   "name": "CSVbox",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#007BFF",
+    "light": "#E8F2FF",
+    "dark": "#007BFF"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -34,8 +34,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/images/image(25).png",
+    "dark": "/images/image(25).png"
   },
   "navbar": {
     "links": [
@@ -68,5 +68,9 @@
       "github": "https://github.com/mintlify",
       "linkedin": "https://linkedin.com/company/mintlify"
     }
+  },
+  "appearance": {
+    "default": "light",
+    "strict": true
   }
 }
