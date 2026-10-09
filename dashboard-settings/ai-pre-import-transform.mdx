@@ -1,0 +1,53 @@
+---
+title: "AI Pre-Import Transform"
+---
+
+### What it does ?
+
+AI Pre-Import Transform lets you write a plain-English instruction that automatically restructures uploaded files before they reach the column-mapping step. Instead of asking your users to clean up their files manually, the AI rewrites the data for them, renaming columns, flattening nested headers, reordering rows, splitting or merging columns, whatever the instruction describes.
+
+### How to enable it ?
+
+1. Open your sheet's **Settings**
+2. Go to the **File Upload** tab
+3. Find **AI Pre-Import Transform** and set it to **Enabled**
+4. Enter your instruction in the **Prompt** field
+5. Save settings
+
+#### Writing a prompt
+
+The prompt is a plain-English description of what you want done to the uploaded file. Examples:<br />
+
+* _"Rename column 'Item Description' to 'Product Name' and 'Unit Cost' to 'Price'"_<br />
+* _"Flatten the two-row merged header into a single header row"_<br />
+* _"Split the 'Full Name' column into 'First Name' and 'Last Name'"_<br />
+* _"Remove any rows where the Quantity column is empty"_<br />
+* _"Add a column called 'Status' with the value 'Pending' for e_<br />
+* _very row"_\
+  \
+  Be specific about column names and the desired outcome. The AI follows the instruction exactly as written.
+
+### What happens during upload
+
+When a user uploads a file, the AI reads the data, applies your instruction, and the transformed result is what the user sees in the column-mapping step. The original file is not stored — only the transformed output is processed.
+
+If the AI cannot apply the transformation (e.g. the file structure does not match the instruction), the original data is shown unchanged.
+
+### Credits
+
+AI Pre-Import Transform uses a separate credit pool from OCR credits.
+
+| Event                                 | Credit cost                                           |
+| ------------------------------------- | ----------------------------------------------------- |
+| AI processes a new file               | Based on actual token usage (1 credit = 1,000 tokens) |
+| Same file re-uploaded with no changes | 1 flat credit                                         |
+
+**Monthly plan credits** are used first each billing cycle. **Purchased credits** are used as overflow once the monthly quota is exhausted.
+
+You will receive an email notification when you reach **90%** and **100%** of your credit limit.
+
+### Limitations
+
+* The prompt applies to every upload on that sheet — it cannot vary per user or per file<br />
+* Very large files may use more credits due to higher token count<br />
+* Complex transformations (e.g. multi-condition logic) may fall back to a direct AI call, which uses more tokens than a simple recipe

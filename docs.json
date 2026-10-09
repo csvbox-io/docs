@@ -12,29 +12,124 @@
     "dark": "/images/favicon.ico"
   },
   "navigation": {
-    "pages": [
+    "groups": [
+      {
+        "group": "Home",
+        "icon": "house",
+        "pages": [
+          "index"
+        ]
+      },
       {
         "group": "Getting Started",
+        "icon": "rocket",
         "pages": [
-          "index",
-          "quickstart"
+          "getting-started",
+          "getting-started/1-add-template",
+          "getting-started/2-install-code",
+          "getting-started/3-receive-data"
+        ]
+      },
+      {
+        "group": "Dashboard Settings",
+        "icon": "sliders",
+        "pages": [
+          "dashboard-settings",
+          "dashboard-settings/sheet-options",
+          "dashboard-settings/add-columns-via-csv",
+          "dashboard-settings/validations",
+          "dashboard-settings/sheet-options-1",
+          "dashboard-settings/styling",
+          "dashboard-settings/ai-pre-import-transform",
+          "dashboard-settings/ai-bulk-transforms",
+          "dashboard-settings/import-analytics",
+          {
+            "group": "AI Document Import",
+            "pages": [
+              "dashboard-settings/ai-document-import",
+              "dashboard-settings/ai-document-import/document-metadata-fields"
+            ]
+          },
+          "dashboard-settings/split-large-csv",
+          "dashboard-settings/ai-function-generator"
+        ]
+      },
+      {
+        "group": "Advanced Installation",
+        "icon": "code",
+        "pages": [
+          "advanced-installation",
+          "advanced-installation/dynamic-columns",
+          "advanced-installation/virtual-columns",
+          "advanced-installation/unmapped-columns",
+          "advanced-installation/ignored-columns",
+          "advanced-installation/import-links",
+          "advanced-installation/validation-functions",
+          "advanced-installation/server-side-validation",
+          "advanced-installation/data-transforms",
+          "advanced-installation/rest-file-api",
+          "advanced-installation/environment-variables",
+          "advanced-installation/auth-api",
+          "advanced-installation/sheet-api",
+          "advanced-installation/mcp-server"
+        ]
+      },
+      {
+        "group": "Data Destinations",
+        "icon": "database",
+        "pages": [
+          "destinations",
+          "destinations/bubble-io",
+          "destinations/hasura",
+          "destinations/openapi",
+          "destinations/neon",
+          "destinations/zapier",
+          "destinations/notion",
+          "destinations/webflow",
+          "destinations/softr",
+          "destinations/google-bigquery",
+          "destinations/supabase",
+          "destinations/n8n",
+          "destinations/pipedream",
+          "destinations/automation-platforms",
+          "destinations/private-mode"
+        ]
+      },
+      {
+        "group": "Account",
+        "icon": "user",
+        "pages": [
+          "account",
+          "account/teams"
+        ]
+      },
+      {
+        "group": "Resources",
+        "icon": "book",
+        "pages": [
+          "performance-benchmarks",
+          "change-log"
+        ]
+      },
+      {
+        "group": "Legal",
+        "icon": "scale-balanced",
+        "pages": [
+          "legal/privacy",
+          "legal/terms",
+          "legal/cookie-policy",
+          "legal/data-policy",
+          {
+            "group": "GDPR",
+            "pages": [
+              "legal/gdpr",
+              "legal/gdpr/data-processing-addendum"
+            ]
+          },
+          "legal/soc-2-type-2"
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/images/1200_square.png",

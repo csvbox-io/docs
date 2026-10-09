@@ -1,0 +1,106 @@
+---
+title: "Performance Benchmarks"
+description: "See how CSVBox performs with different file sizes, row counts, and validation workloads."
+---
+
+Please see the following tables for CSVBox performance benchmarks. Benchmarks last run: 24 August 2026.
+
+> One run per size, there is no variance figure here. Treat each number as a single observation, not a median. Column count moves timing more than file size does.
+
+### Test Environment
+
+A mid-range consumer laptop on office Wi-Fi — deliberately unexceptional hardware, so these numbers read as a realistic floor rather than a best case.
+
+**Device**
+
+<table data-search="false"><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>Model</td><td>ASUS VivoBook X515DA</td></tr><tr><td>CPU</td><td>AMD Ryzen 5 3500U</td></tr><tr><td>Graphics</td><td>Radeon Vega Mobile</td></tr><tr><td>Cores</td><td>4 physical / 8 logical</td></tr><tr><td>Base clock</td><td>2.10 GHz</td></tr><tr><td>Memory</td><td>17.95 GB</td></tr><tr><td>OS</td><td>Windows 11 Enterprise (Build 10.0.22631, 64-bit)</td></tr><tr><td>Browser</td><td>Chrome 151.0.7922.173</td></tr></tbody></table>
+
+**Network**
+
+|        |                       |
+| ------ | --------------------- |
+| Upload | 33.2 Mbps (4.15 MB/s) |
+
+**Importer Sheet**
+
+<table data-search="false"><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>Columns</td><td>3</td></tr><tr><td>col1</td><td>Number</td></tr><tr><td>col2</td><td>Email</td></tr><tr><td>col3</td><td>Date</td></tr><tr><td>Validation</td><td>Column type rules</td></tr><tr><td>Transform</td><td>1 function, on col2</td></tr><tr><td>Virtual cols</td><td>None</td></tr><tr><td>Source file</td><td>12 columns</td></tr></tbody></table>
+
+### File Parse
+
+_Time to read and parse the source CSV file._
+
+| Rows | Duration | Per row | Throughput      |
+| ---- | -------- | ------- | --------------- |
+| 100k | 406 ms   | 4.06 µs | 246.3k rows/sec |
+| 500k | 1.4 s    | 2.79 µs | 357.9k rows/sec |
+| 1M   | 3.2 s    | 3.19 µs | 313.1k rows/sec |
+| 2M   | 5.6 s    | 2.78 µs | 359.3k rows/sec |
+
+### Validation
+
+_Time to validate all rows against the target schema._
+
+| Rows | Duration | Per row  | Throughput      |
+| ---- | -------- | -------- | --------------- |
+| 100k | 583 ms   | 5.83 µs  | 171.5k rows/sec |
+| 500k | 7.3 s    | 14.55 µs | 68.7k rows/sec  |
+| 1M   | 17.7 s   | 17.73 µs | 56.4k rows/sec  |
+| 2M   | 38.1 s   | 19.04 µs | 52.5k rows/sec  |
+
+### Transformation
+
+_Time to apply configured transforms to all rows._
+
+| Rows | Duration | Per row | Throughput      |
+| ---- | -------- | ------- | --------------- |
+| 100k | 188 ms   | 1.88 µs | 531.9k rows/sec |
+| 500k | 873 ms   | 1.75 µs | 572.7k rows/sec |
+| 1M   | 1.6 s    | 1.59 µs | 627.0k rows/sec |
+| 2M   | 6.1 s    | 3.05 µs | 327.5k rows/sec |
+
+### Destination Upload
+
+_Time to deliver the processed rows to the destination._
+
+| Rows | Duration | Per row  | Throughput     |
+| ---- | -------- | -------- | -------------- |
+| 100k | 8.1 s    | 81.02 µs | 12.3k rows/sec |
+| 500k | 29.3 s   | 58.62 µs | 17.1k rows/sec |
+| 1M   | 51.2 s   | 51.22 µs | 19.5k rows/sec |
+| 2M   | 100.6 s  | 50.29 µs | 19.9k rows/sec |
+
+### End to End
+
+_Total time from upload start to completed import._
+
+| Rows | Duration | Per row  | Throughput     |
+| ---- | -------- | -------- | -------------- |
+| 100k | 9.3 s    | 92.78 µs | 10.8k rows/sec |
+| 500k | 38.9 s   | 77.70 µs | 12.9k rows/sec |
+| 1M   | 73.7 s   | 73.75 µs | 13.6k rows/sec |
+| 2M   | 150.3 s  | 75.17 µs | 13.3k rows/sec |
+
+### Reproducing the Run
+
+The sheet was configured with three columns typed Number, Email, and Date, and a single data-transform function applied to `col2`. The transform is intentionally trivial — one string coercion and an uppercase — so the transform timings measure the pipeline's per-row dispatch overhead, not the cost of a user's own logic. This is the exact function that produced the transformation numbers above.
+
+**Data transform function · col2**
+
+```js
+const helper = (value) => {
+  return String(value).toUpperCase();
+};
+csvbox.row["col2"] = helper(csvbox.row["col2"]);
+return csvbox;
+```
+
+**Source datasets**
+
+| Dataset               | Rows      | File size (MB) | Payload sent (MB) | Bytes/row |
+| --------------------- | --------- | -------------- | ----------------- | --------- |
+| customers-100000.csv  | 100,000   | 17.32          | 5.40              | 173       |
+| customers-500000.csv  | 500,000   | 87.03          | 27.85             | 174       |
+| customers-1000000.csv | 1,000,000 | 174.16         | 55.90             | 174       |
+| customers-2000000.csv | 2,000,000 | 349.42         | 113.92            | 175       |
+
+Source CSVs carry 12 columns (Index, Customer Id, First Name, Last Name, Company, City, Country, Phone 1, Phone 2, Email, Subscription Date, Website), of which three were mapped into the sheet for the run. File sizes are decimal MB (10⁶ bytes).
