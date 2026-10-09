@@ -60,7 +60,10 @@
         "pages": [
           "advanced-installation",
           "advanced-installation/dynamic-columns",
-          "advanced-installation/virtual-columns"
+          "advanced-installation/virtual-columns",
+          "advanced-installation/unmapped-columns",
+          "advanced-installation/ignored-columns",
+          "advanced-installation/import-links"
         ]
       },
       {
