@@ -45,7 +45,10 @@
           "dashboard-settings/import-analytics",
           {
             "group": "AI Document Import",
-            "pages": []
+            "pages": [
+              "dashboard-settings/ai-document-import",
+              "dashboard-settings/ai-document-import/document-metadata-fields"
+            ]
           }
         ]
       },
