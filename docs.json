@@ -87,7 +87,10 @@
           "destinations/notion",
           "destinations/webflow",
           "destinations/softr",
-          "destinations/google-bigquery"
+          "destinations/google-bigquery",
+          "destinations/supabase",
+          "destinations/n8n",
+          "destinations/pipedream"
         ]
       },
       {
