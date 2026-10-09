@@ -107,7 +107,8 @@
         "group": "Resources",
         "icon": "book",
         "pages": [
-          "performance-benchmarks"
+          "performance-benchmarks",
+          "change-log"
         ]
       },
       {
