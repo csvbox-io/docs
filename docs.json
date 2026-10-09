@@ -59,7 +59,8 @@
         "icon": "code",
         "pages": [
           "advanced-installation",
-          "advanced-installation/dynamic-columns"
+          "advanced-installation/dynamic-columns",
+          "advanced-installation/virtual-columns"
         ]
       },
       {
