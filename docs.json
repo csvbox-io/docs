@@ -21,114 +21,118 @@
         ]
       },
       {
-        "group": "Getting Started",
-        "icon": "rocket",
+        "group": "Documentation",
         "pages": [
-          "getting-started",
-          "getting-started/1-add-template",
-          "getting-started/2-install-code",
-          "getting-started/3-receive-data"
-        ],
-        "expanded": false
-      },
-      {
-        "group": "Dashboard Settings",
-        "icon": "sliders",
-        "pages": [
-          "dashboard-settings",
-          "dashboard-settings/sheet-options",
-          "dashboard-settings/add-columns-via-csv",
-          "dashboard-settings/validations",
-          "dashboard-settings/sheet-options-1",
-          "dashboard-settings/styling",
-          "dashboard-settings/ai-pre-import-transform",
-          "dashboard-settings/ai-bulk-transforms",
-          "dashboard-settings/import-analytics",
           {
-            "group": "AI Document Import",
+            "group": "Getting Started",
+            "icon": "rocket",
+            "expanded": true,
             "pages": [
-              "dashboard-settings/ai-document-import",
-              "dashboard-settings/ai-document-import/document-metadata-fields"
+              "getting-started",
+              "getting-started/1-add-template",
+              "getting-started/2-install-code",
+              "getting-started/3-receive-data"
             ]
           },
-          "dashboard-settings/split-large-csv",
-          "dashboard-settings/ai-function-generator"
-        ]
-      },
-      {
-        "group": "Advanced Installation",
-        "icon": "code",
-        "pages": [
-          "advanced-installation",
-          "advanced-installation/dynamic-columns",
-          "advanced-installation/virtual-columns",
-          "advanced-installation/unmapped-columns",
-          "advanced-installation/ignored-columns",
-          "advanced-installation/import-links",
-          "advanced-installation/validation-functions",
-          "advanced-installation/server-side-validation",
-          "advanced-installation/data-transforms",
-          "advanced-installation/rest-file-api",
-          "advanced-installation/environment-variables",
-          "advanced-installation/auth-api",
-          "advanced-installation/sheet-api",
-          "advanced-installation/mcp-server"
-        ]
-      },
-      {
-        "group": "Data Destinations",
-        "icon": "database",
-        "pages": [
-          "destinations",
-          "destinations/bubble-io",
-          "destinations/hasura",
-          "destinations/openapi",
-          "destinations/neon",
-          "destinations/zapier",
-          "destinations/notion",
-          "destinations/webflow",
-          "destinations/softr",
-          "destinations/google-bigquery",
-          "destinations/supabase",
-          "destinations/n8n",
-          "destinations/pipedream",
-          "destinations/automation-platforms",
-          "destinations/private-mode"
-        ],
-        "expanded": true
-      },
-      {
-        "group": "Account",
-        "icon": "user",
-        "pages": [
-          "account",
-          "account/teams"
-        ]
-      },
-      {
-        "group": "Resources",
-        "icon": "book",
-        "pages": [
-          "performance-benchmarks",
-          "change-log"
-        ]
-      },
-      {
-        "group": "Legal",
-        "icon": "scale-balanced",
-        "pages": [
-          "legal/privacy",
-          "legal/terms",
-          "legal/cookie-policy",
-          "legal/data-policy",
           {
-            "group": "GDPR",
+            "group": "Dashboard Settings",
+            "icon": "sliders",
             "pages": [
-              "legal/gdpr",
-              "legal/gdpr/data-processing-addendum"
+              "dashboard-settings",
+              "dashboard-settings/sheet-options",
+              "dashboard-settings/add-columns-via-csv",
+              "dashboard-settings/validations",
+              "dashboard-settings/sheet-options-1",
+              "dashboard-settings/styling",
+              "dashboard-settings/ai-pre-import-transform",
+              "dashboard-settings/ai-bulk-transforms",
+              "dashboard-settings/import-analytics",
+              {
+                "group": "AI Document Import",
+                "pages": [
+                  "dashboard-settings/ai-document-import",
+                  "dashboard-settings/ai-document-import/document-metadata-fields"
+                ]
+              },
+              "dashboard-settings/split-large-csv",
+              "dashboard-settings/ai-function-generator"
             ]
           },
-          "legal/soc-2-type-2"
+          {
+            "group": "Advanced Installation",
+            "icon": "code",
+            "pages": [
+              "advanced-installation",
+              "advanced-installation/dynamic-columns",
+              "advanced-installation/virtual-columns",
+              "advanced-installation/unmapped-columns",
+              "advanced-installation/ignored-columns",
+              "advanced-installation/import-links",
+              "advanced-installation/validation-functions",
+              "advanced-installation/server-side-validation",
+              "advanced-installation/data-transforms",
+              "advanced-installation/rest-file-api",
+              "advanced-installation/environment-variables",
+              "advanced-installation/auth-api",
+              "advanced-installation/sheet-api",
+              "advanced-installation/mcp-server"
+            ]
+          },
+          {
+            "group": "Data Destinations",
+            "icon": "database",
+            "pages": [
+              "destinations",
+              "destinations/bubble-io",
+              "destinations/hasura",
+              "destinations/openapi",
+              "destinations/neon",
+              "destinations/zapier",
+              "destinations/notion",
+              "destinations/webflow",
+              "destinations/softr",
+              "destinations/google-bigquery",
+              "destinations/supabase",
+              "destinations/n8n",
+              "destinations/pipedream",
+              "destinations/automation-platforms",
+              "destinations/private-mode"
+            ]
+          },
+          {
+            "group": "Account",
+            "icon": "user",
+            "pages": [
+              "account",
+              "account/teams"
+            ]
+          },
+          {
+            "group": "Resources",
+            "icon": "book",
+            "pages": [
+              "performance-benchmarks",
+              "change-log"
+            ]
+          },
+          {
+            "group": "Legal",
+            "icon": "scale-balanced",
+            "pages": [
+              "legal/privacy",
+              "legal/terms",
+              "legal/cookie-policy",
+              "legal/data-policy",
+              {
+                "group": "GDPR",
+                "pages": [
+                  "legal/gdpr",
+                  "legal/gdpr/data-processing-addendum"
+                ]
+              },
+              "legal/soc-2-type-2"
+            ]
+          }
         ]
       }
     ]
@@ -224,10 +228,13 @@
   },
   "seo": {
     "metatags": {
-      "canonical": "https://csvbox-io.mintlify.app",
+      "canonical": "https://csvbox-io.mintlify.site",
       "og:image": "https://csvbox.io/og/default.png",
       "twitter:site": "@csvboxio",
-      "google-site-verification": "pasjyyd-r2DcO7QTOPF90mi0IilJ8lyaPvFbsnETSic"
+      "google-site-verification": "z6DL203V9XoYEUSTdGR00pYKGzPQ7Qb1yFf_ugbN3wQ"
     }
+  },
+  "api": {
+    "openapi": "https://app.csvbox.io/docs?api-docs.json"
   }
 }
