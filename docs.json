@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "palm",
-  "name": "CSVbox",
+  "name": "CSVbox Docs",
   "colors": {
     "primary": "#007BFF",
     "light": "#E8F2FF",
@@ -25,7 +25,8 @@
         "icon": "rocket",
         "pages": [
           "getting-started",
-          "getting-started/1-add-template"
+          "getting-started/1-add-template",
+          "getting-started/2-install-code"
         ]
       },
       {
@@ -98,13 +99,6 @@
       "vscode"
     ]
   },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
-  },
   "appearance": {
     "default": "light",
     "strict": true
@@ -146,5 +140,6 @@
       "source": "/getting-started/styling",
       "destination": "/dashboard-settings/styling"
     }
-  ]
+  ],
+  "description": "Welcome to CSVbox documentation and help site!"
 }
