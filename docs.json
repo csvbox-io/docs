@@ -86,7 +86,8 @@
                   "advanced-installation/sheet-api/update-sheet"
                 ]
               },
-              "advanced-installation/mcp-server"
+              "advanced-installation/mcp-server",
+              "advanced-installation/if-else-builder"
             ]
           },
           {

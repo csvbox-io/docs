@@ -1,0 +1,317 @@
+---
+title: "If / Else Builder"
+description: "Add conditional validations and data transforms to a sheet without writing JavaScript."
+---
+
+### What it does
+
+The **If / Else Builder** lets you add conditional logic to an importer without writing JavaScript. You describe a rule in plain terms (_IF these conditions are true, THEN do this, ELSE IF ..., ELSE ..._) and CSVBox converts it into a validation or a data transformation that runs on every imported file.
+
+Use it to:
+
+- Fill in or standardise values based on other columns (_"If Country is US, set Currency to USD"_)
+- Remove rows you don't want imported (_"If Email is empty, delete the row"_)
+- Show users a clear error on the exact cell that is wrong (_"If Age is less than 18, flag an error on Age"_)
+
+The builder is available in two features:
+
+| Feature | Purpose | Actions available in the builder |
+| --- | --- | --- |
+| [Data Transforms](/advanced-installation/data-transforms) | Changes values in the file | **Set**, **Clear**, **Delete row** |
+| [Validation Functions](/advanced-installation/validation-functions) | Checks values and reports problems | **Flag error on** |
+
+### How to use it
+
+1. Go to the edit sheet page and open the **Validation Functions** or **Data Transforms** section
+2. Add a new function, or edit an existing one, and give it a name
+3. Switch the editor from **Code** to **Visual**
+4. Build your rule
+5. Click **Save**
+
+<Info>
+  Code mode remains available for anything the builder cannot express. See [Visual vs. Code mode](#visual-vs-code-mode).
+</Info>
+
+### How a rule is structured
+
+A rule is a list of **branches**, checked from top to bottom. Only the first branch whose conditions are true runs. The remaining branches are skipped.
+
+```text
+IF       <conditions>    THEN  <actions>
+ELSE IF  <conditions>    THEN  <actions>      (optional, can repeat)
+ELSE                     THEN  <actions>      (optional, must be last)
+```
+
+| Branch | Conditions | How many | Position |
+| --- | --- | --- | --- |
+| **IF** | Required | Exactly one | Always first |
+| **ELSE IF** | Required | Any number | After IF, before ELSE |
+| **ELSE** | None. Runs when nothing above matched | At most one | Always last |
+
+- A rule can have a maximum of **10 branches** (IF + ELSE IFs + ELSE). A counter above the builder shows `n / 10 branches`.
+- Once an **ELSE** exists, both **Add Else If** and **Add Else** are disabled, because nothing can follow ELSE.
+- Branches other than the first can be removed with the **×** at the top-right of the branch. The first IF branch cannot be removed.
+- Every branch needs at least one action. Every IF / ELSE IF branch needs at least one condition. Removing the last condition or action simply leaves a fresh blank one.
+
+### Conditions
+
+A condition compares a **column** to a **value**:
+
+```text
+[ Column ]  [ Operator ]  [ Value ]
+```
+
+Click **Add Condition** to add more conditions to a branch. Extra conditions have an **×** to remove them.
+
+#### Operators
+
+| Operator | Is true when | Needs a value? |
+| --- | --- | --- |
+| `equals` | The cell exactly equals the value | Yes |
+| `not equals` | The cell does not equal the value | Yes |
+| `>` | The cell, read as a number, is greater than the value | Yes |
+| `<` | The cell, read as a number, is less than the value | Yes |
+| `>=` | The cell, read as a number, is greater than or equal to the value | Yes |
+| `<=` | The cell, read as a number, is less than or equal to the value | Yes |
+| `contains` | The cell contains the value anywhere in the text | Yes |
+| `does not contain` | The cell does not contain the value | Yes |
+| `starts with` | The cell begins with the value | Yes |
+| `ends with` | The cell ends with the value | Yes |
+| `is empty` | The cell is blank (or only spaces) | No |
+| `is not empty` | The cell has some content | No |
+
+#### Text comparisons and Match case
+
+For `equals`, `not equals`, `contains`, `does not contain`, `starts with` and `ends with`:
+
+- By default the comparison is **not case-sensitive** and leading/trailing spaces in the cell are ignored. `" us "`, `"US"` and `"us"` all equal `us`.
+- Tick **Match case** on a condition to compare exactly as typed, including capitalisation and spaces.
+- The **Match case** checkbox only appears for these operators, because it has no effect on the others.
+
+#### Number comparisons
+
+For `>`, `<`, `>=` and `<=`:
+
+- The cell and the value are both read as numbers.
+- Plain numbers (`42`, `3.5`, `-7`) work as expected.
+- Text that does not start with a number (e.g. `n/a`, `$1,200`) is not a number, so the condition is **false**.
+- Text that starts with digits is read up to the first non-numeric character (`12abc` is read as `12`, `1,200` is read as `1`).
+
+<Warning>
+  If your data contains thousands separators or currency symbols, clean those values first with a Data Transform before comparing them as numbers.
+</Warning>
+
+#### Blank checks
+
+`is empty` and `is not empty` ignore surrounding spaces, so a cell containing only spaces counts as empty. They do not need a value.
+
+<Info>
+  A comparison value cannot be left blank on the other operators. To test for blanks, use `is empty` or `is not empty`.
+</Info>
+
+#### Combining conditions with AND / OR
+
+When a branch has two or more conditions, choose how to combine them with the **Match with** dropdown:
+
+| Choice | The branch matches when |
+| --- | --- |
+| **AND** | **All** conditions are true |
+| **OR** | **At least one** condition is true |
+
+The choice applies to **every** condition in that branch. The dropdown appears once, before the second condition, and later separators just show the chosen word. You cannot mix AND and OR inside one branch. To express something like _(A AND B) OR C_, split it into two branches with the same action:
+
+```text
+IF       A AND B     THEN  Set Tier = "Gold"
+ELSE IF  C           THEN  Set Tier = "Gold"
+```
+
+### Actions
+
+Actions are the THEN part of a branch. Click **Add Action** to perform several actions when a branch matches. Extra actions have an **×** to remove them.
+
+#### In a Data Transform
+
+| Action | What it does | Fields |
+| --- | --- | --- |
+| **Set** | Writes a value into a column | Column, value |
+| **Clear** | Empties a column's cell | Column |
+| **Delete row** | Removes the whole row from the import | None |
+
+- **Set** requires a value. To blank a cell, use **Clear** instead.
+- **Delete row** removes the row regardless of any other actions in the same branch. It applies to **Row** rules only. See [Scope](#scope-row-vs-column).
+- If two actions in the same matching branch set the same column, the later one wins.
+
+#### In a Validation Function
+
+| Action | What it does | Fields |
+| --- | --- | --- |
+| **Flag error on** | Marks a cell as invalid and shows your message to the user | Column, error message |
+
+- The error message is required and is shown exactly as you type it, so make it clear and actionable.
+- A branch can flag several columns at once by adding more actions.
+- Flagged cells are reported to the user during the review step so they can fix the data.
+
+### Scope: Row vs. Column
+
+Each rule has a **scope**, chosen with the Row / Column selector next to the builder.
+
+| Scope | Behaviour | Typical use |
+| --- | --- | --- |
+| **Row** | The rule runs once for each row and sees that row's cells | Almost everything: defaults, standardising values, removing rows, cell-level errors |
+| **Column** | The rule runs down the data row by row, with the full set of columns available, and returns results per column. Validation errors include the row number | Rules that are applied uniformly across a column |
+
+- **Delete row** is only meaningful in Row scope. It does nothing in Column scope.
+- Switching scope after building a rule keeps your rule and just changes how it is applied.
+- If you are unsure, use **Row**.
+
+### How conditions read data
+
+- Conditions always look at the **original** values of the row, not values that earlier actions have set.
+- Within a single rule, a **Set** in one branch never affects the conditions of another branch. Because only one branch runs anyway, this rarely matters, but it does mean you cannot write _"set A, then check A"_ in one rule.
+- To act on a changed value, create a **second** transform function. Functions run in sequence.
+
+### Example rules
+
+#### Data Transform examples
+
+<Tabs>
+  <Tab title="Set a default value">
+    Fill in a value when the cell is blank.
+
+    ```text
+    IF   Currency is empty
+    THEN Set Currency = "USD"
+    ```
+  </Tab>
+  <Tab title="Standardise values">
+    Because comparisons ignore case by default, `y`, `Y` and `y` are all matched by the first branch.
+
+    ```text
+    IF       Status equals "Y"
+    THEN     Set Status = "Active"
+    ELSE IF  Status equals "N"
+    THEN     Set Status = "Inactive"
+    ELSE
+    THEN     Set Status = "Unknown"
+    ```
+  </Tab>
+  <Tab title="Remove unwanted rows">
+    Set **Match with** to **OR**.
+
+    ```text
+    IF   Email is empty   OR   Email contains "test@"
+    THEN Delete row
+    ```
+  </Tab>
+  <Tab title="Multiple conditions">
+    Run several actions when all conditions are true.
+
+    ```text
+    IF   Country equals "US"   AND   Order Total >= 1000
+    THEN Set Shipping = "Free"
+         Set Priority = "High"
+    ELSE
+    THEN Set Shipping = "Standard"
+    ```
+  </Tab>
+  <Tab title="Clear dependent data">
+    Empty a cell that no longer applies.
+
+    ```text
+    IF   Subscribed equals "No"
+    THEN Clear Subscription Plan
+    ```
+  </Tab>
+  <Tab title="Tiered rules">
+    Order matters: put the most specific (highest) threshold first, because only the first match runs.
+
+    ```text
+    IF       Order Total >= 5000
+    THEN     Set Tier = "Platinum"
+    ELSE IF  Order Total >= 1000
+    THEN     Set Tier = "Gold"
+    ELSE IF  Order Total >= 100
+    THEN     Set Tier = "Silver"
+    ELSE
+    THEN     Set Tier = "Standard"
+    ```
+  </Tab>
+</Tabs>
+
+#### Validation Function examples
+
+<Tabs>
+  <Tab title="Basic validation">
+    Flag a cell that fails a simple check.
+
+    ```text
+    IF   Age < 18
+    THEN Flag error on Age: "Customer must be 18 or older"
+    ```
+  </Tab>
+  <Tab title="Cross-column validation">
+    Make a column mandatory based on the value in another column.
+
+    ```text
+    IF   Payment Method equals "Card"   AND   Card Number is empty
+    THEN Flag error on Card Number: "Card number is required for card payments"
+    ```
+  </Tab>
+  <Tab title="Several errors from one condition">
+    Flag more than one column from the same branch.
+
+    ```text
+    IF   Shipping Type equals "Express"   AND   Phone is empty
+    THEN Flag error on Phone: "Phone number is required for express shipping"
+         Flag error on Shipping Type: "Express shipping needs a contact number"
+    ```
+  </Tab>
+</Tabs>
+
+### Saving and error checking
+
+- Required fields are checked when you click **Save**. Anything missing is outlined in red with a message under that row, and the first problem is scrolled into view. After the first save attempt the checks update live as you type.
+- The rule is verified again on the server before it is stored. If something invalid gets through (for example, an unsupported combination), you will see a message listing what is wrong.
+- Function names are required. The builder checks this at the same time.
+- In the list of functions, each visual rule is shown as a one-line summary, e.g. `IF Country == 'US' → Set Currency = 'USD'; ELSE → Set Currency = 'EUR'`. Long summaries and long values are shortened with `…` (80 characters overall).
+
+### Visual vs. Code mode
+
+Every function has a **builder mode**:
+
+| Mode | When to use it |
+| --- | --- |
+| **Visual** | Rules that fit IF / ELSE IF / ELSE with the operators above. Easiest to read and maintain |
+| **Code** | Anything more advanced: loops, regular expressions, string manipulation, lookups, calling helper logic |
+
+- When you save a visual rule, CSVBox generates JavaScript from it automatically and stores both the visual definition and the generated code.
+- The generated code is marked with a comment: _"Generated by the If/Then builder — edits here will be overwritten."_
+- If you need to customise the logic beyond the builder, copy the generated code into a new function in Code mode and keep it separate from the visual rule.
+
+<Warning>
+  Changes made to the generated code are **replaced** the next time the visual rule is saved.
+</Warning>
+
+### Best practices
+
+- **Start with the most specific rule.** Only the first matching branch runs, so order branches from narrowest to broadest.
+- **Always consider an ELSE.** It catches everything the other branches did not, which is useful for defaults and for flagging unexpected values.
+- **Use a Validation Function for "should be" and a Data Transform for "make it".** Do not silently rewrite data that a user should correct themselves.
+- **Keep each rule focused.** Several small functions are easier to understand than one rule with ten branches.
+- **Use clear error messages.** Say what is wrong and what a valid value looks like.
+- **Test with a small file** containing a row for each branch, including edge cases (empty cells, extra spaces, different capitalisation).
+
+### Troubleshooting
+
+| What you see | Cause | Fix |
+| --- | --- | --- |
+| `Select a column.` | A condition or action has no column chosen | Choose a column in the highlighted row |
+| `Enter a value, or choose "is empty" to check for blanks.` | A comparison value was left blank | Type a value, or switch the operator to `is empty` or `is not empty` |
+| `Enter a value, or choose "Clear" to blank the cell.` | A **Set** action has no value | Type a value, or change the action to **Clear** |
+| `Error message is required.` | A **Flag error on** action has no message | Write the message users should see |
+| `The … field is required.` | The function name is empty | Enter a name |
+| **Add Else If** / **Add Else** are greyed out | An ELSE already exists, or the 10-branch limit is reached | Remove a branch, or merge rules |
+| A branch never runs | An earlier branch matches the same rows | Reorder branches so the more specific rule is first |
+| A Match case rule does not match | Different capitalisation or stray spaces in the data | Untick **Match case**, or clean the data first |
+| A number comparison is never true | The cell is not numeric (`$1,200`, `n/a`) | Clean the value with a Data Transform before comparing |
+| Edits to the generated code disappeared | The visual rule was saved again | Move custom logic to a Code mode function |
