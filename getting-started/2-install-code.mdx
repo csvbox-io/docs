@@ -306,9 +306,9 @@ You can configure **custom user attributes** in the installation code to identif
 
 <Tab title="Javascript">
 
-Pass custom user attributes as input parameters to the **`setUser`**method. The custom user attributes will be pushed to your destination along with the uploaded data.
+Pass custom user attributes as input parameters to the **`setUser`** method. The custom user attributes will be pushed to your destination along with the uploaded data.
 
-**user\_id** is the only custom attribute that is mandatory. Apart from **user\_id,** you can add up to 4 custom attributes in the**`<key>: <value>`**format. Example:
+**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
 
 ```javascript
  importer.setUser({
@@ -324,9 +324,9 @@ Pass custom user attributes as input parameters to the **`setUser`**method. The 
 
 <Tab title="React">
 
-Pass custom user attributes as an object to the **`user`**property of the **`CSVBoxButton`** component. The custom user attributes will be pushed to your destination along with the uploaded data.
+Pass custom user attributes as an object to the **`user`** property of the **`CSVBoxButton`** component. The custom user attributes will be pushed to your destination along with the uploaded data.
 
-**user\_id** is the only custom attribute that is mandatory. Apart from **user\_id,** you can add up to 4 custom attributes in the **`<key>: <value>`**format. Example:
+**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
 
 ```javascript
   user={{
@@ -342,9 +342,9 @@ Pass custom user attributes as an object to the **`user`**property of the **`CSV
 
 <Tab title="Angular">
 
-Pass custom user attributes as an object to the **`user`**property of the AppComponent. The custom user attributes will be pushed to your destination along with the uploaded data.
+Pass custom user attributes as an object to the **`user`** property of the AppComponent. The custom user attributes will be pushed to your destination along with the uploaded data.
 
-**user\_id** is the only custom attribute that is mandatory. Apart from **user\_id,** you can add up to 4 custom attributes in the **`<key>: <value>`**format. Example:
+**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
 
 ```javascript
   user={
@@ -360,9 +360,9 @@ Pass custom user attributes as an object to the **`user`**property of the AppCom
 
 <Tab title="Vuejs">
 
-Pass custom user attributes as an object to the **`user`**property of the **`CSVBoxButton`** component. The custom user attributes will be pushed to your destination along with the uploaded data.
+Pass custom user attributes as an object to the **`user`** property of the **`CSVBoxButton`** component. The custom user attributes will be pushed to your destination along with the uploaded data.
 
-**user\_id** is the only custom attribute that is mandatory. Apart from **user\_id,** you can add up to 4 custom attributes in the **`<key>: <value>`**format. Example:
+**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
 
 ```javascript
   user: {
@@ -430,7 +430,7 @@ You can write custom code to handle the success or failure conditions client sid
 
 <Tab title="Javascript">
 
-The **`result`** and **`data`**variables will be available in the **`callback`**function that is triggered when the import is completed.
+The **`result`** and **`data`** variables will be available in the **`callback`** function that is triggered when the import is completed.
 
 ```javascript
 function callback(result, data) {
@@ -449,9 +449,9 @@ function callback(result, data) {
 
 <Tab title="React">
 
-Pass additional options as an object to the **`user`**property of the **`CSVBoxButton`** component. The custom user attributes will be pushed to your destination along with the uploaded data.
+Pass additional options as an object to the **`user`** property of the **`CSVBoxButton`** component. The custom user attributes will be pushed to your destination along with the uploaded data.
 
-**user\_id** is the only custom attribute that is mandatory. Apart from **user\_id,** you can add up to 4 custom attributes in the **`<key>: <value>`**format. Example:
+**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
 
 ```javascript
   user={{
@@ -467,7 +467,7 @@ Pass additional options as an object to the **`user`**property of the **`CSVBoxB
 
 <Tab title="Angular">
 
-The **`imported`** property provides access to the **`result`** and **`data`**variables via the specified callback function.
+The **`imported`** property provides access to the **`result`** and **`data`** variables via the specified callback function.
 
 ```javascript
   imported(result: boolean, data: any) {
@@ -484,7 +484,7 @@ The **`imported`** property provides access to the **`result`** and **`data`**va
 
 <Tab title="Vuejs">
 
-The **`onImport`** property provides access to the **`result`** and **`data`**variables.
+The **`onImport`** property provides access to the **`result`** and **`data`** variables.
 
 ```javascript
 onImport: function (result, data) {    
@@ -509,8 +509,8 @@ Here is the list of additional configuration options available with the CSVbox i
 
 #### max\_rows
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>number</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `number`
+* Default: `null`
 *   Description:
 
     Specify the maximum number of rows that a single file can import. This value excludes the headers of the file. So if the number of rows in a sheet is 101, but the first row is the header, then this file would be considered to have 100 data rows in it.
@@ -519,16 +519,16 @@ Here is the list of additional configuration options available with the CSVbox i
 
 #### max\_rows\_allow\_submit
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>boolean</mark>
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>true</mark>
+* Type: `boolean`
+* Default: `true`
 *   Description:
 
     Allow or disallow submission of the permissible number of rows when the overall row count exceeds the limit. Consider row limit (**max\_rows**) is set to 5. If **max\_rows\_allow\_submit is** set to **true** then the user can upload the top 5 rows of his file. If **max\_rows\_allow\_submit is** set to **false** then the user will not be able to submit even 1 row if the overall row count exceeds **max\_rows**.
 
 #### max\_rows\_custom\_message
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>string</mark>
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark>
+* Type: `string`
+* Default: `null`
 *   Description:
 
     Display a custom message to the user when the file row count is greater than **max\_rows**. This message will show only when **max\_rows\_allow\_submit** is set to **false**.
@@ -537,24 +537,24 @@ Here is the list of additional configuration options available with the CSVbox i
 
 #### min\_rows
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>number</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `number`
+* Default: `null`
 *   Description:
 
     The minimum number of rows that is required for a single upload. 
 
 #### min\_rows\_custom\_message
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>string</mark>
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark>
+* Type: `string`
+* Default: `null`
 *   Description:
 
     Display a custom message when the file row count is less than **min\_rows**.
 
 #### language
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>string</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `string`
+* Default: `null`
 *   Description:
 
     Specify the importer frontend language. This value will override the default language option configured via the csvbox dashboard. Acceptable values are:
@@ -563,40 +563,40 @@ Here is the list of additional configuration options available with the CSVbox i
 
 #### allow\_invalid
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>boolean</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>0</mark> 
+* Type: `boolean`
+* Default: `0`
 *   Description:
 
     It specifies if the users can continue to submit the file even if there are validation errors.
 
 #### request\_headers
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>\{ key: value, key: value, ... \}</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `{ key: value, key: value, ... }`
+* Default: `null`
 *   Description:
 
     This is where you define additional headers that get passed with each HTTP request.
 
 #### dynamic\_list\_request\_headers
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>\{ key: value, key: value, ... \}</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `{ key: value, key: value, ... }`
+* Default: `null`
 *   Description:
 
     This is where you define additional headers that get passed with each HTTP request for the [dynamic list API](/dashboard-settings/validations#dynamic-list).
 
 #### sample\_template\_url
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>String</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `String`
+* Default: `null`
 *   Description:
 
     It is the URL to download the sample CSV file for the end users.
 
 #### sample\_template\_button\_text
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>String</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `String`
+* Default: `null`
 *   Description:
 
     It specifies the text on the button for downloading the sample CSV file.
@@ -609,13 +609,13 @@ The **sample\_template\_url** and the **sample\_template\_button\_text** options
 
 </Info>
 
-<mark style={{color: "#E37400", backgroundColor: "transparent"}}>Examples:</mark>
+**Examples:**
 
 <Tabs>
 
 <Tab title="Javascript">
 
-Pass additional options as input parameters to the **`setOptions`**method.
+Pass additional options as input parameters to the **`setOptions`** method.
 
 ```javascript
 importer.setOptions({
@@ -634,7 +634,7 @@ importer.setOptions({
 
 <Tab title="React">
 
-Pass the additional options as an object to the **`options`**property of the **`CSVBoxButton`** component. 
+Pass the additional options as an object to the **`options`** property of the **`CSVBoxButton`** component.
 
 ```javascript
   options={{
@@ -653,7 +653,7 @@ Pass the additional options as an object to the **`options`**property of the **`
 
 <Tab title="Angular">
 
-Pass the additional options as an object to the **`options`**property of the AppComponent. 
+Pass the additional options as an object to the **`options`** property of the AppComponent.
 
 ```javascript
   options={
@@ -672,7 +672,7 @@ Pass the additional options as an object to the **`options`**property of the App
 
 <Tab title="Vuejs">
 
-Pass the additional options as an object to the **`options`**property of the **`CSVBoxButton`** component. 
+Pass the additional options as an object to the **`options`** property of the **`CSVBoxButton`** component.
 
 ```javascript
   options: {
@@ -693,8 +693,8 @@ Pass the additional options as an object to the **`options`**property of the **`
 
 #### target\_file\_name
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>String</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `String`
+* Default: `null`
 *   Description:
 
     It specifies the name of the file that gets pushed to your destination. This is applicable for the following destinations only:
@@ -705,24 +705,24 @@ Pass the additional options as an object to the **`options`**property of the **`
 
 #### upload\_file\_url
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>String</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `String`
+* Default: `null`
 *   Description:
 
     The URL of the file to be imported. This is useful in cases where you want the data to be pre-loaded into the importer without asking the users to upload the file. Simply provide the file location and the importer will load the data when the user clicks the Import button.
 
 #### upload\_file\_worksheet\_name
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>String</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `String`
+* Default: `null`
 *   Description:
 
     The name of the worksheet that should be uploaded if you are uploading a file with multiple tabs via [**upload\_file\_url** ](/getting-started/2-install-code#upload_file_url)option.
 
 #### theme
 
-* Type: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>String</mark> 
-* Default: <mark style={{backgroundColor: "#E8F2FF", color: "inherit"}}>null</mark> 
+* Type: `String`
+* Default: `null`
 *   Description:
 
     Initializes the importer with the specified theme. Supported values:\
@@ -804,7 +804,7 @@ Triggers when all the data is pushed to the destination. Two objects are availab
 1. **`result`** (boolean): It is true when the import is successful and false when the import fails.
 2. **`data`** (object): Contains metadata related to the import.
 
-#### <mark style={{color: "#E37400", backgroundColor: "transparent"}}>Examples:</mark>
+#### Examples:
 
 <Tabs>
 

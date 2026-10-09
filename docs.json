@@ -144,7 +144,7 @@
         "label": "Suggestions"
       },
       {
-        "href": "/changelog",
+        "href": "/change-log",
         "label": "Changelog"
       },
       {
@@ -211,6 +211,11 @@
     {
       "source": "/getting-started/styling",
       "destination": "/dashboard-settings/styling"
+    },
+    {
+      "source": "/changelog",
+      "destination": "/change-log",
+      "permanent": true
     }
   ],
   "interaction": {
