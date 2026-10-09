@@ -7,7 +7,10 @@
     "light": "#E8F2FF",
     "dark": "#007BFF"
   },
-  "favicon": "/favicon.svg",
+  "favicon": {
+    "light": "/images/favicon.ico",
+    "dark": "/images/favicon.ico"
+  },
   "navigation": {
     "pages": [
       {
@@ -35,7 +38,8 @@
   },
   "logo": {
     "light": "/images/image(25).png",
-    "dark": "/images/image(25).png"
+    "dark": "/images/image(25).png",
+    "href": "https://csvbox.io"
   },
   "navbar": {
     "links": [
