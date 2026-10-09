@@ -225,7 +225,8 @@
     "metatags": {
       "canonical": "https://csvbox-io.mintlify.app",
       "og:image": "https://csvbox.io/og/default.png",
-      "twitter:site": "@csvboxio"
+      "twitter:site": "@csvboxio",
+      "google-site-verification": "pasjyyd-r2DcO7QTOPF90mi0IilJ8lyaPvFbsnETSic"
     }
   }
 }
