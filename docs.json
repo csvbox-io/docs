@@ -114,7 +114,10 @@
       {
         "group": "Legal",
         "icon": "scale-balanced",
-        "pages": []
+        "pages": [
+          "legal/privacy",
+          "legal/cookie-policy"
+        ]
       }
     ]
   },
