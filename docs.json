@@ -77,7 +77,9 @@
       {
         "group": "Data Destinations",
         "icon": "database",
-        "pages": []
+        "pages": [
+          "destinations"
+        ]
       },
       {
         "group": "Account",
