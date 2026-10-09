@@ -39,7 +39,14 @@
           "dashboard-settings/add-columns-via-csv",
           "dashboard-settings/validations",
           "dashboard-settings/sheet-options-1",
-          "dashboard-settings/styling"
+          "dashboard-settings/styling",
+          "dashboard-settings/ai-pre-import-transform",
+          "dashboard-settings/ai-bulk-transforms",
+          "dashboard-settings/import-analytics",
+          {
+            "group": "AI Document Import",
+            "pages": []
+          }
         ]
       },
       {
