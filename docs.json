@@ -211,5 +211,8 @@
       "source": "/getting-started/styling",
       "destination": "/dashboard-settings/styling"
     }
-  ]
+  ],
+  "interaction": {
+    "drilldown": true
+  }
 }
