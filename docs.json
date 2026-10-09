@@ -117,7 +117,14 @@
         "pages": [
           "legal/privacy",
           "legal/terms",
-          "legal/cookie-policy"
+          "legal/cookie-policy",
+          "legal/data-policy",
+          {
+            "group": "GDPR",
+            "pages": [
+              "legal/gdpr"
+            ]
+          }
         ]
       }
     ]
