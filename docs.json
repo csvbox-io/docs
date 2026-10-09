@@ -78,7 +78,8 @@
         "group": "Data Destinations",
         "icon": "database",
         "pages": [
-          "destinations"
+          "destinations",
+          "destinations/bubble-io"
         ]
       },
       {
