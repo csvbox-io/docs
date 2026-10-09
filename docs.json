@@ -68,7 +68,9 @@
           "advanced-installation/server-side-validation",
           "advanced-installation/data-transforms",
           "advanced-installation/rest-file-api",
-          "advanced-installation/environment-variables"
+          "advanced-installation/environment-variables",
+          "advanced-installation/auth-api",
+          "advanced-installation/sheet-api"
         ]
       },
       {
