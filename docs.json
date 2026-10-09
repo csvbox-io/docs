@@ -67,7 +67,8 @@
           "advanced-installation/validation-functions",
           "advanced-installation/server-side-validation",
           "advanced-installation/data-transforms",
-          "advanced-installation/rest-file-api"
+          "advanced-installation/rest-file-api",
+          "advanced-installation/environment-variables"
         ]
       },
       {
