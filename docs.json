@@ -98,12 +98,17 @@
       {
         "group": "Account",
         "icon": "user",
-        "pages": []
+        "pages": [
+          "account",
+          "account/teams"
+        ]
       },
       {
         "group": "Resources",
         "icon": "book",
-        "pages": []
+        "pages": [
+          "performance-benchmarks"
+        ]
       },
       {
         "group": "Legal",
