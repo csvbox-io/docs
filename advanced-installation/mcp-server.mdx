@@ -1,0 +1,213 @@
+---
+title: "CSVBox MCP Server"
+sidebarTitle: "MCP Server"
+---
+
+The CSVBox MCP server exposes importer-sheet management as tools that any [Model Context Protocol](https://modelcontextprotocol.io/) client can call directly , Claude Desktop, Cursor, Windsurf, Roo Code, Cline, and VS Code all work identically over one stdio transport.
+
+Instead of hand-writing JSON against the CSVBox REST API, describe the importer you want in plain language and let your AI client create, validate, and push a compliant CSVBox schema for you.
+
+|                      |                                                                                          |
+| -------------------- | ---------------------------------------------------------------------------------------- |
+| **Package**          | `@csvbox/mcp-server`                                                                     |
+| **Executable**       | `csvbox-mcp-server`                                                                      |
+| **Transport**        | stdio                                                                                    |
+| **Tools / Prompts**  | 9 tools · 2 prompts                                                                      |
+| **Requires**         | Node.js ≥ 18                                                                             |
+| **License**          | MIT                                                                                      |
+| **Source**           | [github.com/csvbox-io/csvbox-mcp-server](https://github.com/csvbox-io/csvbox-mcp-server) |
+| **Package registry** | [npmjs.com/package/@csvbox/mcp-server](https://www.npmjs.com/package/@csvbox/mcp-server) |
+
+> CSVBox handles the CSV/XLSX import widget your app embeds. This server handles the _configuration_ side, the importer "sheet" that defines columns, validation, destinations, and webhooks.
+
+***
+
+### Installation
+
+No local install is required — every supported client can run the server directly with `npx`:
+
+```json
+{
+  "mcpServers": {
+    "csvbox": {
+      "command": "npx",
+      "args": ["-y", "--package=@csvbox/mcp-server", "csvbox-mcp-server"],
+      "env": {
+        "CSVBOX_API_KEY": "your_api_key",
+        "CSVBOX_API_SECRET": "your_api_secret"
+      }
+    }
+  }
+}
+```
+
+Or install it locally:
+
+```bash
+npm install @csvbox/mcp-server
+```
+
+The config block above is identical across clients — only the file it goes in changes:
+
+| Client         | Config file                                                                    |
+| -------------- | ------------------------------------------------------------------------------ |
+| Claude Desktop | Claude Desktop MCP settings                                                    |
+| Cursor         | `~/.cursor/mcp.json` (or per-project `.cursor/mcp.json`)                       |
+| Windsurf       | `~/.codeium/windsurf/mcp_config.json`                                          |
+| Roo Code       | `mcp_settings.json`                                                            |
+| Cline          | `cline_mcp_settings.json`                                                      |
+| VS Code        | `.vscode/mcp.json` — note the top-level key is `"servers"`, not `"mcpServers"` |
+
+#### Environment variables
+
+| Variable            | Required for                                                      |
+| ------------------- | ----------------------------------------------------------------- |
+| `CSVBOX_API_KEY`    | All CSVBox API-backed tools                                       |
+| `CSVBOX_API_SECRET` | All CSVBox API-backed tools                                       |
+| `ANTHROPIC_API_KEY` | Server-side schema generation using Claude models                 |
+| `OPENAI_API_KEY`    | Server-side schema generation using OpenAI models                 |
+| `LLM_PROVIDER`      | Disambiguates when both LLM keys are set                          |
+| `LLM_MODEL`         | Overrides the default model — recommended for 100+ column schemas |
+
+> `CSVBOX_API_KEY` and `CSVBOX_API_SECRET` are only required for the API-backed tools (`create_sheet`, `update_sheet`, `patch_sheet`, `create_importer_from_prompt`, `submit_file`). `validate_schema` and `generate_import_code` run with no credentials at all.
+
+You don't need an LLM API key to use the server. Without one, the `create_csvbox_sheet` and `csvbox_sheet_functions` prompts hand schema generation to your AI client's own model — free, with no server-side key.
+
+***
+
+### Tools
+
+| Tool                          | Purpose                                                         | API call                 |
+| ----------------------------- | --------------------------------------------------------------- | ------------------------ |
+| `create_sheet`                | Create a CSVBox sheet                                           | `POST /1.1/sheet`        |
+| `update_sheet`                | Replace an existing sheet (PUT semantics)                       | `PUT /1.1/sheet/{key}`   |
+| `patch_sheet`                 | Partially update a sheet (merge semantics)                      | `PATCH /1.1/sheet/{key}` |
+| `generate_sheet_json`         | Natural-language prompt → complete sheet JSON                   | LLM only, no API call    |
+| `create_importer_from_prompt` | Prompt → validate → create, in one call                         | `POST /1.1/sheet`        |
+| `generate_import_code`        | Integration snippet for vanilla-js / React / Vue / Angular      | none                     |
+| `generate_sheet_functions`    | Prompt → virtual columns, validation functions, data transforms | LLM only, no API call    |
+| `validate_schema`             | Local schema validation against CSVBox's rules                  | none                     |
+| `submit_file`                 | Submit a file for import, by URL or direct upload               | `POST /1.1/file`         |
+
+> There are no `get_sheet` or `list_sheet` tools — the CSVBox API itself has no GET or LIST endpoints for sheets.
+
+#### `update_sheet` vs. `patch_sheet`
+
+|                            | `update_sheet` (PUT)                            | `patch_sheet` (PATCH)                      |
+| -------------------------- | ----------------------------------------------- | ------------------------------------------ |
+| Collection sent            | **Authoritative** — items not named are deleted | **Merged** — items not named are untouched |
+| `"virtual_columns": []`    | Deletes all existing virtual columns            | No-op                                      |
+| Key omitted entirely       | Untouched                                       | Untouched                                  |
+| `_delete: true` on an item | Not valid                                       | Removes that one item, leaves the rest     |
+
+Default to `patch_sheet` for incremental changes. Validate with the matching `mode` (`create`, `put`, or `patch`) before applying.
+
+#### `submit_file`
+
+Calls `POST /1.1/file` with either a `public_file_url` or a base64-encoded upload — the base64 payload is decoded server-side into a true `multipart/form-data` part before it reaches CSVBox, it is never sent to CSVBox as base64 text.
+
+***
+
+### MCP prompts
+
+Two prompts hand schema generation to your AI client's own model instead of the server's — useful when no server-side LLM key is configured.
+
+| Prompt                   | Purpose                                                                                                |
+| ------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `create_csvbox_sheet`    | Guides the client's LLM to build a complete CSVBox sheet, key-free                                     |
+| `csvbox_sheet_functions` | Guides the client's LLM to author virtual columns, validation functions, and data transforms, key-free |
+
+***
+
+### Prompt-to-sheet generation
+
+`generate_sheet_json` and `create_importer_from_prompt` turn a free-form request into a complete sheet — title, columns, destinations, webhooks, security settings, and steps. Only real data fields become columns; destination, domain, region, and file-type settings are routed to their own config sections and never mistaken for columns.
+
+#### Generation tiers
+
+Generation resolves through three tiers, in order:
+
+1. **Server LLM** — if `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` is set, the server calls the model directly. Uses your own API usage.
+2. **MCP prompt** — with no server key, the host client (Cursor, Claude Desktop, Cline, etc.) runs generation with its own model, then calls `validate_schema` and `create_sheet`. Free.
+3. **None** — with no LLM anywhere, the server returns a structured error pointing at the MCP prompt. The CSVBox API is never called.
+
+#### Extraction vs. expansion mode
+
+* **Extraction mode** (default) — the prompt names concrete fields, e.g. _"columns name, email, phone"_, and only those become columns. Nothing is invented.
+* **Expansion mode** — triggered by a named business module, a request for a "comprehensive" schema, or an explicit column-count floor. Each module (e.g. _Suppliers_) expands into realistic, prefixed columns (`supplier_id`, `supplier_gstin`, …), with every name kept globally unique.
+
+For 100+ column schemas, override the default cheap model (`claude-haiku-4-5` / `gpt-4o-mini`) with a stronger one via `LLM_MODEL`. Oversized output is flagged `TRUNCATED` rather than silently truncated or mis-parsed, and the CSVBox API is not called in that case.
+
+#### Column type mapping
+
+Field names and requested types are mapped to CSVBox column types automatically:
+
+| Field pattern                      | Column type    | Validators                       |
+| ---------------------------------- | -------------- | -------------------------------- |
+| Dropdown / status / fixed category | `list`         | `values: [...]`                  |
+| Percentage                         | `number`       | `min_value: 0`, `max_value: 100` |
+| Quantity / cost / age (positive)   | `number`       | `min_value: 0`                   |
+| Email                              | `email`        | —                                |
+| Phone / mobile                     | `phone_number` | —                                |
+| URL / website                      | `url`          | —                                |
+| Price / salary / amount            | `currency`     | —                                |
+| Date fields                        | `date`         | `format: "YYYY-MM-DD"`           |
+| Boolean / `is_*`                   | `boolean`      | —                                |
+| GST / GSTIN / tax id               | `regex`        | GSTIN pattern                    |
+| Indian PIN code                    | `regex`        | `^[1-9][0-9]{5}$`                |
+
+#### Supported column types
+
+`text` · `number` · `email` · `date` · `time` · `boolean` · `regex` · `ip` · `url` · `credit_card` · `phone_number` · `currency` · `list` · `dependent_list` · `dynamic_list` · `dependent_dynamic_list` · `multiselect_list` · `multiselect_dynamic_list`
+
+***
+
+### Function collections
+
+Beyond the core sheet properties, CSVBox accepts three collections whose items carry a `js_code` string that CSVBox executes **during a real import**:
+
+| Collection             | Identified by    | Max items | `js_code` must…                                 |
+| ---------------------- | ---------------- | --------- | ----------------------------------------------- |
+| `virtual_columns`      | `column_name`    | 20        | Return the computed cell value                  |
+| `validation_functions` | `function_name`  | 10        | Return an array of error strings (`[]` = valid) |
+| `data_transforms`      | `transform_name` | 10        | Mutate the `csvbox` object and return it        |
+
+Inside `js_code`, the `csvbox` object exposes `row`, `column`, `virtual`, `user`, `import`, and `environment`. A virtual column reads `csvbox.row.<name>` (one row, a scalar); a column-scoped function reads `csvbox.column.<name>` (the whole column, an array) — the two are not interchangeable.
+
+> **Security note.** The MCP server never executes `js_code` — it is an opaque, unreviewed string here and only runs later inside CSVBox. Read generated code before applying it with `patch_sheet`.
+
+#### Third-party scripts
+
+An item may load up to five third-party scripts, restricted to a fixed CDN allowlist:
+
+```json
+{
+  "url": "https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js",
+  "globals": ["dayjs"],
+  "integrity": "sha384-..."
+}
+```
+
+Allowed hosts: `cdn.jsdelivr.net`, `unpkg.com`, `cdnjs.cloudflare.com` — HTTPS only, `.js`/`.mjs` path, no query string, fragment, userinfo, or port.
+
+> A dependency without an `integrity` digest can change under your users at any time. `validate_schema` warns when one is missing.
+
+***
+
+### FAQ
+
+**Do I need an LLM API key to use it?** No. Without one, the `create_csvbox_sheet` and `csvbox_sheet_functions` prompts hand generation to the host client's own model — free, and no server-side key required.
+
+**What's the difference between `update_sheet` and `patch_sheet`?** `update_sheet` is a destructive PUT — anything not named in a collection gets deleted. `patch_sheet` merges and supports a per-item `_delete` flag. Default to `patch_sheet` for incremental changes.
+
+**Is the generated `js_code` executed by the MCP server?** No — it's treated as an opaque string and only runs later, inside CSVBox, during a real import. Read it before applying with `patch_sheet`.
+
+**How many tools does it expose?** Nine tools and two MCP prompts. No `get_sheet` or `list_sheet` — the CSVBox API itself has no GET or LIST endpoints for sheets.
+
+**How do I install it?** `npm install @csvbox/mcp-server`, or point any MCP client at `npx --package=@csvbox/mcp-server csvbox-mcp-server` with no local install at all.
+
+**Can it submit files directly, not just configure the importer?** Yes — `submit_file` calls `POST /1.1/file` with either a public file URL or a base64 upload, decoded server-side into true multipart binary before it reaches CSVBox.
+
+***
+
+MIT licensed · `@csvbox/mcp-server` · [Source on GitHub](https://github.com/csvbox-io/csvbox-mcp-server) · [npm](https://www.npmjs.com/package/@csvbox/mcp-server) · [csvbox.io](https://csvbox.io/) · [modelcontextprotocol.io](https://modelcontextprotocol.io/)

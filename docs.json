@@ -70,7 +70,8 @@
           "advanced-installation/rest-file-api",
           "advanced-installation/environment-variables",
           "advanced-installation/auth-api",
-          "advanced-installation/sheet-api"
+          "advanced-installation/sheet-api",
+          "advanced-installation/mcp-server"
         ]
       },
       {
