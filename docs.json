@@ -139,12 +139,12 @@
   "navbar": {
     "links": [
       {
-        "href": "https://csvbox.io",
-        "label": "Website"
-      },
-      {
         "href": "https://csvbox.canny.io/feature-requests",
         "label": "Suggestions"
+      },
+      {
+        "href": "/changelog",
+        "label": "Changelog"
       },
       {
         "href": "https://share.hsforms.com/1ubpg6RBoQgKOISkRMEViwg5auur",
@@ -153,7 +153,7 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
+      "label": "Login",
       "href": "https://app.csvbox.io/"
     }
   },
