@@ -46,6 +46,10 @@ Use RAW if you’re planning to run calculations or validations on numeric field
 
 </Accordion>
 
+<Info>
+  If your users upload files from different regions, turn on [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats) to handle numbers written with different thousands and decimal separators, such as `1,234.56` and `1.234,56`.
+</Info>
+
 ### Percentage
 
 The column must contain a valid **percentage** value. You can specify `Min` and `Max` values, and use the `Output` setting to control whether the percentage is stored as a value such as `50%` or `50`. Percentage values are normalized in the data worker.
@@ -124,6 +128,10 @@ The column under validation must be formatted as a date. You have to select a `D
 
 For example, specifying a token string **`dddd, MMMM Do YYYY, h:mm:ss`**  will require the date to be in the format **`Sunday, February 14th 2010, 3:25:50 pm`.**
 
+</Info>
+
+<Info>
+  If your users upload files from different regions, turn on [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats) to convert dates into your `Date Format` and ask the user when a date such as `04/05/2024` could be read two ways.
 </Info>
 
 ### Time

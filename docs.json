@@ -55,7 +55,8 @@
                 ]
               },
               "dashboard-settings/split-large-csv",
-              "dashboard-settings/ai-function-generator"
+              "dashboard-settings/ai-function-generator",
+              "dashboard-settings/smart-date-and-number-formats"
             ]
           },
           {
