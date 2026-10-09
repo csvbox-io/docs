@@ -90,7 +90,9 @@
           "destinations/google-bigquery",
           "destinations/supabase",
           "destinations/n8n",
-          "destinations/pipedream"
+          "destinations/pipedream",
+          "destinations/automation-platforms",
+          "destinations/private-mode"
         ]
       },
       {
