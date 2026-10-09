@@ -57,7 +57,9 @@
       {
         "group": "Advanced Installation",
         "icon": "code",
-        "pages": []
+        "pages": [
+          "advanced-installation"
+        ]
       },
       {
         "group": "Data Destinations",
