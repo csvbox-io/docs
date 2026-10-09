@@ -37,7 +37,9 @@
           "dashboard-settings",
           "dashboard-settings/sheet-options",
           "dashboard-settings/add-columns-via-csv",
-          "dashboard-settings/validations"
+          "dashboard-settings/validations",
+          "dashboard-settings/sheet-options-1",
+          "dashboard-settings/styling"
         ]
       },
       {
