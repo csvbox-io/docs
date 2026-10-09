@@ -17,7 +17,7 @@ Here's a basic configuration that adds 2 dynamic columns **qualification** and *
 
 <Tab title="Javascript">
 
-Pass the dynamic columns that you want to add as an array input parameter to the**`setDynamicColumns()`**method while initializing the importer.
+Pass the dynamic columns that you want to add as an array input parameter to the **`setDynamicColumns()`** method while initializing the importer.
 
 ```javascript
 importer.setDynamicColumns([
@@ -36,7 +36,7 @@ Basic installation steps are available [here](/getting-started/2-install-code).
 
 <Tab title="React">
 
-Pass the dynamic columns as an object to the **`dynamicColumns`**property of the **`CSVBoxButton`** component. 
+Pass the dynamic columns as an object to the **`dynamicColumns`** property of the **`CSVBoxButton`** component.
 
 ```javascript
   dynamicColumns={[
@@ -72,7 +72,7 @@ Add `[dynamicColumns]="dynamicColumns"` to the existing template.
 })
 ```
 
-Then pass the dynamic columns as an object to the**`dynamicColumns`**property of the AppComponent. Example:
+Then pass the dynamic columns as an object to the **`dynamicColumns`** property of the AppComponent. Example:
 
 ```javascript
   dynamicColumns=[
@@ -107,7 +107,7 @@ Add `:dynamicColumns="dynamicColumns"` to the existing template.
 </template>
 ```
 
-Pass the dynamic columns as an object to the**`dynamicColumns`**property of the**`CSVBoxButton`** component. Example:
+Pass the dynamic columns as an object to the **`dynamicColumns`** property of the **`CSVBoxButton`** component. Example:
 
 ```javascript
   dynamicColumns: [
@@ -132,7 +132,7 @@ Dynamic columns will be visible in the importer along with the other regular col
 
 ### **Advanced Configuration**
 
-Dynamic columns can be configured by passing additional**`<key>: <value>`**pairs to the array input parameter of the**`setDynamicColumns()`**method.
+Dynamic columns can be configured by passing additional **`<key>: <value>`** pairs to the array input parameter of the **`setDynamicColumns()`** method.
 
 Here is an example illustrating more configuration options.
 
@@ -364,7 +364,7 @@ dynamicColumns=[
 
 #### Configuration Options
 
-<table><thead><tr><th width="321">Key</th><th>Description</th></tr></thead><tbody><tr><td><a href="/dashboard-settings/sheet-options#column-name">column_name</a> <mark style={{color: "#D93025", backgroundColor: "transparent"}}>*</mark></td><td>It is the column name that will be pushed to the data destination.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#display-label">display_label</a></td><td>The user-friendly column label that the users will see in the importer.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#info-hint">info_hint</a></td><td>Info Hints are help tooltips that will get displayed when the users hover the mouse over the Display Label (or click it) in the importer.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#matching-keywords">matching_keywords</a></td><td>Comma-separated set of keywords as alternative matching options to help users match column names automatically. </td></tr><tr><td><a href="/dashboard-settings/sheet-options#column-type">type</a></td><td>It specifies the data type of the incoming data. Possible values are: <strong>text</strong>, <strong>number</strong>, <strong>email</strong>, <strong>date</strong>, <strong>boolean</strong>, <strong>regex</strong>, <strong>ip</strong>, <strong>url</strong>, <strong>credit_card</strong>, <strong>phone_number, currency, list, dependent_list, dynamic_list, dependent_dynamic_list, multiselect_list,</strong> and <strong>multiselect_dynamic_list.</strong></td></tr><tr><td><a href="/advanced-installation/dynamic-columns#validator-options">validators</a></td><td>The validation rules for the data based on the column type. Validator options are mentioned below.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#default-value">default_value</a></td><td>A default filler value for the column in case the incoming data is blank.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#required">required</a></td><td>It indicates whether a column is mandatory.</td></tr><tr><td><a href="/advanced-installation/dynamic-columns#column-position">position</a></td><td>It defines the display index of the column. Starts from 1.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#read-only">read_only</a></td><td>If configured to <strong>true</strong> then the users will not be able to edit the data of this column. The default value is <strong>false</strong>.</td></tr></tbody></table>
+<table><thead><tr><th width="321">Key</th><th>Description</th></tr></thead><tbody><tr><td><a href="/dashboard-settings/sheet-options#column-name">column_name</a> \*</td><td>It is the column name that will be pushed to the data destination.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#display-label">display_label</a></td><td>The user-friendly column label that the users will see in the importer.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#info-hint">info_hint</a></td><td>Info Hints are help tooltips that will get displayed when the users hover the mouse over the Display Label (or click it) in the importer.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#matching-keywords">matching_keywords</a></td><td>Comma-separated set of keywords as alternative matching options to help users match column names automatically. </td></tr><tr><td><a href="/dashboard-settings/sheet-options#column-type">type</a></td><td>It specifies the data type of the incoming data. Possible values are: <strong>text</strong>, <strong>number</strong>, <strong>email</strong>, <strong>date</strong>, <strong>boolean</strong>, <strong>regex</strong>, <strong>ip</strong>, <strong>url</strong>, <strong>credit_card</strong>, <strong>phone_number, currency, list, dependent_list, dynamic_list, dependent_dynamic_list, multiselect_list,</strong> and <strong>multiselect_dynamic_list.</strong></td></tr><tr><td><a href="/advanced-installation/dynamic-columns#validator-options">validators</a></td><td>The validation rules for the data based on the column type. Validator options are mentioned below.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#default-value">default_value</a></td><td>A default filler value for the column in case the incoming data is blank.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#required">required</a></td><td>It indicates whether a column is mandatory.</td></tr><tr><td><a href="/advanced-installation/dynamic-columns#column-position">position</a></td><td>It defines the display index of the column. Starts from 1.</td></tr><tr><td><a href="/dashboard-settings/sheet-options#read-only">read_only</a></td><td>If configured to <strong>true</strong> then the users will not be able to edit the data of this column. The default value is <strong>false</strong>.</td></tr></tbody></table>
 
 #### Validator options
 
