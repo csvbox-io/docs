@@ -28,7 +28,8 @@
           "getting-started/1-add-template",
           "getting-started/2-install-code",
           "getting-started/3-receive-data"
-        ]
+        ],
+        "expanded": false
       },
       {
         "group": "Dashboard Settings",
