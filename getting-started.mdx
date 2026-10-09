@@ -1,0 +1,46 @@
+---
+title: "Getting Started"
+sidebarTitle: "Overview"
+description: "With csvbox.io you can add a production-ready import feature to your web app in just a few minutes."
+---
+
+## Key Concepts
+
+Here are a few important terms used throughout the application:
+
+**User:** Any person who uses your application.
+
+**File:** The spreadsheet file that the users want to upload to your application.
+
+<Info>
+
+Users can upload .csv, .xlsx or .xls file formats.
+
+</Info>
+
+**Sheet or Template:** It refers to the data modal that specifies the structure of the data you want to accept. You can add columns to the sheet and configure validation criteria via your csvbox.io dashboard. 
+
+<Info>
+
+Users will be able to match the headers of their file columns with the sheet columns and clean data before uploading.
+
+</Info>
+
+**Import:** The entire process where the user invokes the csvbox.io importer to select the file, match columns, validate data, and submit the file is called Import.
+
+**Destination:** It is the end location where the csvbox.io importer will push the data uploaded by the user.
+
+<Info>
+
+1. This importer uses the PapaParse library to parse spreadsheet files. © 2014-present Matias Meno. Licensed under the MIT License.
+2. The project also uses the SheetJS Community Edition (XLSX.js), an open-source library for handling spreadsheet files. © 2012-present SheetJS LLC. Licensed under the Apache License, Version 2.0.
+
+</Info>
+
+## Quick Start
+
+The following are the basic steps to install the csvbox.io CSV importer widget into your app and start accepting data from your users.
+
+1. [Add Template](/getting-started/1-add-template) - Define the model of the incoming data.
+2. [Install Code](/getting-started/2-install-code) - Add the code snippet to your app to embed the widget.
+3. [Receive Data](/getting-started/3-receive-data) - Accept CSV data into your application.

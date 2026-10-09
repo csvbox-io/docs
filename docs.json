@@ -12,29 +12,53 @@
     "dark": "/images/favicon.ico"
   },
   "navigation": {
-    "pages": [
+    "groups": [
+      {
+        "group": "Home",
+        "icon": "house",
+        "pages": [
+          "index"
+        ]
+      },
       {
         "group": "Getting Started",
+        "icon": "rocket",
         "pages": [
-          "index",
-          "quickstart"
+          "getting-started",
+          "getting-started/1-add-template"
         ]
+      },
+      {
+        "group": "Dashboard Settings",
+        "icon": "sliders",
+        "pages": []
+      },
+      {
+        "group": "Advanced Installation",
+        "icon": "code",
+        "pages": []
+      },
+      {
+        "group": "Data Destinations",
+        "icon": "database",
+        "pages": []
+      },
+      {
+        "group": "Account",
+        "icon": "user",
+        "pages": []
+      },
+      {
+        "group": "Resources",
+        "icon": "book",
+        "pages": []
+      },
+      {
+        "group": "Legal",
+        "icon": "scale-balanced",
+        "pages": []
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/images/image(25).png",
@@ -44,8 +68,16 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:support@mintlify.com"
+        "href": "https://csvbox.io",
+        "label": "Website"
+      },
+      {
+        "href": "https://csvbox.canny.io/feature-requests",
+        "label": "Suggestions"
+      },
+      {
+        "href": "https://share.hsforms.com/1ubpg6RBoQgKOISkRMEViwg5auur",
+        "label": "Contact"
       }
     ],
     "primary": {
@@ -76,5 +108,43 @@
   "appearance": {
     "default": "light",
     "strict": true
-  }
+  },
+  "redirects": [
+    {
+      "source": "/master",
+      "destination": "/"
+    },
+    {
+      "source": "/getting-started/1.-add-template",
+      "destination": "/getting-started/1-add-template"
+    },
+    {
+      "source": "/getting-started/2.-install-code",
+      "destination": "/getting-started/2-install-code"
+    },
+    {
+      "source": "/getting-started/3.-receive-data",
+      "destination": "/getting-started/3-receive-data"
+    },
+    {
+      "source": "/destinations/bubble.io",
+      "destination": "/destinations/bubble-io"
+    },
+    {
+      "source": "/getting-started/sheet-options",
+      "destination": "/dashboard-settings/sheet-options"
+    },
+    {
+      "source": "/getting-started/sheet-options-1",
+      "destination": "/dashboard-settings/sheet-options-1"
+    },
+    {
+      "source": "/getting-started/validations",
+      "destination": "/dashboard-settings/validations"
+    },
+    {
+      "source": "/getting-started/styling",
+      "destination": "/dashboard-settings/styling"
+    }
+  ]
 }
