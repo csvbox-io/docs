@@ -230,8 +230,7 @@
     "metatags": {
       "canonical": "https://csvbox-io.mintlify.site",
       "og:image": "https://csvbox.io/og/default.png",
-      "twitter:site": "@csvboxio",
-      "google-site-verification": "z6DL203V9XoYEUSTdGR00pYKGzPQ7Qb1yFf_ugbN3wQ"
+      "twitter:site": "@csvboxio"
     }
   },
   "api": {
