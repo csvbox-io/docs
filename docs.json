@@ -79,7 +79,8 @@
         "icon": "database",
         "pages": [
           "destinations",
-          "destinations/bubble-io"
+          "destinations/bubble-io",
+          "destinations/hasura"
         ]
       },
       {

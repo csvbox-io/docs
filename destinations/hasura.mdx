@@ -1,0 +1,148 @@
+---
+title: "Hasura"
+description: "Push uploaded spreadsheet data straight into a table exposed by your Hasura GraphQL API."
+---
+
+## Before you start
+
+* A Hasura project with a GraphQL endpoint URL — for example `https://your-project.hasura.app/v1/graphql`
+* The project's admin secret
+* A table already tracked in Hasura, with insert permissions available to the admin role
+* An endpoint reachable from the public internet
+
+**Good to know**
+
+A sheet can have only one destination at a time. Selecting Hasura replaces whatever the sheet was writing to before.
+
+### Setup
+
+In your Sheet Settings, open the Destination tab and choose Hasura. Then work through the fields in order — the column mapping only unlocks once the connection test passes.
+
+1. **Enter your GraphQL endpoint** Paste the full endpoint URL, including the `/v1/graphql` path.
+
+```
+   https://your-project.hasura.app/v1/graphql
+```
+
+You'll find this on the Hasura Cloud project page, or it's the endpoint your own instance serves.
+
+2. **Enter your admin secret** Provide the value of your project's `x-hasura-admin-secret`. In Hasura Cloud it lives under Project → Env Vars → `HASURA_GRAPHQL_ADMIN_SECRET`.
+<Info>
+
+**Security** CSVBox stores credentials in encrypted form and uses them only to insert rows into the table you specify.
+
+</Info>
+
+3. **Set the target table** Enter the table you want rows inserted into — for example `users`. Use the name exactly as Hasura exposes it in your GraphQL schema. If the table is tracked under a non-`public` schema or carries a custom GraphQL name, use that name: the one that appears as `insert_<name>` in your API.
+4. **Test the connection** Click Test Connection. CSVBox introspects your schema to confirm the endpoint, admin secret, and table all check out, and loads the table's column list so it can be used for mapping. A green check means everything is ready; if it fails, see Troubleshooting.
+5. **Map columns to table fields** Click Map Columns. For each column in your importer — including any virtual columns — pick the Hasura column it should be written to. Each target's data type is shown next to its name, so you can confirm the destination is the one you meant. Leave a row set to `(empty)` to skip that column; it simply won't be sent.
+6. **Map custom attributes** _(optional)_ In the same window, the Custom Attributes table writes values you pass into the importer at runtime into columns on the target table. This is how every imported row gets tagged with the tenant, account, or user it belongs to. `user_id` is available by default, and you can define up to five attributes in total. Values come from the user object you set on the importer:
+
+javascript
+
+```javascript
+   importer.setUser({
+     user_id: "1234",
+     team_id: "acme-42"
+   });
+```
+
+Map `team_id` to a `team_id` column, and every row from that import carries it.
+
+7. **Save** Save the mapping, then save the sheet. The next file submitted through this importer writes to Hasura.
+
+### Insert vs. upsert
+
+By default every import performs a plain insert — each row becomes a new row in the table. To upsert instead, updating existing rows rather than duplicating them, fill in the two optional fields:
+
+| Field                          | Description                                                                                                                                             |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Upsert Constraint**          | The Postgres unique constraint to match on, e.g. `users_email_key`. Constraint names are listed in the Hasura Console under Data → your table → Modify. |
+| **Update Columns on Conflict** | Comma-separated columns to overwrite when a matching row is found, e.g. `name, email, updated_at`.                                                      |
+
+Leaving Upsert Constraint blank disables upsert entirely; the update-columns value is then ignored.
+
+<Warning>
+
+**Careful with large files**
+
+Plain inserts are not idempotent. If an import is retried after a partial failure, rows already written by a completed batch can be inserted a second time. An upsert on a unique constraint makes retries safe — which is why it's the better choice for big files, not just for deduplication.
+
+</Warning>
+
+### Data flow
+
+Once setup is complete, every submitted file is processed without further intervention.
+
+| Step              | Description                                                                      |
+| ----------------- | -------------------------------------------------------------------------------- |
+| **01 · Validate** | Your sheet's rules and transforms run on every row.                              |
+| **02 · Batch**    | Rows are grouped 500 at a time.                                                  |
+| **03 · Mutate**   | Each batch goes out as one `insert_<table>` mutation using GraphQL variables.    |
+| **04 · Report**   | Progress streams back to the widget; `affected_rows` becomes the imported count. |
+
+Each import ends in one of three states, visible on the Imports page in your dashboard:
+
+| Status      | Meaning                                                                                              |
+| ----------- | ---------------------------------------------------------------------------------------------------- |
+| **Success** | Every batch was accepted by Hasura.                                                                  |
+| **Partial** | Some batches succeeded and others were rejected. The failing errors are recorded against the import. |
+| **Failed**  | No rows were written.                                                                                |
+
+### How values are converted
+
+Spreadsheet cells are text. Before sending a batch, CSVBox converts each value to the JSON type your column expects, based on the schema read during Test Connection.
+
+| Hasura column type                                                                                    | Sent as                                                                    |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `Int`, `smallint`, `bigint`                                                                           | Number (integer)                                                           |
+| `Float`, `numeric`, `money`, `float4`, `float8`                                                       | Number (decimal)                                                           |
+| `Boolean`                                                                                             | `true` for `true`, `1`, `yes`, `on`; `false` for `false`, `0`, `no`, `off` |
+| `timestamptz`, `timestamp`, `date`, `time`, `interval`, `uuid`, `json`, `jsonb`, `citext`, and others | A string, for Postgres to parse                                            |
+| Any type, empty cell                                                                                  | `null`                                                                     |
+
+**Formatting dates and JSON**
+
+Because date, timestamp, UUID, and JSON values pass through as strings, the values in your file need to be in a form Postgres accepts — `2026-03-14` or `2026-03-14T09:30:00Z` for timestamps, for instance. Use validation rules and data transform functions to normalise them before they're sent.
+
+### Environment variables
+
+The endpoint, admin secret, table name, and upsert settings all accept environment variables. Wrap the variable name in double curly braces and CSVBox substitutes it at import time:
+
+```
+https://{{tenant}}.hasura.app/v1/graphql
+```
+
+Pass the value when you create the importer:
+
+javascript
+
+```javascript
+let importer = new CSVBoxImporter("YOUR_LICENSE_KEY_HERE", {}, callback, {
+  lazy: true,
+  environment: {
+    tenant: "acme"
+  }
+});
+```
+
+One importer can then write to a different Hasura project, table, or upsert constraint per customer or per environment.
+
+### Troubleshooting
+
+| Message | What to check |
+| --- | --- |
+| **Invalid Admin Secret** | The secret doesn't match your project's `HASURA_GRAPHQL_ADMIN_SECRET`. Re-copy it, watching for trailing spaces. |
+| **Could not reach the Hasura GraphQL Endpoint** | The URL is wrong, missing `/v1/graphql`, or the instance isn't publicly reachable. A self-hosted Hasura behind a VPN or firewall must allow inbound requests from CSVBox. |
+| **Table not found in Hasura schema** | The table isn't tracked, the name is misspelled, or it's exposed under a different GraphQL name. Confirm `insert_<table>` appears in your Hasura API explorer. |
+| **One or more mapped columns were not found on the table** | The schema changed after you mapped columns. Run Test Connection to reload the column list, then re-map. |
+| **Constraint does not exist** | The upsert constraint name doesn't match a unique constraint on the table. Use the constraint name, not the column name. |
+
+### Notes & limits
+
+* Only insertable scalar columns appear in the mapping list. Columns backed by Postgres enums, arrays, or Hasura relationships aren't offered as targets, and nested or related inserts aren't supported.
+* Authentication uses the admin secret only — JWT and webhook auth modes aren't supported for this destination.
+* Column names are case-sensitive and must match your Hasura schema exactly.
+* Generated columns and columns with database defaults can be left unmapped; Hasura and Postgres fill them in.
+* Hasura can return errors inside an otherwise successful HTTP response. CSVBox inspects every response body, so a rejected batch is always reported as an import error rather than counted as a silent success.
+* This destination composes with the rest of CSVBox: validation rules, virtual columns, data transform functions, and AI transforms all apply before rows are sent.
