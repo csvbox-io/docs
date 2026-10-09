@@ -122,7 +122,8 @@
           {
             "group": "GDPR",
             "pages": [
-              "legal/gdpr"
+              "legal/gdpr",
+              "legal/gdpr/data-processing-addendum"
             ]
           },
           "legal/soc-2-type-2"
