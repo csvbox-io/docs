@@ -42,23 +42,23 @@ Include your API key as a `x-csvbox-api-key` header on all API queries.
 
 ## Submits a spreadsheet file
 
-<mark style={{color: "#188038", backgroundColor: "transparent"}}>`POST`</mark> `https://api.csvbox.io/1.1/file`
+`POST` `https://api.csvbox.io/1.1/file`
 
 #### Headers
 
 | Name                                               | Type   | Description      |
 | -------------------------------------------------- | ------ | ---------------- |
-| x-csvbox-api-key<mark style={{color: "#D93025", backgroundColor: "transparent"}}>\*</mark> | String | API Key          |
-| content-type<mark style={{color: "#D93025", backgroundColor: "transparent"}}>\*</mark>     | String | application/json |
+| x-csvbox-api-key\* | String | API Key |
+| content-type\* | String | application/json |
 
 #### Request Body
 
 | Name                                                         | Type   | Description                                                                                  |
 | ------------------------------------------------------------ | ------ | -------------------------------------------------------------------------------------------- |
-| import.public\_file\_url<mark style={{color: "#D93025", backgroundColor: "transparent"}}>\*</mark> | String | The public URL of the spreadsheet that is to be submitted. |
+| import.public_file_url\* | String | The public URL of the spreadsheet that is to be submitted. |
 | import.file\_sheet\_name                                     | String | Worksheet name in case of a file having multiple tabs.                                       |
-| import.sheet\_license\_key<mark style={{color: "#D93025", backgroundColor: "transparent"}}>\*</mark> | String | Sheet license key |
-| import<mark style={{color: "#D93025", backgroundColor: "transparent"}}>\*</mark> | Object | Import file data |
+| import.sheet_license_key\* | String | Sheet license key |
+| import\* | Object | Import file data |
 | import.user                                                  | Object | Object [referencing the user](/getting-started/2-install-code#referencing-the-user)   |
 | import.options                                               | Object | Object [referencing the import options](/advanced-installation/rest-file-api#options)                 |
 | import.dynamic\_columns                                      | Object | Object [referencing dynamic columns](/advanced-installation/dynamic-columns) |
@@ -310,7 +310,7 @@ As an alternative to providing the public file URL to the FILE API, you also hav
 
 | Name                                          | Type   | Description                              |
 | --------------------------------------------- | ------ | ---------------------------------------- |
-| import.file<mark style={{color: "#D93025", backgroundColor: "transparent"}}>\*</mark> | String | The contents of the file to be imported. |
+| import.file\* | String | The contents of the file to be imported. |
 
 <Info>
 
