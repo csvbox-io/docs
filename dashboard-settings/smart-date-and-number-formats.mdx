@@ -1,128 +1,117 @@
 ---
 title: "Smart Date and Number Formats"
-description: "Convert dates and numbers written in different regional formats, and ask the user only when a value is unclear."
+description: "Automatically convert dates and numbers written in different regional formats, and ask users only when a value is unclear."
 ---
 
-Files from different countries write the same date or number differently. `04/05/2024` is 4 May in the UK and 5 April in the US. `1,234` is one thousand two hundred thirty-four in the US and one point two three four in much of Europe. If an importer guesses wrong, valid data is rejected or, worse, imported with the wrong meaning.
+### What it does
 
-**Smart Date and Number Formats** (the setting is called **Date correction?**) fixes this. Before the user reaches Verify Data, CSVBox reads the columns, converts what is clear, and **asks the user once** only when a value could mean two different things. Nothing is imported until the question is answered or skipped.
+Files from different countries write the same date or number differently. `04/05/2024` is 4 May in the UK and 5 April in the US. `1,234` is one thousand two hundred thirty-four in the US and one point two three four in much of Europe. If the importer guesses wrong, valid data is rejected or, worse, imported with the wrong meaning.
 
-## Who this is for
+With Smart Date and Number Formats, CSVBox reads the Date, Number, Currency and Percentage columns before the user reaches the Verify Data step. Values that can be read only one way are converted into the format your column expects. When a value could mean two different things, the user is asked once how to read it. Nothing is imported until the question is answered or skipped.
 
-- **Importer owners** decide whether to turn the feature on and what format each column expects.
-- **People uploading a file** answer a question when their file is unclear.
+### How to enable it
 
-## For importer owners
+1. Go to your **Sheet Settings**
+2. Click on the **Import Steps** tab
+3. Navigate to the **Verify Data** tab
+4. Set **"Date correction?"** to **Yes**
+5. Save your settings
 
-### Turn it on
+**Default value:** `No`
 
-1. Open the sheet: **Sheets → your sheet → Import Steps → Verify Data**.
-2. Set **Date correction?** to **Yes** and save.
+While the setting is off, values are validated as they are, so a day-first date in a month-first column shows as invalid.
 
 <Info>
-  It is **off by default** for every sheet. While it is off, none of the behaviour below happens and unclear values are simply validated as they are, so a day-first date in a month-first column shows as invalid. If your users never see a question, check this setting first.
+  To try it out, upload a file with an unclear date and an unclear number through **Test Importer**, answer the question, and check the Verify Data screen without submitting.
 </Info>
 
 ### Set the format each column expects
 
-The feature always converts **into** the format you configured, so set the column types carefully (**Sheet → Columns → Edit**). See [Validations](/dashboard-settings/validations) for the full list of column types.
+The feature always converts **into** the format configured on the column, so set your column types carefully under **Sheet Settings > Columns > Edit**. See [Validations](/dashboard-settings/validations) for the full list of column types.
 
-| Column type | What you set | What the importer ends up with |
+| Column type | What you set | What you receive |
 | --- | --- | --- |
-| **Date** | Date Format, such as `MM/DD/YYYY`, `DD/MM/YYYY`, `YYYY-MM-DD`, `DD-MMM-YYYY`, a custom format, or several formats | Every date rewritten to your format. With several formats, clear dates use the first and a picked day/month order uses the format written in that order |
-| **Date with a time** | A format such as `MM/DD/YYYY HH:mm` | The date part rewritten; the time stays exactly as in the file |
-| **Number** | **Allow commas** on or off | Off: plain digits with a `.` decimal (`1234.56`). On: US style with commas (`1,234.56`), which is left as written |
+| **Date** | `Date Format`, such as `MM/DD/YYYY`, `DD/MM/YYYY`, `YYYY-MM-DD`, `DD-MMM-YYYY`, a custom format, or several formats | Every date rewritten to your format. With several formats, clear dates use the first and a picked day/month order uses the format written in that order |
+| **Date with a time** | A format such as `MM/DD/YYYY HH:mm` | The date part rewritten. The time stays exactly as in the file |
+| **Number** | `Allow commas` on or off | Off: plain digits with a `.` decimal (`1234.56`). On: US style with commas (`1,234.56`), which is left as written |
 | **Percentage** | Nothing extra | A plain number, with the `%` kept as written (`12,5%` becomes `12.5%`) |
 | **Currency** | Its own thousands and decimal separators | Values that already match are left alone |
 
-Tips:
+<Info>
+  For a worldwide audience, a Number column with `Allow commas` off is the most predictable: you receive plain numbers whatever the file looked like.
+</Info>
 
-- For a worldwide audience, a Number column with **Allow commas off** is the most predictable: you receive plain numbers whatever the file looked like.
-- If your Date format has a time, files must include one for each date. A date written without a time is flagged as invalid because your format requires it.
-- Dates written with an English month name in the file (`4 May 2026`, `May 4, 2026`, `04-May-2026`) are never asked about, since they can only mean one date. They are rewritten into your sheet's format, and left alone if already in it. Other languages' month names are not recognised.
+### What happens during upload
 
-### Choose what users see first
+The import flow stays the same: upload, select the header row, map columns, then Verify Data. The extra step happens right before Verify Data.
 
-Under **Verify Data** you can set the default view to show **all rows** or **invalid rows only**. If you choose invalid only and the review fixes every value, CSVBox opens on All rows instead of an empty screen, so users always see their records.
+#### When the file is clear
 
-## For people uploading a file
-
-The flow is the usual one: upload, choose the header row, map columns, then **Verify Data**. The extra step happens right before Verify Data.
-
-### 1. Nothing to do when the file is clear
-
-If every value can be read only one way, CSVBox converts it quietly and goes straight to Verify Data. The same happens when your clear values already show that the file uses the importer's own day/month order: values written differently (another separator such as `13.02.2024` or `13-02-2024`, or no leading zero such as `5/4/2024`) are rewritten into the importer's format and values already correct are left alone. Examples:
+If every value can be read only one way, CSVBox converts it quietly and goes straight to Verify Data. No question is shown. Examples:
 
 - `13/02/2024` (there is no 13th month, so it is day-first)
 - `1.234,56` (this can only be European style)
 - `2024-04-19` (year first)
 - `1 234,56`, `12,34,567.89`
+- `4 May 2026`, `May 4, 2026`, `04-May-2026` (an English month name can only mean one date)
 
-### 2. A question appears when a value could mean two things
+The same happens when the clear values show that the file already uses your column's day/month order. Values written differently, such as another separator (`13.02.2024`, `13-02-2024`) or no leading zero (`5/4/2024`), are rewritten into your format, and values that are already correct are left alone.
 
-A card shows the column name and asks, for example:
+#### When a value could mean two things
+
+The user sees a card with the column name and the two possible readings. For example:
 
 > **How should we read dates in this column?**<br /> `12/11/2024` means:<br /> ○ **11/12/2024**, 12 November 2024 · DD/MM/YYYY<br /> ○ **12/11/2024**, 11 December 2024 · MM/DD/YYYY
-
-(The bold date is what will be imported, in your sheet's format, here `MM/DD/YYYY`. The long form says what the value means.)
 
 or:
 
 > **How should we read numbers in this column?**<br /> `1,234` means:<br /> ○ 1234, the comma separates thousands<br /> ○ 1.234, the comma is the decimal point
 
-- When the rest of your file points one way, that choice is marked **suggested**.
-- If several columns need a question, you see **1 of 2**, **2 of 2** and a **Back** button.
-- Pick the reading that matches how your file was written and press **Continue**.
+- The bold date is what will be imported, written in your sheet's own date format (here `MM/DD/YYYY`). A sheet set to `DD-MM-YYYY` offers `DD-MM-YYYY` and `MM-DD-YYYY`.
+- When the rest of the file points one way, that choice is marked **suggested**.
+- If several columns need a question, the user sees **1 of 2**, **2 of 2** and a **Back** button.
+- The question appears in the importer's language.
 
-The two answers are written in **your sheet's own date format**. A sheet set to `DD-MM-YYYY` offers `DD-MM-YYYY` and `MM-DD-YYYY`; a sheet set to `DD.MM.YYYY` offers `DD.MM.YYYY` and `MM.DD.YYYY`. The converted dates are always written in the sheet's format, so what you see on Verify Data matches what the importer expects.
+#### What each answer does
 
-### 3. What each answer does
-
-- **Pick a reading:** every value in that column is rewritten into the importer's format. Values that were already clear are converted as well, so the column ends up consistent.
-- **Keep original:** nothing in that column is changed. Values the importer cannot accept will show as **Invalid** on the next screen, and you can fix them there. Choosing this also lets you continue.
+- **Pick a reading:** every value in that column is rewritten into your column's format. Values that were already clear are converted as well, so the column ends up consistent.
+- **Keep original:** nothing in that column is changed. Values the importer cannot accept show as **Invalid** on the Verify Data screen, where the user can fix or remove them.
 
 <Info>
-  You cannot reach Submit while a question is open. Answer it or choose **Keep original**.
+  The user cannot reach **Submit** while a question is open. They have to answer it or choose **Keep original**.
 </Info>
 
-### 4. Check the result on Verify Data
+On the Verify Data screen, converted columns already show the new values in your column's format, so what the user sees is what will be imported. If the default view under **Verify Data** is set to invalid rows only and the conversion fixes every value, CSVBox opens on All rows instead of an empty screen.
 
-All your rows are listed. Converted columns already show the new values, written in the importer's format, so what you see is what will be imported. Rows that are still wrong, including values from a column you chose **Keep original** for, are marked Invalid as usual and can be edited or removed here.
+### Examples
 
-## Examples
+| Column | File says | Result |
+| --- | --- | --- |
+| Date (`MM/DD/YYYY`) | `13/02/2024`, `14/03/2024`, `12/11/2024` | No question: the first two prove day-first. All become `02/13/2024`, `03/14/2024`, `11/12/2024` |
+| Date (`MM/DD/YYYY`) | `04/05/2024`, `06/07/2024` | Question, since each date could be read both ways. The answer decides |
+| Date (`MM/DD/YYYY HH:mm`) | `13/02/2024 14:30` | Asked if unclear, then `02/13/2024 14:30` |
+| Number (commas off) | `123,456.78`, `456,789.12` | No question. Becomes `123456.78`, `456789.12` |
+| Number (commas off) | `1,234`, `2,345` | Question: thousands or decimal |
+| Number (commas off) | `1.234`, `2.345` | Already valid plain decimals, so left alone |
+| Number (commas on) | `123,456.78` | Already valid. Left as it is |
+| Percentage | `12,5%`, `7,25%` | Becomes `12.5%`, `7.25%` |
+| Percentage | `1,250%`, `2,500%` | Question: thousands or decimal, `%` kept |
 
-| Column | File says | Importer expects | Result |
-| --- | --- | --- | --- |
-| Date (`MM/DD/YYYY`) | `13/02/2024`, `14/03/2024`, `12/11/2024` | month first | No question: the first two prove day-first. All become `02/13/2024`, `03/14/2024`, `11/12/2024` |
-| Date (`MM/DD/YYYY`) | `04/05/2024`, `06/07/2024` | month first | Question, since each date could be read both ways. The answer decides |
-| Date (`MM/DD/YYYY HH:mm`) | `13/02/2024 14:30` | month first | Asked if unclear, then `02/13/2024 14:30` |
-| Number (commas off) | `123,456.78`, `456,789.12` | plain | No question. Becomes `123456.78`, `456789.12` |
-| Number (commas off) | `1,234`, `2,345` | plain | Question: thousands or decimal |
-| Number (commas off) | `1.234`, `2.345` | plain | Already valid plain decimals, so left alone |
-| Number (commas on) | `123,456.78` | US style | Already valid. Left as it is |
-| Percentage | `12,5%`, `7,25%` | plain | Becomes `12.5%`, `7.25%` |
-| Percentage | `1,250%`, `2,500%` | plain | Question: thousands or decimal, `%` kept |
+### Limitations
 
-## What it does not do
-
-- It does not guess when a value is truly unclear. It asks.
-- It does not change the meaning of a time (no 12 to 24 hour conversion) or fix typos.
+- It does not guess when a value is truly unclear. It asks the user.
 - It covers **Date, Number, Currency and Percentage** columns only.
-- A cell you edited by hand is left alone when you change an answer later.
-- The question appears in the importer's language. Values themselves are never translated.
+- It does not change the meaning of a time (no 12 to 24 hour conversion) or fix typos.
+- If your `Date Format` has a time, files must include one for each date. A date written without a time is flagged as invalid.
+- Only English month names are recognised.
+- A cell the user edited by hand is left alone if they change an answer later.
+- Values themselves are never translated.
 
-## Troubleshooting
+### Troubleshooting
 
 | What you see | Why | What to do |
 | --- | --- | --- |
-| No question ever, and dates or numbers show Invalid | **Date correction?** is No | Set it to Yes in Import Steps → Verify Data |
-| Every date is Invalid and no question appears for a timed column | Dates in the file have no time but the format requires one | Add the time to the file, or use a date-only format |
-| Verify Data is empty with "No data found" | The page was showing a filtered view with no matches | Click **All**. Current versions open on All automatically when nothing is invalid |
-| Question looks wrong for one value | Your file mixes styles | Choose **Keep original** and fix the few values on Verify Data |
-
-## Quick checklist before going live
-
-- **Date correction?** is Yes on the sheet.
-- Each Date column has the format you want to receive.
-- Each Number column has **Allow commas** set on purpose.
-- You tried a file with an unclear date and an unclear number through **Test Importer**, answered the question, and checked Verify Data without submitting.
+| No question ever, and dates or numbers show Invalid | **Date correction?** is set to No | Set it to Yes under Import Steps > Verify Data |
+| Every date is Invalid and no question appears for a column with a time | Dates in the file have no time but the format requires one | Add the time to the file, or use a date-only format |
+| Verify Data is empty with "No data found" | The screen was showing a filtered view with no matches | Click **All**. Current versions open on All rows automatically when the conversion fixes every value |
+| The question looks wrong for one value | The file mixes styles | Choose **Keep original** and fix the few values on Verify Data |
