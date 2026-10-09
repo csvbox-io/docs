@@ -50,7 +50,8 @@
               "dashboard-settings/ai-document-import/document-metadata-fields"
             ]
           },
-          "dashboard-settings/split-large-csv"
+          "dashboard-settings/split-large-csv",
+          "dashboard-settings/ai-function-generator"
         ]
       },
       {
