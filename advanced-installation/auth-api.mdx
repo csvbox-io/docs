@@ -1,74 +1,70 @@
 ---
 title: "Auth API"
-description: "Authenticate API requests to CSVBox using a secure header-based scheme that validates both your API Key and Secret API Key."
+description: "Authenticate CSVbox API requests with a header-based scheme that validates both your API Key and Secret API Key."
 ---
 
-### Overview
+CSVbox requires two authentication headers, `x-csvbox-api-key` and `x-csvbox-secret-api-key`, for all protected API requests.
 
-CSVBox requires **two authentication headers** for all protected API requests:
+<Warning>
+  - Always send requests over **HTTPS**.
+  - Never include keys in query parameters or expose them in browser-side code.
+  - Store keys securely in your server environment.
+</Warning>
 
-<Info>
+## Finding your keys
 
-WARNING
+<Steps>
+  <Step title="Log in to the dashboard">
+    Log in to the [CSVbox Dashboard](https://app.csvbox.io/).
+  </Step>
+  <Step title="Open the API Keys tab">
+    Click your profile name → **Profile** → **API Keys** tab.
+  </Step>
+  <Step title="Copy your keys">
+    Copy your API and Secret keys.
+  </Step>
+  <Step title="Regenerate keys if needed">
+    If keys are missing or compromised, click **Regenerate Key**.
+  </Step>
+</Steps>
 
-* Always send requests over **HTTPS**.
-* Never include keys in query parameters or expose them in browser-side code.
-* Store keys securely in your server environment.
+## Authentication flow
 
-</Info>
+1. The client sends a request to a protected endpoint with both headers.
+2. CSVbox validates that:
+   - The API key exists and is active.
+   - The Secret key matches the same account.
+3. If valid, CSVbox returns `200 OK` and the requested data.
+4. If invalid, CSVbox returns an appropriate error code.
 
-***
+## Verify credentials API
 
-### Finding Your Keys
+Verify your credentials with this endpoint.
 
-1. Log in to [CSVBox Dashboard](https://app.csvbox.io/).
-2. Click your profile name → **Profile → API Keys** tab.
-3. Copy your API and Secret keys.
-4. If keys are missing or compromised, click **Regenerate Key**.
+```text
+POST https://api.csvbox.io/1.1/auth
+```
 
-***
+### Headers
 
-### Authentication Flow
+| Name | Value |
+| --- | --- |
+| `content-type` | `application/json` |
+| `x-csvbox-api-key` | `<your-api-key>` |
+| `x-csvbox-secret-api-key` | `<your-secret-api-key>` |
 
-1. Client sends a request to a protected endpoint with both headers.
-2. CSVBox validates:
-   * The API key exists and is active.
-   * The Secret key matches the same account.
-3. If valid → returns `200 OK` and requested data.
-4. If invalid → returns an appropriate error code.
+### Body
 
-***
-
-### Endpoint
-
-## Verify Credentials API
-
-`POST` `https://api.csvbox.io/1.1/auth`
-
-You can verify your credentials using this endpoint.
-
-**Headers**
-
-| Name                    | Value                  |
-| ----------------------- | ---------------------- |
-| content-type            | `application/json`     |
-| x-csvbox-api-key        | &lt;your-api-key>        |
-| x-csvbox-secret-api-key | &lt;your-secret-api-key> |
-
-**Body**
-
-| Name   | Type   | Description      |
-| ------ | ------ | ---------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | `name` | string | Name of the user |
-| `age`  | number | Age of the user  |
+| `age` | number | Age of the user |
 
-**Response**
+### Response
 
-<Tabs>
+**200 OK**
 
-<Tab title="200 OK">
-
-```json
+```json 200 OK
 {
   "message": "successfully authenticated",
   "data": {
@@ -79,56 +75,27 @@ You can verify your credentials using this endpoint.
 }
 ```
 
-</Tab>
+### Error responses
 
-</Tabs>
+| Status | Error | Example |
+| --- | --- | --- |
+| **400 Bad Request** | Missing or malformed headers | `{ "errors": "bad_request" }` |
+| **401 Unauthorized** | Invalid credentials | `{ "errors": "invalid_credentials" }` |
+| **403 Forbidden** | Account lacks permission | `{ "errors": "forbidden"}` |
+| **429 Too Many Requests** | Rate limit exceeded | `{ "errors": "rate_limited"}` |
 
-#### ❌ Error Responses
+### Example requests
 
-| Status                    | Error                        | Example                               |
-| ------------------------- | ---------------------------- | ------------------------------------- |
-| **400 Bad Request**       | Missing or malformed headers | `{ "errors": "bad_request" }`         |
-| **401 Unauthorized**      | Invalid credentials          | `{ "errors": "invalid_credentials" }` |
-| **403 Forbidden**         | Account lacks permission     | `{ "errors": "forbidden"}`            |
-| **429 Too Many Requests** | Rate limit exceeded          | `{ "errors": "rate_limited"}`         |
+<CodeGroup>
 
-***
-
-### Security Best Practices
-
-* Use **HTTPS (TLS)** exclusively.
-* Send keys in **headers**, never in URLs.
-* Mask secret fields in your UI (`type="password"`).
-* Do **not log** raw keys—mask them (e.g., `****abcd`).
-* Rotate and revoke keys regularly via dashboard.
-*   Store credentials as environment variables:
-
-    ```bash
-    CSVBOX_API_KEY=your_api_key
-    CSVBOX_SECRET_API_KEY=your_secret_key
-    ```
-* For browser apps, always proxy API requests through your backend.
-
-***
-
-#### Example Requests
-
-<Tabs>
-
-<Tab title="cURL">
-
-```javascript
+```javascript cURL
 curl -i -X GET "https://api.csvbox.io/1.1/auth" \
   -H "Accept: application/json" \
   -H "x-csvbox-api-key: <your-api-key>" \
   -H "x-csvbox-secret-api-key: <your-secret-key>"
 ```
 
-</Tab>
-
-<Tab title="jQuery (for testing)">
-
-```javascript
+```javascript jQuery (for testing)
 $.ajax({
   url: "https://api.csvbox.io/1.1/auth",
   headers: {
@@ -140,11 +107,7 @@ $.ajax({
 });
 ```
 
-</Tab>
-
-<Tab title="PHP">
-
-```php
+```php PHP
 <?php
 $ch = curl_init("https://api.csvbox.io/1.1/auth");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -165,11 +128,7 @@ if ($code === 200) {
 }
 ```
 
-</Tab>
-
-<Tab title="NodeJS">
-
-```javascript
+```javascript NodeJS
 import axios from "axios";
 
 async function testAuth() {
@@ -190,57 +149,65 @@ async function testAuth() {
 testAuth();
 ```
 
-</Tab>
-
-</Tabs>
+</CodeGroup>
 
 <Danger>
-
-Never expose your secret keys in browser-side code.
-
+  Never expose your secret keys in browser-side code.
 </Danger>
 
-***
+## Security best practices
 
-### FAQ
+- Use **HTTPS (TLS)** exclusively.
+- Send keys in **headers**, never in URLs.
+- Mask secret fields in your UI (`type="password"`).
+- Don't log raw keys. Mask them (for example, `****abcd`).
+- Rotate and revoke keys regularly from the dashboard.
+- Store credentials as environment variables:
+  ```bash
+  CSVBOX_API_KEY=your_api_key
+  CSVBOX_SECRET_API_KEY=your_secret_key
+  ```
+- For browser apps, always proxy API requests through your backend.
 
-**Can I send only the API key?**\
-No. Both headers are required for authentication.
+## FAQ
 
-**Can I use query parameters for keys?**\
-No. Query-based authentication is disabled for security reasons.
+<AccordionGroup>
+  <Accordion title="Can I send only the API key?">
+    No. Both headers are required for authentication.
+  </Accordion>
 
-**Where should I store my keys?**\
-Store them server-side in environment variables or a secrets manager.
+  <Accordion title="Can I use query parameters for keys?">
+    No. Query-based authentication is disabled for security reasons.
+  </Accordion>
 
-**I lost my secret key. What now?**\
-Regenerate it from the **API Keys** page.
+  <Accordion title="Where should I store my keys?">
+    Store them server-side in environment variables or a secrets manager.
+  </Accordion>
 
-***
+  <Accordion title="I lost my secret key. What now?">
+    Regenerate it from the **API Keys** page.
+  </Accordion>
+</AccordionGroup>
 
-### Troubleshooting & Support
+## Troubleshooting & support
 
 If authentication fails:
 
-1. Verify exact header names (`x-csvbox-api-key`, `x-csvbox-secret-api-key`).
-2. Ensure your account and keys are active.
-3. Confirm you’re using **HTTPS**.
-4. If still failing, contact [support ](https://share.hsforms.com/1ubpg6RBoQgKOISkRMEViwg5auur)with your request ID or timestamp.
+1. Verify the exact header names (`x-csvbox-api-key`, `x-csvbox-secret-api-key`).
+2. Make sure your account and keys are active.
+3. Confirm you're using **HTTPS**.
+4. If it still fails, contact [support](https://share.hsforms.com/1ubpg6RBoQgKOISkRMEViwg5auur) with your request ID or timestamp.
 
-***
+## Summary
 
-### Summary
+| Topic | Details |
+| --- | --- |
+| Method | Header-based (API Key + Secret Key) |
+| Headers | `x-csvbox-api-key`, `x-csvbox-secret-api-key` |
+| Protocol | HTTPS only |
+| Auth type | Server-to-server |
+| Test endpoint | `GET https://api.csvbox.io/1.1/auth` |
 
-| Topic         | Details                                       |
-| ------------- | --------------------------------------------- |
-| Method        | Header-based (API Key + Secret Key)           |
-| Headers       | `x-csvbox-api-key`, `x-csvbox-secret-api-key` |
-| Protocol      | HTTPS only                                    |
-| Auth Type     | Server-to-server                              |
-| Test Endpoint | `GET https://api.csvbox.io/1.1/auth`          |
-
-<Info>
-
-Use this endpoint to verify your integration before making any other CSVBox API calls.
-
-</Info>
+<Note>
+  Use this endpoint to verify your integration before making any other CSVbox API calls.
+</Note>

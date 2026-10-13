@@ -1,49 +1,62 @@
 ---
 title: "Data Transforms"
-description: "Bulk edit the dataset before pushing it to your system."
+description: "Bulk edit the dataset with JavaScript before CSVbox pushes it to your system."
 ---
 
-The **Data Transforms** feature in CSVbox empowers you to modify and manipulate the data before it is uploaded to your app. Using JavaScript, you can apply custom transformations to reshape, sanitize, or enhance your data in real-time. Whether you need to perform simple tasks like capitalizing text or formatting dates, or handle complex business logic, Data Transforms gives you full control to customize your dataset to meet your app's specific needs.
+Data Transforms let you modify the data with JavaScript before it's uploaded to your app. Use them to reshape, sanitize, or enrich rows in real time, from simple tasks like capitalizing text or formatting dates to complex business logic.
 
-<Frame caption="Data Trasforms"><img src="/images/data-transforms.png" alt="Data Trasforms" /></Frame>
+<Frame caption="Data Transforms">
+  <img
+    src="/images/data-transforms.png"
+    alt="Data Transforms tab in the sheet editor"
+  />
+</Frame>
 
-<Info>
+<Tip>
   Prefer not to write code? Use the [If / Else Builder](/advanced-installation/if-else-builder) to set or clear values and delete rows visually with IF / ELSE IF / ELSE conditions.
-</Info>
+</Tip>
 
 ## How it works
 
-When a CSV file is uploaded, CSVbox parses the data and applies your transformation logic row-by-row or column cell-by-cell. The JavaScript function you write defines how each row or field should be transformed. Once the transformation is complete, the modified data is passed to the next stage for validation.\
-\
-There are two main types of Data Transforms available in CSVbox: **Row Transforms** and **Column Transforms**.
+When a CSV file is uploaded, CSVbox parses the data and applies your transformation logic row by row or column cell by cell. The JavaScript function you write defines how each row or field is transformed. Once the transformation is complete, the modified data passes to the next stage for validation.
 
-* **Row Transforms** apply transformation logic row-by-row, processing each row individually from top to bottom. These are especially useful when the transformation of one cell depends on the values of other cells within the same row. For instance, if you need to combine data from multiple cells into a single cell, or if a calculation requires input from different columns within the same row, Row Transforms are ideal. This approach allows you to apply logic dynamically based on relationships within each row of data.
-* **Column Transforms** operate on a single column or a set of selected columns, applying transformations to all entries in the specified columns at once. These transforms are most effective when you need to analyze or modify data across the entire column rather than row-by-row. For example, if you're looking to identify duplicate entries in a column and replace each duplicate with a unique identifier, a Column Transform can help by analyzing all values in that column collectively before applying changes. This approach is efficient for transformations that rely on examining the column as a whole, such as sorting, aggregating, or deduplication tasks.
+There are two types of Data Transforms:
 
-Using these two transformation types, you can precisely target and manipulate your data based on your application's requirements, whether you need to perform intra-row calculations or make adjustments to column-wide data sets.
+- **Row Transforms**: apply logic to each row individually, from top to bottom. Use them when one cell depends on other cells in the same row, for example to combine several cells into one or to run a calculation that needs input from different columns.
+- **Column Transforms**: apply logic to one or more selected columns at once. Use them when you need to analyze or modify the column as a whole, for example to find duplicate entries and replace each one with a unique identifier. They suit sorting, aggregation, and deduplication.
 
 <Warning>
-
-Selecting **Column Transforms** can impact importer performance, as the entire column dataset is loaded into memory for processing. This means that, especially with large datasets, using Column Transforms may slow down the import process. For optimal performance, consider using Row Transforms for operations that do not require analyzing the entire column, reserving Column Transforms for cases where column-wide data processing is essential, such as deduplication or aggregation tasks.
-
+  Column Transforms can slow down the importer, because the entire column dataset is loaded into memory. With large datasets, prefer Row Transforms and reserve Column Transforms for column-wide work such as deduplication or aggregation.
 </Warning>
 
-## Row Transforms <a href="#adding-virtual-columns" id="adding-virtual-columns"></a>
+## Row transforms <a href="#adding-virtual-columns" id="adding-virtual-columns" />
 
-### Adding Row Data Transforms <a href="#adding-virtual-columns" id="adding-virtual-columns"></a>
+### Adding row data transforms
 
-1. Go to the edit sheet page > **Data Transforms** tab >  Click **Add Transforms** button.
-2. Add Transform **Name**.
-3. Select **Transform Type** as **Row**.
-4. Provide **Javascript** code.
-5. Attach **Dependent** Libraries (optional).
-6. Click **Save**.
+<Steps>
+  <Step title="Open the Data Transforms tab">
+    On the edit sheet page, go to the **Data Transforms** tab and click **Add Transforms**.
+  </Step>
+  <Step title="Name the transform">
+    Enter the transform **Name**.
+  </Step>
+  <Step title="Choose the Row type">
+    Set **Transform Type** to **Row**.
+  </Step>
+  <Step title="Add the code">
+    Provide the **Javascript** code.
+  </Step>
+  <Step title="Attach dependencies (optional)">
+    Attach **Dependent** libraries.
+  </Step>
+  <Step title="Save the transform">
+    Click **Save**.
+  </Step>
+</Steps>
 
-### Row Transform Examples
+### Row transform examples
 
-<Tabs>
-
-<Tab title="Append text ">
+#### Append text
 
 Append a constant to the cell value.
 
@@ -53,11 +66,9 @@ csvbox.row["serial_number"] = csvbox.row["serial_number"] + '_' + csvbox.user["u
   return csvbox;
 ```
 
-</Tab>
+#### Normalize dates
 
-<Tab title="Normalize dates">
-
-Normalize date value into US format.
+Normalize a date value into US format.
 
 ```javascript wrap
 function normalizeToUSFormat(dateString) {
@@ -85,17 +96,13 @@ function normalizeToUSFormat(dateString) {
   return csvbox;
 ```
 
-</Tab>
+### Variables in the row transform
 
-</Tabs>
-
-### Variables in the Row Transform
-
-You have access to data variables included in the **`csvbox`** object. The following data is available:
+The `csvbox` object gives you access to the following data.
 
 #### `csvbox.row`
 
-It contains row data. Each cell in the row can be accessed by providing the column name. Examples:
+Contains the row data. Access each cell by its column name:
 
 ```javascript
 csvbox.row["first_name"]
@@ -105,7 +112,7 @@ csvbox.row["price"]
 
 #### `csvbox.user`
 
-It contains the [custom user attributes](/getting-started/2-install-code#referencing-the-user) defined while initializing the importer. Examples:
+Contains the [custom user attributes](/getting-started/2-install-code#referencing-the-user) defined when initializing the importer:
 
 ```javascript
 csvbox.user["user_id"]
@@ -115,7 +122,7 @@ csvbox.user["isAuthenticated"]
 
 #### `csvbox.import`
 
-This refers to the current import-specific data. The following data is available:
+Contains data about the current import:
 
 ```javascript
 csvbox.import["sheet_id"]
@@ -129,7 +136,7 @@ csvbox.import["row_number"] //current row number starting with 1
 
 #### `csvbox.columns`
 
-This object contains the column metadata (name, type).
+Contains the column metadata (name, type).
 
 ```javascript
 //Example usage
@@ -154,12 +161,11 @@ if(column.isUnmapped) {
    // code  
    
 }
-
 ```
 
 #### `csvbox.environment`
 
-It contains the [environment variables](/advanced-installation/environment-variables) that are passed during importer initialization.
+Contains the [environment variables](/advanced-installation/environment-variables) passed during importer initialization.
 
 ```javascript
 // Example Usage
@@ -170,32 +176,40 @@ if(csvbox.environment["user_id"] && csvbox.environment["user_id"] == "abc123") {
 }
 ```
 
-<Info>
+<Tip>
+  Use `console.log(csvbox);` to print all the available variables in the debugging console.
+</Tip>
 
- _**console.log(csvbox);**_ 
+## Column transforms
 
-With this statement, you can print all the available variables in the debugging console.
+### Adding column data transforms
 
-</Info>
+<Steps>
+  <Step title="Open the Data Transforms tab">
+    On the edit sheet page, go to the **Data Transforms** tab and click **Add Transforms**.
+  </Step>
+  <Step title="Name the transform">
+    Enter the transform **Name**.
+  </Step>
+  <Step title="Select the columns">
+    Add the **Columns** you need for the transform.
+  </Step>
+  <Step title="Add the code">
+    Provide the **Javascript** code.
+  </Step>
+  <Step title="Attach dependencies (optional)">
+    Attach **Dependent** libraries.
+  </Step>
+  <Step title="Save the transform">
+    Click **Save**.
+  </Step>
+</Steps>
 
-## Column Transforms <a href="#adding-virtual-columns" id="adding-virtual-columns"></a>
+### Column transform examples
 
-### Adding Column Data Transforms <a href="#adding-virtual-columns" id="adding-virtual-columns"></a>
+#### Example 1
 
-1. Go to the edit sheet page > **Data Transforms** tab >  Click **Add Transforms** button.
-2. Add Transform **Name**.
-3. Add the **Columns you need for** the transform.
-4. Provide **Javascript** code.
-5. Attach **Dependent** Libraries (optional).
-6. Click **Save**.
-
-### Column Transform Examples
-
-<Tabs>
-
-<Tab title="Example 1">
-
-Capitalizing Text Fields:
+Capitalize text fields:
 
 ```javascript
 //loop and capitalize each value
@@ -209,17 +223,13 @@ for(let i=0; i < csvbox.column["first_name"].length; i++)
 return csvbox;
 ```
 
-</Tab>
+### Variables in the column transform
 
-</Tabs>
-
-### Variables in the Column Transform
-
-You have access to data variables included in the **`csvbox`** object. The following data is available:
+The `csvbox` object gives you access to the following data.
 
 #### `csvbox.column`
 
-It contains the entire column data. Each cell in the column can be accessed by providing the column name and the row number. The row number starts with 1. Examples:
+Contains the entire column data. Access each cell by the column name and the row number. The row number starts with 1.
 
 ```javascript
 csvbox.column["first_name"][1]
@@ -228,14 +238,12 @@ csvbox.column["price"][10001]
 ```
 
 <Warning>
-
-Only the selected columns will be available in the Transform javascript.
-
+  Only the selected columns are available in the transform JavaScript.
 </Warning>
 
 #### `csvbox.user`
 
-It contains the [custom user attributes](/getting-started/2-install-code#referencing-the-user) defined while initializing the importer. Examples:
+Contains the [custom user attributes](/getting-started/2-install-code#referencing-the-user) defined when initializing the importer:
 
 ```javascript
 csvbox.user["user_id"]
@@ -245,7 +253,7 @@ csvbox.user["isAuthenticated"]
 
 #### `csvbox.import`
 
-This refers to the current import-specific data. The following data is available:
+Contains data about the current import:
 
 ```javascript
 csvbox.import["sheet_id"]
@@ -258,7 +266,7 @@ csvbox.import["total_rows"]
 
 #### `csvbox.environment`
 
-It contains the [environment variables](/advanced-installation/environment-variables) that are passed during importer initialization.
+Contains the [environment variables](/advanced-installation/environment-variables) passed during importer initialization.
 
 ```javascript
 // Example Usage
@@ -271,7 +279,7 @@ if(csvbox.environment["user_id"] && csvbox.environment["user_id"] == "abc123") {
 
 #### `csvbox.columns`
 
-This object contains the column metadata (name, type).
+Contains the column metadata (name, type).
 
 ```javascript
 //Example usage
@@ -298,84 +306,76 @@ if(column.isUnmapped) {
 }
 ```
 
-#### _**console.log(csvbox);**_ 
+#### console.log(csvbox);
 
-<Info>
-
-With this statement, you can print all the available variables in the debugging console.
-
-</Info>
+Use this statement to print all the available variables in the debugging console.
 
 ### Dependencies
 
-In the Transforms Javascript snippet, you can utilize an external library hosted via a CDN. You can also call any external API endpoint to fetch real-time data. Add the library script tag and/or any custom scripts to the 'Dependencies' section and use it in the main Javascript snippet.
+The transform JavaScript can use an external library hosted on a CDN, and it can call any external API endpoint to fetch real-time data. Add the library script tag and any custom scripts to the **Dependencies** section, then use them in the main JavaScript snippet.
 
-## **Execution Time**
+## Execution time
 
-Every Data Transform can now run at **one of two stages** in the import pipeline:
+Every Data Transform runs at one of two stages in the import pipeline, so you control when it runs:
 
-* **Pre Data Validation** (default)
-* **Post Data Validation**
+- **Pre Data Validation** (default)
+- **Post Data Validation**
 
-This gives you full control over _when_ your transform runs during the import workflow.
+### Pre-validation data transform
 
-#### **1. Pre-Validation Data Transform**
+Runs immediately after column mapping and before Data Validation. Use it for:
 
-Runs **immediately after column mapping** and **before Data Validation**.
+- Cleaning or normalizing user input
+- Converting formats (dates, numbers, booleans)
+- Combining or splitting fields
+- Setting defaults
+- Preparing data that validators depend on
 
-Use this for:
+For example, convert a string such as `" 23.4500 "` into a clean numeric value before your validation rules run.
 
-* Cleaning or normalizing user input
-* Converting formats (dates, numbers, booleans)
-* Combining or splitting fields
-* Setting defaults
-* Preparing data that validators depend on
+### Post-validation data transform
 
-Example:\
-Convert a string such as `" 23.4500 "` into a clean numeric value before your validation rules run.
+Runs only if there are no validation errors, just before data is pushed to the final destination. Use it for:
 
-#### **2. Post-Validation Data Transform**
+- Final formatting
+- Destination-specific transformations
+- Generating or enriching fields only when the row is already valid
+- Preparing computed values needed only for storage
 
-Runs **only if there are no validation errors**, and just before pushing data to the final destination.
+For example, generate a `slug` or `UUID`, or apply pricing markup, after all validations pass.
 
-Use this for:
+### Where to configure execution time
 
-* Final formatting
-* Destination-specific transformations
-* Generating or enriching fields **only when the row is already valid**
-* Preparing computed values needed only for storage
+When you create or edit a Data Transform:
 
-Example:\
-If you need to generate a `slug`, `UUID`, or apply pricing markup _after_ all validations pass.
+<Steps>
+  <Step title="Open the Data Transforms settings">
+    Open **Sheet Settings** → **Data Transforms**.
+  </Step>
+  <Step title="Select a transform">
+    Select an existing transform or create a new one.
+  </Step>
+  <Step title="Choose the execution time">
+    Set **Execution Time** to **Pre Data Validation** or **Post Data Validation**.
+  </Step>
+  <Step title="Save your changes">
+    Save the transform.
+  </Step>
+</Steps>
 
-#### **Where to Configure Execution Time**
+## Key features
 
-When creating or editing a Data Transform:
+- **JavaScript-powered**: write custom JavaScript to operate on your data. With access to native JavaScript methods, you can implement anything from basic modifications to complex logic.
+- **Real-time execution**: transformations are applied as the file is uploaded, so data is processed and adjusted before it enters your app.
+- **Versatile**: handle a wide range of operations, such as:
+  - Modifying string data (for example, capitalizing text or trimming spaces)
+  - Formatting dates
+  - Performing calculations, such as currency conversions
+  - Validating and cleaning up data
+  - Applying conditional logic to data fields
+- **Error handling**: include custom error handling in your JavaScript to manage issues gracefully without disrupting the upload.
 
-1. Open **Sheet Settings → Data Transforms**.
-2. Select your existing transform or create a new one.
-3. Choose the desired **Execution Time**:
-   * **Pre Data Validation**
-   * **Post Data Validation**
-4. Save your changes.
+## Best practices
 
-## Key Features
-
-* **JavaScript-Powered**: Write custom JavaScript code to perform operations on your data. With access to native JavaScript methods, you can implement transformations ranging from basic modifications to complex logic.
-* **Real-Time Execution**: Your transformations are applied as the file is uploaded, ensuring that the data is processed and adjusted before it enters your app.
-* **Versatile**: Use Data Transforms to handle a wide range of operations, such as:
-  * Modifying string data (e.g., capitalizing text, trimming spaces)
-  * Formatting dates
-  * Performing calculations, such as currency conversions
-  * Validating and cleaning up data
-  * Applying conditional logic to data fields
-* **Error Handling**: You can include custom error handling in your JavaScript to manage issues gracefully without disrupting the upload process.
-
-## Best Practices
-
-* **Error Handling**: Incorporate error-handling logic into your JavaScript code to avoid disruptions in the upload process due to malformed data.
-* **Optimize Performance**: Keep your transformation code efficient, especially when working with large datasets, to ensure smooth uploads.
-
-## Conclusion
-
-With Data Transforms, you have the flexibility to clean, format, and manipulate data in real-time as it's uploaded through CSVbox. Whether you need to perform simple formatting tasks or implement complex business logic, Data Transforms can help you streamline your data handling processes and ensure that your datasets are always consistent and accurate.
+- **Handle errors**: add error-handling logic to your JavaScript so malformed data doesn't disrupt the upload.
+- **Optimize performance**: keep transformation code efficient, especially with large datasets, so uploads stay smooth.

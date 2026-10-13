@@ -3,40 +3,77 @@ title: "Webflow"
 description: "Import customer CSV data to your Webflow CMS."
 ---
 
-Steps to configure Webflow data destination:
+The Webflow destination pushes the CSV and Excel files your users upload directly into a Webflow CMS collection.
 
-Log in to [csvbox.io](https://app.csvbox.io/login).
+## Set up the destination
 
-Add a sheet.
+<Steps>
+  <Step title="Log in to CSVbox">
+    Log in to [csvbox.io](https://app.csvbox.io/login).
+  </Step>
+  <Step title="Add a sheet">
+    <Frame>
+      <img
+        src="/images/image-25.png"
+        alt="Add a sheet"
+      />
+    </Frame>
+  </Step>
+  <Step title="Add columns">
+    Add columns to the sheet as per your requirement.
 
-<img src="/images/image-25.png" alt="" />
+    <Frame>
+      <img
+        src="/images/image-17.png"
+        alt="Add columns to the sheet"
+      />
+    </Frame>
+  </Step>
+  <Step title="Select Webflow as the destination">
+    Under the **Destination** section, for the **Send Data To** setting, select **Webflow**. Then click **Connect Webflow**.
 
-Add columns to the sheet as per your requirement.
+    <Frame>
+      <img
+        src="/images/connect-webflow.jpg"
+        alt="Connect Webflow"
+      />
+    </Frame>
+  </Step>
+  <Step title="Authorize the application">
+    You are redirected to the Webflow CSVbox Integration Authorization screen.
 
-![](/images/image-17.png)
+    <Frame>
+      <img
+        src="/images/webflow-auth.jpg"
+        alt="Webflow authorization"
+      />
+    </Frame>
 
-Under the "**Destination**" section, for the "**Send Data To**" setting select the "**Webflow**" option.
+    Select the site where you want the CSV data to be pushed, then click **Authorize Application**.
+  </Step>
+  <Step title="Pick the site and collection">
+    Go back to your CSVbox sheet and pick the Webflow site and the collection from the list.
 
-Click the "**Connect Webflow**" button.
+    <Frame>
+      <img
+        src="/images/webflow-site-seelction.jpg"
+        alt="Select site and collection"
+      />
+    </Frame>
+  </Step>
+  <Step title="Map columns">
+    Click **Map Columns** and map the sheet columns to the Webflow CMS collection fields.
 
-<div align="left"><img src="/images/connect-webflow.jpg" alt="Connect Webflow" /></div>
+    <Frame>
+      <img
+        src="/images/col-mappings.jpg"
+        alt="Column mapping"
+      />
+    </Frame>
+  </Step>
+  <Step title="Save the sheet">
+    Click **Save**.
+  </Step>
+</Steps>
 
-This will redirect you to the Webflow CSVbox Integration Authorization screen. 
-
-![Webflow Authorization](/images/webflow-auth.jpg)
-
-You will have to select the site where you want the CSV data to be pushed.
-
-Click '**Authorize Application**'.
-
-Go back to your Csvbox sheet and pick the Webflow site and the collection from the list.
-
-<div align="left"><img src="/images/webflow-site-seelction.jpg" alt="Select site and collection" /></div>
-
-Click the "**Map Columns**" button and map the sheet columns to the Webflow CMS collection fields.
-
-![Column Mapping](/images/col-mappings.jpg)
-
-Click the "**Save**" button.
-
-The CSVs uploaded by the users will now be pushed to the Webflow CMS.
+The CSVs uploaded by your users are now pushed to the Webflow CMS.

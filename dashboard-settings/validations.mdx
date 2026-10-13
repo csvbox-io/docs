@@ -1,15 +1,17 @@
 ---
 title: "Validations"
-description: "This page describes the various validation options available inside the importer."
+description: "Column data types and validation options that check the format of incoming data in the importer."
 ---
 
-## Column Data Types
+Validations check every incoming value against the rules you set for its column. When data doesn't match, users see an error message that explains the problem and how to fix it, so only clean data reaches your destination.
 
-While creating a sheet you can specify the column to be any of the data types mentioned below. If the incoming CSV data does not match the column data type (and its validation rules), then the user will see a relevant error message identifying what the problem is and how to fix it.  
+## Column data types
+
+While creating a sheet, you can set each column to any of the data types below. If the incoming CSV data doesn't match the column data type (and its validation rules), the user sees an error message identifying the problem and how to fix it.
 
 ### Text
 
-This is the default column data type. It accepts any alphanumeric string. You can provide the `Min Length` and `Max Length` parameters to specify the acceptable length of the text data.
+This is the default column data type. It accepts any alphanumeric string. Use the `Min Length` and `Max Length` parameters to specify the acceptable length of the text data.
 
 ### UUID
 
@@ -17,38 +19,34 @@ The column must contain a valid UUID.
 
 ### Number
 
-This **Number** column data type accepts integer and float strings only. Additionally, you can provide the `Min Value` and `Max Value` parameters to specify the acceptable range of numbers.
+The **Number** column data type accepts integer and float strings only. Use the `Min Value` and `Max Value` parameters to specify the acceptable range of numbers.
 
-<Accordion title="Values for Excel Setting">
+#### Values for Excel setting
 
-When importing data from Excel files, you may encounter unexpected issues due to the way Excel internally stores and formats different types of values—especially **Numbers**. Excel often applies formatting to numeric values that changes how they appear:
+When importing data from Excel files, you may run into unexpected issues because of the way Excel internally stores and formats values, especially **Numbers**. Excel often applies formatting to numeric values that changes how they appear:
 
-* A raw value of `0.15` could be displayed as `15%`
-* A value of `1200` might appear as `$1,200.00`
-* A long number like `1234567890123` may be auto-converted to scientific notation (`1.23E+12`)
+- A raw value of `0.15` could be displayed as `15%`
+- A value of `1200` might appear as `$1,200.00`
+- A long number like `1234567890123` may be auto-converted to scientific notation (`1.23E+12`)
 
-These formatted displays can mislead the importer if you're expecting clean numbers. With CSVbox you have the following options to select the way the values are interpretated for numeric columns.
+These formatted displays can mislead the importer if you're expecting clean numbers. CSVbox lets you choose how values are interpreted for numeric columns:
 
-1. **Formatted Values** Imports numbers exactly as shown in Excel. Examples:
-   * `$1,200.00` stays `$1,200.00`
-   * `15%` stays `15%`
-   * `1.23E+12` stays in scientific notation
-2. **Original RAW Values** Strips all formatting and imports the core numeric value. Examples:
-   * `$1,200.00` → `1200`
-   * `15%` → `0.15`
-   * `1.23E+12` → `1230000000000`
+- **Formatted Values**: Imports numbers exactly as shown in Excel. Examples:
+  - `$1,200.00` stays `$1,200.00`
+  - `15%` stays `15%`
+  - `1.23E+12` stays in scientific notation
+- **Original RAW Values**: Strips all formatting and imports the core numeric value. Examples:
+  - `$1,200.00` → `1200`
+  - `15%` → `0.15`
+  - `1.23E+12` → `1230000000000`
 
-<Info>
+<Tip>
+  Use RAW if you're planning to run calculations or validations on numeric fields post-import.
+</Tip>
 
-Use RAW if you’re planning to run calculations or validations on numeric fields post-import.
-
-</Info>
-
-</Accordion>
-
-<Info>
+<Note>
   If your users upload files from different regions, turn on [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats) to handle numbers written with different thousands and decimal separators, such as `1,234.56` and `1.234,56`.
-</Info>
+</Note>
 
 ### Percentage
 
@@ -56,123 +54,119 @@ The column must contain a valid **percentage** value. You can specify `Min` and 
 
 ### Email
 
-The column under validation must be formatted as an email address.
+The column must be formatted as an email address.
 
 ### Date
 
-The column under validation must be formatted as a date. You have to select a `Date Format` from the dropdown list to specify the acceptable format. The default format is '_MM/DD/YYYY_'. If your desired format is not found in the list, you can simply provide your custom format using the formatting tokens below.
+The column must be formatted as a date. Select a `Date Format` from the dropdown list to specify the acceptable format. The default format is `MM/DD/YYYY`. If your format isn't in the list, provide a custom format using the formatting tokens below.
 
-| | Token | Output |
+| Unit | Token | Output |
 | --- | --- | --- |
 | **Month** | M | 1 2 ... 11 12 |
-| | Mo | 1st 2nd ... 11th 12th |
-| | MM | 01 02 ... 11 12 |
-| | MMM | Jan Feb ... Nov Dec |
-| | MMMM | January February ... November December |
+|  | Mo | 1st 2nd ... 11th 12th |
+|  | MM | 01 02 ... 11 12 |
+|  | MMM | Jan Feb ... Nov Dec |
+|  | MMMM | January February ... November December |
 | **Quarter** | Q | 1 2 3 4 |
-| | Qo | 1st 2nd 3rd 4th |
+|  | Qo | 1st 2nd 3rd 4th |
 | **Day of Month** | D | 1 2 ... 30 31 |
-| | Do | 1st 2nd ... 30th 31st |
-| | DD | 01 02 ... 30 31 |
+|  | Do | 1st 2nd ... 30th 31st |
+|  | DD | 01 02 ... 30 31 |
 | **Day of Year** | DDD | 1 2 ... 364 365 |
-| | DDDo | 1st 2nd ... 364th 365th |
-| | DDDD | 001 002 ... 364 365 |
+|  | DDDo | 1st 2nd ... 364th 365th |
+|  | DDDD | 001 002 ... 364 365 |
 | **Day of Week** | d | 0 1 ... 5 6 |
-| | do | 0th 1st ... 5th 6th |
-| | dd | Su Mo ... Fr Sa |
-| | ddd | Sun Mon ... Fri Sat |
-| | dddd | Sunday Monday ... Friday Saturday |
+|  | do | 0th 1st ... 5th 6th |
+|  | dd | Su Mo ... Fr Sa |
+|  | ddd | Sun Mon ... Fri Sat |
+|  | dddd | Sunday Monday ... Friday Saturday |
 | **Day of Week (Locale)** | e | 0 1 ... 5 6 |
 | **Day of Week (ISO)** | E | 1 2 ... 6 7 |
 | **Week of Year** | w | 1 2 ... 52 53 |
-| | wo | 1st 2nd ... 52nd 53rd |
-| | ww | 01 02 ... 52 53 |
+|  | wo | 1st 2nd ... 52nd 53rd |
+|  | ww | 01 02 ... 52 53 |
 | **Week of Year (ISO)** | W | 1 2 ... 52 53 |
-| | Wo | 1st 2nd ... 52nd 53rd |
-| | WW | 01 02 ... 52 53 |
+|  | Wo | 1st 2nd ... 52nd 53rd |
+|  | WW | 01 02 ... 52 53 |
 | **Year** | YY | 70 71 ... 29 30 |
-| | YYYY | 1970 1971 ... 2029 2030 |
-| | YYYYYY | <p>-001970 -001971 ... +001907 +001971<br /><strong>Note:</strong> <a href="https://tc39.es/ecma262/#sec-expanded-years">Expanded Years</a> (Covering the full time value range of approximately 273,790 years forward or backward from 01 January, 1970)</p> |
-| | Y | <p>1970 1971 ... 9999 +10000 +10001<br /><strong>Note:</strong> This complies with the ISO 8601 standard for dates past the year 9999</p> |
+|  | YYYY | 1970 1971 ... 2029 2030 |
+|  | YYYYYY | -001970 -001971 ... +001907 +001971. **Note:** [Expanded Years](https://tc39.es/ecma262/#sec-expanded-years) (Covering the full time value range of approximately 273,790 years forward or backward from 01 January, 1970) |
+|  | Y | 1970 1971 ... 9999 +10000 +10001. **Note:** This complies with the ISO 8601 standard for dates past the year 9999 |
 | **Era Year** | y | 1 2 ... 2020 ... |
-| **Era** | N, NN, NNN | <p>BC AD<br /><strong>Note:</strong> Abbr era name</p> |
-| | NNNN | <p>Before Christ, Anno Domini<br /><strong>Note:</strong> Full era name</p> |
-| | NNNNN | <p>BC AD<br /><strong>Note:</strong> Narrow era name</p> |
+| **Era** | N, NN, NNN | BC AD. **Note:** Abbr era name |
+|  | NNNN | Before Christ, Anno Domini. **Note:** Full era name |
+|  | NNNNN | BC AD. **Note:** Narrow era name |
 | **Week Year** | gg | 70 71 ... 29 30 |
-| | gggg | 1970 1971 ... 2029 2030 |
+|  | gggg | 1970 1971 ... 2029 2030 |
 | **Week Year (ISO)** | GG | 70 71 ... 29 30 |
-| | GGGG | 1970 1971 ... 2029 2030 |
+|  | GGGG | 1970 1971 ... 2029 2030 |
 | **AM/PM** | A | AM PM |
-| | a | am pm |
+|  | a | am pm |
 | **Hour** | H | 0 1 ... 22 23 |
-| | HH | 00 01 ... 22 23 |
-| | h | 1 2 ... 11 12 |
-| | hh | 01 02 ... 11 12 |
-| | k | 1 2 ... 23 24 |
-| | kk | 01 02 ... 23 24 |
+|  | HH | 00 01 ... 22 23 |
+|  | h | 1 2 ... 11 12 |
+|  | hh | 01 02 ... 11 12 |
+|  | k | 1 2 ... 23 24 |
+|  | kk | 01 02 ... 23 24 |
 | **Minute** | m | 0 1 ... 58 59 |
-| | mm | 00 01 ... 58 59 |
+|  | mm | 00 01 ... 58 59 |
 | **Second** | s | 0 1 ... 58 59 |
-| | ss | 00 01 ... 58 59 |
+|  | ss | 00 01 ... 58 59 |
 | **Fractional Second** | S | 0 1 ... 8 9 |
-| | SS | 00 01 ... 98 99 |
-| | SSS | 000 001 ... 998 999 |
-| | SSSS ... SSSSSSSSS | 000\[0..] 001\[0..] ... 998\[0..] 999\[0..] |
-| **Time Zone** | z or zz | <p>EST CST ... MST PST<br /><strong>Note:</strong> as of <strong>1.6.0</strong>, the z/zz format tokens have been deprecated from plain moment objects. <a href="https://github.com/moment/moment/issues/162">Read more about it here.</a> However, they *do* work if you are using a specific time zone with the moment-timezone addon.</p> |
-| | Z | -07:00 -06:00 ... +06:00 +07:00 |
-| | ZZ | -0700 -0600 ... +0600 +0700 |
+|  | SS | 00 01 ... 98 99 |
+|  | SSS | 000 001 ... 998 999 |
+|  | SSSS ... SSSSSSSSS | 000[0..] 001[0..] ... 998[0..] 999[0..] |
+| **Time Zone** | z or zz | EST CST ... MST PST. **Note:** as of **1.6.0**, the z/zz format tokens have been deprecated from plain moment objects. [Read more about it here.](https://github.com/moment/moment/issues/162) However, they _do_ work if you are using a specific time zone with the moment-timezone addon. |
+|  | Z | -07:00 -06:00 ... +06:00 +07:00 |
+|  | ZZ | -0700 -0600 ... +0600 +0700 |
 | **Unix Timestamp** | X | 1360013296 |
 | **Unix Millisecond Timestamp** | x | 1360013296123 |
 
-<Info>
+For example, the token string `dddd, MMMM Do YYYY, h:mm:ss` requires the date to be in the format `Sunday, February 14th 2010, 3:25:50 pm`.
 
-For example, specifying a token string **`dddd, MMMM Do YYYY, h:mm:ss`**  will require the date to be in the format **`Sunday, February 14th 2010, 3:25:50 pm`.**
-
-</Info>
-
-<Info>
+<Note>
   If your users upload files from different regions, turn on [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats) to convert dates into your `Date Format` and ask the user when a date such as `04/05/2024` could be read two ways.
-</Info>
+</Note>
 
 ### Time
 
-The column must be formatted in a time format. You have to select a `Time Format` from the dropdown list to specify the acceptable format. The default format is '_HH:mm:ss_'. If your desired format is not found in the list, you can simply provide your custom format using the formatting tokens below.
+The column must be formatted as a time. Select a `Time Format` from the dropdown list to specify the acceptable format. The default format is `HH:mm:ss`. If your format isn't in the list, provide a custom format using the formatting tokens below.
 
-| | Token | Output |
+| Unit | Token | Output |
 | --- | --- | --- |
 | **AM/PM** | A | AM PM |
-| | a | am pm |
+|  | a | am pm |
 | **Hour** | H | 0 1 ... 22 23 |
-| | HH | 00 01 ... 22 23 |
-| | h | 1 2 ... 11 12 |
-| | hh | 01 02 ... 11 12 |
-| | k | 1 2 ... 23 24 |
-| | kk | 01 02 ... 23 24 |
+|  | HH | 00 01 ... 22 23 |
+|  | h | 1 2 ... 11 12 |
+|  | hh | 01 02 ... 11 12 |
+|  | k | 1 2 ... 23 24 |
+|  | kk | 01 02 ... 23 24 |
 | **Minute** | m | 0 1 ... 58 59 |
-| | mm | 00 01 ... 58 59 |
+|  | mm | 00 01 ... 58 59 |
 | **Second** | s | 0 1 ... 58 59 |
-| | ss | 00 01 ... 58 59 |
+|  | ss | 00 01 ... 58 59 |
 | **Fractional Second** | S | 0 1 ... 8 9 |
-| | SS | 00 01 ... 98 99 |
-| | SSS | 000 001 ... 998 999 |
-| | SSSS ... SSSSSSSSS | 000\[0..] 001\[0..] ... 998\[0..] 999\[0..] |
-| **Time Zone** | z or zz | <p>EST CST ... MST PST<br /><strong>Note:</strong> as of <strong>1.6.0</strong>, the z/zz format tokens have been deprecated from plain moment objects. <a href="https://github.com/moment/moment/issues/162">Read more about it here.</a> However, they *do* work if you are using a specific time zone with the moment-timezone addon.</p> |
-| | Z | -07:00 -06:00 ... +06:00 +07:00 |
-| | ZZ | -0700 -0600 ... +0600 +0700 |
+|  | SS | 00 01 ... 98 99 |
+|  | SSS | 000 001 ... 998 999 |
+|  | SSSS ... SSSSSSSSS | 000[0..] 001[0..] ... 998[0..] 999[0..] |
+| **Time Zone** | z or zz | EST CST ... MST PST. **Note:** as of **1.6.0**, the z/zz format tokens have been deprecated from plain moment objects. [Read more about it here.](https://github.com/moment/moment/issues/162) However, they _do_ work if you are using a specific time zone with the moment-timezone addon. |
+|  | Z | -07:00 -06:00 ... +06:00 +07:00 |
+|  | ZZ | -0700 -0600 ... +0600 +0700 |
 | **Unix Timestamp** | X | 1360013296 |
 | **Unix Millisecond Timestamp** | x | 360013296123 |
 
-### IANA Timezone
+### IANA timezone
 
-The column must contain a valid IANA timezone. CSVBox validates the timezone and normalizes timezone values during processing.
+The column must contain a valid IANA timezone. CSVbox validates the timezone and normalizes timezone values during processing.
 
 ### Boolean
 
-The column under validation must be able to be cast as a boolean. Accepted inputs are _true_, _false_, _TRUE_, _FALSE_, _1_, _0_, _yes_, _no_, _y_, _n_, _on_, _off_, _enabled,_ and _disabled_.
+The column must be castable as a boolean. Accepted inputs are `true`, `false`, `TRUE`, `FALSE`, `1`, `0`, `yes`, `no`, `y`, `n`, `on`, `off`, `enabled`, and `disabled`.
 
 ### Regex
 
-The column data must match the given regular expression. You need to specify the `Regex` and the importer will pattern match it with the incoming data. 
+The column data must match the given regular expression. Specify the `Regex`, and the importer pattern-matches it against the incoming data.
 
 ### JSON
 
@@ -180,19 +174,19 @@ The column must contain valid JSON data.
 
 ### IP
 
-The column under validation must be an IP address. You have to select the `IP Version`.
+The column must be an IP address. Select the `IP Version`.
 
 ### URL
 
-The column under validation must be a valid URL.
+The column must be a valid URL.
 
 ### Domain
 
 The column must contain a valid domain name.
 
-### Credit Card
+### Credit card
 
-The column under validation must be formatted as a credit card number. Acceptable formats are _5555555555554444_, _5555-5555-5555-4444_ and _5555 5555 5555 4444_.
+The column must be formatted as a credit card number. Acceptable formats are `5555555555554444`, `5555-5555-5555-4444`, and `5555 5555 5555 4444`.
 
 ### UPC
 
@@ -206,85 +200,113 @@ The column must contain a valid EAN product barcode.
 
 The column must contain a valid IMEI number.
 
-### Phone Number
+### Phone number
 
-The column will be validated for phone number formats based on the [libphonenumber.js library](https://catamphetamine.gitlab.io/libphonenumber-js/). You have to select a default country code. If the incoming phone number does not have a country code then this default country code will be used for validation.
+The column is validated for phone number formats based on the [libphonenumber.js library](https://catamphetamine.gitlab.io/libphonenumber-js/). Select a default country code. If an incoming phone number has no country code, the default country code is used for validation.
 
 ### Currency
 
-The column data should be in a currency amount format. You can specify currency formatting options based on the [Validator.js library](https://github.com/validatorjs/validator.js). 
+The column data must be in a currency amount format. You can specify currency formatting options based on the [Validator.js library](https://github.com/validatorjs/validator.js).
 
-### Currency Code
+### Currency code
 
 The column must contain a valid currency code.
 
 ### List
 
-With the **List** data type, you can specify a list of acceptable values. The importer will compare the CSV column data with the list of acceptable values and throw a validation error if there is a mismatch. You can specify a list of acceptable `Values` and related `Display Labels`. The importer will match the column data with the list of `Display Labels`. If the data passes validation then the `Values` corresponding to the `Display Labels` will be pushed to the destination. For example say, you configure the List column as shown below:
+With the **List** data type, you specify a list of acceptable values. The importer compares the CSV column data with the list and throws a validation error if there's a mismatch.
 
-![List Data Type](/images/list.jpg)
+You specify a list of acceptable `Values` and related `Display Labels`. The importer matches the column data with the list of `Display Labels`. If the data passes validation, the `Values` corresponding to the `Display Labels` are pushed to the destination. For example, say you configure the List column as shown below:
 
-In this case, the acceptable data in the CSV column will be _Small_, _Medium_, and _Large_. Based on the actual data found in the user CSV, the values _s_, _m_ or _l_ will be pushed to your data destination. This allows you to accept readable values from your users while pushing data to your system that is in a format it understands.
+<Frame>
+  <img
+    src="/images/list.jpg"
+    alt="List data type configuration"
+  />
+</Frame>
 
-<Info>
+In this case, the acceptable data in the CSV column is `Small`, `Medium`, and `Large`. Based on the actual data in the user's CSV, the values `s`, `m`, or `l` are pushed to your data destination. This lets you accept readable values from your users while pushing data in a format your system understands.
 
-**Allow Other Values**
+#### Allow other values
 
-<img src="/images/list-allow-all-values.jpg" alt="" />
+Selecting the **Accept Other Values** option allows users to input values that aren't in the predefined list of acceptable values.
 
-Selecting the 'Accept Other Values' option will allow the users to input values that are not found in the predefined list of acceptable values.
+<Frame>
+  <img
+    src="/images/list-allow-all-values.jpg"
+    alt="Accept Other Values option for a List column"
+  />
+</Frame>
 
-</Info>
+#### Accept list values
 
-<Info>
+When you enable this option, the importer accepts List **Values** interchangeably with **Display Labels** as valid data for the column.
 
-#### Accept List Values
+<Frame>
+  <img
+    src="/images/list-values.png"
+    alt="List items with values and display labels"
+  />
+</Frame>
 
-If you enable this option, the importer will accept List **Values** interchangeably with **Display Labels** as valid data for the column.
+Refer to the list of items in the image above. If the column contains the value `NYC`, the importer fails validation, because it only accepts the display label `New York City`. To make the importer accept `NYC` as well, activate the **Accept List Values** option.
 
-![](/images/list-values.png)
+### Dependent list
 
-Refer to the list of items in the image above. If the column contains the value "NYC," the importer will fail validation since it only accepts the display label "New York City." To enable the importer to accept "NYC" as well, you need to activate the "Accept List Values" option.
+Sometimes you may want to use more than one list, so that the items available in a second drop-down list depend on the selection made in the first. These are dependent lists. Below is an example of a dependent list.
 
-</Info>
+<Frame>
+  <img
+    src="/images/image-12.png"
+    alt="Example of a dependent list where cities depend on the selected country"
+  />
+</Frame>
 
-### Dependent List
+The options in the City column depend on the selection made in the Country column. If you select `USA` in Drop Down 1, you see cities from the USA; if you select `Canada` in Drop Down 1, you see cities from Canada in Drop Down 2.
 
-Sometimes, you may want to use more than one list such that the items available in a second drop-down list dependent on the selection made in the first drop-down list.
+You can achieve the same functionality in CSVbox with a combination of [List](/dashboard-settings/validations#list) and Dependent List column types (or a combination of [Dynamic List](/dashboard-settings/validations#dynamic-list) and [Dependent Dynamic List](/dashboard-settings/validations#dependent-dynamic-list) column types).
 
-Let us call them dependent lists. Below is an example of a dependent list.
+To create conditional lists using the example above:
 
-![](/images/image-12.png)
+<Steps>
+  <Step title="Create the primary column">
+    Create a column `Country`. Set its column type to **List**.
+  </Step>
+  <Step title="Create the dependent column">
+    Create a column `City`. Set its column type to **Dependent List**, and select `Country` as the **Primary** column.
 
-You can see that the options in the City column depend on the selection made in the Country column. If you select 'USA' in Drop Down 1, then you will cities from the USA, but if you select Canada in Drop Down 1, then you see the cities from Canada in Drop Down 2.
+    <Frame>
+      <img
+        src="/images/cols.png"
+        alt="Dependent List column with Country selected as the primary column"
+      />
+    </Frame>
+  </Step>
+  <Step title="Add the primary values">
+    Go back to the `Country` column and add the list of valid values.
+  </Step>
+  <Step title="Add the dependent values">
+    For each valid country value, add dependent (city) values as shown below.
 
-The same functionality can be achieved in CSVbox via a combination of [List](/dashboard-settings/validations#list) and Dependent List column types (or a combination of [Dynamic List](/dashboard-settings/validations#dynamic-list) and [Dependent Dynamic List](/dashboard-settings/validations#dependent-dynamic-list) column types).
-
-Here are the steps to create conditional lists using the example above:
-
-1. Create a column 'Country'. Configure column type as 'List'.
-2. Create a column 'City'. Configure column type as 'Dependent List'. Select 'Country' as the Primary column.\
-   <img src="/images/cols.png" alt="" />
-3. Go back to the 'Country' column and add the list of valid values. 
-4. For each valid country value, you can add dependent (city) values as shown below. ![](/images/dependents.jpg)
+    <Frame>
+      <img
+        src="/images/dependents.jpg"
+        alt="Adding dependent city values to a country value"
+      />
+    </Frame>
+  </Step>
+</Steps>
 
 <Warning>
-
-If you change the name of the primary column or reorder the priority of any of the columns, then you need to reassign the primary column in the Dependent List column settings.
-
+  - If you change the name of the primary column or reorder the priority of any of the columns, reassign the primary column in the Dependent List column settings.
+  - The Display Label and the Value must be unique across all items. Primary items can't share dependents that have the same Display Label and/or the same Value.
 </Warning>
 
-<Warning>
+### Dynamic list
 
-The Display Label and the Value should be unique across all the items. Primary items cannot share dependents having the same Display Label and/or same Value.
+This is similar to the **List** type above: the importer validates the column data against a list of values. However, instead of providing a static list, the **Dynamic List** column type lets you supply the list of acceptable values in real time via an API.
 
-</Warning>
-
-### Dynamic List
-
-This is similar to the **List** type column above where the importer will validate the column data against a list of values. However, instead of providing a static list of values, with the **Dynamic List** column type, you can now specify a list of acceptable values in real-time via an API.
-
-The API should return the list of values in the JSON format as shown below. 
+The API must return the list of values in the JSON format shown below.
 
 ```json
 [
@@ -294,87 +316,99 @@ The API should return the list of values in the JSON format as shown below.
 ]
 ```
 
-For each list item, the `value` field is mandatory while `display_label` is optional.
+For each list item, the `value` field is mandatory, while `display_label` is optional.
 
-<Info>
+You can attach the [custom user attributes](/getting-started/2-install-code#referencing-the-user) as query parameters to the Dynamic List API request. The `csvbox_` prefix is added to the custom user attribute query parameters. This helps you identify the users or environment and return a relevant list of values.
 
-You have the option to attach the [custom user attributes](/getting-started/2-install-code#referencing-the-user) as query parameters to the Dynamic List API request. **csvbox\_** prefix will be added to the custom user attribute query parameters. This will help you identify the users/environment and return back a relevant list of values.
+To authenticate the requests, pass the authorization headers via the [`dynamic_list_request_headers`](/getting-started/2-install-code#dynamic_list_request_headers) initialization option.
 
-</Info>
+### Dependent dynamic list
 
-For authenticating the requests you can pass the authorization headers via the [**dynamic\_list\_request\_headers** ](/getting-started/2-install-code#dynamic_list_request_headers)initialization option.
+Sometimes you may want to use more than one list, so that the items available in a second drop-down list depend on the selection made in the first. These are dependent lists. Below is an example of a dependent list.
 
-### Dependent Dynamic List
+<Frame>
+  <img
+    src="/images/conditional-list.png"
+    alt="Conditional dependent list"
+  />
+</Frame>
 
-Sometimes, you may want to use more than one list such that the items available in a second drop-down list depend on the selection made in the first drop-down list.
+The options in the City column depend on the selection made in the Country column. If you select `USA` in Drop Down 1, you see cities from the USA; if you select `Canada` in Drop Down 1, you see cities from Canada in Drop Down 2.
 
-Let us call them dependent lists. Below is an example of a dependent list.
+You can achieve the same functionality in CSVbox with a combination of [Dynamic List](/dashboard-settings/validations#dynamic-list) and Dependent Dynamic List column types (or a combination of [List](/dashboard-settings/validations#list) and [Dependent List](/dashboard-settings/validations#dependent-list) column types).
 
-<div align="left"><img src="/images/conditional-list.png" alt="Conditional dependent list" /></div>
+To create conditional lists using the example above:
 
-You can see that the options in the City column depend on the selection made in the Country column. If you select 'USA' in Drop Down 1, then you will cities from the USA, but if you select Canada in Drop Down 1, then you see the cities from Canada in Drop Down 2.
+<Steps>
+  <Step title="Create the primary column">
+    Create a column `Country`. Set its column type to **Dynamic List**.
+  </Step>
+  <Step title="Create the dependent column">
+    Create a column `City`. Set its column type to **Dependent Dynamic List**, and select `Country` as the **Primary** column.
 
-The same functionality can be achieved in CSVbox via a combination of [Dynamic List](/dashboard-settings/validations#dynamic-list) and Dependent Dynamic List column types (or a combination of [List](/dashboard-settings/validations#list) and [Dependent List](/dashboard-settings/validations#dependent-list) column types).
+    <Frame>
+      <img
+        src="/images/cols.png"
+        alt="Dependent column with Country selected as the primary column"
+      />
+    </Frame>
+  </Step>
+  <Step title="Configure the API">
+    Go back to the `Country` column and configure the API that fetches valid values from your application for `Country` as well as its dependent column, `City`. Your API must return the list of values in the JSON format shown below.
 
-Here are the steps to create conditional lists using the example above:
+    ```json
+    [
+       {"value": "USA", "display_label": "USA", "dependents": [
+          {"value": "ny", "display_label": "New York"},
+          {"value": "ch", "display_label": "Chicago"},
+          {"value": "se", "display_label": "Seatle"},
+          {"value": "mi", "display_label": "Miami"}
+       ]},
+       {"value": "Canada", "display_label": "Canada", "dependents": [
+          {"value": "to", "display_label": "Toronto"},
+          {"value": "va", "display_label": "Vancouver"}    
+       ]}
+    ]
+    ```
 
-1. Create a column 'Country'. Configure column type as 'Dynamic List'
-2. Create a column 'City'. Configure column type as 'Dependent Dynamic List'. Select 'Country' as the Primary column.\
-   <img src="/images/cols.png" alt="" />
-3. Go back to the 'Country' column and configure the API that will fetch valid values from your application for 'Country' as well as its dependent column i.e. City column. Your API should return the list of values in the JSON format as shown below. 
-
-```json
-[
-   {"value": "USA", "display_label": "USA", "dependents": [
-      {"value": "ny", "display_label": "New York"},
-      {"value": "ch", "display_label": "Chicago"},
-      {"value": "se", "display_label": "Seatle"},
-      {"value": "mi", "display_label": "Miami"}
-   ]},
-   {"value": "Canada", "display_label": "Canada", "dependents": [
-      {"value": "to", "display_label": "Toronto"},
-      {"value": "va", "display_label": "Vancouver"}    
-   ]}
-]
-```
-
-Note the **`dependents`** object above. It contains the list of valid values for the dependent column based on the primary column value.
+    The `dependents` object contains the list of valid values for the dependent column based on the primary column value.
+  </Step>
+</Steps>
 
 <Warning>
-
-If you change the name of the primary column or reorder the priority of any of the columns, then you need to reassign the primary column in the Dependent Dynamic List column settings.
-
+  - If you change the name of the primary column or reorder the priority of any of the columns, reassign the primary column in the Dependent Dynamic List column settings.
+  - The Display Label and the Value must be unique across all items. Primary items can't share dependents that have the same Display Label and/or the same Value.
 </Warning>
 
-<Warning>
+### Multi-select list
 
-The Display Label and the Value should be unique across all the items. Primary items cannot share dependents having the same Display Label and/or same Value.
+The **Multi-select List** data type is similar to the [List](/dashboard-settings/validations#list) data type: you specify a list of acceptable values. While the **List** data type accepts only one value per cell, the **Multi-select List** accepts multiple comma-separated values.
 
-</Warning>
+<Frame caption="Multi-Select List">
+  <img
+    src="/images/multi-select-list.png"
+    alt="Multi-Select List"
+  />
+</Frame>
 
-### Multi-select List
+The importer compares the values in the incoming data with the list of acceptable values and throws a validation error if there's a mismatch.
 
-The **Multi-select List** data type is similar to the [**List**](/dashboard-settings/validations#list) data type, where you can specify a list of acceptable values. While the **List** data type accepts only one value per cell, the **Multi-select List** accepts multiple comma-separated values.
+#### Allow other values
 
-<Frame caption="Multi-Select List"><img src="/images/multi-select-list.png" alt="Multi-Select List" /></Frame>
+Selecting the **Accept Other Values** option allows users to input values that aren't in the predefined list of acceptable values.
 
-The importer will compare the values in the incoming data with the list of acceptable values and throw a validation error if there is a mismatch.
+<Frame>
+  <img
+    src="/images/other-values-multi-select.jpg"
+    alt="Accept Other Values option for a Multi-select List column"
+  />
+</Frame>
 
-<Info>
+### Dynamic multi-select list
 
-**Allow Other Values**
+This is similar to the **Multi-select List** type above: the importer accepts multiple comma-separated values. However, instead of providing a static list, you supply the list of acceptable values in real time via an API.
 
-<img src="/images/other-values-multi-select.jpg" alt="" />
-
-Selecting the 'Accept Other Values' option will allow the users to input values that are not found in the predefined list of acceptable values.
-
-</Info>
-
-### Dynamic Multi-select List
-
-This is similar to the **Multi-select** **List** type column above where the importer accepts multiple comma-separated values. However, instead of providing a static list of values, here, you can now specify a list of acceptable values in real time via an API.
-
-The API should return the list of values in the JSON format as shown below. 
+The API must return the list of values in the JSON format shown below.
 
 ```json
 [
@@ -384,16 +418,12 @@ The API should return the list of values in the JSON format as shown below.
 ]
 ```
 
-<Info>
+The importer attaches the [custom user attributes](/getting-started/2-install-code#referencing-the-user) as query parameters to the Dynamic List API request. The `csvbox_` prefix is added to the custom user attribute query parameters. This helps you identify the users or environment and return a relevant list of values.
 
-The importer will attach the [custom user attributes](/getting-started/2-install-code#referencing-the-user) as query parameters to the Dynamic List API request. **csvbox\_** prefix will be added to the custom user attribute query parameters. This will help you identify the users/environment and return back a relevant list of values.
+To authenticate the requests, pass the authorization headers via the [`dynamic_list_request_headers`](/getting-started/2-install-code#dynamic_list_request_headers) initialization option.
 
-</Info>
+## Other validation options
 
-For authenticating the requests you can pass the authorization headers via the [**dynamic\_list\_request\_headers** ](/getting-started/2-install-code#dynamic_list_request_headers)initialization option.
+### Column required
 
-## Other Validation Options
-
-### Column Required
-
-You can check/uncheck the `Required` checkbox on the Column Settings window. The column data must be present, and not empty if the `Required` checkbox is ticked.
+Check or uncheck the `Required` checkbox in the **Column Settings** window. When it's ticked, the column data must be present and not empty.

@@ -1,53 +1,46 @@
 ---
 title: "n8n"
-description: "Push user spreadsheet data to n8n."
+description: "Push user spreadsheet data to n8n and connect your imports to any app it supports."
 ---
 
-This allows you to directly connect your CSVbox imports to any of the apps supported by n8n without needing a webhook setup. With this integration, you can build workflows like:
+The n8n destination connects your CSVbox imports directly to any of the apps supported by n8n, without needing a webhook setup. With this integration, you can build workflows such as:
 
 * Save imported rows into a database (MySQL, Postgres, MongoDB, etc.)
 * Send imported data to Slack, Teams, or Discord
 * Trigger downstream API calls automatically
 * Push leads into your CRM or marketing tools
 
-***
+## Set up the integration
 
-### Step 1: Enable n8n as a Destination in CSVbox
+<Steps>
+  <Step title="Enable n8n as a destination in CSVbox">
+    1. Go to your [CSVbox Dashboard](https://dashboard.csvbox.io/).
+    2. Open the **Sheet Settings** for the sheet you want to integrate.
+    3. Navigate to the **Destinations** tab.
+    4. Click **Add Destination** → select **n8n**.
+    5. Click **Connect n8n**. This redirects you to the n8n connections page.
+    6. Connect n8n with your CSVbox account by providing the API Key and API Secret Key. You can find these keys on the **Accounts** page of your CSVbox dashboard.
+    7. Save the destination.
+  </Step>
+  <Step title="Configure the CSVbox node in n8n">
+    1. Open your **n8n Editor** (Cloud or Self-hosted).
+    2. Create a new workflow.
+    3. Add the **CSVbox node**.
+    4. Under **Credentials**, select your CSVbox account.
+    5. Select the **Trigger** type: **Import New Row** fires whenever new data is imported in CSVbox.
+    6. Choose the **Sheet Name** from the dropdown list.
+  </Step>
+  <Step title="Add processing nodes">
+    Connect the CSVbox node to other nodes:
 
-1. Go to your [CSVbox Dashboard](https://dashboard.csvbox.io/).
-2. Open the **Sheet Settings** for the sheet you want to integrate.
-3. Navigate to the **Destinations** tab.
-4. Click on **Add Destination** → select **n8n**.
-5. Click on **Connect n8n** button. This will redirect you to n8n connections page.
-6. Connect n8n with your csvbox.io account by providing the API Key and API Secret Key. These keys can be found on the **Accounts** page of your csvbox dashboard.
-7. Save the destination.
+    - **Database Nodes**: store imported data in MySQL, Postgres, MongoDB.
+    - **Messaging Nodes**: send Slack or Teams alerts.
+    - **Spreadsheet Nodes**: save to Google Sheets, Airtable.
+    - **HTTP Node**: call custom APIs with imported data.
+  </Step>
+</Steps>
 
-***
-
-### Step 2: Configure CSVbox Node in n8n
-
-1. Open your **n8n Editor** (Cloud or Self-hosted).
-2. Create a new workflow.
-3. Add the **CSVbox node**.
-4. Under **Credentials**, select CSVbox account.
-5. Select the **Trigger** type:
-   * **Import New Row** → Fires whenever new data is imported in CSVbox
-6. Choose the **Sheet Name** from the dropdown list.
-
-***
-
-### Step 3: Add Processing Nodes
-
-Now connect the CSVbox node to other nodes:
-
-* **Database Nodes** → Store imported data in MySQL, Postgres, MongoDB
-* **Messaging Nodes** → Send Slack or Teams alerts
-* **Spreadsheet Nodes** → Save to Google Sheets, Airtable
-* **HTTP Node** → Call custom APIs with imported data
-
-***
-
-### Example Workflow
+## Example workflow
 
 A simple flow could be:
 
@@ -55,19 +48,26 @@ A simple flow could be:
 
 This setup automatically saves imported data into a Google Sheet and then posts a confirmation message to Slack.
 
-### Error Handling
+## Error handling
 
 * If the connected nodes succeed, the workflow continues normally.
-* If there’s a failure (e.g. database timeout), n8n will show the error in **Executions → Error Log**.
-* You can use n8n’s **Error Workflow** feature for retries or notifications.
+* If there's a failure (e.g. a database timeout), n8n shows the error in **Executions** → **Error Log**.
+* You can use n8n's **Error Workflow** feature for retries or notifications.
 
-***
+## Alternative: Webhook node
 
-### Alternative: Webhook Node
+If you don't want to use the official CSVbox node, you can still integrate using n8n's **Webhook node**:
 
-If you don’t want to use the official CSVbox node, you can still integrate using n8n’s **Webhook node**:
+<Steps>
+  <Step title="Add a Webhook node">
+    Add a **Webhook node** in n8n.
+  </Step>
+  <Step title="Copy the webhook URL">
+    Copy the generated webhook URL.
+  </Step>
+  <Step title="Add the URL in CSVbox">
+    Add this URL as a **Webhook destination** in CSVbox.
+  </Step>
+</Steps>
 
-1. Add a **Webhook node** in n8n.
-2. Copy the generated webhook URL.
-3. Add this URL as a **Webhook destination** in CSVbox.
-4. On each import, CSVbox will `POST` validated rows to this webhook.
+On each import, CSVbox sends validated rows to this webhook as `POST` requests.

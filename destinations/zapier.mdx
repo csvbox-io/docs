@@ -1,44 +1,83 @@
 ---
 title: "Zapier"
-description: "Push user CSV data to Zapier."
+description: "Push user CSV data to Zapier as a trigger and move it to any connected app."
 ---
 
-The data from files uploaded by the users can be pushed to Zapier as a trigger. This data can then be moved to any connected app of your choice.
+The Zapier destination pushes the data from files your users upload to Zapier as a trigger. You can then move this data to any connected app of your choice.
 
-Log in to [csvbox.io](https://app.csvbox.io/login).
+## Set up the destination
 
-Add a sheet.
+<Steps>
+  <Step title="Log in to CSVbox">
+    Log in to [csvbox.io](https://app.csvbox.io/login).
+  </Step>
+  <Step title="Add a sheet">
+    <Frame>
+      <img
+        src="/images/add-sheet.png"
+        alt="Add a sheet"
+      />
+    </Frame>
+  </Step>
+  <Step title="Add columns">
+    Add columns to the sheet as per your requirement.
 
-<div align="left"><img src="/images/add-sheet.png" alt="Add a sheet" /></div>
+    <Frame>
+      <img
+        src="/images/add-columns.png"
+        alt="Add columns"
+      />
+    </Frame>
+  </Step>
+  <Step title="Select Zapier as the destination">
+    Under the **Settings** section, for the **Send Data To** setting, select **Zapier**.
+  </Step>
+  <Step title="Connect a Zap">
+    Click **Connect Zap**. This redirects you to Zapier.
 
-Add columns to the sheet as per your requirement.
+    <Frame>
+      <img
+        src="/images/connect-zap.jpg"
+        alt="Connect Zap"
+      />
+    </Frame>
+  </Step>
+  <Step title="Create a new Zap">
+    Log in to your Zapier account and create a new Zap.
+  </Step>
+  <Step title="Choose the CSVbox trigger">
+    Select **csvbox.io** as the Trigger.
 
-<div align="left"><img src="/images/add-columns.png" alt="Add columns" /></div>
+    <Frame>
+      <img
+        src="/images/csvbox-trigger.jpg"
+        alt="csvbox.io trigger in Zapier"
+      />
+    </Frame>
 
-Under the "**Settings**" section, for the "**Send Data To**" setting select the "**Zapier**" option.
+    Select **New Import Row** as the Trigger Event.
+  </Step>
+  <Step title="Connect your CSVbox account">
+    Provide your API Key and API Secret Key. You can find these keys on the **Accounts** page of your CSVbox dashboard.
 
-Click "**Connect Zap**".
+    <Frame>
+      <img
+        src="/images/keys.jpg"
+        alt="API credentials"
+      />
+    </Frame>
+  </Step>
+  <Step title="Select the sheet">
+    Select the sheet (template) in the **sheets** dropdown of the **Set up Trigger** section. Data from this sheet is pushed to Zapier one row at a time.
 
-<div align="left"><img src="/images/connect-zap.jpg" alt="Connect Zap" /></div>
-
-This will redirect you to Zapier.
-
-Log in to your Zapier account.
-
-Create a new Zap.
-
-Select **csvbox.io** as the Trigger.
-
-<div align="left"><img src="/images/csvbox-trigger.jpg" alt="csvbox.io trigger" /></div>
-
- Select '**New Import Row**' as the Trigger Event.
-
-Connect your csvbox.io account by providing the API Key and API Secret Key. These keys can be found on the **Accounts** page of your csvbox dashboard.
-
-![API crentials](/images/keys.jpg)
-
-Select the sheet (template) in the 'sheets' dropdown of the 'Set up Trigger' section. Data from this sheet will be pushed to Zapier one row at a time.
-
-![Select Sheet](/images/trigger-sheet.jpg)
-
-Then you can Test the trigger and continue with setting up the Action of your Zap.
+    <Frame>
+      <img
+        src="/images/trigger-sheet.jpg"
+        alt="Select sheet"
+      />
+    </Frame>
+  </Step>
+  <Step title="Test the trigger">
+    Test the trigger and continue with setting up the Action of your Zap.
+  </Step>
+</Steps>

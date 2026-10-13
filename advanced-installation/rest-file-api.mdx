@@ -1,11 +1,11 @@
 ---
 title: "REST File API"
-description: "Automate CSV submissions via REST File API"
+description: "Submit spreadsheet files to CSVbox programmatically with the REST File API."
 ---
 
-The File API lets you accept spreadsheet files programmatically. It is an alternative to the users uploading the files manually, via the Csvbox importer. Files submitted via the REST File API will then be pushed to the data destination as set up in the Csvbox dashboard.
+The File API lets you accept spreadsheet files programmatically, as an alternative to users uploading files manually through the CSVbox importer. Files submitted through the REST File API are pushed to the data destination set up in the CSVbox dashboard.
 
-#### Simple File API Request
+## Simple File API request
 
 ```javascript
 curl --location --request POST 'https://api.csvbox.io/1.1/file' \
@@ -24,56 +24,56 @@ curl --location --request POST 'https://api.csvbox.io/1.1/file' \
 }'
 ```
 
-After the data is pushed to the destination, the [import complete webhook ](/getting-started/3-receive-data#import-complete-webhook)can be triggered as configured in the sheet settings.
+After the data is pushed to the destination, the [import complete webhook](/getting-started/3-receive-data#import-complete-webhook) can be triggered as configured in the sheet settings.
 
 <Warning>
 
-The spreadsheet data submitted via File API will not be [validated](/dashboard-settings/validations) based on the rules configured in the sheet settings. The importer will attempt to push the data directly to the destination in the raw form.
+Spreadsheet data submitted through the File API is not [validated](/dashboard-settings/validations) against the rules configured in the sheet settings. The importer attempts to push the data directly to the destination in raw form.
 
 </Warning>
 
-Authentication
+## Authentication
 
-All REST File API queries require a valid API key. You can find the API key on the **Accounts** page in the Csvbox dashboard.
+All REST File API queries require a valid API key. You can find the API key on the **Accounts** page in the CSVbox dashboard.
 
-Include your API key as a `x-csvbox-api-key` header on all API queries. 
+Include your API key as an `x-csvbox-api-key` header on all API queries.
 
-### Endpoint
+## Endpoint
 
-## Submits a spreadsheet file
+Submits a spreadsheet file.
 
-`POST` `https://api.csvbox.io/1.1/file`
+```text
+POST https://api.csvbox.io/1.1/file
+```
 
-#### Headers
+### Headers
 
-| Name                                               | Type   | Description      |
-| -------------------------------------------------- | ------ | ---------------- |
-| x-csvbox-api-key\* | String | API Key |
-| content-type\* | String | application/json |
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `x-csvbox-api-key` | String | Yes | API Key |
+| `content-type` | String | Yes | `application/json` |
 
-#### Request Body
+### Request body
 
-| Name                                                         | Type   | Description                                                                                  |
-| ------------------------------------------------------------ | ------ | -------------------------------------------------------------------------------------------- |
-| import.public_file_url\* | String | The public URL of the spreadsheet that is to be submitted. |
-| import.file\_sheet\_name                                     | String | Worksheet name in case of a file having multiple tabs.                                       |
-| import.sheet_license_key\* | String | Sheet license key |
-| import\* | Object | Import file data |
-| import.user                                                  | Object | Object [referencing the user](/getting-started/2-install-code#referencing-the-user)   |
-| import.options                                               | Object | Object [referencing the import options](/advanced-installation/rest-file-api#options)                 |
-| import.dynamic\_columns                                      | Object | Object [referencing dynamic columns](/advanced-installation/dynamic-columns) |
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `import.public_file_url` | String | Yes | The public URL of the spreadsheet that is to be submitted. |
+| `import.file_sheet_name` | String | No | Worksheet name in case of a file having multiple tabs. |
+| `import.sheet_license_key` | String | Yes | Sheet license key |
+| `import` | Object | Yes | Import file data |
+| `import.user` | Object | No | Object [referencing the user](/getting-started/2-install-code#referencing-the-user) |
+| `import.options` | Object | No | Object [referencing the import options](/advanced-installation/rest-file-api#options) |
+| `import.dynamic_columns` | Object | No | Object [referencing dynamic columns](/advanced-installation/dynamic-columns) |
 
 <Warning>
-
-The columns in the file should be arranged in the same order as configured in the sheet template and the column names should match exactly. If you want the importer to auto-map the columns, configure **options**.**auto\_map** to **true**.
-
+  The columns in the file must be in the same order as configured in the sheet template, and the column names must match exactly. To have the importer auto-map the columns, set `options.auto_map` to `true`.
 </Warning>
 
-<Tabs>
+### Response
 
-<Tab title="200: OK File submitted">
+**200 OK**: File submitted.
 
-```javascript
+```javascript 200 OK
 HTTP/1.1 200 OK
 {
   "import_id": 79418895,
@@ -121,17 +121,11 @@ HTTP/1.1 200 OK
 }
 ```
 
-</Tab>
+### Example request
 
-</Tabs>
+<CodeGroup>
 
-#### Example Request
-
-<Tabs>
-
-<Tab title="cURL">
-
-```javascript
+```javascript cURL
 curl --location --request POST 'https://api.csvbox.io/1.1/file' \
 --header 'x-csvbox-api-key: CSBxRLHgIZv3bqMlrJiVKXhKwtcHSv' \
 --header 'Content-Type: application/json' \
@@ -178,11 +172,7 @@ curl --location --request POST 'https://api.csvbox.io/1.1/file' \
     }'
 ```
 
-</Tab>
-
-<Tab title="jQuery">
-
-```javascript
+```javascript jQuery
 var settings = {
   "url": "https://api.csvbox.io/1.1/file",
   "method": "POST",
@@ -199,11 +189,7 @@ $.ajax(settings).done(function (response) {
 });
 ```
 
-</Tab>
-
-<Tab title="PHP">
-
-```php
+```php PHP
 <?php
 
 $curl = curl_init();
@@ -267,14 +253,9 @@ $response = curl_exec($curl);
 
 curl_close($curl);
 echo $response;
-
 ```
 
-</Tab>
-
-<Tab title="NodeJS">
-
-```javascript
+```javascript NodeJS
 var axios = require('axios');
 var data = '{\r\n    "import": {\r\n        "public_file_url": "https: //some-domain.com/admin/download-csv/UXOR2MphpEu2sSAIISpY7AKmOIzAKygLNy8eviEr",\r\n        "sheet_license_key": "jhkjsahjkhkjhkjhkjasdasd",\r\n        "user": {\r\n            "user_id": "1a2b3c4d5e6f",\r\n            "team_id": "sales2",\r\n            "permissionLevel": "admin"\r\n        },\r\n        "options": {\r\n            "max_rows": 150,\r\n            "has_header": "1"\r\n        },\r\n        "dynamic_columns": [\r\n            {\r\n                "column_name": "qualification",\r\n                "display_label": "HighestQualification",\r\n                "info_hint": "Whatisyourhighesteducationaldegree",\r\n                "matching_keywords": "degree,   education",\r\n                "type": "text",\r\n                "validators": {\r\n                    "min_length": 2,\r\n                    "max_length": 50\r\n                },\r\n                "required": true\r\n            },\r\n            {\r\n                "column_name": "experience",\r\n                "display_label": "WorkExperience",\r\n                "info_hint": "Yearsofworkexperience",\r\n                "matching_keywords": "",\r\n                "type": "number",\r\n                "validators": {\r\n                    "min_value": 0,\r\n                    "max_value": 100\r\n                },\r\n                "required": false\r\n            }\r\n        ]\r\n    }';
 
@@ -295,36 +276,27 @@ axios(config)
 .catch(function (error) {
   console.log(error);
 });
-
 ```
 
-</Tab>
+</CodeGroup>
 
-</Tabs>
+## Direct file upload
 
-### Direct File Upload
+As an alternative to providing a public file URL, you can upload the file contents directly. Instead of `import.public_file_url`, use the following body parameter.
 
-As an alternative to providing the public file URL to the FILE API, you also have the option to upload the file contents directly. Instead of using the _import.public\_file\_url_ use the following body param:
+### Request body
 
-#### Request Body
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `import.file` | String | Yes | The contents of the file to be imported. |
 
-| Name                                          | Type   | Description                              |
-| --------------------------------------------- | ------ | ---------------------------------------- |
-| import.file\* | String | The contents of the file to be imported. |
+<Note>
+  Send the file with the `multipart/form-data` content type.
+</Note>
 
-<Info>
+### Example request
 
-The file should be sent with the `multipart/form-data` content-type.
-
-</Info>
-
-#### Example Request
-
-<Tabs>
-
-<Tab title="cURL">
-
-```javascript
+```javascript cURL
 curl --location --request POST 'https://api.csvbox.io/1.1/file' \
 --header 'x-csvbox-api-key: CSBxRLHgIZv3bqMlrJiVKXhKwtcHSv' \
 --header 'Content-Type: multipart/form-data' \
@@ -341,27 +313,23 @@ curl --location --request POST 'https://api.csvbox.io/1.1/file' \
 -F 'file=@/path/to/your/file.csv'
 ```
 
-</Tab>
-
-</Tabs>
-
-### Rate limits
+## Rate limits
 
 The REST Admin API supports a limit of 30 requests per minute. This allotment replenishes at a rate of 2 requests per second. 
 
-Past the limit, the API will return a `429 Too Many Requests` error.
+Past the limit, the API returns a `429 Too Many Requests` error.
 
-All REST API responses include the x`-csvbox-file-api-call-limit` header, which shows how many requests the client has made, and the total number allowed per minute.
+All REST API responses include the `x-csvbox-file-api-call-limit` header, which shows how many requests the client has made and the total number allowed per minute.
 
-A `429` response will also include a `retry-after` header with the number of seconds to wait until retrying your query.
+A `429` response also includes a `retry-after` header with the number of seconds to wait before retrying your query.
 
-### Status and error codes
+## Status and error codes
 
-All API queries return HTTP status codes that can tell you more about the response.
+All API queries return HTTP status codes that tell you more about the response.
 
-**401 Unauthorized**
+### 401 Unauthorized
 
-The client doesn’t have the correct authentication credentials.
+The client doesn't have the correct authentication credentials.
 
 ```
 HTTP/1.1 401 Unauthorized
@@ -370,9 +338,9 @@ HTTP/1.1 401 Unauthorized
 }
 ```
 
-**402 Import Limit Reached**
+### 402 Import Limit Reached
 
-The monthly import limit based on the account plan is reached. You can upgrade the plan to increase the import limit.
+The monthly import limit for the account plan is reached. Upgrade the plan to increase the import limit.
 
 ```
 HTTP/1.1 402 Import Limit Reached
@@ -381,9 +349,9 @@ HTTP/1.1 402 Import Limit Reached
 }
 ```
 
-**403 Forbidden**
+### 403 Forbidden
 
-The server is refusing to respond. This is typically caused if File API is disabled.
+The server is refusing to respond. This is typically caused by the File API being disabled.
 
 ```
 HTTP/1.1 403 Access Denied
@@ -392,7 +360,7 @@ HTTP/1.1 403 Access Denied
 }
 ```
 
-**404 Not Found**
+### 404 Not Found
 
 The referenced sheet was not found.
 
@@ -403,9 +371,9 @@ HTTP/1.1 404 Not Found
 }
 ```
 
-**422 Unprocessable File**
+### 422 Unprocessable File
 
-The request body contains file errors. This is typically caused by incorrect file path, invalid file permissions, incorrect file format, corrupt file, file size too large, etc.
+The request body contains file errors. Typical causes are an incorrect file path, invalid file permissions, an incorrect file format, a corrupt file, or a file size that's too large.
 
 ```
 HTTP/1.1 422 Unprocessable File
@@ -414,7 +382,7 @@ HTTP/1.1 422 Unprocessable File
 }
 ```
 
-**429 Too Many Requests**
+### 429 Too Many Requests
 
 The client has exceeded the [rate limit](/advanced-installation/rest-file-api#rate-limits).
 
@@ -425,9 +393,9 @@ HTTP/1.1 429 Too Many Requests
 }
 ```
 
-**5xx Errors**
+### 5xx errors
 
-An internal error occurred in Csvbox. Report to our team for such errors.
+An internal error occurred in CSVbox. Report such errors to our team.
 
 ```
 HTTP/1.1 500 Internal Server Error
@@ -436,18 +404,24 @@ HTTP/1.1 500 Internal Server Error
 }
 ```
 
-### Options
+## Options
 
-Here is the list of additional configuration options available with the File API.
+The following additional configuration options are available with the File API.
 
-#### max\_rows
+### max_rows
 
-<table><thead><tr><th width="150"></th><th></th><th data-hidden></th></tr></thead><tbody><tr><td>Type</td><td>Integer</td><td></td></tr><tr><td>Default</td><td>Null</td><td></td></tr><tr><td>Description</td><td>The maximum number of rows to import.</td><td></td></tr></tbody></table>
+- **Type**: Integer
+- **Default**: Null
+- **Description**: The maximum number of rows to import.
 
-#### has\_header
+### has_header
 
-<table><thead><tr><th width="150"></th><th></th><th data-hidden></th></tr></thead><tbody><tr><td>Type</td><td>Boolean</td><td></td></tr><tr><td>Default</td><td>0</td><td></td></tr><tr><td>Description</td><td><p>Specify whether the file contains a header row.<br /><br />Acceptable values are:</p><p><strong>0</strong> (no header)</p><p><strong>1</strong> (has a header row)</p></td><td></td></tr></tbody></table>
+- **Type**: Boolean
+- **Default**: `0`
+- **Description**: Specify whether the file contains a header row. Acceptable values are `0` (no header) and `1` (has a header row).
 
-#### auto\_map
+### auto_map
 
-<table><thead><tr><th width="150"></th><th></th><th data-hidden></th></tr></thead><tbody><tr><td>Type</td><td>Boolean</td><td></td></tr><tr><td>Default</td><td>Null</td><td></td></tr><tr><td>Description</td><td>Enable automatic column mapping in cases where exact match is not found. <strong>auto_map</strong> default value is <strong>false</strong>.</td><td></td></tr></tbody></table>
+- **Type**: Boolean
+- **Default**: Null
+- **Description**: Enable automatic column mapping in cases where an exact match is not found. The `auto_map` default value is `false`.
