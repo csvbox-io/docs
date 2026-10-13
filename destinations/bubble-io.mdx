@@ -1,131 +1,205 @@
 ---
 title: "Bubble.io"
-description: "Import customer CSV data to your Bubble app database with the csvbox.io importer."
+description: "Import customer CSV data to your Bubble app database with the CSVbox importer."
 ---
 
-## Demo App
+The Bubble.io destination pushes the CSV and Excel files your users upload directly into your Bubble app database. You configure the Bubble Data API, connect it to a CSVbox sheet, and add the CSVbox plugin to your app.
+
+## Demo app
 
 See how it works [here](https://csvbox-demo.bubbleapps.io/version-test).
 
-## 1. Configuring Bubble App
+## Configuring Bubble app
 
-<Info>
+<Note>
+  You need to be on a [paid Bubble application plan](https://bubble.io/pricing/compare) to use the Bubble API, which is required to push external CSV data into the Bubble data store.
+</Note>
 
-You need to be on a [paid Bubble application plan](https://bubble.io/pricing/compare) to be able to use the Bubble API that is required to push external CSV data into the Bubble data store.
+### Data settings
 
-</Info>
+Create or update a data type in your Bubble app where you want to push the CSV data. Make sure the data type is **Publicly visible**. Add custom fields to the data type as per your requirements.
 
-#### Data Settings
+<Frame>
+  <img
+    src="/images/data-type.jpg"
+    alt="Bubble data type"
+  />
+</Frame>
 
-Create or update a data type in your Bubble app where you want to push the CSV data. Ensure that the data type is 'Publicly visible'. Add custom fields to the data type as per your requirements.
+<Warning>
+  Manually add at least one object (row) to the data type.
+</Warning>
 
-![Bubble Data Type](/images/data-type.jpg)
+<Frame>
+  <img
+    src="/images/object.jpg"
+    alt="Add object"
+  />
+</Frame>
 
-**Important:** Manually add at least one object (row) to the data type.
+### API settings
 
-![Add object](/images/object.jpg)
+<Steps>
+  <Step title="Open Settings">
+    Go to **Settings**.
+  </Step>
+  <Step title="Open the API page">
+    Go to the **API** page.
+  </Step>
+  <Step title="Activate the Data API">
+    Activate **Data API**.
+  </Step>
+  <Step title="Activate the API for your data type">
+    Activate the API for the data type where you want to push the CSV data.
+  </Step>
+  <Step title="Generate the API Private Key">
+    Generate and save the **API Private Key**.
 
-#### API Settings
+    <Frame>
+      <img
+        src="/images/api-settings.jpg"
+        alt="API settings"
+      />
+    </Frame>
+  </Step>
+</Steps>
 
-1. Go to Settings
-2. Go to the API page
-3. Activate 'Data API'
-4. Activate API for the data type where you want to push the CSV data
-5. Generate and save the **API Private Key**
+## Setting up CSVbox
 
-![API Settings](/images/api-settings.jpg)
+<Steps>
+  <Step title="Log in to CSVbox">
+    Log in to [csvbox.io](https://app.csvbox.io/login).
+  </Step>
+  <Step title="Add a sheet">
+    <Frame>
+      <img
+        src="/images/add-sheet.png"
+        alt="Add a sheet"
+      />
+    </Frame>
+  </Step>
+  <Step title="Add columns">
+    Add columns to the sheet. The column names should match the column/object names for your data type in Bubble. Pay attention to upper and lower case letters in Bubble and match them in CSVbox.
 
-## 2. Setting up csvbox.io
+    <Frame>
+      <img
+        src="/images/add-columns.png"
+        alt="Add columns"
+      />
+    </Frame>
+  </Step>
+  <Step title="Select Bubble.io as the destination">
+    Under the **Settings** section, for the **Send Data To** setting, select **Bubble.io**.
 
-Log in to [csvbox.io](https://app.csvbox.io/login).
+    <Frame>
+      <img
+        src="/images/bubble-io-settings.jpg"
+        alt="Bubble.io data destination settings"
+      />
+    </Frame>
 
-Add a sheet.
+    Fill in the following fields:
 
-![Add a Sheet](/images/add-sheet.png)
+    - **App Name**: the name of your Bubble.io app.
+    - **Custom Domain Name**: if you have attached a custom domain name to your Bubble app, provide it here.
+    - **Environment**: pick the environment where you want the CSV data to be sent, either TEST/DEVELOPMENT or PRODUCTION/LIVE.
+    - **API Private Key**: the API token you generated while configuring the [API settings](/destinations/bubble-io#api-settings) in the Bubble app.
+    - **Data Type**: the data type name where you want to push the CSV data.
+  </Step>
+  <Step title="Test the connection">
+    Click **Test Connection**. It succeeds if all fields are filled in correctly.
+  </Step>
+  <Step title="Map columns">
+    Click **Map Columns**. A modal opens where you can map the sheet columns to the object fields.
 
-Add columns to the sheet. The column names should match column/object names for your data type in Bubble. Make sure you pay attention to upper and lower case letters on Bubble and match them in csvbox.io.
+    <Frame>
+      <img
+        src="/images/map-columns-2.jpg"
+        alt="Map sheet columns to Bubble data fields"
+      />
+    </Frame>
 
-![Add Columns](/images/add-columns.png)
+    <Warning>
+      The data fields from the Bubble database are available in the Map Column modal only if they have data in the first row. Add dummy data for each data field in the first row so that they appear in the Map Column modal.
+    </Warning>
+  </Step>
+  <Step title="Save the sheet">
+    Click **Save**.
+  </Step>
+  <Step title="Copy the Sheet License Key">
+    Go to the **Code** section of the sheet and note down the **Sheet License Key**.
 
-Under the "**Settings**" section, for the "**Send Data To**" setting select the "**Bubble.io**" option. 
+    <Frame>
+      <img
+        src="/images/sheet-license-key.png"
+        alt="Sheet License Key"
+      />
+    </Frame>
+  </Step>
+</Steps>
 
-![Bubble.io Data Destination Settings](/images/bubble-io-settings.jpg)
+## Adding CSVbox to Bubble
 
-Fill in the following fields:
+<Steps>
+  <Step title="Install the plugin">
+    Install the [csvbox.io](https://bubble.io/plugin/csv--excel-importer-|-receive-json-1628686647935x372170116910546940) plugin in your Bubble app.
+  </Step>
+  <Step title="Add the CSVBox Button element">
+    Drag the CSVBox Button element onto your web page.
+  </Step>
+  <Step title="Set the Sheet License Key">
+    Paste the **Sheet License Key** value from the sheet **Code** page (saved above) into the **Sheet License Key** property of the CSVBox element.
 
-* **App Name** - This is the name of your Bubble.io app.
-* **Custom Domain Name** - If you have attached a custom domain name to your Bubble app then you need to provide it here.
-* **Environment** - Pick an environment between TEST/DEVELOPMENT and PRODUCTION/LIVE where you want the CSV data to be sent.
-* **API Private Key** - It is the API token that you generated while configuring the [API settings ](/destinations/bubble-io#api-settings)in the Bubble app.
-* **Data Type** - The data type name where you want to push the CSV data.
+    <Frame>
+      <img
+        src="/images/bubble-app-csvbox-element.png"
+        alt="Bubble app CSVBox Button element"
+      />
+    </Frame>
+  </Step>
+  <Step title="Configure the button">
+    Enter the import button label in the `button_text` property. Optionally, add CSS classes in the `button_classes` property to style the CSVbox import button.
 
-Click the "**Test Connection**" button. It should be successful if all fields are inputted correctly.
+    <Note>
+      You can add custom user attributes (such as user_id, user name, company name, etc.) as values to the `custom_attribute_XX` properties of the CSVBox Button element. More information on custom attributes is available [here](/getting-started/2-install-code#referencing-the-user).
+    </Note>
+  </Step>
+</Steps>
 
-Click the "**Map Columns**" button. It will open a modal where you can map the sheet columns to the object fields.
+The CSVbox import button is now available in your app. Your users can click the button to upload CSV files, and the data arrives in your Bubble database.
 
-![Map Sheet Columns to Bubble Data Fields](/images/map-columns-2.jpg)
+### Import events
 
-<Danger>
+The CSVBox Button element exposes two events that indicate the completion of the import process:
 
-The data fields from the Bubble database will be available in the Map Column modal only if they have data in the first row. You may add dummy data for each data field in the first row in order for them to appear in the Map Column modal.
+- **import_success**: triggered when the CSV data is imported successfully into your Bubble database.
+- **import_fail**: triggered when the import failed completely or partially.
 
-</Danger>
-
-Click the "**Save**" button.
-
-Go to the "**Code**" section of the sheet and note down the **Sheet License Key**.
-
-![Sheet License Key](/images/sheet-license-key.png)
-
-## 3. Adding the csvbox to Bubble
-
-Install the [csvbox.io](https://bubble.io/plugin/csv--excel-importer-|-receive-json-1628686647935x372170116910546940) plugin to your Bubble app.
-
-Drag the CSVBox Button element on your web page.
-
-Save the **Sheet License Key** value from the sheet "**Code**" page (that we saved above) into the "**Sheet License Key**" property of the CSVBox element.
-
-![Bubble App CSVBox Button Element](/images/bubble-app-csvbox-element.png)
-
-Enter the import button label under the '**button\_text**' property. Optionally you can add CSS classes in the "**button\_classes**" property to stylize the csvbox.io import button.
-
-<Info>
-
-You can add custom user attributes (such as user\_id, user name, company name, etc) as values to the custom\_attribute_XX_ properties of the CSVBox Button element. More information on custom attributes is available [here](/getting-started/2-install-code#referencing-the-user).
-
-</Info>
-
-The csvbox.io import button should be available on your app. Your users can click the button to upload CSV files. You will get data in your Bubble Database.
-
-The CSVBox Button element exposes two events that indicate the completion of the import process. The two events are:
-
-1. **import\_success** - triggered when the CSV data gets imported successfully into your Bubble database.
-2. **import\_fail** - triggered when the import failed completely or partially failed.
-
-![CSVBox Button Element Events](/images/bubble-events.png)
+<Frame>
+  <img
+    src="/images/bubble-events.png"
+    alt="CSVBox Button element events"
+  />
+</Frame>
 
 You can add relevant actions to process the import result events.
 
 ## Why does my upload fail with unknown errors?
 
-Bubble.io databases are very picky. The Column Names you are POSTing from the csvbox importer need to **EXACTLY** match what is in your Bubble.io database.
+Bubble.io databases are very picky. The column names you POST from the CSVbox importer must **exactly** match what is in your Bubble.io database.
 
-Check the following things:
+Check the following:
 
-* Make sure there are no extra columns in your csvbox.io sheet that do NOT map to a field/attribute in your Bubble.io database object. Bubble does not like extra columns that its database doesn't know about.
-* The csvbox.io sheet column names should **EXACTLY** match the type names in your Bubble.io database object. Verify that capitalization and spaces are exactly the same as your Bubble.io data type object.
-* In your Bubble.io app settings, click "API" and make sure you have all checkboxes checked for exposing the Data API and also checked for every database object you want to import for.
+- Make sure there are no extra columns in your CSVbox sheet that do not map to a field/attribute in your Bubble.io database object. Bubble does not accept extra columns that its database doesn't know about.
+- The CSVbox sheet column names must **exactly** match the type names in your Bubble.io database object. Verify that capitalization and spaces are exactly the same as in your Bubble.io data type object.
+- In your Bubble.io app settings, click **API** and make sure all checkboxes are checked for exposing the Data API, and for every database object you want to import into.
 
-<Info>
+<Note>
+  The maximum number of items that can be created in Bubble.io via a single bulk request is currently 1000.
+</Note>
 
-The maximum number of items that can be created in Bubble.io via a single bulk request is currently 1000. 
+## Adding configuration options
 
-</Info>
-
-## Adding Configuration Options
-
-<Info>
-
-coming soon
-
-</Info>
+<Note>
+  Coming soon.
+</Note>
