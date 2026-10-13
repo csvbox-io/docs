@@ -3,95 +3,106 @@ title: "Automation Platforms"
 description: "Send CSVbox imports to Zapier, n8n, Make, Workato, or any workflow automation tool with one universal setup."
 ---
 
-CSVbox makes it easy to connect your spreadsheet imports with any automation platform.<br />
-
-Using the **`New Row Import`** trigger, you can send every imported row into your workflows — whether that means adding a contact to Salesforce, storing data in Postgres, or sending a Slack notification.
+CSVbox connects your spreadsheet imports with any automation platform. Using the **`New Row Import`** trigger, you can send every imported row into your workflows, whether that means adding a contact to Salesforce, storing data in Postgres, or sending a Slack notification.
 
 This guide shows you how to integrate CSVbox with popular tools like **Zapier, Make, n8n, Pipedream, IFTTT, Node-RED, Workato, Tray.io, Airflow, Prefect, Camunda**, and more.
 
-Once connected, each new row uploaded by your users can automatically flow into your databases, CRMs, analytics pipelines, or enterprise systems — without writing custom code for every tool.
+Once connected, each new row uploaded by your users can automatically flow into your databases, CRMs, analytics pipelines, or enterprise systems, without writing custom code for every tool.
 
-***
+## Core pattern
 
-### 🔑 Core Pattern
+1. **Webhook event (trigger)**: CSVbox sends a webhook on each row import. Example payload:
+   ```json
+   [
+     {
+       "import_id": 79418895,
+       "sheet_id": 55,
+       "sheet_name": "Products",
+       "row_number": 1,
+       "total_rows": 1009,
+       "env_name": "default", 
+       "original_filename": "products01_24.csv",
+       "row_data": {
+             "Name": "TP-Link TL-WN822N Wireless N300 High Gain USB Adapter",
+             "SKU": "AS-100221",
+             "Price": "33.00",
+             "Quantity": "3",
+             "Image URL": "https://cdn.shopify.com/s/files/1/1491/9536/products/31jJOj1DS5L_070b4893-b7af-482f-8a15-d40f5e06760d.jpg?v=1521803806"
+       },
+       "custom_fields": {
+         "user_id": "1002"
+       }
+     }  
+   ]
+   ```
+2. **Automation platform**: receives this webhook and executes downstream actions such as a database insert, CRM update, or Slack notification.
 
-1. **Webhook Event (Trigger)**
-   * CSVbox sends a webhook on each row import.
-   *   Example payload:
+## Integration guides
 
-       ```json
-       [
-         {
-           "import_id": 79418895,
-           "sheet_id": 55,
-           "sheet_name": "Products",
-           "row_number": 1,
-           "total_rows": 1009,
-           "env_name": "default", 
-           "original_filename": "products01_24.csv",
-           "row_data": {
-                 "Name": "TP-Link TL-WN822N Wireless N300 High Gain USB Adapter",
-                 "SKU": "AS-100221",
-                 "Price": "33.00",
-                 "Quantity": "3",
-                 "Image URL": "https://cdn.shopify.com/s/files/1/1491/9536/products/31jJOj1DS5L_070b4893-b7af-482f-8a15-d40f5e06760d.jpg?v=1521803806"
-           },
-           "custom_fields": {
-             "user_id": "1002"
-           }
-         }  
-       ]
-       ```
-2. **Automation Platform**
-   * Receives this webhook.
-   * Executes downstream actions: database insert, CRM update, Slack notification, etc.
+### Zapier
 
-***
+<Steps>
+  <Step title="Create a new Zap">
+  </Step>
+  <Step title="Add a Catch Hook trigger">
+    Select **Webhooks by Zapier** → **Catch Hook**.
+  </Step>
+  <Step title="Copy the webhook URL">
+  </Step>
+  <Step title="Paste the URL in CSVbox">
+    In the CSVbox Dashboard → **Settings** → **Webhooks**, paste the Zapier URL.
+  </Step>
+  <Step title="Perform a test import in CSVbox">
+  </Step>
+  <Step title="Confirm the data mapping in Zapier">
+  </Step>
+  <Step title="Add actions">
+    For example, **Google Sheets** → **Add Row**, or **Salesforce** → **Create Contact**.
+  </Step>
+  <Step title="Turn on the Zap">
+  </Step>
+</Steps>
 
-### ⚙️ Integration Guides (Step by Step)
+Each new row import flows into your Zapier automations.
 
-#### 🔹 1. Zapier
+### Make (Integromat)
 
-**Steps:**
+<Steps>
+  <Step title="Create a new Scenario">
+  </Step>
+  <Step title="Add a webhook module">
+    Add a **Webhook module** → **Custom Webhook**.
+  </Step>
+  <Step title="Copy the webhook URL">
+  </Step>
+  <Step title="Paste the URL in CSVbox">
+    Paste it into the CSVbox Dashboard → **Webhooks**.
+  </Step>
+  <Step title="Run the scenario in listening mode">
+  </Step>
+  <Step title="Test an import in CSVbox">
+    The payload appears in Make.
+  </Step>
+  <Step title="Add modules">
+    For example, Sheets, MySQL, or Slack.
+  </Step>
+  <Step title="Save and activate">
+  </Step>
+</Steps>
 
-1. Create a new Zap.
-2. Select **Webhooks by Zapier** → _Catch Hook_.
-3. Copy webhook URL.
-4. In CSVbox Dashboard → Settings → Webhooks → paste the Zapier URL.
-5. Perform a test import in CSVbox.
-6. Confirm data mapping in Zapier.
-7. Add actions (e.g., Google Sheets → Add Row, Salesforce → Create Contact).
-8. Turn on Zap.
+### Pipedream
 
-✅ Each new row import flows into Zapier automations.
-
-***
-
-#### 🔹 2. Make (Integromat)
-
-**Steps:**
-
-1. Create a new Scenario.
-2. Add a **Webhook module** → Custom Webhook.
-3. Copy webhook URL.
-4. Paste it into CSVbox Dashboard → Webhooks.
-5. Run scenario (listening mode).
-6. Test import in CSVbox → payload appears.
-7. Add modules (Sheets, MySQL, Slack, etc.).
-8. Save & activate.
-
-***
-
-#### 🔹 3. Pipedream
-
-**Steps:**
-
-1. Create new Workflow.
-2. Trigger: **HTTP/Webhook**.
-3. Copy webhook URL to CSVbox Dashboard.
-4. Test import in CSVbox.
-5.  Add Code Step:
-
+<Steps>
+  <Step title="Create a new Workflow">
+  </Step>
+  <Step title="Set the trigger to HTTP/Webhook">
+    Use **HTTP/Webhook** as the trigger.
+  </Step>
+  <Step title="Copy the webhook URL to the CSVbox Dashboard">
+  </Step>
+  <Step title="Test an import in CSVbox">
+  </Step>
+  <Step title="Add a code step">
     ```js
     export default defineComponent({
       props: { event: { type: "object" } },
@@ -100,97 +111,139 @@ Once connected, each new row uploaded by your users can automatically flow into 
       }
     });
     ```
-6. Add downstream integrations (DB, CRM, Slack).
+  </Step>
+  <Step title="Add downstream integrations">
+    For example, a database, CRM, or Slack.
+  </Step>
+</Steps>
 
-***
+### n8n
 
-#### 🔹 4. n8n
+<Steps>
+  <Step title="Create a workflow">
+  </Step>
+  <Step title="Add a Webhook node">
+    Add a **Webhook node**.
+  </Step>
+  <Step title="Copy the webhook URL to the CSVbox Dashboard">
+  </Step>
+  <Step title="Test an import">
+    n8n captures the payload.
+  </Step>
+  <Step title="Add downstream nodes">
+    For example, Postgres, Slack, or HTTP.
+  </Step>
+  <Step title="Fetch rows with the CSVbox node (optional)">
+    Use the CSVbox node to fetch rows by `import_id`.
+  </Step>
+</Steps>
 
-**Steps:**
+### Node-RED
 
-1. Create workflow.
-2. Add **Webhook node**.
-3. Copy webhook URL to CSVbox Dashboard.
-4. Test import → n8n captures payload.
-5. Add downstream nodes (Postgres, Slack, HTTP).
-6. (Optional) Use CSVbox Node to fetch rows by `import_id`.
-
-***
-
-#### 🔹 5. Node-RED
-
-**Steps:**
-
-1. Add **HTTP In node** → URL `/csvbox`.
-2. Add **JSON node** → parse payload.
-3.  Add **Function node**:
-
+<Steps>
+  <Step title="Add an HTTP In node">
+    Add an **HTTP In node** with the URL `/csvbox`.
+  </Step>
+  <Step title="Add a JSON node">
+    Add a **JSON node** to parse the payload.
+  </Step>
+  <Step title="Add a Function node">
     ```js
     msg.payload = msg.payload.data;
     return msg;
     ```
-4. Connect target nodes (DB, Email, Slack).
-5. Deploy and paste URL into CSVbox Dashboard.
+  </Step>
+  <Step title="Connect target nodes">
+    For example, a database, Email, or Slack.
+  </Step>
+  <Step title="Deploy and paste the URL into the CSVbox Dashboard">
+  </Step>
+</Steps>
 
-***
+### IFTTT
 
-#### 🔹 6. IFTTT
+<Steps>
+  <Step title="Create an Applet">
+    In IFTTT, create an **Applet**.
+  </Step>
+  <Step title="Set the If This trigger">
+    For **If This**, choose **Webhooks** → **Receive a web request** (`row_imported`).
+  </Step>
+  <Step title="Copy the webhook key/URL">
+  </Step>
+  <Step title="Paste the URL in the CSVbox Dashboard">
+  </Step>
+  <Step title="Set the Then That action">
+    For **Then That**, pick an action, such as sending an email, a notification, or triggering an IoT device.
+  </Step>
+</Steps>
 
-**Steps:**
+Use IFTTT for lightweight, consumer-friendly automations.
 
-1. In IFTTT, create an **Applet**.
-2. “If This” → **Webhooks** → Receive a web request (`row_imported`).
-3. Copy webhook key/URL.
-4. In CSVbox Dashboard → paste URL.
-5. “Then That” → pick action (e.g., send email, notification, IoT device).
+### Activepieces
 
-✅ Lightweight consumer-friendly automations.
+<Steps>
+  <Step title="Create a new Flow">
+    In Activepieces, create a new Flow.
+  </Step>
+  <Step title="Add a Webhook Trigger">
+    Add a **Webhook Trigger**.
+  </Step>
+  <Step title="Copy the URL into the CSVbox Dashboard">
+  </Step>
+  <Step title="Test an import">
+    Activepieces captures the row data.
+  </Step>
+  <Step title="Add actions">
+    For example, Google Sheets, Airtable, or APIs.
+  </Step>
+  <Step title="Save and activate">
+  </Step>
+</Steps>
 
-***
+### Automatisch
 
-#### 🔹 7. Activepieces
+<Steps>
+  <Step title="Create a workflow">
+  </Step>
+  <Step title="Set the trigger to Webhook">
+    Choose **Trigger** → **Webhook**.
+  </Step>
+  <Step title="Copy the webhook URL and paste it into the CSVbox Dashboard">
+  </Step>
+  <Step title="Import a test row">
+    Automatisch captures the payload.
+  </Step>
+  <Step title="Add downstream integrations">
+  </Step>
+</Steps>
 
-**Steps:**
+### Huginn
 
-1. In Activepieces, create a new Flow.
-2. Add **Webhook Trigger**.
-3. Copy URL into CSVbox Dashboard.
-4. Test import → Activepieces captures row data.
-5. Add actions (e.g., Google Sheets, Airtable, APIs).
-6. Save & activate.
+<Steps>
+  <Step title="Add a Webhook Agent">
+    Add a **Webhook Agent**.
+  </Step>
+  <Step title="Copy the Huginn webhook URL">
+  </Step>
+  <Step title="Paste the URL into the CSVbox Dashboard">
+  </Step>
+  <Step title="Test an import">
+    Huginn captures the JSON.
+  </Step>
+  <Step title="Chain agents">
+    For example, **Post Agent** → **Slack Agent** → **Email Agent**.
+  </Step>
+</Steps>
 
-***
+### StackStorm
 
-#### 🔹 8. Automatisch
-
-**Steps:**
-
-1. Create a workflow.
-2. Trigger → Webhook.
-3. Copy webhook URL → paste into CSVbox Dashboard.
-4. Import test row → Automatisch captures payload.
-5. Add downstream integrations.
-
-***
-
-#### 🔹 9. Huginn
-
-**Steps:**
-
-1. Add **Webhook Agent**.
-2. Copy Huginn webhook URL.
-3. Paste into CSVbox Dashboard.
-4. Test import → Huginn captures JSON.
-5. Chain agents (Post Agent → Slack Agent → Email Agent).
-
-***
-
-#### 🔹 10. StackStorm
-
-**Steps:**
-
-1. Create **Webhook sensor** in StackStorm.
-2.  Rule example:
+<Steps>
+  <Step title="Create a Webhook sensor">
+    Create a **Webhook sensor** in StackStorm.
+  </Step>
+  <Step title="Add a rule">
+    Rule example:
 
     ```yaml
     ---
@@ -203,64 +256,72 @@ Once connected, each new row uploaded by your users can automatically flow into 
       parameters:
         cmd: "echo {{trigger.body.data.email}} >> /var/log/csvbox.log"
     ```
-3. Test import.
+  </Step>
+  <Step title="Test an import">
+  </Step>
+</Steps>
 
-***
+### Apache Airflow
 
-#### 🔹 11. Apache Airflow
-
-**Steps:**
-
-1. Setup Flask/Django endpoint to receive CSVbox webhook.
-2. Configure CSVbox Dashboard → Webhooks → paste URL.
-3. Trigger Airflow DAG with row data.
-4.  Example DAG:
+<Steps>
+  <Step title="Set up an endpoint">
+    Set up a Flask/Django endpoint to receive the CSVbox webhook.
+  </Step>
+  <Step title="Paste the URL in CSVbox">
+    In the CSVbox Dashboard → **Webhooks**, paste the URL.
+  </Step>
+  <Step title="Trigger an Airflow DAG with the row data">
+  </Step>
+  <Step title="Create the DAG">
+    Example DAG:
 
     ```python
     from airflow import DAG
     from airflow.operators.python import PythonOperator
-
+    
     def process_row(**context):
         data = context['dag_run'].conf
         print("Row imported:", data)
-
+    
     dag = DAG("csvbox_import", start_date="2025-01-01")
-
+    
     process = PythonOperator(
         task_id="process_row",
         python_callable=process_row,
         dag=dag
     )
     ```
+  </Step>
+</Steps>
 
-***
+### Prefect
 
-#### 🔹 12. Prefect
-
-**Steps:**
-
-1. Setup Prefect Cloud/Server.
-2. Create flow with `@flow` decorator.
-3. CSVbox webhook triggers a Prefect API call.
-4.  Example:
+<Steps>
+  <Step title="Set up Prefect Cloud/Server">
+  </Step>
+  <Step title="Create a flow">
+    Create a flow with the `@flow` decorator.
+  </Step>
+  <Step title="Trigger a Prefect API call from the CSVbox webhook">
+    Example:
 
     ```python
     from prefect import flow
-
+    
     @flow
     def process_row(data: dict):
         print("Row Imported:", data)
     ```
-5. Deploy and connect webhook.
+  </Step>
+  <Step title="Deploy and connect the webhook">
+  </Step>
+</Steps>
 
-***
+### Kestra
 
-#### 🔹 13. Kestra
-
-**Steps:**
-
-1. Create a Kestra flow with a **Webhook Trigger**.
-2.  Example:
+<Steps>
+  <Step title="Create a Kestra flow with a Webhook Trigger">
+    Example:
 
     ```yaml
     id: csvbox_import
@@ -270,16 +331,16 @@ Once connected, each new row uploaded by your users can automatically flow into 
         type: io.kestra.core.tasks.debugs.Log
         message: "{{ trigger.body }}"
     ```
-3. Paste Kestra webhook URL into CSVbox Dashboard.
+  </Step>
+  <Step title="Paste the Kestra webhook URL into the CSVbox Dashboard">
+  </Step>
+</Steps>
 
-***
+### Temporal
 
-#### 🔹 14. Temporal
-
-**Steps:**
-
-1. Define a workflow in Temporal.
-2.  Example:
+<Steps>
+  <Step title="Define a workflow in Temporal">
+    Example:
 
     ```python
     @workflow.defn
@@ -288,15 +349,17 @@ Once connected, each new row uploaded by your users can automatically flow into 
         async def run(self, row: dict):
             print("Processing:", row)
     ```
-3. CSVbox webhook → EventBridge/queue → starts Temporal workflow.
+  </Step>
+  <Step title="Start the workflow from the CSVbox webhook">
+    CSVbox webhook → EventBridge/queue → starts the Temporal workflow.
+  </Step>
+</Steps>
 
-***
+### Inngest
 
-#### 🔹 15. Inngest
-
-**Steps:**
-
-1.  In Inngest, define an event handler:
+<Steps>
+  <Step title="Define an event handler">
+    In Inngest, define an event handler:
 
     ```js
     inngest.createFunction(
@@ -307,47 +370,67 @@ Once connected, each new row uploaded by your users can automatically flow into 
       }
     )
     ```
-2. Configure CSVbox webhook to send event payloads to Inngest.
+  </Step>
+  <Step title="Send CSVbox events to Inngest">
+    Configure the CSVbox webhook to send event payloads to Inngest.
+  </Step>
+</Steps>
 
-***
+### Windmill
 
-#### 🔹 16. Windmill
+<Steps>
+  <Step title="Create a new flow">
+    In Windmill, create a new flow.
+  </Step>
+  <Step title="Set the trigger to HTTP endpoint">
+    Choose **Trigger** → **HTTP endpoint**.
+  </Step>
+  <Step title="Paste the URL into the CSVbox Dashboard">
+  </Step>
+  <Step title="Test an import">
+    Windmill captures the payload.
+  </Step>
+  <Step title="Add a code step">
+    Add a code step in Python/JS to process rows.
+  </Step>
+</Steps>
 
-**Steps:**
+### Tray.io
 
-1. In Windmill, create a new flow.
-2. Trigger → HTTP endpoint.
-3. Paste URL into CSVbox Dashboard.
-4. Test import → Windmill captures payload.
-5. Add code step in Python/JS to process rows.
+<Steps>
+  <Step title="Create a Tray workflow">
+  </Step>
+  <Step title="Add a Webhook Trigger">
+    Add a **Webhook Trigger**.
+  </Step>
+  <Step title="Copy the URL into the CSVbox Dashboard">
+  </Step>
+  <Step title="Import a test row">
+  </Step>
+  <Step title="Add actions">
+    For example, Salesforce, NetSuite, or databases.
+  </Step>
+</Steps>
 
-***
+### Workato
 
-#### 🔹 17. Tray.io
+<Steps>
+  <Step title="Create a Workato recipe">
+  </Step>
+  <Step title="Add a Webhook Trigger">
+    Add a **Webhook Trigger**.
+  </Step>
+  <Step title="Copy the URL and paste it into the CSVbox Dashboard">
+  </Step>
+  <Step title="Test an import">
+    Workato captures the row data.
+  </Step>
+  <Step title="Add enterprise actions">
+    For example, ERP, CRM, or HR tools.
+  </Step>
+</Steps>
 
-**Steps:**
-
-1. Create a Tray workflow.
-2. Add a **Webhook Trigger**.
-3. Copy URL into CSVbox Dashboard.
-4. Import test row.
-5. Add actions (Salesforce, NetSuite, DBs).
-
-***
-
-#### 🔹 18. Workato
-
-**Steps:**
-
-1. Create a Workato recipe.
-2. Add **Webhook Trigger**.
-3. Copy URL → paste into CSVbox Dashboard.
-4. Test import → Workato captures row data.
-5. Add enterprise actions (ERP, CRM, HR tools).
-
-***
-
-### 📦 Developer SDK (Optional)
+## Developer SDK (optional)
 
 Offer an SDK so dev teams can wire CSVbox directly:
 
@@ -362,34 +445,37 @@ client.on("row_imported", (row) => {
 });
 ```
 
-***
-
-### ✅ Best Practices
+## Best practices
 
 * **Verify webhook signatures** (HMAC secret).
-* **Retry failed actions** (add DLQ or retries).
+* **Retry failed actions** (add a DLQ or retries).
 * Store `import_id` + `row_id` for tracking.
 * Log every payload for debugging.
 * Secure API keys properly.
 
-***
+## Example end-to-end flow
 
-### 🚀 Example End-to-End Flow
+**Use case**: "When a customer uploads a new row with email + plan → push to CRM → notify sales on Slack."
 
-**Use Case:**\
-“When a customer uploads a new row with email + plan → push to CRM → notify sales on Slack.”
+<Steps>
+  <Step title="CSVbox sends a webhook">
+    CSVbox → Webhook (`row_imported`).
+  </Step>
+  <Step title="n8n inserts the contact into HubSpot">
+    The n8n workflow inserts the row into HubSpot CRM.
+  </Step>
+  <Step title="Slack notifies the sales team">
+    The Slack node posts: "New Pro plan signup: [john@example.com](mailto:john@example.com)".
+  </Step>
+</Steps>
 
-1. CSVbox → Webhook (`row_imported`)
-2. n8n workflow → Insert into HubSpot CRM
-3. Slack node → “🎉 New Pro plan signup: john@example.com”
+## Supported platform categories
 
-***
+With this playbook, CSVbox integrates with **every automation platform**:
 
-👉 With this playbook, CSVbox integrates seamlessly with **every automation platform**:
-
-* **Mainstream SaaS automation** → Zapier, Make, Pipedream, IFTTT
-* **Open-source low-code** → n8n, Node-RED, Activepieces, Automatisch, Huginn
-* **Enterprise iPaaS** → Workato, Tray.io
-* **Data orchestration** → Airflow, Prefect, Kestra
-* **Developer-first platforms** → Windmill, Temporal, Inngest, StackStorm
-* **Business process automation** → Camunda
+* **Mainstream SaaS automation**: Zapier, Make, Pipedream, IFTTT
+* **Open-source low-code**: n8n, Node-RED, Activepieces, Automatisch, Huginn
+* **Enterprise iPaaS**: Workato, Tray.io
+* **Data orchestration**: Airflow, Prefect, Kestra
+* **Developer-first platforms**: Windmill, Temporal, Inngest, StackStorm
+* **Business process automation**: Camunda
