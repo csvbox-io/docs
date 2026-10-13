@@ -106,10 +106,10 @@ Go to **Edit Sheets** → **Options** → **Authorized Domains** and add the dom
 
 | Text | Valid | Invalid |
 | --- | --- | --- |
-| exampleco.com | exampleco.com | [www.exampleco.com](http://www.exampleco.com), app.exampleco.com |
-| [www.exampleco.com](http://www.exampleco.com) | [www.exampleco.com](http://www.exampleco.com) | exampleco.com, app.exampleco.com |
-| app.exampleco.com | app.exampleco.com | exampleco.com, [www.exampleco.com](http://www.exampleco.com) |
-| \*.exampleco.com | all exampleco.com subdomains |  |
+| `exampleco.com` | `exampleco.com` | `www.exampleco.com`, `app.exampleco.com` |
+| `www.exampleco.com` | `www.exampleco.com` | `exampleco.com`, `app.exampleco.com` |
+| `app.exampleco.com` | `app.exampleco.com` | `exampleco.com`, `www.exampleco.com` |
+| `*.exampleco.com` | All `exampleco.com` subdomains |  |
 
 If a domain fails validation, the user sees the error screen below:
 
