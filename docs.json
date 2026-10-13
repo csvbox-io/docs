@@ -39,24 +39,24 @@
             "icon": "sliders",
             "pages": [
               "dashboard-settings",
+              "dashboard-settings/sheet-options-1",
               "dashboard-settings/sheet-options",
               "dashboard-settings/add-columns-via-csv",
               "dashboard-settings/validations",
-              "dashboard-settings/sheet-options-1",
+              "dashboard-settings/smart-date-and-number-formats",
               "dashboard-settings/styling",
-              "dashboard-settings/ai-pre-import-transform",
-              "dashboard-settings/ai-bulk-transforms",
               "dashboard-settings/import-analytics",
+              "dashboard-settings/split-large-csv",
               {
-                "group": "AI Document Import",
+                "group": "AI Features",
                 "pages": [
+                  "dashboard-settings/ai-pre-import-transform",
+                  "dashboard-settings/ai-bulk-transforms",
+                  "dashboard-settings/ai-function-generator",
                   "dashboard-settings/ai-document-import",
                   "dashboard-settings/ai-document-import/document-metadata-fields"
                 ]
-              },
-              "dashboard-settings/split-large-csv",
-              "dashboard-settings/ai-function-generator",
-              "dashboard-settings/smart-date-and-number-formats"
+              }
             ]
           },
           {
@@ -64,30 +64,50 @@
             "icon": "code",
             "pages": [
               "advanced-installation",
-              "advanced-installation/dynamic-columns",
-              "advanced-installation/virtual-columns",
-              "advanced-installation/unmapped-columns",
-              "advanced-installation/ignored-columns",
-              "advanced-installation/import-links",
-              "advanced-installation/validation-functions",
-              "advanced-installation/server-side-validation",
-              "advanced-installation/data-transforms",
-              "advanced-installation/rest-file-api",
-              "advanced-installation/environment-variables",
-              "advanced-installation/auth-api",
               {
-                "group": "Sheet API",
+                "group": "Columns",
                 "pages": [
-                  "advanced-installation/sheet-api",
-                  "advanced-installation/sheet-api/list-sheets",
-                  "advanced-installation/sheet-api/get-sheet",
-                  "advanced-installation/sheet-api/create-sheet",
-                  "advanced-installation/sheet-api/replace-sheet",
-                  "advanced-installation/sheet-api/update-sheet"
+                  "advanced-installation/dynamic-columns",
+                  "advanced-installation/virtual-columns",
+                  "advanced-installation/unmapped-columns",
+                  "advanced-installation/ignored-columns"
                 ]
               },
-              "advanced-installation/mcp-server",
-              "advanced-installation/if-else-builder"
+              {
+                "group": "Validation & Transforms",
+                "pages": [
+                  "advanced-installation/validation-functions",
+                  "advanced-installation/server-side-validation",
+                  "advanced-installation/data-transforms",
+                  "advanced-installation/if-else-builder"
+                ]
+              },
+              {
+                "group": "APIs & Integrations",
+                "pages": [
+                  "advanced-installation/rest-file-api",
+                  "advanced-installation/auth-api",
+                  {
+                    "group": "Sheet API",
+                    "pages": [
+                      "advanced-installation/sheet-api",
+                      "advanced-installation/sheet-api/list-sheets",
+                      "advanced-installation/sheet-api/get-sheet",
+                      "advanced-installation/sheet-api/create-sheet",
+                      "advanced-installation/sheet-api/replace-sheet",
+                      "advanced-installation/sheet-api/update-sheet"
+                    ]
+                  },
+                  "advanced-installation/mcp-server"
+                ]
+              },
+              {
+                "group": "Configuration",
+                "pages": [
+                  "advanced-installation/import-links",
+                  "advanced-installation/environment-variables"
+                ]
+              }
             ]
           },
           {
