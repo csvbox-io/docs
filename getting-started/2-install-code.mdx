@@ -3,387 +3,344 @@ title: "2. Install Code"
 description: "Add a snippet of code to your app to start accepting spreadsheets from your users."
 ---
 
-Go to the 'Code' tab of the sheet and find the integration code. Place the code in your application at the location you want to display the import button.
+Embed the CSVbox importer in your app with a short code snippet. Go to the **Code** tab of the sheet, find the integration code, and place it in your application where you want the import button to appear.
+
+## Install the importer
 
 <Tabs>
+  <Tab title="JavaScript">
+    Sample code with basic usage:
 
-<Tab title="Javascript">
-
-Sample code with basic usage:
-
-```javascript
-<button class="btn btn-primary" data-csvbox disabled onclick="importer.openModal();">Import</button>
-<script type="text/javascript" src="https://js.csvbox.io/script.js"></script>
-<script type="text/javascript">
-    function callback(result, data) {
-        if(result){
-            console.log("success");
-            console.log(data.row_success + " rows uploaded");
-            //custom code
-        }else{
-            console.log("fail");
-            //custom code
+    ```javascript
+    <button class="btn btn-primary" data-csvbox disabled onclick="importer.openModal();">Import</button>
+    <script type="text/javascript" src="https://js.csvbox.io/script.js"></script>
+    <script type="text/javascript">
+        function callback(result, data) {
+            if(result){
+                console.log("success");
+                console.log(data.row_success + " rows uploaded");
+                //custom code
+            }else{
+                console.log("fail");
+                //custom code
+            }
         }
-    }
-    let importer = new CSVBoxImporter("YOUR_LICENSE_KEY_HERE",{        
-    }, callback);
+        let importer = new CSVBoxImporter("YOUR_LICENSE_KEY_HERE",{
+        }, callback);
     
-    importer.setUser({
+        importer.setUser({
+            user_id: "default123"
+        })
+    </script>
+    ```
+
+    <Note>
+      Each sheet has a unique license key. Find it on the **Code** tab of the sheet page and pass it to the `CSVBoxImporter` function.
+    </Note>
+  </Tab>
+  <Tab title="React">
+    Install using npm:
+
+    ```javascript
+    npm install @csvbox/react
+    ```
+
+    This gives you access to the `CSVBoxButton` component, which has the basic functionality of the importer. Import the `CSVBoxButton` component into your project.
+
+    ```javascript
+    import { CSVBoxButton } from '@csvbox/react'
+    ```
+
+    Basic usage:
+
+    ```javascript
+    <CSVBoxButton
+      licenseKey="YOUR_LICENSE_KEY_HERE"
+      user={{
         user_id: "default123"
-    })
-</script>
-```
-
-<Info>
-
-Each sheet has a unique Licence Key. Find the Licence Key of the sheet on the 'Code' tab of the sheet page and pass it to the **CSVBoxImporter** function.
-
-</Info>
-
-</Tab>
-
-<Tab title="React">
-
-Install using npm:
-
-```javascript
-npm install @csvbox/react
-```
-
- This will give you access to the **`CSVBoxButton`** component having the basic functionality of our importer. Import the **`CSVBoxButton`** component to your project.
-
-```javascript
-import { CSVBoxButton } from '@csvbox/react'
-```
-
-Basic usage:
-
-```javascript
-<CSVBoxButton
-  licenseKey="YOUR_LICENSE_KEY_HERE"
-  user={{
-    user_id: "default123"
-  }}
-  onImport={(result, data) => {
-    if(result){
-      console.log("success");
-      console.log(data.row_success + " rows uploaded");
-      //custom code
-    }else{
-      console.log("fail");
-      //custom code
-    }
-  }} 
-  render={(launch, isLoading)=>{
-          return <button disabled={isLoading} onClick={launch}>Upload file</button>;
       }}
->
-  Import
-</CSVBoxButton>
-```
-
-<Info>
-
-Each sheet has a unique Licence Key. Find the Licence Key of the sheet on the Code section of the sheet page and attach it to the **licenseKey** property of the **CSVBoxButton** component.
-
-</Info>
-
-<Info>
-
-The optional **render** property allows you to pass in your button to use in place of the standard csvbox element.
-
-</Info>
-
-</Tab>
-
-<Tab title="Angular">
-
-Install using npm:
-
-```javascript
-npm install @csvbox/angular
-```
-
-<Info>
-
-For Angular versions below 12 use @csvbox/angular\_8 and for Angular versions 12 and above use @csvbox/angular
-
-</Info>
-
-Import: 
-
-Add `CSVBoxAngularModule` to your module imports.
-
-```javascript
-import { CSVBoxAngularModule } from "@csvbox/angular";
-
-@NgModule({
-  ...
-  imports: [
-    ...
-    CSVBoxAngularModule
-  ]
-})
-```
-
-Once you have this setup, in your app component file, you will be able to import and access the`CSVBoxMethods` module for use.
-
-It will bring the `csvbox-button` component into your project. Example:
-
-```text
-<csvbox-button [licenseKey]="licenseKey" [imported]="imported.bind(this)" [user]="user">Import</csvbox-button>
-```
-
-Basic usage:
-
-```javascript
-@Component({
-  selector: 'app-root',
-  template: `
-    <csvbox-button
-      [licenseKey]="licenseKey"
-      [user]="user"      
-      [imported]="imported.bind(this)">
-      Import
-    </csvbox-button>
-  `
-})
-
-export class AppComponent {
-
-  title = 'example';
-  licenseKey = 'YOUR_LICENSE_KEY_HERE';
-  user = { user_id: 'default123' };
-
-  imported(result: boolean, data: any) {
-    if(result) {
-      console.log("Sheet uploaded successfully");
-      console.log(data.row_success + " rows uploaded");
-    }else{
-      console.log("There was some problem uploading the sheet");
-    }
-  }
-}
-```
-
-<Info>
-
-Each sheet has a unique Licence Key. Find the Licence Key of the sheet on the Code section of the sheet page and attach it to the **licenseKey** property of the **AppComponent**.
-
-</Info>
-
-Styling the button:
-
-In order to style the `<csvbox-button>` from within your parent component, ensure that your parent component has `ViewEncapsulation.None`, pass down a class to `<csvbox-button>`, and now you will be able to style the `button` one-level down.
-
-```javascript
-import { Component, ViewEncapsulation } from '@angular/core';
-```
-
-```javascript
-@Component({
-  selector: 'app-root',
-  template: `
-    <csvbox-button
-      [licenseKey]="licenseKey"
-      [user]="user"
-      [dynamicColumns]="dynamicColumns"
-      [imported]="Imported.bind(this)"
-      class=“csvbox-btn”      
-      >
-      Import
-    </csvbox-button>
-  `,
-  encapsulation: ViewEncapsulation.None,
-  styles: [`
-    .csvbox-btn button {        
-        background: #007bff;
-        border-radius: 3px;        
-      }
-  `],
-export class AppComponent { 
-    //...
-}
-```
-
-</Tab>
-
-<Tab title="Vuejs">
-
-Install using npm:
-
-```javascript
-npm install @csvbox/vuejs
-```
-
- This will give you access to the **`CSVBoxButton`** component. Import the **`CSVBoxButton`** component to your project.
-
-```javascript
-import { CSVBoxButton } from '@csvbox/vuejs'
-```
-
- Now just import the **`CSVBoxButton`** and include it in your Vue `components`, and you're ready to get started.
-
-Basic usage:
-
-```javascript
-<template>
-  <div id="app">
-    <CSVBoxButton 
-      :licenseKey="licenseKey"
-      :user="user"        
-      :onImport="onImport">
-      Upload File
-    </CSVBoxButton>
-  </div>
-</template>
-
-<script>
-import { CSVBoxButton } from '@csvbox/vuejs';
-
-export default {
-  name: 'App',
-  components: {
-    CSVBoxButton,
-  },
-  data: () => ({
-    licenseKey: 'YOUR_LICENSE_KEY_HERE',
-    user: {
-      user_id: 'default123',
-    },
-  }),
-  methods: {    
-    onImport: function (result, data) {    
-       if(result){
+      onImport={(result, data) => {
+        if(result){
           console.log("success");
           console.log(data.row_success + " rows uploaded");
           //custom code
-      }else{
+        }else{
           console.log("fail");
           //custom code
+        }
+      }}
+      render={(launch, isLoading)=>{
+              return <button disabled={isLoading} onClick={launch}>Upload file</button>;
+          }}
+    >
+      Import
+    </CSVBoxButton>
+    ```
+
+    <Note>
+      Each sheet has a unique license key. Find it in the **Code** section of the sheet page and attach it to the `licenseKey` property of the `CSVBoxButton` component.
+
+      The optional `render` property lets you pass in your own button to use in place of the standard CSVbox element.
+    </Note>
+  </Tab>
+  <Tab title="Angular">
+    Install using npm:
+
+    ```javascript
+    npm install @csvbox/angular
+    ```
+
+    <Note>
+      For Angular versions below 12, use `@csvbox/angular_8`. For Angular 12 and above, use `@csvbox/angular`.
+    </Note>
+
+    **Import**
+
+    Add `CSVBoxAngularModule` to your module imports.
+
+    ```javascript
+    import { CSVBoxAngularModule } from "@csvbox/angular";
+    
+    @NgModule({
+      ...
+      imports: [
+        ...
+        CSVBoxAngularModule
+      ]
+    })
+    ```
+
+    Once this is set up, you can import and access the `CSVBoxMethods` module in your app component file.
+
+    It brings the `csvbox-button` component into your project. Example:
+
+    ```text
+    <csvbox-button [licenseKey]="licenseKey" [imported]="imported.bind(this)" [user]="user">Import</csvbox-button>
+    ```
+
+    Basic usage:
+
+    ```javascript
+    @Component({
+      selector: 'app-root',
+      template: `
+        <csvbox-button
+          [licenseKey]="licenseKey"
+          [user]="user"
+          [imported]="imported.bind(this)">
+          Import
+        </csvbox-button>
+      `
+    })
+    
+    export class AppComponent {
+    
+      title = 'example';
+      licenseKey = 'YOUR_LICENSE_KEY_HERE';
+      user = { user_id: 'default123' };
+    
+      imported(result: boolean, data: any) {
+        if(result) {
+          console.log("Sheet uploaded successfully");
+          console.log(data.row_success + " rows uploaded");
+        }else{
+          console.log("There was some problem uploading the sheet");
+        }
       }
     }
-  },
-}
-</script>
-```
+    ```
 
-<Info>
+    <Note>
+      Each sheet has a unique license key. Find it in the **Code** section of the sheet page and attach it to the `licenseKey` property of the `AppComponent`.
+    </Note>
 
-Each sheet has a unique Licence Key. Find the Licence Key of the sheet on the Code section of the sheet page and attach it to the **licenseKey** property of the **CSVBoxButton** component.
+    **Styling the button**
 
-</Info>
+    To style `<csvbox-button>` from within your parent component, make sure the parent component has `ViewEncapsulation.None`, then pass a class down to `<csvbox-button>`. You can then style the `button` one level down.
 
-> #### Implementation Demo
->
-> Vue2 - [https://codesandbox.io/s/csvbox-vue2-plzl0q](https://codesandbox.io/s/csvbox-vue2-plzl0q)
->
-> Vue3 - [https://codesandbox.io/s/csvbox-vue3-vuselr](https://codesandbox.io/s/csvbox-vue3-vuselr)
+    ```javascript
+    import { Component, ViewEncapsulation } from '@angular/core';
+    ```
 
-</Tab>
+    ```javascript
+    @Component({
+      selector: 'app-root',
+      template: `
+        <csvbox-button
+          [licenseKey]="licenseKey"
+          [user]="user"
+          [dynamicColumns]="dynamicColumns"
+          [imported]="Imported.bind(this)"
+          class=“csvbox-btn”
+          >
+          Import
+        </csvbox-button>
+      `,
+      encapsulation: ViewEncapsulation.None,
+      styles: [`
+        .csvbox-btn button {
+            background: #007bff;
+            border-radius: 3px;
+          }
+      `],
+    export class AppComponent {
+        //...
+    }
+    ```
+  </Tab>
+  <Tab title="Vue.js">
+    Install using npm:
 
+    ```javascript
+    npm install @csvbox/vuejs
+    ```
+
+    This gives you access to the `CSVBoxButton` component. Import the `CSVBoxButton` component into your project.
+
+    ```javascript
+    import { CSVBoxButton } from '@csvbox/vuejs'
+    ```
+
+    Include `CSVBoxButton` in your Vue `components`, and you're ready to get started.
+
+    Basic usage:
+
+    ```javascript
+    <template>
+      <div id="app">
+        <CSVBoxButton
+          :licenseKey="licenseKey"
+          :user="user"
+          :onImport="onImport">
+          Upload File
+        </CSVBoxButton>
+      </div>
+    </template>
+    
+    <script>
+    import { CSVBoxButton } from '@csvbox/vuejs';
+    
+    export default {
+      name: 'App',
+      components: {
+        CSVBoxButton,
+      },
+      data: () => ({
+        licenseKey: 'YOUR_LICENSE_KEY_HERE',
+        user: {
+          user_id: 'default123',
+        },
+      }),
+      methods: {
+        onImport: function (result, data) {
+           if(result){
+              console.log("success");
+              console.log(data.row_success + " rows uploaded");
+              //custom code
+          }else{
+              console.log("fail");
+              //custom code
+          }
+        }
+      },
+    }
+    </script>
+    ```
+
+    <Note>
+      Each sheet has a unique license key. Find it in the **Code** section of the sheet page and attach it to the `licenseKey` property of the `CSVBoxButton` component.
+    </Note>
+
+    **Implementation demos**
+
+    - Vue2: [https://codesandbox.io/s/csvbox-vue2-plzl0q](https://codesandbox.io/s/csvbox-vue2-plzl0q)
+    - Vue3: [https://codesandbox.io/s/csvbox-vue3-vuselr](https://codesandbox.io/s/csvbox-vue3-vuselr)
+  </Tab>
 </Tabs>
 
-<Danger>
+<Warning>
+  If your app or database restricts access to an IP allowlist, you need to manually add CSVbox's addresses to use the importer. Allowlist all of the following IP addresses:
 
-If your app/database is restricted to IP addresses on an allowlist, you will need to manually add CSVbox's addresses in order to use the importer.
+  - `18.233.84.183`
+  - `18.213.249.53`
+  - `3.73.26.144`
 
-You will have to whitelist the following IP addresses:
+  Only one of these addresses is in use at any time, but the active address can change at any time. Add them all to your allowlist to avoid interruptions in service.
+</Warning>
 
-* `18.233.84.183`
-* `18.213.249.53`
-* `3.73.26.144`
+## Referencing the user
 
-Note that at any time, you will only see one of these addresses in use. However, the active IP address can change at any time, so you should add them all to your IP whitelist to ensure no interruptions in service.
-
-</Danger>
-
-### Referencing the user
-
-You can configure **custom user attributes** in the installation code to identify the users in your platform and match them with their respective imports. 
+Configure **custom user attributes** in the installation code to identify the users on your platform and match them with their imports.
 
 <Tabs>
+  <Tab title="JavaScript">
+    Pass custom user attributes as input parameters to the `setUser` method. The custom user attributes are pushed to your destination along with the uploaded data.
 
-<Tab title="Javascript">
+    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
 
-Pass custom user attributes as input parameters to the **`setUser`** method. The custom user attributes will be pushed to your destination along with the uploaded data.
+    ```javascript
+     importer.setUser({
+            user_id: "1a2b3c4d5e6f",
+            team_id: "sales2",
+            isAuthenticated: "true",
+            permissionLevel: "admin",
+            email: "abc@example.com"
+        })
+    ```
+  </Tab>
+  <Tab title="React">
+    Pass custom user attributes as an object to the `user` property of the `CSVBoxButton` component. The custom user attributes are pushed to your destination along with the uploaded data.
 
-**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
+    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
 
-```javascript
- importer.setUser({
-        user_id: "1a2b3c4d5e6f",
-        team_id: "sales2",
-        isAuthenticated: "true",
-        permissionLevel: "admin",
-        email: "abc@example.com"
-    })
-```
+    ```javascript
+      user={{
+                  user_id: "1a2b3c4d5e6f",
+                  team_id: "sales2",
+                  isAuthenticated: "true",
+                  permissionLevel: "admin",
+                  email: "abc@example.com"
+      }}
+    ```
+  </Tab>
+  <Tab title="Angular">
+    Pass custom user attributes as an object to the `user` property of the `AppComponent`. The custom user attributes are pushed to your destination along with the uploaded data.
 
-</Tab>
+    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
 
-<Tab title="React">
+    ```javascript
+      user={
+                  user_id: "1a2b3c4d5e6f",
+                  team_id: "sales2",
+                  isAuthenticated: "true",
+                  permissionLevel: "admin",
+                  email: "abc@example.com"
+     }
+    ```
+  </Tab>
+  <Tab title="Vue.js">
+    Pass custom user attributes as an object to the `user` property of the `CSVBoxButton` component. The custom user attributes are pushed to your destination along with the uploaded data.
 
-Pass custom user attributes as an object to the **`user`** property of the **`CSVBoxButton`** component. The custom user attributes will be pushed to your destination along with the uploaded data.
+    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
 
-**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
-
-```javascript
-  user={{
-              user_id: "1a2b3c4d5e6f",
-              team_id: "sales2",
-              isAuthenticated: "true",
-              permissionLevel: "admin",
-              email: "abc@example.com"
-  }}
-```
-
-</Tab>
-
-<Tab title="Angular">
-
-Pass custom user attributes as an object to the **`user`** property of the AppComponent. The custom user attributes will be pushed to your destination along with the uploaded data.
-
-**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
-
-```javascript
-  user={
-              user_id: "1a2b3c4d5e6f",
-              team_id: "sales2",
-              isAuthenticated: "true",
-              permissionLevel: "admin",
-              email: "abc@example.com"
- }
-```
-
-</Tab>
-
-<Tab title="Vuejs">
-
-Pass custom user attributes as an object to the **`user`** property of the **`CSVBoxButton`** component. The custom user attributes will be pushed to your destination along with the uploaded data.
-
-**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
-
-```javascript
-  user: {
-              user_id: "1a2b3c4d5e6f",
-              team_id: "sales2",
-              isAuthenticated: "true",
-              permissionLevel: "admin",
-              email: "abc@example.com"
-  },
-```
-
-</Tab>
-
+    ```javascript
+      user: {
+                  user_id: "1a2b3c4d5e6f",
+                  team_id: "sales2",
+                  isAuthenticated: "true",
+                  permissionLevel: "admin",
+                  email: "abc@example.com"
+      },
+    ```
+  </Tab>
 </Tabs>
 
-### Callback function
+## Callback function
 
-Once the user uploads a file the importer will return the status of the import along with metadata describing the completed import. Data is returned via two variables: **`result`** and **`data`**. 
+Once the user uploads a file, the importer returns the status of the import along with metadata describing the completed import. Data is returned in two variables, `result` and `data`:
 
-1. **`result`** - It is of type boolean with the value **true** if the import is successful and **false** if the import fails.
-2. **`data`** - It returns JSON data as shown below:
+- **`result`**: a boolean that is `true` if the import succeeds and `false` if it fails.
+- **`data`**: JSON data as shown below.
 
 ```javascript
   {
@@ -407,662 +364,576 @@ Once the user uploads a file the importer will return the status of the import a
       { "SKU": "Product SKU" },
       { "Price": "Sale Price" },
       { "Quantity": "Inventory"},
-      { "Image URL": "Img"}    
+      { "Image URL": "Img"}
     ]
   }
 ```
 
-<Info>
+<Note>
+  The `data` object is null if the import fails. You can also configure the importer to receive the entire file data in JSON format in the `data` object. [Learn more](/getting-started/3-receive-data#data-on-the-client-side).
+</Note>
 
-The data object will be null if the import fails
-
-</Info>
-
-<Info>
-
-You can also configure the importer to receive the entire file data in JSON format in the **data** object above. More information [here](/getting-started/3-receive-data#data-on-the-client-side).
-
-</Info>
-
-You can write custom code to handle the success or failure conditions client side.
+You can write custom code to handle the success or failure conditions on the client side.
 
 <Tabs>
+  <Tab title="JavaScript">
+    The `result` and `data` variables are available in the `callback` function, which is triggered when the import completes.
 
-<Tab title="Javascript">
-
-The **`result`** and **`data`** variables will be available in the **`callback`** function that is triggered when the import is completed.
-
-```javascript
-function callback(result, data) {
-        if(result){
-            console.log("success");
-            console.log(data.row_success + " rows uploaded");
-            //custom code
-        }else{
-            console.log("fail");
-            //custom code
+    ```javascript
+    function callback(result, data) {
+            if(result){
+                console.log("success");
+                console.log(data.row_success + " rows uploaded");
+                //custom code
+            }else{
+                console.log("fail");
+                //custom code
+            }
         }
-    }
-```
+    ```
+  </Tab>
+  <Tab title="React">
+    Pass additional options as an object to the `user` property of the `CSVBoxButton` component. The custom user attributes are pushed to your destination along with the uploaded data.
 
-</Tab>
+    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
 
-<Tab title="React">
+    ```javascript
+      user={{
+                  user_id: "1a2b3c4d5e6f",
+                  team_id: "sales2",
+                  isAuthenticated: "true",
+                  permissionLevel: "admin",
+                  email: "abc@example.com"
+      }}
+    ```
+  </Tab>
+  <Tab title="Angular">
+    The `imported` property provides access to the `result` and `data` variables through the specified callback function.
 
-Pass additional options as an object to the **`user`** property of the **`CSVBoxButton`** component. The custom user attributes will be pushed to your destination along with the uploaded data.
-
-**user_id** is the only custom attribute that is mandatory. Apart from **user_id,** you can add up to 4 custom attributes in the **`<key>: <value>`** format. Example:
-
-```javascript
-  user={{
-              user_id: "1a2b3c4d5e6f",
-              team_id: "sales2",
-              isAuthenticated: "true",
-              permissionLevel: "admin",
-              email: "abc@example.com"
-  }}
-```
-
-</Tab>
-
-<Tab title="Angular">
-
-The **`imported`** property provides access to the **`result`** and **`data`** variables via the specified callback function.
-
-```javascript
-  imported(result: boolean, data: any) {
-    if(result) {
-      console.log("Sheet uploaded successfully");
-      console.log(data.row_success + " rows uploaded");
-    }else{
-      console.log("There was some problem uploading the sheet");
-    }
-  }
-```
-
-</Tab>
-
-<Tab title="Vuejs">
-
-The **`onImport`** property provides access to the **`result`** and **`data`** variables.
-
-```javascript
-onImport: function (result, data) {    
-       if(result){
-          console.log("success");
+    ```javascript
+      imported(result: boolean, data: any) {
+        if(result) {
+          console.log("Sheet uploaded successfully");
           console.log(data.row_success + " rows uploaded");
-          //custom code
-      }else{
-          console.log("fail");
-          //custom code
+        }else{
+          console.log("There was some problem uploading the sheet");
+        }
       }
-}
-```
+    ```
+  </Tab>
+  <Tab title="Vue.js">
+    The `onImport` property provides access to the `result` and `data` variables.
 
-</Tab>
-
+    ```javascript
+    onImport: function (result, data) {
+           if(result){
+              console.log("success");
+              console.log(data.row_success + " rows uploaded");
+              //custom code
+          }else{
+              console.log("fail");
+              //custom code
+          }
+    }
+    ```
+  </Tab>
 </Tabs>
 
-### Options
+## Options
 
-Here is the list of additional configuration options available with the CSVbox importer.
+These additional configuration options are available with the CSVbox importer.
 
-#### max\_rows
+### max_rows
 
-* Type: `number`
-* Default: `null`
-*   Description:
+- **Type**: `number`
+- **Default**: `null`
 
-    Specify the maximum number of rows that a single file can import. This value excludes the headers of the file. So if the number of rows in a sheet is 101, but the first row is the header, then this file would be considered to have 100 data rows in it.
+Specify the maximum number of rows that a single file can import. This value excludes the file headers. If a sheet has 101 rows and the first row is the header, the file is considered to have 100 data rows.
 
-<Frame caption="Max Limit Message"><img src="/images/max-limit.jpg" alt="Max Limit Message" /></Frame>
+<Frame caption="Max Limit Message">
+  <img
+    src="/images/max-limit.jpg"
+    alt="Max Limit Message"
+  />
+</Frame>
 
-#### max\_rows\_allow\_submit
+### max_rows_allow_submit
 
-* Type: `boolean`
-* Default: `true`
-*   Description:
+- **Type**: `boolean`
+- **Default**: `true`
 
-    Allow or disallow submission of the permissible number of rows when the overall row count exceeds the limit. Consider row limit (**max\_rows**) is set to 5. If **max\_rows\_allow\_submit is** set to **true** then the user can upload the top 5 rows of his file. If **max\_rows\_allow\_submit is** set to **false** then the user will not be able to submit even 1 row if the overall row count exceeds **max\_rows**.
+Allow or disallow submitting the permissible number of rows when the overall row count exceeds the limit. For example, suppose the row limit (`max_rows`) is set to 5:
 
-#### max\_rows\_custom\_message
+- If `max_rows_allow_submit` is `true`, the user can upload the top 5 rows of their file.
+- If `max_rows_allow_submit` is `false`, the user can't submit even 1 row if the overall row count exceeds `max_rows`.
 
-* Type: `string`
-* Default: `null`
-*   Description:
+### max_rows_custom_message
 
-    Display a custom message to the user when the file row count is greater than **max\_rows**. This message will show only when **max\_rows\_allow\_submit** is set to **false**.
+- **Type**: `string`
+- **Default**: `null`
 
-<Frame caption="Custom Message for Max Row Limit"><img src="/images/custom-message.jpg" alt="Custom Message for Max Row Limit" /></Frame>
+Display a custom message to the user when the file row count is greater than `max_rows`. This message shows only when `max_rows_allow_submit` is set to `false`.
 
-#### min\_rows
+<Frame caption="Custom Message for Max Row Limit">
+  <img
+    src="/images/custom-message.jpg"
+    alt="Custom Message for Max Row Limit"
+  />
+</Frame>
 
-* Type: `number`
-* Default: `null`
-*   Description:
+### min_rows
 
-    The minimum number of rows that is required for a single upload. 
+- **Type**: `number`
+- **Default**: `null`
 
-#### min\_rows\_custom\_message
+The minimum number of rows required for a single upload.
 
-* Type: `string`
-* Default: `null`
-*   Description:
+### min_rows_custom_message
 
-    Display a custom message when the file row count is less than **min\_rows**.
+- **Type**: `string`
+- **Default**: `null`
 
-#### language
+Display a custom message when the file row count is less than `min_rows`.
 
-* Type: `string`
-* Default: `null`
-*   Description:
+### language
 
-    Specify the importer frontend language. This value will override the default language option configured via the csvbox dashboard. Acceptable values are:
+- **Type**: `string`
+- **Default**: `null`
 
-<table><thead><tr><th width="150">Value</th><th>Language</th></tr></thead><tbody><tr><td>en</td><td>English</td></tr><tr><td>de</td><td>German</td></tr><tr><td>fr</td><td>French</td></tr><tr><td>es</td><td>Spanish</td></tr><tr><td>nl</td><td>Dutch</td></tr><tr><td>pt</td><td>Portuguese</td></tr><tr><td>th</td><td>Thai</td></tr><tr><td>pl</td><td>Polish</td></tr><tr><td>ro</td><td>Romanian</td></tr><tr><td>he</td><td>Hebrew</td></tr><tr><td>ja</td><td>Japenese</td></tr><tr><td>da</td><td>Danish</td></tr><tr><td>tr</td><td>Turkish</td></tr><tr><td>sk</td><td>Slovak</td></tr><tr><td>hi</td><td>Hindi</td></tr><tr><td>ms</td><td>Bahasa Malaysia (Malay)</td></tr><tr><td>ru</td><td>Russian </td></tr><tr><td>vi</td><td>Vietnamese </td></tr><tr><td>ko</td><td>Korean </td></tr><tr><td>id</td><td>Bahasa Indonesia</td></tr><tr><td>ar-EG</td><td>Egyptian Arabic</td></tr><tr><td>ur</td><td>Urdu </td></tr><tr><td>zh-CN</td><td>Chinese (Simplified) </td></tr><tr><td>zh-TW</td><td>Chinese (Traditional)</td></tr><tr><td>bg</td><td>Bulgarian</td></tr><tr><td>cs</td><td>Czech</td></tr><tr><td>hu</td><td>Hungarian</td></tr><tr><td>uk</td><td>Ukrainian</td></tr></tbody></table>
+Specify the importer frontend language. This value overrides the default language configured in the CSVbox dashboard. Acceptable values:
 
-#### allow\_invalid
+| Value | Language |
+| --- | --- |
+| `en` | English |
+| `de` | German |
+| `fr` | French |
+| `es` | Spanish |
+| `nl` | Dutch |
+| `pt` | Portuguese |
+| `th` | Thai |
+| `pl` | Polish |
+| `ro` | Romanian |
+| `he` | Hebrew |
+| `ja` | Japanese |
+| `da` | Danish |
+| `tr` | Turkish |
+| `sk` | Slovak |
+| `hi` | Hindi |
+| `ms` | Bahasa Malaysia (Malay) |
+| `ru` | Russian |
+| `vi` | Vietnamese |
+| `ko` | Korean |
+| `id` | Bahasa Indonesia |
+| `ar-EG` | Egyptian Arabic |
+| `ur` | Urdu |
+| `zh-CN` | Chinese (Simplified) |
+| `zh-TW` | Chinese (Traditional) |
+| `bg` | Bulgarian |
+| `cs` | Czech |
+| `hu` | Hungarian |
+| `uk` | Ukrainian |
 
-* Type: `boolean`
-* Default: `0`
-*   Description:
+### allow_invalid
 
-    It specifies if the users can continue to submit the file even if there are validation errors.
+- **Type**: `boolean`
+- **Default**: `0`
 
-#### request\_headers
+Specifies whether users can continue to submit the file even if there are validation errors.
 
-* Type: `{ key: value, key: value, ... }`
-* Default: `null`
-*   Description:
+### request_headers
 
-    This is where you define additional headers that get passed with each HTTP request.
+- **Type**: `{ key: value, key: value, ... }`
+- **Default**: `null`
 
-#### dynamic\_list\_request\_headers
+Defines additional headers that are passed with each HTTP request.
 
-* Type: `{ key: value, key: value, ... }`
-* Default: `null`
-*   Description:
+### dynamic_list_request_headers
 
-    This is where you define additional headers that get passed with each HTTP request for the [dynamic list API](/dashboard-settings/validations#dynamic-list).
+- **Type**: `{ key: value, key: value, ... }`
+- **Default**: `null`
 
-#### sample\_template\_url
+Defines additional headers that are passed with each HTTP request for the [dynamic list API](/dashboard-settings/validations#dynamic-list).
 
-* Type: `String`
-* Default: `null`
-*   Description:
+### sample_template_url
 
-    It is the URL to download the sample CSV file for the end users.
+- **Type**: `String`
+- **Default**: `null`
 
-#### sample\_template\_button\_text
+The URL from which end users download the sample CSV file.
 
-* Type: `String`
-* Default: `null`
-*   Description:
+### sample_template_button_text
 
-    It specifies the text on the button for downloading the sample CSV file.
+- **Type**: `String`
+- **Default**: `null`
 
-<Info>
+The text on the button for downloading the sample CSV file.
 
-The **sample\_template\_url** and the **sample\_template\_button\_text** options can be used to provide the end users with a customized dynamic sample CSV file.
+<Note>
+  Use the `sample_template_url` and `sample_template_button_text` options together to give end users a customized, dynamic sample CSV file.
 
-<img src="/images/sample-template-file.jpg" alt="" />
+  <Frame>
+    <img
+      src="/images/sample-template-file.jpg"
+      alt="Importer showing a custom sample template download button"
+    />
+  </Frame>
+</Note>
 
-</Info>
-
-**Examples:**
+The following examples set several of these options:
 
 <Tabs>
+  <Tab title="JavaScript">
+    Pass additional options as input parameters to the `setOptions` method.
 
-<Tab title="Javascript">
+    ```javascript
+    importer.setOptions({
+        max_rows: 50,
+        language: 'de',
+        request_headers: {
+                "Content-Type": "application/json",
+                "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
+        },
+        sample_template_url: 'https://files.myapp.com/user-18768',
+        sample_template_button_text: 'Starter Template'
+    })
+    ```
+  </Tab>
+  <Tab title="React">
+    Pass the additional options as an object to the `options` property of the `CSVBoxButton` component.
 
-Pass additional options as input parameters to the **`setOptions`** method.
+    ```javascript
+      options={{
+                  max_rows: 50,
+                  language: 'de',
+                  request_headers: {
+                            "Content-Type": "application/json",
+                            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
+                      },
+                  sample_template_url: 'https://files.myapp.com/user-18768',
+                  sample_template_button_text: 'Starter Template'
+      }}
+    ```
+  </Tab>
+  <Tab title="Angular">
+    Pass the additional options as an object to the `options` property of the `AppComponent`.
 
-```javascript
-importer.setOptions({
-    max_rows: 50,
-    language: 'de',
-    request_headers: {
-            "Content-Type": "application/json",
-            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
-    },
-    sample_template_url: 'https://files.myapp.com/user-18768',
-    sample_template_button_text: 'Starter Template' 
-})
-```
+    ```javascript
+      options={
+                  max_rows: 50,
+                  language: 'de',
+                  request_headers: {
+                            "Content-Type": "application/json",
+                            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
+                    },
+                  sample_template_url: 'https://files.myapp.com/user-18768',
+                  sample_template_button_text: 'Starter Template'
+     }
+    ```
+  </Tab>
+  <Tab title="Vue.js">
+    Pass the additional options as an object to the `options` property of the `CSVBoxButton` component.
 
-</Tab>
-
-<Tab title="React">
-
-Pass the additional options as an object to the **`options`** property of the **`CSVBoxButton`** component.
-
-```javascript
-  options={{
-              max_rows: 50,
-              language: 'de',     
-              request_headers: {
-                        "Content-Type": "application/json",
-                        "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
-                  },
-              sample_template_url: 'https://files.myapp.com/user-18768',
-              sample_template_button_text: 'Starter Template'              
-  }}
-```
-
-</Tab>
-
-<Tab title="Angular">
-
-Pass the additional options as an object to the **`options`** property of the AppComponent.
-
-```javascript
-  options={
-              max_rows: 50,
-              language: 'de',
-              request_headers: {
-                        "Content-Type": "application/json",
-                        "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
-                },
-              sample_template_url: 'https://files.myapp.com/user-18768',
-              sample_template_button_text: 'Starter Template'                     
- }
-```
-
-</Tab>
-
-<Tab title="Vuejs">
-
-Pass the additional options as an object to the **`options`** property of the **`CSVBoxButton`** component.
-
-```javascript
-  options: {
-              max_rows: 50,
-              language: 'de',
-              request_headers: {
-                        "Content-Type": "application/json",
-                        "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
-                },
-              sample_template_url: 'https://files.myapp.com/user-18768',
-              sample_template_button_text: 'Starter Template'    
-  },
-```
-
-</Tab>
-
+    ```javascript
+      options: {
+                  max_rows: 50,
+                  language: 'de',
+                  request_headers: {
+                            "Content-Type": "application/json",
+                            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
+                    },
+                  sample_template_url: 'https://files.myapp.com/user-18768',
+                  sample_template_button_text: 'Starter Template'
+      },
+    ```
+  </Tab>
 </Tabs>
 
-#### target\_file\_name
+### target_file_name
 
-* Type: `String`
-* Default: `null`
-*   Description:
+- **Type**: `String`
+- **Default**: `null`
 
-    It specifies the name of the file that gets pushed to your destination. This is applicable for the following destinations only:
+Specifies the name of the file that is pushed to your destination. This applies only to the following destinations:
 
-    * s3
-    * FTP Server
-    * Google Sheets
+- S3
+- FTP Server
+- Google Sheets
 
-#### upload\_file\_url
+### upload_file_url
 
-* Type: `String`
-* Default: `null`
-*   Description:
+- **Type**: `String`
+- **Default**: `null`
 
-    The URL of the file to be imported. This is useful in cases where you want the data to be pre-loaded into the importer without asking the users to upload the file. Simply provide the file location and the importer will load the data when the user clicks the Import button.
+The URL of the file to import. Use it when you want the data preloaded into the importer without asking users to upload a file. Provide the file location, and the importer loads the data when the user clicks the **Import** button.
 
-#### upload\_file\_worksheet\_name
+### upload_file_worksheet_name
 
-* Type: `String`
-* Default: `null`
-*   Description:
+- **Type**: `String`
+- **Default**: `null`
 
-    The name of the worksheet that should be uploaded if you are uploading a file with multiple tabs via [**upload\_file\_url** ](/getting-started/2-install-code#upload_file_url)option.
+The name of the worksheet to upload when you upload a file with multiple tabs through the [`upload_file_url`](/getting-started/2-install-code#upload_file_url) option.
 
-#### theme
+### theme
 
-* Type: `String`
-* Default: `null`
-*   Description:
+- **Type**: `String`
+- **Default**: `null`
 
-    Initializes the importer with the specified theme. Supported values:\
-    `light`, `light-custom`, `dark`, `dark-custom`. If not specified, the theme set in the sheet dashboard will be used by default.
+Initializes the importer with the specified theme. Supported values: `light`, `light-custom`, `dark`, `dark-custom`. If not specified, the theme set in the sheet dashboard is used by default.
 
-#### **default\_header\_row**
+### default_header_row
 
-* Type: number
-* Default: 1
-* Description:\
-  Row to auto-select as the header on the Header Selection page (rows are 1-indexed).
+- **Type**: `number`
+- **Default**: `1`
 
-### Events
+The row to auto-select as the header on the **Header Selection** page. Rows are 1-indexed.
 
-Here is the list of additional importer events/properties:
+## Events
 
-#### onReady
+These additional importer events and properties are available.
 
-Triggers when the importer is initialized and ready for use by the users. The users can then click the Import button to open the Importer modal dialog.
+### onReady
 
-#### onLoadStart
+Triggers when the importer is initialized and ready for use. Users can then click the **Import** button to open the importer modal dialog.
 
-Triggers when the importer iFrame starts loading.
+### onLoadStart
 
-<Info>
+Triggers when the importer iframe starts loading.
 
-In vanilla Javascript, onLoadStart will trigger only when the [Lazy Load](/getting-started/2-install-code#lazy-load) is activated. Without Lazy Load, the iframe loading starts as soon as the importer is initialized.
+<Note>
+  In vanilla JavaScript, `onLoadStart` triggers only when [Lazy Load](/getting-started/2-install-code#lazy-load) is activated. Without Lazy Load, the iframe starts loading as soon as the importer is initialized.
+</Note>
 
-</Info>
-
-#### onClose
+### onClose
 
 Triggers when the importer is closed.
 
-#### onSubmit
+### onSubmit
 
-Triggers when the user hits the 'Submit' button to upload the validated file. **`data`** object is available in this event. It contains metadata related to the import. 
+Triggers when the user clicks **Submit** to upload the validated file. The `data` object is available in this event and contains metadata about the import.
 
-<Accordion title="onSubmit Data object sample">
-
-```json
-{
-  "import_id": 79418895,
-  "sheet_id": 575,
-  "sheet_name": "Products Import",
-  "destination_type": "webhook",
-  "row_count": 100,
-  "import_starttime": 87987897897,
-  "original_filename": "example-01.csv",
-  "custom_fields": {
-    "user_id": "Z1001"
-  },
-  "column_mappings": [
-    {
-      "Item": "Product Name"
+<Accordion title="onSubmit data object sample">
+  ```json
+  {
+    "import_id": 79418895,
+    "sheet_id": 575,
+    "sheet_name": "Products Import",
+    "destination_type": "webhook",
+    "row_count": 100,
+    "import_starttime": 87987897897,
+    "original_filename": "example-01.csv",
+    "custom_fields": {
+      "user_id": "Z1001"
     },
-    {
-      "SKU": "Product SKU"
-    },
-    {
-      "Price": "Sale Price"
-    },
-    {
-      "Quantity": "Inventory"
-    },
-    {
-      "Image URL": "Img"
-    }
-  ]
-}
-```
-
+    "column_mappings": [
+      {
+        "Item": "Product Name"
+      },
+      {
+        "SKU": "Product SKU"
+      },
+      {
+        "Price": "Sale Price"
+      },
+      {
+        "Quantity": "Inventory"
+      },
+      {
+        "Image URL": "Img"
+      }
+    ]
+  }
+  ```
 </Accordion>
 
-#### onImport
+### onImport
 
 Triggers when all the data is pushed to the destination. Two objects are available in this event:
 
-1. **`result`** (boolean): It is true when the import is successful and false when the import fails.
-2. **`data`** (object): Contains metadata related to the import.
+- **`result`** (boolean): `true` when the import succeeds and `false` when it fails.
+- **`data`** (object): contains metadata about the import.
 
-#### Examples:
+### Examples
 
 <Tabs>
-
-<Tab title="Javascript">
-
-```javascript
-<button class="btn btn-primary" data-csvbox disabled onclick="importer.openModal();">Import</button>
-<script type="text/javascript" src="https://js.csvbox.io/script.js"></script>
-<script type="text/javascript">
-       function callback(result, data) {
-           if(result){
-               console.log("Sheet uploaded successfully");
-               console.log(data.row_success + " rows uploaded");
-           }else{
-               console.log("There was some problem uploading the sheet");
+  <Tab title="JavaScript">
+    ```javascript
+    <button class="btn btn-primary" data-csvbox disabled onclick="importer.openModal();">Import</button>
+    <script type="text/javascript" src="https://js.csvbox.io/script.js"></script>
+    <script type="text/javascript">
+           function callback(result, data) {
+               if(result){
+                   console.log("Sheet uploaded successfully");
+                   console.log(data.row_success + " rows uploaded");
+               }else{
+                   console.log("There was some problem uploading the sheet");
+               }
            }
-       }
-       let importer = new CSVBoxImporter("YOUR_LICENSE_KEY_HERE",{}, callback);
-       importer.setUser({
-           user_id: 'default123'
-       });
-       
-       importer.listen("onReady", function(){
-        console.log("onReady");
-       });
-       
-       importer.listen("onClose", function(){
-        console.log("onClose");
-       });
-       
-        importer.listen("onSubmit", function(data){
-        console.log("onSubmit");
-        console.log(data.import_id);
-       });
-       
-</script>    
-```
-
-</Tab>
-
-<Tab title="React">
-
-```javascript
-import React from "react";
-
-import { CSVBoxButton } from "@csvbox/react";
-
-const App = () => {
-  return (
-    <CSVBoxButton
-      licenseKey="YOUR_LICENSE_KEY_HERE"
-      lazy={true}
-      user={{
-        user_id: "default123"
-      }}
-      onImport={(result, data) => {
-        if (result) {
-          console.log("success");
-          console.log(data.row_success + " rows uploaded");
-          //custom code
-        } else {
-          console.log("fail");
-          //custom code
-        }
-      }}
-      loadStarted={() => {
-        console.log("loadStarted");
-      }}
-      onReady={() => {
-        console.log("onReady");
-      }}
-      onClose={() => {
-        console.log("onclosed");
-      }}
-      onSubmit={(data) => {
-        console.log("onSubmit");
-        console.log(data.import_id);
-      }}
-    >
-      Import
-    </CSVBoxButton>
-  );
-};
-
-export default App;
-```
-
-</Tab>
-
-<Tab title="Angular">
-
-<Info>
-
-The events are named slightly differently for Angular.
-
-</Info>
-
-| Event       | Angular Event |
-| ----------- | ------------- |
-| onReady     | importerReady |
-| onLoadStart | loadStarted   |
-| onClose     | closed        |
-| onSubmit    | submitted     |
-| onImport    | imported      |
-
-```javascript
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  template: `
-    <csvbox-button
-      [licenseKey]="licenseKey"
-      [user]="user"
-      [dynamicColumns]="dynamicColumns"
-      [imported]="imported.bind(this)"
-      [closed]="closed.bind(this)"
-      [submitted]="submitted.bind(this)"
-      [importerReady]="importerReady.bind(this)">
-      Import
-    </csvbox-button>
-  `
-})
-export class AppComponent {
-
-  title = 'example';
-  licenseKey = 'YOUR_LICENSE_KEY_HERE';
-  user = { user_id: 'default123' };
-  dynamicColumns = [
-    {
-      column_name: 'col2',
-      type: 'text'
-    }
-  ];
-
-  imported(result: boolean, data: any) {
-    console.log("result", result, "data", data)
-    if(result) {
-      console.log("Sheet uploaded successfully");
-      console.log(data.row_success + " rows uploaded");
-    }else{
-      console.log("There was some problem uploading the sheet");
-    }
-  }
-  
-  loadStarted() {
-    console.log("loadStarted");
-  }
-
-  closed(){
-    console.log("onClose");
-  }
-
-  importerReady(){
-    console.log("onReady");
-  }
-
-  submitted(data: any){
-    console.log("onSubmit");
-    console.log(data.import_id);
-  }
-}
-```
-
-</Tab>
-
-<Tab title="Vuejs">
-
-```javascript
-<template>
-  <div>
-    <CSVBoxButton 
-      licenseKey="YOUR_LICENSE_KEY_HERE" 
-      :user="{ user_id: 'default123' }" 
-      :onImport="onImport"
-      :onReady="onReady"
-      :onClose="onClose"
-      :onSubmit="onSubmit"
-      >Import</CSVBoxButton>
-
-  </div>
-</template>
-<script>
-
-import CSVBoxButton from './components/CSVBoxButton'
-
-export default {
-  name: 'App',
-  components: {
-    CSVBoxButton
-  },
-  methods: {
-    onImport(result, data){
-      console.log("onImport", result, data);
-      if(result){
-        console.log("success");
-        console.log(data.row_success + " rows uploaded");
-        //custom code
-      }else{
-        console.log("fail");
-        //custom code
-      }
-    },
-    onReady(){
-      console.log("onReady");
-    },
-    onClose(){
-      console.log("onClose");
-    },
-     onSubmit(data){
-      console.log("onSubmit");
-      console.log(data.import_id);
-    }
-  },
-  mounted() {
+           let importer = new CSVBoxImporter("YOUR_LICENSE_KEY_HERE",{}, callback);
+           importer.setUser({
+               user_id: 'default123'
+           });
     
-  },
-}
-</script>
-```
+           importer.listen("onReady", function(){
+            console.log("onReady");
+           });
+    
+           importer.listen("onClose", function(){
+            console.log("onClose");
+           });
+    
+            importer.listen("onSubmit", function(data){
+            console.log("onSubmit");
+            console.log(data.import_id);
+           });
+    
+    </script>
+    ```
+  </Tab>
+  <Tab title="React">
+    ```javascript
+    import React from "react";
+    
+    import { CSVBoxButton } from "@csvbox/react";
+    
+    const App = () => {
+      return (
+        <CSVBoxButton
+          licenseKey="YOUR_LICENSE_KEY_HERE"
+          lazy={true}
+          user={{
+            user_id: "default123"
+          }}
+          onImport={(result, data) => {
+            if (result) {
+              console.log("success");
+              console.log(data.row_success + " rows uploaded");
+              //custom code
+            } else {
+              console.log("fail");
+              //custom code
+            }
+          }}
+          loadStarted={() => {
+            console.log("loadStarted");
+          }}
+          onReady={() => {
+            console.log("onReady");
+          }}
+          onClose={() => {
+            console.log("onclosed");
+          }}
+          onSubmit={(data) => {
+            console.log("onSubmit");
+            console.log(data.import_id);
+          }}
+        >
+          Import
+        </CSVBoxButton>
+      );
+    };
+    
+    export default App;
+    ```
+  </Tab>
+  <Tab title="Angular">
+    <Note>
+      The events are named slightly differently in Angular.
+    </Note>
 
-</Tab>
+    | Event | Angular event |
+    | --- | --- |
+    | `onReady` | `importerReady` |
+    | `onLoadStart` | `loadStarted` |
+    | `onClose` | `closed` |
+    | `onSubmit` | `submitted` |
+    | `onImport` | `imported` |
 
-</Tabs>
-
-### Other Settings
-
-### Lazy Load
-
-The importer assets are loaded on the webpage load. This can sometimes slow the app if you initialize multiple importers on the same page. As a workaround, you can defer the loading of the importer assets to the Import button click. This can be done by adding the `lazy: true` parameter to the initialization code.
-
-<Tabs>
-
-<Tab title="Javascript">
-
-```javascript
-let importer = new CSVBoxImporter("YOUR_LICENSE_KEY_HERE",{        
-    }, callback, { lazy: true });
-
-```
-
-</Tab>
-
-<Tab title="React">
-
-```javascript
-import { CSVBoxButton } from '@csvbox/react'
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <CSVBoxButton
-        licenseKey="YOUR_LICENSE_KEY_HERE"
-        user={{
-          user_id: "default123"
-        }}
-        onImport={(result, data) => {
+    ```javascript
+    import { Component } from '@angular/core';
+    
+    @Component({
+      selector: 'app-root',
+      template: `
+        <csvbox-button
+          [licenseKey]="licenseKey"
+          [user]="user"
+          [dynamicColumns]="dynamicColumns"
+          [imported]="imported.bind(this)"
+          [closed]="closed.bind(this)"
+          [submitted]="submitted.bind(this)"
+          [importerReady]="importerReady.bind(this)">
+          Import
+        </csvbox-button>
+      `
+    })
+    export class AppComponent {
+    
+      title = 'example';
+      licenseKey = 'YOUR_LICENSE_KEY_HERE';
+      user = { user_id: 'default123' };
+      dynamicColumns = [
+        {
+          column_name: 'col2',
+          type: 'text'
+        }
+      ];
+    
+      imported(result: boolean, data: any) {
+        console.log("result", result, "data", data)
+        if(result) {
+          console.log("Sheet uploaded successfully");
+          console.log(data.row_success + " rows uploaded");
+        }else{
+          console.log("There was some problem uploading the sheet");
+        }
+      }
+    
+      loadStarted() {
+        console.log("loadStarted");
+      }
+    
+      closed(){
+        console.log("onClose");
+      }
+    
+      importerReady(){
+        console.log("onReady");
+      }
+    
+      submitted(data: any){
+        console.log("onSubmit");
+        console.log(data.import_id);
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Vue.js">
+    ```javascript
+    <template>
+      <div>
+        <CSVBoxButton
+          licenseKey="YOUR_LICENSE_KEY_HERE"
+          :user="{ user_id: 'default123' }"
+          :onImport="onImport"
+          :onReady="onReady"
+          :onClose="onClose"
+          :onSubmit="onSubmit"
+          >Import</CSVBoxButton>
+    
+      </div>
+    </template>
+    <script>
+    
+    import CSVBoxButton from './components/CSVBoxButton'
+    
+    export default {
+      name: 'App',
+      components: {
+        CSVBoxButton
+      },
+      methods: {
+        onImport(result, data){
+          console.log("onImport", result, data);
           if(result){
             console.log("success");
             console.log(data.row_success + " rows uploaded");
@@ -1071,65 +942,126 @@ function App() {
             console.log("fail");
             //custom code
           }
-        }}
-        lazy={true}
-      >
-        Import
-      </CSVBoxButton>
-    </div>
-  );
-}
-
-export default App;
-```
-
-</Tab>
-
-<Tab title="Angular">
-
-```javascript
-@Component({
-  selector: 'app-root',
-  template: `
-    <csvbox-button
-      [licenseKey]="licenseKey"
-      [user]="user"
-      [imported]="imported.bind(this)"
-      [lazy]="lazy">
-      Import
-    </csvbox-button>
-  `
-})
-export class AppComponent {
-  title = 'csvbox-test';
-  licenseKey = 'YOUR_LICENSE_KEY_HERE';
-  user = { user_id: 'default123' };
-  lazy = true;
-  imported(result: boolean, data: any) {
-    if(result) {
-      console.log("Sheet uploaded successfully");
-      console.log(data.row_success + " rows uploaded");
-    }else{
-      console.log("There was some problem uploading the sheet");
+        },
+        onReady(){
+          console.log("onReady");
+        },
+        onClose(){
+          console.log("onClose");
+        },
+         onSubmit(data){
+          console.log("onSubmit");
+          console.log(data.import_id);
+        }
+      },
+      mounted() {
+    
+      },
     }
-  }
-}
-```
-
-</Tab>
-
-<Tab title="Vuejs">
-
-```javascript
-<CSVBoxButton
-      :licenseKey="licenseKey"
-      :user="user"      
-      :onImport="onImport"
-      :lazy="true">
-      Upload File
-</CSVBoxButton>
-```
-
-</Tab>
-
+    </script>
+    ```
+  </Tab>
 </Tabs>
+
+## Other settings
+
+### Lazy load
+
+The importer assets load when the webpage loads. This can slow your app if you initialize multiple importers on the same page. As a workaround, defer loading the importer assets until the **Import** button is clicked by adding the `lazy: true` parameter to the initialization code.
+
+<Tabs>
+  <Tab title="JavaScript">
+    ```javascript
+    let importer = new CSVBoxImporter("YOUR_LICENSE_KEY_HERE",{
+        }, callback, { lazy: true });
+    
+    ```
+  </Tab>
+  <Tab title="React">
+    ```javascript
+    import { CSVBoxButton } from '@csvbox/react'
+    import './App.css';
+    
+    function App() {
+      return (
+        <div className="App">
+          <CSVBoxButton
+            licenseKey="YOUR_LICENSE_KEY_HERE"
+            user={{
+              user_id: "default123"
+            }}
+            onImport={(result, data) => {
+              if(result){
+                console.log("success");
+                console.log(data.row_success + " rows uploaded");
+                //custom code
+              }else{
+                console.log("fail");
+                //custom code
+              }
+            }}
+            lazy={true}
+          >
+            Import
+          </CSVBoxButton>
+        </div>
+      );
+    }
+    
+    export default App;
+    ```
+  </Tab>
+  <Tab title="Angular">
+    ```javascript
+    @Component({
+      selector: 'app-root',
+      template: `
+        <csvbox-button
+          [licenseKey]="licenseKey"
+          [user]="user"
+          [imported]="imported.bind(this)"
+          [lazy]="lazy">
+          Import
+        </csvbox-button>
+      `
+    })
+    export class AppComponent {
+      title = 'csvbox-test';
+      licenseKey = 'YOUR_LICENSE_KEY_HERE';
+      user = { user_id: 'default123' };
+      lazy = true;
+      imported(result: boolean, data: any) {
+        if(result) {
+          console.log("Sheet uploaded successfully");
+          console.log(data.row_success + " rows uploaded");
+        }else{
+          console.log("There was some problem uploading the sheet");
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Vue.js">
+    ```javascript
+    <CSVBoxButton
+          :licenseKey="licenseKey"
+          :user="user"
+          :onImport="onImport"
+          :lazy="true">
+          Upload File
+    </CSVBoxButton>
+    ```
+  </Tab>
+</Tabs>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="3. Receive Data" icon="inbox" href="/getting-started/3-receive-data">
+    Receive the imported data in your app.
+  </Card>
+
+  <Card title="Destinations" icon="share-nodes" href="/destinations">
+    Choose where CSVbox sends the imported data.
+  </Card>
+</CardGroup>

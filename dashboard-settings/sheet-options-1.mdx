@@ -1,192 +1,264 @@
 ---
 title: "Sheet Options"
-description: "Description of select sheet configuration settings"
+description: "Sheet-level settings that control error display, data location, security, import screens, Excel formatting, and sheet transfer."
 ---
 
-## Show Error Text
+Sheet options control how the importer behaves for every upload against a sheet: what users see on each screen, where their data is stored, and how Excel files are interpreted. Each option below covers what it does, how to configure it, and an example.
 
-<Accordion title="Display the import fail error messages back to the end-users.">
+## Show error text
 
-<img src="/images/error-option.jpg" alt="" />
+Display the import fail error messages back to end users.
 
-To see the errors, the users will have to click the 'See Errors' button on the import complete screen.
+<Frame>
+  <img
+    src="/images/error-option.jpg"
+    alt="Show Error Text option in sheet settings"
+  />
+</Frame>
 
-<img src="/images/errorlist.jpg" alt="" />
+To see the errors, users click the **See Errors** button on the import complete screen.
 
-</Accordion>
+<Frame>
+  <img
+    src="/images/errorlist.jpg"
+    alt="Error list shown to the user after import"
+  />
+</Frame>
 
-## Export Button
+## Export button
 
-<Accordion title="Export validation errors in Excel">
+Export validation errors in Excel.
 
-With this option, you can enable/disable the **Export** button on the verify data screen. Your users can export data to Excel while keeping the error highlighting and error messages. This helps to resolve the errors in the Excel sheet and quickly re-upload the file in CSVbox.
+Enable or disable the **Export** button on the verify data screen. Your users can export data to Excel while keeping the error highlighting and error messages. This helps them resolve the errors in the Excel sheet and quickly re-upload the file in CSVbox.
 
-![](/images/export-settings.jpg)
+<Frame>
+  <img
+    src="/images/export-settings.jpg"
+    alt="Export button setting"
+  />
+</Frame>
 
-<img src="/images/export-button.jpg" alt="" />
+<Frame>
+  <img
+    src="/images/export-button.jpg"
+    alt="Export button on the verify data screen"
+  />
+</Frame>
 
-![](/images/excel1-2.png)
+<Frame>
+  <img
+    src="/images/excel1-2.png"
+    alt="Exported Excel file with error highlighting"
+  />
+</Frame>
 
-</Accordion>
+<a id="server-and-data-location" />
 
-## Server & Data Location
+## Server & data location
 
-<Accordion title="Select the geographic location of the servers & database for the user data.">
+Select the geographic location of the servers and database for the user data.
 
-Data residency refers to where the data is stored in a geographical location. The location is important usually for regulatory or policy reasons.
+Data residency refers to the geographical location where data is stored. The location is usually important for regulatory or policy reasons. You can select the storage location of the data uploaded by your users.
 
-You have the option to select the storage location of the data uploaded by your users.
+Go to **Edit Sheets** → **Options** → **Privacy & Security** section and select the location from the dropdown.
 
-Go to **Edit Sheets** > **Options** > **Privacy & Security** section > Select the location from the dropdown.
+<Frame>
+  <img
+    src="/images/locations.png"
+    alt="Data location dropdown in Privacy & Security settings"
+  />
+</Frame>
 
-<img src="/images/locations.png" alt="" />
+The US is the default location. The other option is Europe (Germany). The data uploaded by users then passes through servers and is stored in the database situated in the selected location only.
 
-The US is the default location. The other option is Europe (Germany.)
+<Note>
+  You also have the option to not store the data at all.
+</Note>
 
-The data uploaded by the users will then pass through servers and get stored in the database situated in the selected location only.
+The long-lived data about the import and the user files isn't covered by the selected location. It mainly consists of supplementary log data that helps with troubleshooting and analyzing the import processes. This data doesn't include any original data from inside the user files.
 
-Note, that you also have the option to not store the data at all.
+The image below shows how the data flows if you select Europe as the data residency location.
 
-The long-lived data about the import and the user files is not covered under the selected location. It mainly consists of supplementary log data helpful for troubleshooting and analyzing the import processes. This data does not include any original data from inside the user files.\
-\
-The image below shows how the data will flow if you select Europe as the data residency location.
+<Frame>
+  <img
+    src="/images/data-flow-location-1.svg"
+    alt="Data flow with Europe selected as the data residency location"
+  />
+</Frame>
 
-<img src="/images/data-flow-location-1.svg" alt="" />
+## Domain authorization
 
-</Accordion>
+Run the importer on select domains only.
 
-## Domain Authorization
+Provide a list of authorized _domains/sub-domains_ for embedding the importer. The embedded importer works on the whitelisted domains only.
 
-<Accordion title="Run the importer on select domains only">
+Go to **Edit Sheets** → **Options** → **Authorized Domains** and add the domains/subdomains.
 
-You can provide a list of authorized _domains/sub-domains_ for embedding the importer. The embedded importer will work on the whitelisted domains only.
+<Frame>
+  <img
+    src="/images/domains.jpg"
+    alt="Authorized Domains setting"
+  />
+</Frame>
 
-Go to **Edit Sheets** > **Options** > **Authorized Domains** > Add the domain/subdomains
+- If you don't whitelist any domain, the importer embed works on all domains. This is the default configuration.
+- You can use the `*` wildcard prefix to include any subdomain. A few examples:
 
-![](/images/domains.jpg)
+| Text | Valid | Invalid |
+| --- | --- | --- |
+| exampleco.com | exampleco.com | [www.exampleco.com](http://www.exampleco.com), app.exampleco.com |
+| [www.exampleco.com](http://www.exampleco.com) | [www.exampleco.com](http://www.exampleco.com) | exampleco.com, app.exampleco.com |
+| app.exampleco.com | app.exampleco.com | exampleco.com, [www.exampleco.com](http://www.exampleco.com) |
+| \*.exampleco.com | all exampleco.com subdomains |  |
 
-* If you do not whitelist any domain, then the importer embed will work on all the domains. This is the default configuration.
-*   You can use the "\*" wildcard prefix to include any subdomain. A few examples:
+If a domain fails validation, the user sees the error screen below:
 
-    | Text              | Valid                        | Invalid                              |
-    | ----------------- | ---------------------------- | ------------------------------------ |
-    | exampleco.com     | exampleco.com                | www.exampleco.com, app.exampleco.com |
-    | www.exampleco.com | www.exampleco.com            | exampleco.com, app.exampleco.com     |
-    | app.exampleco.com | app.exampleco.com            | exampleco.com, www.exampleco.com     |
-    | \*.exampleco.com  | all exampleco.com subdomains |                                      |
+<Frame>
+  <img
+    src="/images/udo.jpg"
+    alt="Unauthorized domain error screen"
+  />
+</Frame>
 
-If a domain fails validation then the user will see the error screen as below:![](/images/udo.jpg)
+## File delete policy
 
-</Accordion>
+Manage user data storage in CSVbox.
 
-## File Delete Policy
+Enable or disable the storage of user-uploaded data in CSVbox. You can decide based on privacy preferences or specific sheet requirements.
 
-<Accordion title="Managing User Data Storage in CSVbox">
+<Frame>
+  <img
+    src="/images/image-33.png"
+    alt="File delete policy options"
+  />
+</Frame>
 
-You have the option to either enable or disable the storage of the user uploaded data in CSVbox. This decision can be made based on privacy preferences or specific sheet requirements.
+- **Do not store the file**: When enabled, user-uploaded data isn't stored in the CSVbox datastore.
+- **Store data**: Data is stored on CSVbox storage and auto-deleted after one month.
 
-<img src="/images/image-33.png" alt="" />
+## Import complete messages
 
-* **Do not store the file**: By enabling this option, the user-uploaded data will not be stored in the CSVbox datastore.
-* **Store data**: Data will be stored on CSVbox storage. It will be auto deleted after one month.
+Show custom messages when the import is completed.
 
-</Accordion>
+You can show customized success or failure messages when the import is complete. The messages can be:
 
-## Import Complete Messages
+- **Static**: Any fixed text as per your requirements.
+- **Dynamic**: Provide an API to fetch the message text in real time. The importer appends metadata (`import_id`, `sheet_id`) to the API as query parameters, which helps determine the context and return relevant messages.
 
-<Accordion title="Show custom messages when the import is completed">
+<Frame>
+  <img
+    src="/images/custom-messages.jpg"
+    alt="Import complete messages settings"
+  />
+</Frame>
 
-You can show customized success or failure messages when the import is complete. <img src="/images/custom-messages.jpg" alt="" />
+## Resubmit button
 
-The messages can be:
+One click to resubmit the same CSV file again.
 
-1. **Static** - Any fixed text as per your requirements.
-2. **Dynamic** - Provide an API to fetch the message text in real-time. The importer will append metadata (`import_id`, `sheet_id`) to the API as query parameters. This will help determine the context and return relevant messages.
+Show or hide the **Resubmit** button on the Import Success screen. The Resubmit button triggers a new import that pushes the same file with the same import configuration.
 
-</Accordion>
+This is useful during testing and debugging. You don't have to upload the file, match columns, and confirm data again: click **Resubmit** to push the file to the same destination.
 
-## Resubmit Button
+<Frame>
+  <img
+    src="/images/resubmit-button.jpg"
+    alt="Resubmit button on the Import Success screen"
+  />
+</Frame>
 
-<Accordion title="1-click to resubmit the same CSV file again">
+## Importer dialog size
 
-With this option, you can show or hide the Resubmit button on the Import Success screen.
+Control the size of the import dialog box on large screens.
 
-The Resubmit button triggers a new import pushing the same file with the same import configuration.
+Based on your import data structure (number of columns), pick between two import dialog sizes:
 
-This is useful during testing and debugging. You don't have to upload the file, match columns and confirm data for importing the file. Simply click the Resubmit button and push the file to the same destination.
+<Tabs>
+  <Tab title="Medium">
+    <Frame caption="Medium size">
+      <img
+        src="/images/medium-screen.jpg"
+        alt="Medium size"
+      />
+    </Frame>
+  </Tab>
+  <Tab title="Large">
+    <Frame caption="Large size">
+      <img
+        src="/images/large-screen.jpg"
+        alt="Large size"
+      />
+    </Frame>
+  </Tab>
+</Tabs>
 
-![](/images/resubmit-button.jpg)
+To change the size, go to sheet settings → **Display** → **Importer Dialog Size**.
 
-</Accordion>
+<Frame>
+  <img
+    src="/images/select-size.jpg"
+    alt="Importer Dialog Size setting"
+  />
+</Frame>
 
-## Importer Dialog Size
+<Note>
+  The dialog size configuration applies to large (desktop) screens only. On smaller screens, the dialog always occupies the entire screen.
+</Note>
 
-<Accordion title="Control the size of the import dialog box for large screens">
+## Worksheet selection
 
-Based on your import data structure (# of columns) you can pick between two import dialog sizes:
+Allow users to select a worksheet for upload.
 
-1.  Medium
+An uploaded Excel file can contain multiple worksheets. You can let users select which worksheet to upload.
 
-    <Frame caption="Medium size"><img src="/images/medium-screen.jpg" alt="Medium size" /></Frame>
-2.  Large
+To activate worksheet selection, go to sheet settings → **Display** → **File Upload** and select **Yes** for the **Allow Worksheet Selection** option.
 
-    <Frame caption="Large size"><img src="/images/large-screen.jpg" alt="Large size" /></Frame>
+<Frame>
+  <img
+    src="/images/multi-selection.jpg"
+    alt="Worksheet selection in the importer"
+  />
+</Frame>
 
-To change the size go to sheet settings > display > Importer Dialog Size
+If **Allow Worksheet Selection** is set to **No**, the first worksheet is picked by default.
 
-![](/images/select-size.jpg)
+## Custom redirect URL
 
-Note: The dialog size configuration will be applicable for large (desktop) screens only. For smaller screens the dialog will always occupy the entire screen.
+Redirect end users to any page after a successful import.
 
-</Accordion>
+Specify a custom URL to redirect users to when an import completes successfully. This lets you direct users to a specific page immediately after the import and streamline your workflow.
 
-## Worksheet Selection
+<Frame>
+  <img
+    src="/images/redirect-url.jpg"
+    alt="Custom redirect URL setting"
+  />
+</Frame>
 
-<Accordion title="Allow users to select a worksheet for upload">
+## Show file upload box
 
-There can be a case where the uploaded Excel file contains multiple worksheets. You can allow the users to select a worksheet for upload.
+Enable or disable the ability to upload spreadsheet files.
 
-To activate worksheet selection go to sheet settings > display > File Upload > Select '**Yes**' for **Allow Worksheet Selection** option.
+You may need to disable user file uploads and allow only copy-pasting of data in CSVbox. In that case, hide the File Upload Box and show users only the Copy-Paste data option.
 
-<img src="/images/multi-selection.jpg" alt="" />
+To hide the File Upload Box, go to sheet settings → **Display** → **File Upload** and select **No** for the **Show File Upload Box?** option.
 
-If the **Allow Worksheet Selection** option is set to '**No**' then the first worksheet will be picked up by default.
+## Import description
 
-</Accordion>
+Allow users to provide a name or description of the file they're uploading.
 
-## Custom Redirect URL
+File names like `contacts.csv` or `Import 123.xlsx` lack context. More descriptive labels such as "Texas Customers" or "Parts from 2022 Catalog" improve the clarity and usefulness of the import. When enabled, the description input box appears after the user selects the file.
 
-<Accordion title="Redirect end users to any page after successful import">
+<Frame>
+  <img
+    src="/images/file-description-1.png"
+    alt="Import description input box in the importer"
+  />
+</Frame>
 
-You have the ability to specify a custom URL for redirection upon successful import completion. This enhancement is designed to provide greater flexibility and streamline your workflow by directing users to a specific page immediately after the successful import.
+The description is pushed along with the row data to the destination, in the `import_description` property:
 
-![](/images/redirect-url.jpg)
-
-</Accordion>
-
-## Show File Upload Box
-
-<Accordion title="Enable / Disable the ability to upload spreadsheet files">
-
-There can be a case where you need to disable user file uploads to allow only copy-pasting of the data in CSVbox. In such cases, you can hide the File Upload Box and only show the users the Copy-Paste data option.
-
-To hide the File Upload Box go to sheet settings > display > File Upload > Select '**No**' for '**Show File Upload Box?**' option.
-
-</Accordion>
-
-## Import Description
-
-<Accordion title="Allow users to provide a name/description of the file they are uploading">
-
-Enable users to input a name or a description for their uploaded files. File names like "contacts.csv" or "Import 123.xlsx" lack context. More descriptive labels such as "Texas Customers" or "Parts from 2022 Catalog" enhance the clarity and utility of the import.
-
-The description input box will be visible if enabled after the user selects the file.\
-\
- <img src="/images/file-description-1.png" alt="" />
-
-The description will be pushed along with the row data at the end destination. The data will be available in the **import\_description** property:
-
-```
+```text
     "import_id": 79418895,
     "sheet_id": 575,
     "sheet_name": "Products234248",
@@ -197,297 +269,297 @@ The description will be pushed along with the row data at the end destination. T
 
 The following destinations are supported:
 
-1. API/Webhook
-2. Zapier
-3. [Data at Client](/getting-started/3-receive-data#data-on-the-client-side)
-4. [Import Complete Webhook](/getting-started/3-receive-data#import-complete-webhook)
+- API/Webhook
+- Zapier
+- [Data at Client](/getting-started/3-receive-data#data-on-the-client-side)
+- [Import Complete Webhook](/getting-started/3-receive-data#import-complete-webhook)
 
-To enable the description input box:
+To enable the description input box, go to **Sheet Settings** → **Display** tab → **File Upload** page → **Show import description** option and select **Yes**.
 
-Go to Sheet Settings > Display Tab > Select 'File Upload' Page > Go to 'Show import description' option > Select 'Yes'
+<Frame>
+  <img
+    src="/images/import-description-option.jpg"
+    alt="Show import description option"
+  />
+</Frame>
 
-![](/images/import-description-option.jpg)
+<Note>
+  This feature is turned off by default. The description requires a minimum of 3 characters and a maximum of 100 characters.
+</Note>
 
-By default his feature is turned OFF.
+## Mapping choice
 
-A minimum of 3 characters and a maximum of 100 characters is required. 
+Let customers map file columns to template fields, or template fields to file columns.
 
-</Accordion>
-
-## Mapping Choice
-
-<Accordion title="Option for customers to map file columns to template fields or template fields to file columns.">
-
-#### How It Works:
+### How it works
 
 By default, on the column mapping screen:
 
-* **Template Fields** are static and displayed on the left.
-* **Uploaded File Columns** appear on the right in a dropdown, allowing users to map them to the corresponding template fields.
+- **Template Fields** are static and displayed on the left.
+- **Uploaded File Columns** appear on the right in a dropdown, so users can map them to the corresponding template fields.
 
-![](/images/image-34.png)
+<Frame>
+  <img
+    src="/images/image-34.png"
+    alt="Default mapping with template fields on the left"
+  />
+</Frame>
 
-With the **Mapping Choice** option, users can **reverse this mapping direction**:
+With the **Mapping Choice** option, users can **reverse this mapping direction**. Selecting **Template Fields** as the Mapping Choice flips the layout.
 
-* Selecting **"Template Fields"** as the Mapping Choice flips the layout.
+<Frame>
+  <img
+    src="/images/image-36.png"
+    alt="Template Fields selected as the Mapping Choice"
+  />
+</Frame>
 
-![](/images/image-36.png)
+**File Columns** become static on the left, while **Template Fields** appear in the dropdown on the right, so users can match them accordingly.
 
-* **File Columns** become static on the left, while **Template Fields** appear in the dropdown on the right, allowing users to match them accordingly.
+<Frame>
+  <img
+    src="/images/image-35.png"
+    alt="Reversed mapping with file columns on the left"
+  />
+</Frame>
 
-![](/images/image-35.png)
+This added flexibility accommodates different file structures and user preferences, making the mapping process more intuitive.
 
-This added flexibility helps accommodate different file structures and user preferences, making the mapping process more intuitive.
+<Warning>
+  The **Template Fields** Mapping Choice is **not compatible** with the [Ignore Columns](/advanced-installation/ignored-columns) functionality.
+</Warning>
 
-<Info>
+## Zero template columns
 
-The **"Template Fields"** Mapping Choice is **not compatible** with the[ **Ignore Columns**](/advanced-installation/ignored-columns) functionality.
+Accept file submissions without requiring any predefined template columns.
 
-</Info>
+This is useful when you want users to upload files with their own structure, without enforcing a strict column format.
 
-</Accordion>
+### How it works
 
-## Zero Template Columns
+- By default, CSVbox requires at least one template column for mapping.
+- Setting **Allow Zero Template Columns** to **Yes** lets users submit files **without any predefined template columns**, providing complete flexibility.
+- You can combine this setting with the [Unmapped Columns](/advanced-installation/unmapped-columns) feature, so users can upload files with **any set of columns** without a predefined template structure.
 
-<Accordion title="Accept file submissions without requiring any predefined template columns">
+<Frame>
+  <img
+    src="/images/sleekshot-5.png"
+    alt="Allow Zero Template Columns setting"
+  />
+</Frame>
 
-This is useful in scenarios where you want to allow users to upload files with their own structure, without enforcing a strict column format.
+### When to use this feature
 
-#### **How It Works**
+- When you want to **fully accommodate user-defined file formats**.
+- When you prefer **not to enforce a rigid template**, giving users the freedom to submit files as they are.
 
-* By default, CSVBox requires at least one template column for mapping.
-* Configuring **"Allow Zero Template Columns"** to "Yes" lets users submit files **without any predefined template columns**, providing complete flexibility.
-* This setting can be combined with the [**Unmapped Columns**](/advanced-installation/unmapped-columns) feature, allowing users to upload files with **any set of columns**, without the need for a predefined template structure.
+<Note>
+  For this feature to work effectively, set **Allow Unmapped Columns** to **Yes** along with the **Show Unmapped Columns on Validation Screen** selection. This lets users review and verify file columns before submission.
+</Note>
 
-![](/images/sleekshot-5.png)
+## Formatting in Excel files
 
-#### **When to Use This Feature**
+Handle Excel file formatting for dates, times, and numbers.
 
-* When you want to **fully accommodate user-defined file formats**.
-* When you prefer **not to enforce a rigid template**, giving users the freedom to submit files as they are.
+When importing data from Excel files, you may run into unexpected issues because of the way Excel internally stores and formats values, especially **Dates**, **Times**, and **Numbers**. Unlike CSV files, Excel files can retain formatting, formulas, and cell types, which can lead to inconsistencies or misinterpretation during import.
 
-<Info>
+To give you better control over how your data is interpreted, CSVbox provides customizable options to configure how Excel data is processed.
 
-For this feature to work effectively, ensure that **Allow Unmapped Columns** is set to **"Yes"** along with "**Show Unmapped Columns on Validation Screen" selection.** This ensures that users can review and verify file columns before submission.
-
-</Info>
-
-</Accordion>
-
-## Formatting in Excel Files
-
-<Accordion title="Handling Excel File Formatting: Dates, Times & Numbers">
-
-When importing data from Excel files, you may encounter unexpected issues due to the way Excel internally stores and formats different types of values—especially **Dates**, **Times**, and **Numbers**. Unlike CSV files, Excel files can retain formatting, formulas, and cell types, which can lead to inconsistencies or misinterpretation during import.
-
-To help you gain better control over how your data is interpreted, csvbox now provides customizable options to configure the way Excel data is processed.
-
-<Info>
+<Note>
   To handle dates and numbers written in different regional styles in an uploaded file (for example a day-first `04/05/2024` or a European `1.234,56`), see [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats).
-</Info>
+</Note>
 
-### Date Formatting Issues in Excel
+### Date formatting issues in Excel
 
 Excel stores dates in one of two ways:
 
-1. **As formatted text**: e.g., `"03/04/2024"`
-2. **As numeric serial values**: e.g., `45025`, which represents the number of days since January 1, 1900.
+- **As formatted text**: e.g., `"03/04/2024"`
+- **As numeric serial values**: e.g., `45025`, which represents the number of days since January 1, 1900.
 
-This dual nature can lead to problems during import, especially when dealing with international date formats. For example:
+This dual nature can lead to problems during import, especially with international date formats. For example:
 
-* `"03/04/2024"` might be **March 4** in the U.S. (MM/DD/YYYY)
-* ...or **April 3** in Europe (DD/MM/YYYY)
+- `"03/04/2024"` might be **March 4** in the U.S. (MM/DD/YYYY)
+- ...or **April 3** in Europe (DD/MM/YYYY)
 
-If Excel stores the date as a number (`45025`) and the importer misinterprets the format, the final result could be completely off.
+If Excel stores the date as a number (`45025`) and the importer misinterprets the format, the final result could be completely off. To address this, CSVbox lets you explicitly define how Excel date values are interpreted.
 
-To address this, csvbox lets you explicitly define how Excel date values should be interpreted:
+#### Date handling options
 
-#### **Date Handling Options**
+- **Default**: Uses Excel's built-in logic to interpret the cell as a date. Best for files with consistent formatting and locale.
+- **MM/DD/YYYY**: Forces interpretation using the **Month-Day-Year** format. Example: `"03/04/2024"` → March 4, 2024
+- **DD/MM/YYYY**: Forces interpretation using the **Day-Month-Year** format. Example: `"03/04/2024"` → April 3, 2024
+- **Custom**: Define a custom format like `YYYY-MM-DD`, `DD-MMM-YYYY`, or any other pattern based on how your Excel file stores the date. Example: `"12-Mar-2024"` → use custom format `DD-MMM-YYYY`
 
-* **Default**\
-  Uses Excel’s built-in logic to interpret the cell as a date. Best for files with consistent formatting and locale.
-* **MM/DD/YYYY**\
-  Forces interpretation using the **Month-Day-Year** format. Example:\
-  `"03/04/2024"` → March 4, 2024
-* **DD/MM/YYYY**\
-  Forces interpretation using the **Day-Month-Year** format. Example:\
-  `"03/04/2024"` → April 3, 2024
-* **Custom**\
-  You can define a custom format like `YYYY-MM-DD`, `DD-MMM-YYYY`, or any other pattern based on how your Excel file stores the date.\
-  Example:\
-  `"12-Mar-2024"` → Use custom format `DD-MMM-YYYY`
+<Tip>
+  If your dates are inconsistently formatted or include a mix of text and numeric formats, consider cleaning them in Excel first, or use the **Custom** option for better accuracy.
+</Tip>
 
-<Info>
+### Time formatting issues in Excel
 
-If your dates are inconsistently formatted or include a mix of text and numeric formats, consider cleaning them in Excel first, or use the **Custom** option for better accuracy.
+Excel also stores time values either as:
 
-</Info>
-
-***
-
-### Time Formatting Issues in Excel
-
-Excel also allows time values to be stored either as:
-
-* **Numeric fractions** of a day (e.g., `0.5` represents 12:00 PM)
-* **Formatted time strings** (e.g., `"14:30"`, `"2:30 PM"`, `"14:30:00"`)
+- **Numeric fractions** of a day (e.g., `0.5` represents 12:00 PM)
+- **Formatted time strings** (e.g., `"14:30"`, `"2:30 PM"`, `"14:30:00"`)
 
 This can create parsing issues, especially if some cells are stored as numbers and others as formatted text. For example:
 
-* `0.75` → might mean `6:00 PM` (75% of a day)
-* `"06:00"` → clearly indicates 6 AM, but may be read as a string
+- `0.75` → might mean `6:00 PM` (75% of a day)
+- `"06:00"` → clearly indicates 6 AM, but may be read as a string
 
-To avoid misinterpretation, csvbox provides options for:
+To avoid misinterpretation, CSVbox provides the following options.
 
-#### **Time Handling Options**
+#### Time handling options
 
-* **Default**\
-  Uses Excel’s formatting as-is. Suitable for simple, clean files.
-* **HH:MM:SS**\
-  Example: `"14:30:00"` → 2:30 PM
-* **HH:MM AM/PM**\
-  Example: `"2:30 PM"` → 14:30
-* **Custom**\
-  Define your own time pattern like `HH:mm`, `h:mm a`, etc., based on your file’s content.
+- **Default**: Uses Excel's formatting as-is. Suitable for simple, clean files.
+- **HH:MM:SS**: Example: `"14:30:00"` → 2:30 PM
+- **HH:MM AM/PM**: Example: `"2:30 PM"` → 14:30
+- **Custom**: Define your own time pattern like `HH:mm`, `h:mm a`, etc., based on your file's content.
 
-***
-
-### Number Formatting Issues in Excel
+### Number formatting issues in Excel
 
 Excel often applies formatting to numeric values that changes how they appear:
 
-* A raw value of `0.15` could be displayed as `15%`
-* A value of `1200` might appear as `$1,200.00`
-* A long number like `1234567890123` may be auto-converted to scientific notation (`1.23E+12`)
+- A raw value of `0.15` could be displayed as `15%`
+- A value of `1200` might appear as `$1,200.00`
+- A long number like `1234567890123` may be auto-converted to scientific notation (`1.23E+12`)
 
 These formatted displays can mislead the importer if you're expecting clean numbers.
 
-#### **Number Interpretation Options**
+#### Number interpretation options
 
-* **Formatted Values**\
-  Imports numbers exactly as shown in Excel. Examples:
-  * `$1,200.00` stays `$1,200.00`
-  * `15%` stays `15%`
-  * `1.23E+12` stays in scientific notation
-* **Original RAW Values**\
-  Strips all formatting and imports the core numeric value. Examples:
-  * `$1,200.00` → `1200`
-  * `15%` → `0.15`
-  * `1.23E+12` → `1230000000000`
+- **Formatted Values**: Imports numbers exactly as shown in Excel. Examples:
+  - `$1,200.00` stays `$1,200.00`
+  - `15%` stays `15%`
+  - `1.23E+12` stays in scientific notation
+- **Original RAW Values**: Strips all formatting and imports the core numeric value. Examples:
+  - `$1,200.00` → `1200`
+  - `15%` → `0.15`
+  - `1.23E+12` → `1230000000000`
 
-<Info>
+<Tip>
+  Use RAW if you're planning to run calculations or validations on numeric fields post-import.
+</Tip>
 
-Use RAW if you’re planning to run calculations or validations on numeric fields post-import.
+### How to use these settings
 
-</Info>
-
-***
-
-### How to Use These Settings
-
-#### Configure Date Formatting
+#### Configure date formatting
 
 When setting up your Excel-based import:
 
-1. Navigate to **Sheet Settings > Import Steps > File Upload Tab** in your CSVbox dashboard
-2. Scroll to the **Formatting in Excel** section
-3. Choose your preferred option for:
-   * **Date Format**
-4. Save the configuration
+<Steps>
+  <Step title="Open the File Upload tab">
+    Go to **Sheet Settings** → **Import Steps** → **File Upload** tab in your CSVbox dashboard.
+  </Step>
+  <Step title="Find the Excel formatting section">
+    Scroll to the **Formatting in Excel** section.
+  </Step>
+  <Step title="Choose a date format">
+    Choose your preferred option for **Date Format**.
+  </Step>
+  <Step title="Save the configuration">
+    Save the configuration.
+  </Step>
+</Steps>
 
-***
-
-#### Configure Number Formatting
+#### Configure number formatting
 
 To control how numbers are interpreted from Excel files:
 
-1. Navigate to **Sheet Settings > Columns**
-2. Click **Edit** on a column with type **Number**
-3. Locate the **Values for Excel** option
-4. Select your preferred interpretation setting
-5. Save the configuration
-
-***
+<Steps>
+  <Step title="Open the columns">
+    Go to **Sheet Settings** → **Columns**.
+  </Step>
+  <Step title="Edit a Number column">
+    Click **Edit** on a column with type **Number**.
+  </Step>
+  <Step title="Select a Values for Excel setting">
+    Locate the **Values for Excel** option and select your preferred interpretation setting.
+  </Step>
+  <Step title="Save the configuration">
+    Save the configuration.
+  </Step>
+</Steps>
 
 #### Notes
 
-* Date formatting is now configured at the **sheet level during file upload setup**
-* Number formatting is controlled at the **individual column level**, allowing more granular control per field
+- Date formatting is configured at the **sheet level during file upload setup**.
+- Number formatting is controlled at the **individual column level**, allowing more granular control per field.
 
-***
+These controls make sure your data is interpreted as intended, minimizing errors and reducing the need for pre-processing in Excel before importing.
 
-These new controls ensure your data is interpreted as intended—minimizing errors and reducing the need for pre-processing in Excel before importing.
+## Hide cancel button
 
-</Accordion>
+Hide the **Cancel** button located at the bottom-right corner of the importer.
 
-## Hide Cancel Button
+The **X (close)** button at the top-right corner of the importer remains unaffected. Enabling this feature helps prevent users from accidentally canceling the import process and keeps their attention on completing the import with the **Submit** button.
 
-<Accordion title="Hide Cancel Button">
+- **Use case**: Ideal for workflows where you want to guide users toward submission without distractions or potential interruptions.
+- **Default value**: `No`
 
-This option allows you to **hide the Cancel button** located at the bottom-right corner of the importer.
+<Frame>
+  <img
+    src="/images/image-4.png"
+    alt="Hide Cancel Button setting"
+  />
+</Frame>
 
-The **X (close)** button at the top-right corner of the importer remains unaffected.
+<Frame>
+  <img
+    src="/images/image-5.png"
+    alt="Importer without the Cancel button"
+  />
+</Frame>
 
-Enabling this feature helps prevent users from accidentally cancelling the import process and keeps their attention focused on completing the import using the **Submit** button.
+<a id="sheet-import-and-export" />
 
-**Use case:**\
-Ideal for workflows where you want to guide users toward submission without distractions or potential interruptions.
+## Sheet import & export
 
-**Default value:** `No`
-
-<Frame><img src="/images/image-4.png" alt="" /></Frame>
-
-<Frame><img src="/images/image-5.png" alt="" /></Frame>
-
-</Accordion>
-
-## Sheet Import & Export
-
-<Accordion title="Export a sheet from one CSVbox account and import it into another account — or duplicate it within the same account — in just a few clicks.">
+Export a sheet from one CSVbox account and import it into another account, or duplicate it within the same account, in just a few clicks.
 
 This is perfect for:
 
-* Moving sheets between staging and production accounts
-* Sharing templates across teams
-* Backing up sheet configurations
-* Reusing validated sheet structures
+- Moving sheets between staging and production accounts
+- Sharing templates across teams
+- Backing up sheet configurations
+- Reusing validated sheet structures
 
-***
+### Export a sheet
 
-#### Export a Sheet
+<Steps>
+  <Step title="Open your sheets">
+    Go to **Sheets** in your dashboard and locate the sheet you want to export.
+  </Step>
+  <Step title="Click Export">
+    Click the **Export** button in the **Actions** column. A dialog opens showing:
 
-1. Go to **Sheets** in your dashboard.
-2. Locate the sheet you want to export.
-3. Click the **Export** button in the Actions column.
+    - **Sheet License Key**
+    - **Export Key**
+    - Options to **Copy**, **Show**, or **Regenerate** the export key.
+  </Step>
+  <Step title="Copy both keys">
+    Copy both the **Sheet License Key** and the **Export Key**.
+  </Step>
+</Steps>
 
-A dialog will open showing:
+### Import a sheet
 
-* **Sheet License Key**
-* **Export Key**
-* Options to **Copy**, **Show**, or **Regenerate** the export key.
+<Steps>
+  <Step title="Log in to the target account">
+    Log in to the account where you want to import the sheet.
+  </Step>
+  <Step title="Choose Import Sheet">
+    Click **Add Sheet**, then select **Import Sheet**.
+  </Step>
+  <Step title="Paste the keys">
+    Paste the **Sheet License Key** and the **Export Key**.
+  </Step>
+  <Step title="Click Import">
+    Click **Import**. The entire sheet, including columns, validations, configuration, and settings, is copied into the new account.
+  </Step>
+</Steps>
 
-Copy both the **Sheet License Key** and the **Export Key**.
+### Important
 
-***
-
-#### Import a Sheet
-
-1. Log in to the account where you want to import the sheet.
-2. Click **Add Sheet**.
-3. Select **Import Sheet**.
-4. Paste:
-   * The **Sheet License Key**
-   * The **Export Key**
-5. Click **Import**.
-
-That’s it ✅
-
-The entire sheet — including columns, validations, configuration, and settings — will be copied into the new account.
-
-#### Important
-
-* The newly imported sheet will have a **new License Key**.
-* The original sheet remains unchanged.
-* Importing does **not** affect existing imports or data in the original sheet.
-
-</Accordion>
+- The newly imported sheet has a **new License Key**.
+- The original sheet remains unchanged.
+- Importing does **not** affect existing imports or data in the original sheet.

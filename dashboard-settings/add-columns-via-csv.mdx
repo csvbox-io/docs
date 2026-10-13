@@ -3,22 +3,34 @@ title: "Bulk Add Columns"
 description: "Bulk add columns to a new sheet by providing the column info in a CSV file."
 ---
 
-CSVbox offers two methods to do this:
+Instead of creating columns one at a time, you can add them to a new sheet in bulk from a CSV file. CSVbox offers two methods to do this.
 
-<Frame><img src="/images/sleekshot-6.png" alt="" /></Frame>
+<Frame>
+  <img
+    src="/images/sleekshot-6.png"
+    alt="Options for bulk adding columns to a sheet"
+  />
+</Frame>
 
-### 1. Using Sample CSV File
+## Using sample CSV file
 
-Upload any sample CSV or Excel file you already have. We’ll automatically extract the column headers from your file and create corresponding columns in your sheet. Our AI will attempt to detect column types based on the data. You can always review and modify the columns afterward.
+Upload any sample CSV or Excel file you already have. CSVbox automatically extracts the column headers from your file and creates corresponding columns in your sheet, and AI attempts to detect column types based on the data. You can always review and modify the columns afterward.
 
-### 2. Using Bulk Import Template
+## Using bulk import template
 
-If you prefer more control over column setup, use our **predefined CSV template**. Simply download the template, fill it with column info, and upload it back. Columns will be created based on the data you provide. The template supports the following fields:
+For more control over column setup, use the **predefined CSV template**. Download the template, fill it with column info, and upload it back. Columns are created based on the data you provide.
 
-<table><thead><tr><th width="150">Field</th><th width="453">Description</th><th>Required</th></tr></thead><tbody><tr><td><a href="/dashboard-settings/sheet-options#column-name">Column Name</a></td><td>Internal name of the column</td><td>✅ Yes</td></tr><tr><td><a href="/dashboard-settings/sheet-options#display-label">Display Name</a></td><td>Display label for end users</td><td>Optional</td></tr><tr><td><a href="/dashboard-settings/sheet-options#info-hint">Info Hint</a></td><td>Tooltip/help text for users</td><td>Optional</td></tr><tr><td><a href="/dashboard-settings/sheet-options#column-type">Column Type</a></td><td>Type of the field (e.g. Text, Number, Date)</td><td>Optional</td></tr><tr><td><a href="/dashboard-settings/sheet-options#required">Is Required</a></td><td>Should this field be mandatory? (Yes/No)</td><td>Optional</td></tr><tr><td><a href="/dashboard-settings/sheet-options#matching-keywords">Keywords</a></td><td>Tags to help with auto-mapping</td><td>Optional</td></tr></tbody></table>
+The template supports the following fields:
 
-**Download Template:**
+| Field | Description | Required |
+| --- | --- | --- |
+| [Column Name](/dashboard-settings/sheet-options#column-name) | Internal name of the column | Yes |
+| [Display Name](/dashboard-settings/sheet-options#display-label) | Display label for end users | Optional |
+| [Info Hint](/dashboard-settings/sheet-options#info-hint) | Tooltip/help text for users | Optional |
+| [Column Type](/dashboard-settings/sheet-options#column-type) | Type of the field (e.g. Text, Number, Date) | Optional |
+| [Is Required](/dashboard-settings/sheet-options#required) | Should this field be mandatory? (Yes/No) | Optional |
+| [Keywords](/dashboard-settings/sheet-options#matching-keywords) | Tags to help with auto-mapping | Optional |
 
 <Card title="Bulk Import Template" icon="file-csv" href="/files/add-columns-template.csv">
-  Download the file
+  Download the CSV template.
 </Card>

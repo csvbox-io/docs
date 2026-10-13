@@ -1,51 +1,69 @@
 ---
 title: "Ignored Columns"
-description: "Option for users to drop columns from the import process."
+description: "Let users drop selected columns from the import process."
 ---
 
-There can be a situation where users want to skip a column during data submission. This is especially useful when using the importer to update existing data. To avoid overwriting existing columns, the users can mark those columns as **Ignored** and the importer will skip them.
+Users sometimes want to skip a column during data submission. This is especially useful when you use the importer to update existing data: to avoid overwriting existing columns, users can mark those columns as **Ignored** and the importer skips them. With CSVbox, you can give users the option to mark certain columns as ignored.
 
-With CSVbox you can give the option to the users to mark certain columns as Ignored. 
+## Enabling ignored columns
 
-### Enabling Ignored Columns
+First, activate the Ignore Columns option in your CSVbox dashboard.
 
-The first step is to activate the Ignore Columns option via your CSVbox dashboard.
+<Steps>
+  <Step title="Log in to your account">
+    Sign in to the CSVbox dashboard.
+  </Step>
+  <Step title="Edit the sheet">
+    Open the sheet of your choice for editing.
+  </Step>
+  <Step title="Open the Options tab">
+    Go to the **Options** tab.
+  </Step>
+  <Step title="Allow columns to be ignored">
+    Select **Yes** for the **Allow Columns to be Ignored** field.
+  </Step>
+  <Step title="Save the sheet">
+    Click **Save**.
+  </Step>
+</Steps>
 
-1. Login to your account.
-2. Edit the sheet of your choice.
-3. Go to the '**Options**' Tab.
-4. Select '**Yes**' for the '**Allow Columns to be Ignored**' field.
-5. Click '**Save**'.
+The importer then shows the option to mark columns as ignored on the Column Mapping screen.
 
-The importer will then show the option to mark the columns as Ignored on the Column Mapping screen.
+<Frame caption="Ignored Column Selection">
+  <img
+    src="/images/ignore-colum1.png"
+    alt="Ignore Column option on the Column Mapping screen"
+  />
+</Frame>
 
-<Frame caption="Ignored Column Selection"><img src="/images/ignore-colum1.png" alt="Ignored Column Selection" /></Frame>
+<Frame caption="Ignored Column">
+  <img
+    src="/images/ignore-colum2.png"
+    alt="Column marked as Ignored on the Column Mapping screen"
+  />
+</Frame>
 
-<Frame caption="Ignored Column"><img src="/images/ignore-colum2.png" alt="Ignored Column" /></Frame>
+Columns marked as ignored aren't visible on the Verify Data screen.
 
-The columns that are marked as Ignored will not be visible on the Verify Data screen.
+<Note>
+  The Ignore Column option isn't available for columns marked as **Required**.
+</Note>
 
-<Info>
+### Default selection
 
-For columns that are marked as "Required", the Ignore Column option will not be available for selection.
+When the **Default Selection** option is set to **Yes**, all unmapped columns default to Ignore Column.
 
-</Info>
+## Data from ignored columns
 
-#### Default Selection
+Ignored columns aren't pushed to any destination. Only the metadata (the list of ignored columns) is pushed to the following destinations:
 
-When the Default Selection option is configured to 'Yes', all the unmapped columns will default to Ignore Column.
+- [API/Webhook](/destinations#api--webhook)
+- [Zapier](/destinations/zapier)
+- [Client Side](/getting-started/3-receive-data#data-on-the-client-side)
 
-### **Data from Ignored Columns**
+### Ignored column list
 
-The Ignored Columns will not be pushed to any destination. Only the metadata (List of Ignored Columns) will be pushed to the following destinations:
-
-1. [API/Webhook](/destinations#api--webhook)
-2. [Zapier](/destinations/zapier)
-3. [Client Side](/getting-started/3-receive-data#data-on-the-client-side)
-
-#### Ignored Column List
-
-In the API response JSON object, the list of Ignored Columns will be displayed inside the **ignored\_columns** object as shown below. The **ignored\_columns** object will be visible only if the Ignored Columns are activated. In the example below check lines 16 and 36.
+In the API response JSON object, the list of ignored columns appears inside the `ignored_columns` object, as shown below. The `ignored_columns` object is visible only if ignored columns are activated. In the example below, check lines 16 and 36.
 
 ```json lines
 [
