@@ -56,7 +56,9 @@
               },
               "dashboard-settings/split-large-csv",
               "dashboard-settings/ai-function-generator",
-              "dashboard-settings/smart-date-and-number-formats"
+              "dashboard-settings/smart-date-and-number-formats",
+              "dashboard-settings/sheet-tags",
+              "dashboard-settings/checkbox-boolean-columns"
             ]
           },
           {

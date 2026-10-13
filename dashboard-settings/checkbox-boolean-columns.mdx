@@ -1,0 +1,124 @@
+---
+title: "Checkbox Display for Boolean Columns"
+description: "Show Boolean columns as checkboxes on the Verify Data screen and send clean true or false values to your destination."
+---
+
+### What it does
+
+By default, a [Boolean](/dashboard-settings/validations#boolean) column checks that each value is one of a fixed set of words, such as `true`, `yes` or `1`. Anything else is flagged as invalid and the user has to fix it.
+
+With **Display as checkbox**, the column works differently. The Verify Data screen shows a checkbox in each cell, and CSVBox turns every value into a real `true` or `false` before it is sent to your destination. Users tick or untick boxes instead of typing, and the column can never show a validation error.
+
+<Info>
+  A Boolean column with this setting off is unchanged. It keeps its strict validation of accepted values.
+</Info>
+
+### How to enable it
+
+1. Go to your **Sheet Settings**
+2. Click on the **Columns** tab
+3. Click **Edit** on a column with the **Boolean** data type
+4. Turn on **Display as checkbox**
+5. Save your settings
+
+**Default value:** Off
+
+### How values are converted
+
+Every value in the column is read without regard to capital letters, and surrounding spaces are ignored.
+
+| Value in the file | Result |
+| --- | --- |
+| Blank, `0`, `off`, `n`, `no`, `false`, `disabled` | **Unchecked** (`false`) |
+| Anything else, such as `1`, `yes`, `y`, `true`, `on`, `enabled` or any other text | **Checked** (`true`) |
+
+Because every value maps to one of the two results, nothing in this column is ever reported as invalid.
+
+<Warning>
+  Any text that is not in the unchecked list is treated as checked. A value such as `maybe` or `N/A` becomes `true`. If you need to reject unexpected values, keep the setting off and use a regular Boolean column.
+</Warning>
+
+### What the user sees
+
+The checkbox column behaves like the rest of the Verify Data grid.
+
+| Action | What happens |
+| --- | --- |
+| Click a cell | Selects the cell |
+| Click the selected cell again | Flips the checkbox |
+| Double-click | Flips the checkbox once |
+| Press **Space** | Flips the selected checkbox |
+| Hold **Shift**, **Ctrl** or **Cmd** and click | Selects cells without flipping them, so range and multi-selection do not change values |
+| Sort the column | Checked and unchecked rows are grouped together |
+| Search or filter | A term such as `1`, `0`, `y`, `n`, `on`, `off`, `true` or `false` matches by meaning, so `y` finds every checked row |
+| Read-only column | The checkbox is disabled and cannot be changed |
+
+#### Find and replace
+
+- When you pick **this checkbox column** in Find and Replace, matching is done by meaning. Searching for `1` finds every checked cell.
+- When you pick **All columns**, matching is done on the literal text. A replace such as `1` to `2` does not change checked cells.
+
+### What your destination receives
+
+Values are converted to real booleans before they are sent. The format depends on the destination.
+
+| Destination | What is sent |
+| --- | --- |
+| Webhook and API webhook (JSON or XML) | A real boolean, `true` or `false` |
+| Webhook with `form_data` | The text `"true"` or `"false"` |
+| MySQL | `1` or `0`, which fits a `TINYINT(1)` column |
+| PostgreSQL and SQL Server | The text `true` or `false`, which these databases accept for boolean columns |
+| Other destinations | The text `"true"` or `"false"` |
+
+See [Data Destinations](/destinations) for how each destination is set up.
+
+### Required, empty and unmapped columns
+
+- **Required is not available.** A blank value is a valid `false`, so a checkbox column cannot be marked Required. The option is switched off when you enable the checkbox, and it cannot be turned back on while the checkbox is enabled.
+- **Empty rows are still removed.** A row where every cell is blank is not turned into `false` values, so it is still dropped as an empty row.
+- **Unmapped columns send `false`.** If the user does not map a file column to the checkbox column, every row is sent with `false`.
+
+### Set it with the Sheet API
+
+Set the option in the `validators` of a Boolean column:
+
+```json
+{
+  "column_name": "Is Active",
+  "data_type": "Boolean",
+  "validators": { "render_as_checkbox": true }
+}
+```
+
+- The setting is returned when you fetch the sheet, so you can read a sheet and send it back without losing the option.
+- `"false"`, `"0"` and `"off"` count as off. Any other truthy value turns it on.
+- `required` is always set to `false` for a checkbox column, even if you send `true`.
+
+### Examples
+
+| Column | File says | Result |
+| --- | --- | --- |
+| Is Active | `Yes`, `no`, `TRUE`, `0` | Checked, unchecked, checked, unchecked |
+| Subscribed | (blank) | Unchecked. No error |
+| Newsletter | `  Off  ` | Unchecked. Spaces and capital letters are ignored |
+| Approved | `pending` | Checked, because it is not in the unchecked list |
+| Is Active (not mapped) | Column not in the file | `false` on every row |
+
+### Limitations
+
+- It is available for **Boolean** columns only.
+- The unchecked words are fixed: blank, `0`, `off`, `n`, `no`, `false` and `disabled`. You cannot add your own.
+- Unexpected values are never flagged. They become checked.
+- A column left unmapped and a column with blank values both send `false`, so you cannot tell them apart in your destination.
+- A checkbox column cannot be Required.
+
+### Troubleshooting
+
+| What you see | Why | What to do |
+| --- | --- | --- |
+| No **Display as checkbox** option | The column is not a Boolean column | Change the column type to Boolean |
+| **Required** is switched off or cannot be turned on | Checkbox columns cannot be required | Turn off **Display as checkbox** if the value must be provided |
+| A value like `maybe` shows as checked | Only the listed words are unchecked | Use a regular Boolean column to validate the accepted values |
+| Find and Replace did not change checked cells | **All columns** matches literal text | Select the checkbox column and run it again |
+| Clicking a cell does not flip it | The first click only selects the cell | Click the selected cell again, or press **Space** |
+| The checkbox cannot be clicked | The column is read only | Turn off **Read only** on the column |
