@@ -270,6 +270,8 @@ For each import, the dependent scripts run only once, whereas the main JavaScrip
 
 In the virtual column JavaScript snippet, you have access to data variables in the `csvbox` object. The following data is available:
 
+<a id="csvboxrow" />
+
 ### `csvbox.row`
 
 Contains the row data. Access each cell in the row by providing the column name. Examples:
@@ -308,6 +310,8 @@ csvbox.import["total_rows"]
 csvbox.import["row_number"] //current row number starting with 1
 ```
 
+<a id="csvboxvirtual" />
+
 ### `csvbox.virtual`
 
 Contains data from the preceding virtual columns.
@@ -320,6 +324,8 @@ csvbox.virtual["age"]
 <Warning>
   Only data from the virtual columns defined before the current virtual column is available for use.
 </Warning>
+
+<a id="csvboxenvironment" />
 
 ### `csvbox.environment`
 
