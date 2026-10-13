@@ -1,19 +1,65 @@
 ---
 title: "Advanced Installation"
 sidebarTitle: "Overview"
-description: "Description of additional importer options and features."
+description: "Additional importer options and features for dynamic columns, custom validation, data transforms, and API automation."
 ---
 
-1. [Dynamic Columns](/advanced-installation/dynamic-columns) - Add new columns to the template at run-time.
-2. [Virtual Columns](/advanced-installation/virtual-columns) - Create new columns by applying custom data transformation logic.
-3. [Unmapped Columns](/advanced-installation/unmapped-columns) - Allow users to submit columns not included in the sheet template.
-4. [Ignored Columns](/advanced-installation/ignored-columns) - Option for users to drop columns from the import process.
-5. [Import Links](/advanced-installation/import-links) - Accept files from your users without a website or an app.
-6. [Validation Functions](/advanced-installation/validation-functions) - Implement advance validations using Javascript functions.
-7. [Server Side Validation](/advanced-installation/server-side-validation) - Validate data at your server, report back errors for correction & re-upload.
-8. [Data Transforms](/advanced-installation/data-transforms) - Bulk edit the dataset before pushing it to your system.
-9. [REST File API](/advanced-installation/rest-file-api) - Automate CSV submissions via API.
-10. [Environment Variables](/advanced-installation/environment-variables) - Variables to configure the importer environment.
-11. [Auth API](/advanced-installation/auth-api) - Authenticate API requests to CSVBox using a secure header-based scheme.
-12. [Sheet API ](/advanced-installation/sheet-api) - Programmatically create and manage CSVBox sheets and their column configurations directly through the API.
-13. [MCP Server](/advanced-installation/mcp-server) - CSVBox now ships an MCP server, configure importers by prompting Claude, Cursor, or any MCP client instead of hand-writing schema JSON.
+These guides cover additional importer options and features. Use them to extend a sheet at run time, add custom validation and transformation logic, and automate imports through the API.
+
+<CardGroup cols={2}>
+  <Card title="Dynamic Columns" icon="table-columns" href="/advanced-installation/dynamic-columns">
+    Add new columns to the sheet at run time.
+  </Card>
+
+  <Card title="Virtual Columns" icon="wand-magic-sparkles" href="/advanced-installation/virtual-columns">
+    Create new columns by applying custom data transformation logic.
+  </Card>
+
+  <Card title="Unmapped Columns" icon="table-cells" href="/advanced-installation/unmapped-columns">
+    Allow users to submit columns not included in the sheet template.
+  </Card>
+
+  <Card title="Ignored Columns" icon="eye-slash" href="/advanced-installation/ignored-columns">
+    Let users drop columns from the import process.
+  </Card>
+
+  <Card title="Import Links" icon="link" href="/advanced-installation/import-links">
+    Accept files from your users without a website or an app.
+  </Card>
+
+  <Card title="Validation Functions" icon="code" href="/advanced-installation/validation-functions">
+    Implement advanced validations using JavaScript functions.
+  </Card>
+
+  <Card title="Server Side Validation" icon="server" href="/advanced-installation/server-side-validation">
+    Validate data at your server and report errors back for correction and re-upload.
+  </Card>
+
+  <Card title="Data Transforms" icon="shuffle" href="/advanced-installation/data-transforms">
+    Bulk edit the dataset before pushing it to your system.
+  </Card>
+
+  <Card title="REST File API" icon="cloud-arrow-up" href="/advanced-installation/rest-file-api">
+    Automate CSV submissions via API.
+  </Card>
+
+  <Card title="Environment Variables" icon="sliders" href="/advanced-installation/environment-variables">
+    Variables to configure the importer environment.
+  </Card>
+
+  <Card title="Auth API" icon="key" href="/advanced-installation/auth-api">
+    Authenticate API requests to CSVbox using a secure header-based scheme.
+  </Card>
+
+  <Card title="Sheet API" icon="file-code" href="/advanced-installation/sheet-api">
+    Programmatically create and manage CSVbox sheets and their column configurations through the API.
+  </Card>
+
+  <Card title="MCP Server" icon="robot" href="/advanced-installation/mcp-server">
+    Configure importers by prompting Claude, Cursor, or any MCP client instead of hand-writing schema JSON.
+  </Card>
+
+  <Card title="If / Else Builder" icon="code-branch" href="/advanced-installation/if-else-builder">
+    Add conditional validations and data transforms to a sheet without writing JavaScript.
+  </Card>
+</CardGroup>
