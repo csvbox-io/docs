@@ -3,892 +3,1586 @@ title: "Change Log"
 description: "A record of all notable changes made to the application."
 ---
 
-## October 2026
+This page lists notable CSVbox releases, newest first. Each entry links to the documentation for the feature it adds or changes.
 
-- **Added:** [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats). CSVBox now converts dates and numbers written in different regional formats into the format your column expects, and asks the user once when a value such as `04/05/2024` or `1,234` could be read two ways. Turn it on with **Date correction?** under **Import Steps > Verify Data**.
-- **Added:** [If / Else Builder](/advanced-installation/if-else-builder). Build Validation Functions and Data Transforms visually with IF / ELSE IF / ELSE rules, without writing JavaScript.
+<Update label="October 2026" description="Smart date and number formats, If / Else Builder">
+  ### Smart date and number formats
 
-## September 2026
+  **Added**: [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats). CSVbox now converts dates and numbers written in different regional formats into the format your column expects, and asks the user once when a value such as `04/05/2024` or `1,234` could be read two ways. Turn it on with **Date correction?** under **Import Steps** → **Verify Data**.
 
-* **Added:** CSVBox now ships an MCP server, configure importers by prompting Claude, Cursor, or any MCP client instead of hand-writing schema JSON.
-* **Added:** GET APIs to retrieve a list of importers and view the complete configuration of a specific importer, with sensitive credentials excluded.
-* **Added: 11 new column types** to give you more options for validating and normalizing imported data, including **Percentage, IANA Timezone, UPC, EAN, UUID, Domain, Currency Code, Country Code A2, Country Code A3, IMEI, and JSON**.
+  ### If / Else Builder
 
-## August 2026
+  **Added**: [If / Else Builder](/advanced-installation/if-else-builder). Build Validation Functions and Data Transforms visually with IF / ELSE IF / ELSE rules, without writing JavaScript.
+</Update>
 
-* **Added:** CSVBox can now handle files with **up to 2M rows**, making it easier to import and process high-volume datasets without splitting them into smaller batches.
-* **Added: Spreadsheet Review Table Enhancements** — Added column sorting (3-state cycle with numeric-aware ordering), advanced filtering (value/condition operators with multi-column logic), right-click context menus for cells/columns/rows, and full undo/redo support (up to 50 steps).
-* **Added:** Sorting support in the upload table. Table rendering was reworked to handle sorted views correctly.
-* **Added:** A new AI-powered feature that lets you **generate a CSVBox sheet and define its columns** simply by describing your requirements.
-* **Added:** Create, update, and manage Validation Functions, Virtual Columns, and Data Transforms via Sheet API
+<Update label="September 2026" description="MCP server, importer GET APIs, and 11 new column types">
+  ### MCP server
 
-## July 2026
+  **Added**: CSVbox now ships an MCP server. Configure importers by prompting Claude, Cursor, or any MCP client instead of hand-writing schema JSON.
 
-* **Added:** PDF metadata extraction - Automatically extract metadata fields from uploaded PDF documents.
-* **Added:** Bulk AI Transform - Run AI-powered transformations across your data in bulk with a single click.
-* **Updated:** Trim whitespace for List columns - Trim-whitespace support now works on list-type columns, including dynamic columns.
-* **Updated:** Improved table & header detection - Enhanced OCR header matching, more reliable table merging, and improved text wrapping for wide columns.
-* **Updated:** Cleaner upload view - Refreshed the upload modal UI with truncated long column names and tooltips for better readability.
+  ### Importer GET APIs
 
-## June 2026
+  **Added**: GET APIs to retrieve a list of importers and view the complete configuration of a specific importer, with sensitive credentials excluded.
 
-* **Added:** [Neon](https://neon.tech) added as a data destination. Push imported data directly to Neon serverless Postgres databases, with built-in credentials management and connection handling.
-* **Added:** [OpenAPI](/destinations/openapi) specification support as an upload destination type. Point CSVBox to an OpenAPI/Swagger spec URL and it will automatically route import data to your API endpoints.
-* **Added:** Secret key + API key combination for Sheet API authorization, adding an extra layer of security for embedding and API access.
-* **Improved:** REST API `auto_map` now matches columns using the same priority order as the frontend importer — display\_label first, then column\_name, then matching keywords.
-* **Added:** CSVBox as an in-app integration in [Make](https://make.com).
-* **Added:** CSVBox as an app in [Pabbly](https://www.pabbly.com).
-* **Added:** CSVBox as an app in [IFTTT](https://ifttt.com).
-* **Added:** [Xero](https://www.xero.com/) added as a data destination. Automatically push imported data to Xero with secure authentication and simplified connection setup.
-*   **New:** [Sheets API ](/advanced-installation/sheet-api)- You can now create and manage importer sheets programmatically instead of only through the dashboard.
+  ### 11 new column types
 
-## May 2026
+  **Added**: 11 new column types give you more options for validating and normalizing imported data, including **Percentage, IANA Timezone, UPC, EAN, UUID, Domain, Currency Code, Country Code A2, Country Code A3, IMEI, and JSON**.
+</Update>
 
-* **New:** [AI Function Generator](/dashboard-settings/ai-function-generator) - Generate validation functions, virtual columns, data transforms, and regex patterns using plain-language prompts. Simply describe what you want, and CSVBox will generate compatible JavaScript or regex logic automatically.
-* **New:** [Split Large CSV File Imports](/dashboard-settings/split-large-csv) - CSVBox can now automatically split large CSV files into smaller parts during import for improved reliability and browser performance. Multipart uploads reuse the same column mappings across all parts and are grouped together in the Imports dashboard for easier tracking.
-* **New:** [AI Document Import](/dashboard-settings/ai-document-import) (PDFs, Images & DOCX) - You can now import data from PDFs, images, and documents using AI-powered table extraction.
+<Update label="August 2026" description="2M-row files, review table enhancements, AI sheet generation, and more">
+  ### Files with up to 2M rows
 
-## April 2026
+  **Added**: CSVbox can now handle files with **up to 2M rows**, making it easier to import and process high-volume datasets without splitting them into smaller batches.
 
-* **Added** [Import Analytics](/dashboard-settings/import-analytics) **-** Get visibility into your import flow with built-in analytics. Track each step—from file upload and header selection to mapping, validation, and final submission. Identify drop-offs, measure completion rates, and uncover top errors so you can improve onboarding and reduce failed imports. Available for Pro plans and higher.
-* **New:** [Server-Side Validation](/advanced-installation/server-side-validation) supports **column** error type.
+  ### Spreadsheet review table enhancements
 
-## February 2026
+  **Added**: Column sorting (3-state cycle with numeric-aware ordering), advanced filtering (value/condition operators with multi-column logic), right-click context menus for cells/columns/rows, and full undo/redo support (up to 50 steps).
 
-* **Added sheet import & export** functionality. You can now export sheets from one CSVbox account and import them into another (or duplicate within the same account).
-  * Securely copy sheets using a Sheet License Key and Export Key
-  * Entire sheet configuration is duplicated automatically
-  * Imported sheets receive a new unique license key
-  * Perfect for staging → production workflows and template reuse
-  * More information [here](/dashboard-settings/sheet-options-1#sheet-import--export)
-* Added **Bulk Actions** to the Column Mapping screen, allowing users to reset all mappings or mark all columns as ignored in a single action.
+  ### Sorting in the upload table
 
-<Columns cols={2}>
+  **Added**: Sorting support in the upload table. Table rendering was reworked to handle sorted views correctly.
 
-<div>
+  ### AI sheet generation
 
-<Frame><img src="/images/image-3.png" alt="" /></Frame>
+  **Added**: A new AI-powered feature that lets you **generate a CSVbox sheet and define its columns** simply by describing your requirements.
 
-</div>
+  ### Column logic via Sheet API
 
-<div>
+  **Added**: Create, update, and manage Validation Functions, Virtual Columns, and Data Transforms via Sheet API.
+</Update>
 
-<Frame><img src="/images/image-2.png" alt="" /></Frame>
+<Update label="July 2026" description="PDF metadata extraction, Bulk AI Transform, and import UI improvements">
+  ### PDF metadata extraction
 
-</div>
+  **Added**: Automatically extract metadata fields from uploaded PDF documents.
 
-</Columns>
+  ### Bulk AI Transform
 
-* Introduced **AI-powered auto column mapping** within Bulk Actions to automatically map file columns to template fields.
+  **Added**: Run AI-powered transformations across your data in bulk with a single click.
 
-## January 2026
+  ### Trim whitespace for List columns
 
-* **Added** custom styling Download and Upload functionality. You can now download your customized importer styling as a CSS file and upload it to another importer to instantly apply the same design. Perfect for maintaining consistent branding across multiple sheets—no re-styling required. More info [here](/dashboard-settings/styling#download--reuse-importer-styling-css).
-* **Updated** the Import screen in the admin dashboard to display additional metadata for individual imports.
+  **Updated**: Trim-whitespace support now works on list-type columns, including dynamic columns.
 
-## December 2025
+  ### Improved table and header detection
 
-* **Added:** Support for AES-256-GCM and improved AES-CBC (V2) encryption options in Environment Variables for enhanced data security. More information [here](/advanced-installation/environment-variables#encrypting-environment-variables).
-*   **UI Enhancements:** Made several small UI tweaks to make the importer sleeker and more user-friendly. For example, the row filter dropdown (All / Error rows) is now a modern toggle switch, and the search box has been condensed into a search icon that expands on click.
+  **Updated**: Enhanced OCR header matching, more reliable table merging, and improved text wrapping for wide columns.
 
-    <div><Frame caption="Row Filter"><img src="/images/row-filter.png" alt="Row Filter" /></Frame> <Frame caption="Search Icon"><img src="/images/search-v2.png" alt="Search Icon" /></Frame></div>
-* **Added** [Pipedream ](/destinations/pipedream)as data destination.
-* **Added** [n8n](/destinations/n8n) as data destination.
-* Added [Sofr ](/destinations/softr)as data destination.
-* **Improved** List Selection: We’ve added a new **“Replace all similar cells”** button for **List-type columns**. This allows you to replace **all cells with the same value as the currently selected cell** in one click. Perfect for quickly fixing repeated invalid values and speeding up data verification.
+  ### Cleaner upload view
 
-<div align="left"><Frame><img src="/images/improved-list-selection.png" alt="" /></Frame></div>
+  **Updated**: Refreshed the upload modal UI with truncated long column names and tooltips for better readability.
+</Update>
 
-* **Added** Quick Actions for Validation Errors: You can now take faster action on validation errors using the new **Quick Actions** button in the message bar. This provides one-click options to delete all invalid values, replace empty cells, or find and replace values—making it quicker to fix errors without navigating through individual cells.
+<Update label="June 2026" description="Neon, OpenAPI, and Xero destinations, Sheets API, and new automation integrations">
+  ### Neon destination
 
-<div align="left"><Frame><img src="/images/quick-action-button.png" alt="" /></Frame></div>
+  **Added**: [Neon](https://neon.tech) as a data destination. Push imported data directly to Neon serverless Postgres databases, with built-in credentials management and connection handling.
 
-* **Added –** Newly supported languages include:
-  * Bulgarian(`bg`)
-  * Czech (`cs`)
-  * Hungarian (`hu`)
-  * Ukrainian(`uk`)
+  ### OpenAPI destination
 
-## November 2025
+  **Added**: [OpenAPI](/destinations/openapi) specification support as an upload destination type. Point CSVbox to an OpenAPI/Swagger spec URL and it automatically routes import data to your API endpoints.
 
-* **Added** [Supabase ](/destinations/supabase)as data destination.
-* Newly supported languages include:
-  * Chinese (Simplified) - zh-CN
-  * Chinese (Traditional) - zh-TW
-* **Added: Hide Cancel Button** option to hide the Cancel button located at the bottom-right corner of the importer. More information [here](/dashboard-settings/sheet-options-1#hide-cancel-button).
-* **Added:** New client-side attributes (`ssv_enabled`, `ssv_fail`, `ssv_row_fail`, `ssv_table_error`) are now included in the response object when Server-Side Validation is enabled. More information [here](/advanced-installation/server-side-validation#additional-attributes-in-the-client-data-object).
-* **Added** [Google BigQuery](/destinations/google-bigquery) as data destination.
-*   **Added** [Execution Time](/advanced-installation/data-transforms#execution-time) option to Data Transforms. You can now choose to run each transform **before** or **after** the Data Validation stage.
+  ### Secret key for Sheet API authorization
 
-    <Frame><img src="/images/data-transforms-1.png" alt="" /></Frame>
+  **Added**: Secret key + API key combination for Sheet API authorization, adding an extra layer of security for embedding and API access.
 
-## 09 October 2025
+  ### REST API auto mapping priority
 
-*   Added a new feature allowing users to select accepted file types for uploads — choose between **CSV**, **XLS**, and **XLSX** formats in your sheet settings.<br />
+  **Improved**: REST API `auto_map` now matches columns using the same priority order as the frontend importer: `display_label` first, then `column_name`, then matching keywords.
 
-    <Frame><img src="/images/image-37.png" alt="" /></Frame>
+  ### Make, Pabbly, and IFTTT integrations
 
-## 25 September 2025
+  **Added**:
 
-* **Added – Language Support**\
-  We’ve expanded CSVBox’s multilingual capabilities! Newly supported languages include:
-  * Hindi (`hi`)
-  * Bahasa Malaysia (Malay) (`ms`)
-  * Russian (`ru`)
-  * Vietnamese (`vi`)
-  * Korean (`ko`)
-  * Bahasa Indonesia (`id`)
-  * Egyptian Arabic (`ar-EG`)
-  * Urdu (`ur`)
+  - CSVbox as an in-app integration in [Make](https://make.com).
+  - CSVbox as an app in [Pabbly](https://www.pabbly.com).
+  - CSVbox as an app in [IFTTT](https://ifttt.com).
 
-## 08 September 2025
+  ### Xero destination
 
-* **New:** [Server-Side Validation](/advanced-installation/server-side-validation) supports **table** and **row** error types.
-* **UX:** Table errors render in an alert banner above the grid; row errors appear as a badge on the row number with a pop-over on click.
+  **Added**: [Xero](https://www.xero.com/) as a data destination. Automatically push imported data to Xero with secure authentication and simplified connection setup.
 
-<Frame><img src="/images/sse-errors-1.png" alt="" /></Frame>
+  ### Sheets API
 
-* **API:** You can mix `table`, `row`, and `cell` errors in one response. `type` is optional and defaults to `cell`. **No breaking changes.**
+  **New**: [Sheets API](/advanced-installation/sheet-api). You can now create and manage importer sheets programmatically instead of only through the dashboard.
+</Update>
 
-## 28 August 2025
+<Update label="May 2026" description="AI Function Generator, split large CSV imports, and AI document import">
+  ### AI Function Generator
 
-* Added option to set the default row on the header selection screen. You can now choose which row is pre-selected on the Header Selection step. 
-* Also available as an installation parameter - [**`default_header_row`**](/getting-started/2-install-code#default_header_row).\
-  \
-  ![](/images/image-7.png)
+  **New**: [AI Function Generator](/dashboard-settings/ai-function-generator). Generate validation functions, virtual columns, data transforms, and regex patterns using plain-language prompts. Describe what you want, and CSVbox generates compatible JavaScript or regex logic automatically.
 
-## 14 August 2025
+  ### Split large CSV file imports
 
-* Added [**Test API**](/destinations#test-api) destination **—** sends spreadsheet data to a unique [`webhooks.csvbox.io`](https://webhooks.csvbox.io/) URL (testing-only).
+  **New**: [Split Large CSV File Imports](/dashboard-settings/split-large-csv). CSVbox can now automatically split large CSV files into smaller parts during import for improved reliability and browser performance. Multipart uploads reuse the same column mappings across all parts and are grouped together in the Imports dashboard for easier tracking.
 
-## 17 July 2025
+  ### AI document import
 
-* Added support for custom error messages (via `error_message` validator) for [regex type dynamic columns](/advanced-installation/dynamic-columns#validator-options).
-* You can now use the `excel_value` validator with number-type dynamic columns to control whether to import **raw** or **formatted** values from Excel.
+  **New**: [AI Document Import](/dashboard-settings/ai-document-import) (PDFs, Images & DOCX). You can now import data from PDFs, images, and documents using AI-powered table extraction.
+</Update>
 
-## 16 July 2025
+<Update label="April 2026" description="Import Analytics and column-level server-side validation errors">
+  ### Import Analytics
 
-*   **Environment Variable Support for APIs** – You can now use environment variables in:
+  **Added**: [Import Analytics](/dashboard-settings/import-analytics). Get visibility into your import flow with built-in analytics. Track each step, from file upload and header selection to mapping, validation, and final submission. Identify drop-offs, measure completion rates, and uncover top errors so you can improve onboarding and reduce failed imports. Available for Pro plans and higher.
 
-    1. Dynamic List API
-    2. Multi-select Dynamic List API
-    3. Success Message API
-    4. Failed Message API
-    5. Custom headers for all the above
+  ### Column errors in server-side validation
 
-    This makes it easier to manage configuration across environments.\
-    \
-    ![](/images/sleekshot-1.png)
+  **New**: [Server-Side Validation](/advanced-installation/server-side-validation) supports the **column** error type.
+</Update>
 
-## 08 July 2025
+<Update label="February 2026" description="Sheet import and export, bulk mapping actions, and AI auto column mapping">
+  ### Sheet import and export
 
-* The importer now supports **dark** and **custom dark** themes for a better user experience.
-* Added a [`theme`](/getting-started/2-install-code#theme) selection option in the installation code for applying the theme at runtime.
+  **Added**: Sheet import and export functionality. You can now export sheets from one CSVbox account and import them into another (or duplicate within the same account).
 
-## 12 June 2025
+  - Securely copy sheets using a Sheet License Key and Export Key
+  - Entire sheet configuration is duplicated automatically
+  - Imported sheets receive a new unique license key
+  - Perfect for staging → production workflows and template reuse
+  - More information [here](/dashboard-settings/sheet-options-1#sheet-import--export)
 
-*   Added **Excel Value Formatting Options** – Choose how numeric values are imported:
+  ### Bulk actions on the column mapping screen
 
-    * **Formatted**: As shown in Excel (e.g., "$1,200.00", "15%").
-    * **RAW**: Strips formatting for clean numbers (e.g., 1200, 0.15).
+  Added **Bulk Actions** to the Column Mapping screen, allowing users to reset all mappings or mark all columns as ignored in a single action.
 
-    Ideal for better control in calculations and validations. More info [here](/dashboard-settings/validations#number).
+  <Frame>
+    <img
+      src="/images/image-3.png"
+      alt="Bulk Actions menu on the Column Mapping screen"
+    />
+  </Frame>
 
-## 20 May 2025
+  <Frame>
+    <img
+      src="/images/image-2.png"
+      alt="Bulk Actions options on the Column Mapping screen"
+    />
+  </Frame>
 
-* Added MongoDB as data destination.
+  ### AI-powered auto column mapping
 
-## 29 April 2025
+  Introduced **AI-powered auto column mapping** within Bulk Actions to automatically map file columns to template fields.
+</Update>
 
-* Introduced **AI Bulk Transformations**, allowing users to apply AI-driven changes to uploaded data using natural language prompts — all directly in the importer. Supports multi-language input, column-level modifications, and ensures complete privacy with no external data sharing. More information [here](/dashboard-settings/ai-bulk-transforms).
+<Update label="January 2026" description="Reusable importer styling CSS and richer import metadata">
+  ### Download and reuse importer styling
 
-## 17 April 2025
+  **Added**: Custom styling Download and Upload functionality. You can now download your customized importer styling as a CSS file and upload it to another importer to instantly apply the same design. Perfect for maintaining consistent branding across multiple sheets, with no re-styling required. More info [here](/dashboard-settings/styling#download--reuse-importer-styling-css).
 
-* Introduced a setting to choose the default table view on the Verify Data screen — users can now select between "Show all rows" and "Show invalid rows only."
+  ### Import metadata in the admin dashboard
 
-<div align="left"><Frame><img src="/images/sleekshot-3.png" alt="" /></Frame></div>
+  **Updated**: The Import screen in the admin dashboard now displays additional metadata for individual imports.
+</Update>
 
-<div align="left"><Frame><img src="/images/image-9.png" alt="" /></Frame></div>
+<Update label="December 2025" description="New encryption options, UI enhancements, new destinations, quick actions, and new languages">
+  ### Environment variable encryption options
 
-* Added a configuration option to set the default number of rows displayed on the Verify Data screen.
+  **Added**: Support for AES-256-GCM and improved AES-CBC (V2) encryption options in Environment Variables for enhanced data security. More information [here](/advanced-installation/environment-variables#encrypting-environment-variables).
 
-<div align="left"><Frame><img src="/images/image-10.png" alt="" /></Frame></div>
+  ### UI enhancements
 
-<div align="left"><Frame><img src="/images/image-11.png" alt="" /></Frame></div>
+  Made several small UI tweaks to make the importer sleeker and more user-friendly. For example, the row filter dropdown (All / Error rows) is now a modern toggle switch, and the search box has been condensed into a search icon that expands on click.
 
-## 14 April 2025
+  <Frame caption="Row Filter">
+    <img
+      src="/images/row-filter.png"
+      alt="Row Filter"
+    />
+  </Frame>
 
-* **Introduced the `column.isUnmapped` property** in the [`csvbox.columns`](/advanced-installation/data-transforms#csvboxcolumns) object to identify Unmapped Columns. This is now available in Data Transforms and Validation Functions.
-* Added support for Unmapped Columns in Server Side Validation, allowing validation errors to be shown for Unmapped Columns.
+  <Frame caption="Search Icon">
+    <img
+      src="/images/search-v2.png"
+      alt="Search Icon"
+    />
+  </Frame>
 
-## 07 April 2025
+  ### Pipedream, n8n, and Softr destinations
 
-* Added support for bulk adding columns using a sample CSV file. More info [here](/dashboard-settings/add-columns-via-csv).
+  **Added**:
 
-## 26 March 2025
+  - [Pipedream](/destinations/pipedream) as data destination.
+  - [n8n](/destinations/n8n) as data destination.
+  - [Softr](/destinations/softr) as data destination.
 
-* **Introduced the `column.isDynamic` property** in the [`csvbox.columns`](/advanced-installation/data-transforms#csvboxcolumns) object to identify Dynamic Columns. This is now available in Data Transforms and Validation Functions.
-* Introduced a new configuration option to restrict adding new rows on the Verify Data screen.
+  ### Improved list selection
 
-<div align="left"><Frame caption="Adding rows option"><img src="/images/sleekshot-4.png" alt="Adding rows option" /></Frame></div>
+  **Improved**: We've added a new **Replace all similar cells** button for **List-type columns**. This allows you to replace **all cells with the same value as the currently selected cell** in one click. Perfect for quickly fixing repeated invalid values and speeding up data verification.
 
-## 21 March 2025
+  <Frame>
+    <img
+      src="/images/improved-list-selection.png"
+      alt="Replace all similar cells button for a List-type column"
+    />
+  </Frame>
 
-* Added OpenAI to the list of [Sub Processors](/legal/gdpr/data-processing-addendum#sub-processors) in the [DPA](/legal/gdpr/data-processing-addendum). 
-* Why is OpenAI added as a subprocessor?\
-  CSVbox leverages OpenAI’s industry-leading AI capabilities to enhance functionality within the importer app. As we build new AI-powered features, OpenAI has been included as a subprocessor. 
+  ### Quick actions for validation errors
 
-## 20 March 2025
+  **Added**: You can now take faster action on validation errors using the new **Quick Actions** button in the message bar. This provides one-click options to delete all invalid values, replace empty cells, or find and replace values, making it quicker to fix errors without navigating through individual cells.
 
-* Added support for file submissions without requiring predefined template columns. Check out [Zero Template Column](/dashboard-settings/sheet-options-1#zero-template-columns) functionality
+  <Frame>
+    <img
+      src="/images/quick-action-button.png"
+      alt="Quick Actions button in the message bar"
+    />
+  </Frame>
 
-## 17 March 2025
+  ### New languages
 
-* Expanded styling options with customizable colors, fonts, and layout sizes, allowing for a more consistent and professional appearance.
+  **Added**: Newly supported languages include:
 
-<Frame><img src="/images/styling.png" alt="" /></Frame>
+  - Bulgarian (`bg`)
+  - Czech (`cs`)
+  - Hungarian (`hu`)
+  - Ukrainian (`uk`)
+</Update>
 
-## 12 March 2025
+<Update label="November 2025" description="Supabase and Google BigQuery destinations, Chinese languages, and more">
+  ### Supabase destination
 
-* Added [Mapping Choices](/dashboard-settings/sheet-options-1#mapping-choice) - option for customers to map file columns to template fields or template fields to file columns.
+  **Added**: [Supabase](/destinations/supabase) as data destination.
 
-## 11 February 2025
+  ### Chinese languages
 
-* Support for [Environment Variables](/advanced-installation/environment-variables) is now available in [Validation Functions](/advanced-installation/validation-functions#csvboxenvironment), [Data Transforms](/advanced-installation/data-transforms#csvboxenvironment), and [Virtual Columns](/advanced-installation/virtual-columns#csvboxenvironment).
+  Newly supported languages include:
 
-## 24 January 2025
+  - Chinese (Simplified) - `zh-CN`
+  - Chinese (Traditional) - `zh-TW`
 
-* Relocated the[ File Delete Policy](/dashboard-settings/sheet-options-1#file-delete-policy) from account-level settings to sheet-level settings.
+  ### Hide Cancel button
 
-## 14 January 2025
+  **Added**: **Hide Cancel Button** option to hide the Cancel button located at the bottom-right corner of the importer. More information [here](/dashboard-settings/sheet-options-1#hide-cancel-button).
 
-* Introduced the [`csvbox.columns`](/advanced-installation/data-transforms#csvboxcolumns) object for use in Data Transforms and Validation Functions.
+  ### Server-side validation attributes in the client data
 
-## 06 January 2025
+  **Added**: New client-side attributes (`ssv_enabled`, `ssv_fail`, `ssv_row_fail`, `ssv_table_error`) are now included in the response object when Server-Side Validation is enabled. More information [here](/advanced-installation/server-side-validation#additional-attributes-in-the-client-data-object).
 
-* Added [**auto\_map** ](/advanced-installation/rest-file-api#request-body)attribute to the REST File API to activate automatic column mapping during file submission.
+  ### Google BigQuery destination
 
-## 03 December 2024
+  **Added**: [Google BigQuery](/destinations/google-bigquery) as data destination.
 
-* Optimized the code to improve import performance 2x.
+  ### Execution time for Data Transforms
 
-## 14 November 2024
+  **Added**: [Execution Time](/advanced-installation/data-transforms#execution-time) option to Data Transforms. You can now choose to run each transform **before** or **after** the Data Validation stage.
 
-* Introduced Data Transforms, enabling a new method for bulk editing datasets before pushing them to your app. Learn more here: [Data Transforms Guide](/advanced-installation/data-transforms)
+  <Frame>
+    <img
+      src="/images/data-transforms-1.png"
+      alt="Execution Time option in Data Transforms"
+    />
+  </Frame>
+</Update>
 
-## 23 October 2024
+<Update label="09 October 2025" description="">
+  ### Accepted file types
 
-* Refined the CSVbox admin panel UI for a more intuitive and streamlined experience.
+  Added a new feature allowing users to select accepted file types for uploads. Choose between **CSV**, **XLS**, and **XLSX** formats in your sheet settings.
 
-## 16 October 2024
+  <Frame>
+    <img
+      src="/images/image-37.png"
+      alt="Accepted file types setting with CSV, XLS, and XLSX options"
+    />
+  </Frame>
+</Update>
 
-* Added the option to hide File Upload Box for cases where only Copy-Paste data option is mandatory.
-* For List-type columns introduced the ability to accept **list values** interchangeably with **display labels**.
+<Update label="25 September 2025" description="">
+  ### Language support
 
-## 07 October 2024
+  **Added**: We've expanded CSVbox's multilingual capabilities. Newly supported languages include:
 
-* Introduced several UI improvements to the importer, including a confirmation prompt when closing the import process.
-* Added toggle functionality to enable or disable Virtual Columns and Validation Functions.
+  - Hindi (`hi`)
+  - Bahasa Malaysia (Malay) (`ms`)
+  - Russian (`ru`)
+  - Vietnamese (`vi`)
+  - Korean (`ko`)
+  - Bahasa Indonesia (`id`)
+  - Egyptian Arabic (`ar-EG`)
+  - Urdu (`ur`)
+</Update>
 
-## 19 September 2024
+<Update label="08 September 2025" description="">
+  ### Table and row errors in server-side validation
 
-* Added the option to show [Unmapped Columns](/advanced-installation/unmapped-columns) on the Validation Screen.
+  **New**: [Server-Side Validation](/advanced-installation/server-side-validation) supports **table** and **row** error types.
 
-<div align="left"><Frame caption="Show Unmapped Columns"><img src="/images/show-unmapped-columns.png" alt="Show Unmapped Columns" /></Frame></div>
+  **UX**: Table errors render in an alert banner above the grid. Row errors appear as a badge on the row number with a pop-over on click.
 
-## 28 August 2024
+  <Frame>
+    <img
+      src="/images/sse-errors-1.png"
+      alt="Table and row errors in the importer"
+    />
+  </Frame>
 
-* Updated the [REST File API](/advanced-installation/rest-file-api) to enable direct uploading of file contents. Check [**import.file**](/advanced-installation/rest-file-api#direct-file-upload) body param.
+  **API**: You can mix `table`, `row`, and `cell` errors in one response. `type` is optional and defaults to `cell`. **No breaking changes.**
+</Update>
 
-## 19 August 2024
+<Update label="28 August 2025" description="">
+  ### Default header row
 
-* Added support for the Slovak language.
+  Added option to set the default row on the header selection screen. You can now choose which row is pre-selected on the Header Selection step.
 
-## 06 August 2024
+  Also available as an installation parameter: [`default_header_row`](/getting-started/2-install-code#default_header_row).
 
-* Added the functionality to make columns [**Read Only**](/dashboard-settings/sheet-options#read-only).
+  <Frame>
+    <img
+      src="/images/image-7.png"
+      alt="Default header row setting"
+    />
+  </Frame>
+</Update>
 
-## 01 August 2024
+<Update label="14 August 2025" description="">
+  ### Test API destination
 
-* Enable end users to input a file/import description before uploading the file. More info [here](/dashboard-settings/sheet-options-1#import-description).
+  Added [**Test API**](/destinations#test-api) destination. It sends spreadsheet data to a unique [`webhooks.csvbox.io`](https://webhooks.csvbox.io/) URL (testing-only).
+</Update>
 
-## 26 July 2024
+<Update label="17 July 2025" description="">
+  ### Custom error messages for regex dynamic columns
 
-* Added support for the Turkish language.
+  Added support for custom error messages (via `error_message` validator) for [regex type dynamic columns](/advanced-installation/dynamic-columns#validator-options).
 
-## 02 July 2024
+  ### Excel values for number dynamic columns
 
-* **Importer Enhancement:** The importer now handles password-protected files more effectively. Users will receive a message indicating that password-protected files cannot be read.
+  You can now use the `excel_value` validator with number-type dynamic columns to control whether to import **raw** or **formatted** values from Excel.
+</Update>
 
-## 24 June 2024
+<Update label="16 July 2025" description="">
+  ### Environment variable support for APIs
 
-* You can now provide a URL to redirect the page after the import is completed successfully.
+  You can now use environment variables in:
 
-<div align="left"><Frame caption="Redirect URL"><img src="/images/redirect-url.jpg" alt="Redirect URL" /></Frame></div>
+  1. Dynamic List API
+  2. Multi-select Dynamic List API
+  3. Success Message API
+  4. Failed Message API
+  5. Custom headers for all the above
 
-## 18 June 2024
+  This makes it easier to manage configuration across environments.
 
-*  Two-Factor Authentication (2FA) is now available for all CSVbox users. This new feature is a part of our ongoing efforts to enhance security when accessing our platform. To activate 2FA, login to your CSVbox account > go to Accounts page > Click on 'Enable 2-factor Authentication' button and follow the instructions.
+  <Frame>
+    <img
+      src="/images/sleekshot-1.png"
+      alt="Environment variables used in an API URL"
+    />
+  </Frame>
+</Update>
 
-## 14 June 2024
+<Update label="08 July 2025" description="">
+  ### Dark themes
 
-* Added [**upload\_file\_url** ](/getting-started/2-install-code#upload_file_url)and [**upload\_file\_worksheet\_name** ](/getting-started/2-install-code#upload_file_worksheet_name)options to pre-load the importer with data from a file.
+  The importer now supports **dark** and **custom dark** themes for a better user experience.
 
-## 10 June 2024
+  ### Theme installation option
 
-* You can now encrypt environment variables using the [AES Everywhere library ](https://github.com/mervick/aes-everywhere)to protect sensitive data. More info [here](/advanced-installation/environment-variables#encrypting-environment-variables).
+  Added a [`theme`](/getting-started/2-install-code#theme) selection option in the installation code for applying the theme at runtime.
+</Update>
 
-## 06 June 2024
+<Update label="12 June 2025" description="">
+  ### Excel value formatting options
 
-* Updated the List Type Column validation to include the 'Accept Other Values' option.
+  Added **Excel Value Formatting Options**. Choose how numeric values are imported:
 
-<div align="left"><Frame caption="List Column Validation"><img src="/images/image-32.png" alt="List Column Validation" /></Frame></div>
+  - **Formatted**: As shown in Excel (e.g., "\$1,200.00", "15%").
+  - **RAW**: Strips formatting for clean numbers (e.g., 1200, 0.15).
 
-Selecting the 'Accept Other Values' option will allow the users to input values that are not found in the predefined list of acceptable values.
+  Ideal for better control in calculations and validations. More info [here](/dashboard-settings/validations#number).
+</Update>
 
-This option is also available for the Dynamic List, Multi-Select List and Dynamic Multi-Select List column types as well.
+<Update label="20 May 2025" description="">
+  ### MongoDB destination
 
-## 27 May 2024
+  Added MongoDB as data destination.
+</Update>
 
-* Added [**min\_rows** ](/getting-started/2-install-code#min_rows)config option to enforce a minimum number of rows uploaded in a single sheet.
-* Added option to configure a default delimiter for manual data entry.
+<Update label="29 April 2025" description="">
+  ### AI bulk transformations
 
-<div align="left"><Frame caption="Default delimiter"><img src="/images/default-delimiter.jpg" alt="Default delimiter" /></Frame></div>
+  Introduced **AI Bulk Transformations**, allowing users to apply AI-driven changes to uploaded data using natural language prompts, all directly in the importer. Supports multi-language input, column-level modifications, and ensures complete privacy with no external data sharing. More information [here](/dashboard-settings/ai-bulk-transforms).
+</Update>
 
-## 20 May 2024
+<Update label="17 April 2025" description="">
+  ### Default table view
 
-* You can now add[ **Environment Variables**](/advanced-installation/environment-variables) to define different environments (such as 'production', 'staging', 'local') and pass dynamic values to the importer.
+  Introduced a setting to choose the default table view on the Verify Data screen. Users can now select between "Show all rows" and "Show invalid rows only."
 
-## 28 April 2024
+  <Frame>
+    <img
+      src="/images/sleekshot-3.png"
+      alt="Default table view setting"
+    />
+  </Frame>
 
-* You now have the capability to directly send JSON formatted files to S3, in addition to the CSV format files that were already sendable.
+  <Frame>
+    <img
+      src="/images/image-9.png"
+      alt="Default table view options on the Verify Data screen"
+    />
+  </Frame>
 
-<div align="left"><Frame><img src="/images/json-type.png" alt="" /></Frame></div>
+  ### Default number of rows
 
-## 01 April 2024
+  Added a configuration option to set the default number of rows displayed on the Verify Data screen.
 
-* Added search functionality to quickly find the text in the uploaded sheet. It can be turned off via the admin dashboard.
+  <Frame>
+    <img
+      src="/images/image-10.png"
+      alt="Default number of rows setting"
+    />
+  </Frame>
 
-<div align="left"><Frame caption="Text Search"><img src="/images/search-data.jpg" alt="Text Search" /></Frame></div>
+  <Frame>
+    <img
+      src="/images/image-11.png"
+      alt="Rows per page on the Verify Data screen"
+    />
+  </Frame>
+</Update>
 
-## 19 March 2024
+<Update label="14 April 2025" description="">
+  ### Unmapped column property
 
-* Added functionality to find and replace text in the uploaded data.
+  **Introduced the `column.isUnmapped` property** in the [`csvbox.columns`](/advanced-installation/data-transforms#csvboxcolumns) object to identify Unmapped Columns. This is now available in Data Transforms and Validation Functions.
 
-<div align="left"><Frame caption="Find and replace button"><img src="/images/button.jpg" alt="Find and replace button" /></Frame></div>
+  ### Unmapped columns in server-side validation
 
-<div align="left"><Frame caption="Find and Replace Popup"><img src="/images/findandreplace.jpg" alt="Find and Replace Popup" /></Frame></div>
+  Added support for Unmapped Columns in Server Side Validation, allowing validation errors to be shown for Unmapped Columns.
+</Update>
 
-## 13 March 2024
+<Update label="07 April 2025" description="">
+  ### Add columns via CSV
 
-* A new option was added to allow the default selection of columns as [Ignored Columns](/advanced-installation/ignored-columns).
+  Added support for bulk adding columns using a sample CSV file. More info [here](/dashboard-settings/add-columns-via-csv).
+</Update>
 
-<div align="left"><Frame><img src="/images/ignore-cols-default-selection.jpg" alt="" /></Frame></div>
+<Update label="26 March 2025" description="">
+  ### Dynamic column property
 
-## 4 March 2024
+  **Introduced the `column.isDynamic` property** in the [`csvbox.columns`](/advanced-installation/data-transforms#csvboxcolumns) object to identify Dynamic Columns. This is now available in Data Transforms and Validation Functions.
 
-* Added Azure Blob Storage as data destination.
+  ### Restrict adding rows
 
-## 21 Feb 2024
+  Introduced a new configuration option to restrict adding new rows on the Verify Data screen.
 
-* Added Google Sheets to the[ target\_file\_name](/getting-started/2-install-code#target_file_name) option. You can now provide custom file names for each new import in Google Sheets.
-* New option to append [custom user attributes](/getting-started/2-install-code#referencing-the-user) to [Dynamic List API](/dashboard-settings/validations#dynamic-list). This helps to identify the user in your app and generate custom list options.
+  <Frame caption="Adding rows option">
+    <img
+      src="/images/sleekshot-4.png"
+      alt="Adding rows option"
+    />
+  </Frame>
+</Update>
 
-<div align="left"><Frame caption="Custom User Attributes"><img src="/images/custom.jpg" alt="Custom User Attributes" /></Frame></div>
+<Update label="21 March 2025" description="">
+  ### OpenAI added as a sub-processor
 
-## 12 Feb 2024
+  Added OpenAI to the list of [Sub Processors](/legal/gdpr/data-processing-addendum#sub-processors) in the [DPA](/legal/gdpr/data-processing-addendum).
 
-* Added an option to skip the Data Validation screen if no errors are found.
+  **Why is OpenAI added as a subprocessor?** CSVbox leverages OpenAI's industry-leading AI capabilities to enhance functionality within the importer app. As we build new AI-powered features, OpenAI has been included as a subprocessor.
+</Update>
 
-<div align="left"><Frame><img src="/images/skip-verify.png" alt="" /></Frame></div>
+<Update label="20 March 2025" description="">
+  ### Zero template columns
 
-## 02 Feb 2024
+  Added support for file submissions without requiring predefined template columns. Check out [Zero Template Column](/dashboard-settings/sheet-options-1#zero-template-columns) functionality.
+</Update>
 
-* The $9 Personal Plan has been discontinued. Existing subscribers to this plan will remain on their current subscription.
+<Update label="17 March 2025" description="">
+  ### Expanded styling options
 
-## 18 Jan 2024
+  Expanded styling options with customizable colors, fonts, and layout sizes, allowing for a more consistent and professional appearance.
 
-* Added a new page for API keys. Each team will have one common set of API and Secret key. Only the Super Admin can generate/regenerate the keys. Admin and Tech roles can view the keys.
-* Updated Airtable integration to move from the older API key based authentication to the newer Personal Access Token based authentication.
+  <Frame>
+    <img
+      src="/images/styling.png"
+      alt="Importer styling options"
+    />
+  </Frame>
+</Update>
 
-## 20 December 2023
+<Update label="12 March 2025" description="">
+  ### Mapping choices
 
-* Added optimizations to improve speed.
-* Fixed vulnerabilities as per the external pen testing report.
+  Added [Mapping Choices](/dashboard-settings/sheet-options-1#mapping-choice), an option for customers to map file columns to template fields or template fields to file columns.
+</Update>
 
-## 27 November 2023
+<Update label="11 February 2025" description="">
+  ### Environment variables in column logic
 
-* Improvements added to [Server Side Validation](/advanced-installation/server-side-validation) functionality. To allow the users to re-submit all the rows again (instead of error rows only) we have added the 'All Rows' option as shown below:
+  Support for [Environment Variables](/advanced-installation/environment-variables) is now available in [Validation Functions](/advanced-installation/validation-functions#csvboxenvironment), [Data Transforms](/advanced-installation/data-transforms#csvboxenvironment), and [Virtual Columns](/advanced-installation/virtual-columns#csvboxenvironment).
+</Update>
 
-<div align="left"><Frame><img src="/images/ssv.png" alt="" /></Frame></div>
+<Update label="24 January 2025" description="">
+  ### File delete policy moved to sheet settings
 
-## 06 November 2023
+  Relocated the [File Delete Policy](/dashboard-settings/sheet-options-1#file-delete-policy) from account-level settings to sheet-level settings.
+</Update>
 
-* Updated Teams feature to allow users to be part of multiple teams.
+<Update label="14 January 2025" description="">
+  ### Columns object
 
-## 20 October 2023
+  Introduced the [`csvbox.columns`](/advanced-installation/data-transforms#csvboxcolumns) object for use in Data Transforms and Validation Functions.
+</Update>
 
-* Added option to skip pushing of header row to the FTP data destination.
+<Update label="06 January 2025" description="">
+  ### Auto mapping in the REST File API
 
-## 13 October 2023
+  Added the [`auto_map`](/advanced-installation/rest-file-api#request-body) attribute to the REST File API to activate automatic column mapping during file submission.
+</Update>
 
-<Check>
+<Update label="03 December 2024" description="">
+  ### Faster imports
 
-It is official! CSVbox is now SOC 2 Type 2 certified. [Read more](https://csvbox.io/soc-2-type-2).
+  Optimized the code to improve import performance 2x.
+</Update>
 
-</Check>
+<Update label="14 November 2024" description="">
+  ### Data Transforms
 
-## 05 October 2023
+  Introduced Data Transforms, enabling a new method for bulk editing datasets before pushing them to your app. Learn more here: [Data Transforms Guide](/advanced-installation/data-transforms).
+</Update>
 
-* Added the 'Allow Commas' option to the 'Number' type column.
+<Update label="23 October 2024" description="">
+  ### Admin panel UI refresh
 
-<Frame caption="Allow Commas"><img src="/images/commas.jpg" alt="Allow Commas" /></Frame>
+  Refined the CSVbox admin panel UI for a more intuitive and streamlined experience.
+</Update>
 
-## 25 September 2023
+<Update label="16 October 2024" description="">
+  ### Hide the file upload box
 
-* Add an option 'No headers in the sheet' on the Header Row selection page.
+  Added the option to hide File Upload Box for cases where only Copy-Paste data option is mandatory.
 
-<Frame caption="No headers option"><img src="/images/no-header.jpg" alt="No headers option" /></Frame>
+  ### List values and display labels
 
-## 22 September 2023
+  For List-type columns, introduced the ability to accept **list values** interchangeably with **display labels**.
+</Update>
 
-* Added [**target\_file\_name** ](/getting-started/2-install-code#target_file_name)option to control the name of the file that gets pushed to the end destination.
+<Update label="07 October 2024" description="">
+  ### Importer UI improvements
 
-## 20 September 2023
+  Introduced several UI improvements to the importer, including a confirmation prompt when closing the import process.
 
-* Added dynamic column support to Validation Functions.
+  ### Toggle Virtual Columns and Validation Functions
 
-## 12 September 2023
+  Added toggle functionality to enable or disable Virtual Columns and Validation Functions.
+</Update>
 
-* Added [Validation Functions](/advanced-installation/validation-functions). Code your custom validation logic in Javascript.
+<Update label="19 September 2024" description="">
+  ### Show unmapped columns
 
-## 11 September 2023
+  Added the option to show [Unmapped Columns](/advanced-installation/unmapped-columns) on the Validation Screen.
 
-* Added support for [worksheet selection](/dashboard-settings/sheet-options-1#worksheet-selection) in Excel files.
+  <Frame caption="Show Unmapped Columns">
+    <img
+      src="/images/show-unmapped-columns.png"
+      alt="Show Unmapped Columns"
+    />
+  </Frame>
+</Update>
 
-## 06 September 2023
+<Update label="28 August 2024" description="">
+  ### Direct file upload in the REST File API
 
-* Deployed the functionality to add multiple [team members](/account/teams) to the CSVbox account.
+  Updated the [REST File API](/advanced-installation/rest-file-api) to enable direct uploading of file contents. Check the [`import.file`](/advanced-installation/rest-file-api#direct-file-upload) body param.
+</Update>
 
-## 29 August 2023
+<Update label="19 August 2024" description="">
+  ### Slovak language
 
-* Added new options - **max\_rows\_allow\_submit** and **max\_rows\_custom\_message** for [**max\_rows** ](/getting-started/2-install-code#max_rows)validation.
+  Added support for the Slovak language.
+</Update>
 
-## 02 August 2023
+<Update label="06 August 2024" description="">
+  ### Read-only columns
 
-* Added [Currency ](/dashboard-settings/validations#currency)Column Type validation.
+  Added the functionality to make columns [**Read Only**](/dashboard-settings/sheet-options#read-only).
+</Update>
 
-## 12 July 2023
+<Update label="01 August 2024" description="">
+  ### Import description
 
-* Added  **raw\_columns** object to the Import [Complete Webhook](/getting-started/3-receive-data#import-complete-webhook) and the [Data at Client](/getting-started/3-receive-data#data-on-the-client-side). This object contains all the column headers found in the raw spreadsheet file uploaded by the user.
+  End users can now input a file/import description before uploading the file. More info [here](/dashboard-settings/sheet-options-1#import-description).
+</Update>
 
-## 07 July 2023
+<Update label="26 July 2024" description="">
+  ### Turkish language
 
-* Added [sample\_template\_url ](/getting-started/2-install-code#sample_template_url)and [sample\_template\_button\_text ](/getting-started/2-install-code#sample_template_button_text)configuration options. With these, you can now configure a dynamic sample template file for each user.
+  Added support for the Turkish language.
+</Update>
 
-## 27 June 2023
+<Update label="02 July 2024" description="">
+  ### Password-protected files
 
-* Added [Ignored columns](/advanced-installation/ignored-columns) - allow users to skip columns for data submission.
+  **Importer enhancement**: The importer now handles password-protected files more effectively. Users receive a message indicating that password-protected files cannot be read.
+</Update>
 
-## 16 June 2023
+<Update label="24 June 2024" description="">
+  ### Redirect URL
 
-* Infrastructure changes
-* Bug fixes
+  You can now provide a URL to redirect the page after the import is completed successfully.
 
-## 15 May 2023
+  <Frame caption="Redirect URL">
+    <img
+      src="/images/redirect-url.jpg"
+      alt="Redirect URL"
+    />
+  </Frame>
+</Update>
 
-* Added functionality to hide copy-paste data option.
-* Added option to skip confirmation message when accepting invalid data.
-* UI enhancements to improve the speed of the admin dashboard.
-* Enabled multiple importers on the same page for the Bubble plugin.
-* Performance improvements across all destinations.
+<Update label="18 June 2024" description="">
+  ### Two-factor authentication
 
-## 12 April 2023
+  Two-Factor Authentication (2FA) is now available for all CSVbox users. This new feature is a part of our ongoing efforts to enhance security when accessing our platform.
 
-* Few UI enhancements. Now the entire row gets highlighted when there is a validation issue in any one cell.
+  To activate 2FA, log in to your CSVbox account → go to the **Accounts** page → click the **Enable 2-factor Authentication** button and follow the instructions.
+</Update>
 
-## 06 April 2023
+<Update label="14 June 2024" description="">
+  ### Pre-load the importer from a file
 
-* Added [Private Mode](/destinations/private-mode) for data processing.
+  Added [`upload_file_url`](/getting-started/2-install-code#upload_file_url) and [`upload_file_worksheet_name`](/getting-started/2-install-code#upload_file_worksheet_name) options to pre-load the importer with data from a file.
+</Update>
 
-## 27 Mar 2023
+<Update label="10 June 2024" description="">
+  ### Encrypted environment variables
 
-* Added [Server Side Validation](/advanced-installation/server-side-validation) (Beta) feature
+  You can now encrypt environment variables using the [AES Everywhere library](https://github.com/mervick/aes-everywhere) to protect sensitive data. More info [here](/advanced-installation/environment-variables#encrypting-environment-variables).
+</Update>
 
-## 09 Mar 2023
+<Update label="06 June 2024" description="">
+  ### Accept other values in List columns
 
-* Added the Danish language to the importer.
+  Updated the List Type Column validation to include the **Accept Other Values** option.
 
-## 06 Mar 2023
+  <Frame caption="List Column Validation">
+    <img
+      src="/images/image-32.png"
+      alt="List Column Validation"
+    />
+  </Frame>
 
-* Added option to select between Sequential and Parallel sending of data via webhooks. More info [here](/destinations#request-type).
+  Selecting the **Accept Other Values** option allows users to input values that are not found in the predefined list of acceptable values.
 
-## 27 Feb 2023
+  This option is also available for the Dynamic List, Multi-Select List, and Dynamic Multi-Select List column types.
+</Update>
 
-* Option to add a new sheet in Google Sheets for each file upload.
+<Update label="27 May 2024" description="">
+  ### Minimum rows
 
-![](/images/gsheet.jpg)
+  Added the [`min_rows`](/getting-started/2-install-code#min_rows) config option to enforce a minimum number of rows uploaded in a single sheet.
 
-## 17 Feb 2023
+  ### Default delimiter for manual data entry
 
-* Added the importer event [onLoadStart](/getting-started/2-install-code#onloadstart). It gets triggered when the importer iFrame starts loading.
+  Added option to configure a default delimiter for manual data entry.
 
-## 14 Feb 2023
+  <Frame caption="Default delimiter">
+    <img
+      src="/images/default-delimiter.jpg"
+      alt="Default delimiter"
+    />
+  </Frame>
+</Update>
 
-* Added [Upsert ](/destinations#2-upsert)operation for Airtable.
+<Update label="20 May 2024" description="">
+  ### Environment variables
 
-## 09 Feb 2023
+  You can now add [**Environment Variables**](/advanced-installation/environment-variables) to define different environments (such as 'production', 'staging', 'local') and pass dynamic values to the importer.
+</Update>
 
-* Option to disable [user keywords](/dashboard-settings/sheet-options#matching-keywords) based column mapping.
+<Update label="28 April 2024" description="">
+  ### JSON files to S3
 
-![](/images/keywords.jpg)
+  You can now send JSON formatted files directly to S3, in addition to the CSV format files that were already sendable.
 
-## 06 Feb 2023
+  <Frame>
+    <img
+      src="/images/json-type.png"
+      alt="JSON file type option for the S3 destination"
+    />
+  </Frame>
+</Update>
 
-* Added [`position` ](/advanced-installation/dynamic-columns#column-position)parameter to control the display order of the dynamic columns.
+<Update label="01 April 2024" description="">
+  ### Text search
 
-## 24 Jan 2023
+  Added search functionality to quickly find text in the uploaded sheet. It can be turned off via the admin dashboard.
 
-* Added [Lazy Load](/getting-started/2-install-code#lazy-load) option for importer initialization.
-* Added multiple-level List-Dependent List validations.
-* Added info icons on the Column Mapping page.
-* Updated email validation to accept special characters.
-* Fixed bugs, improved notifications and made minor UI changes to the admin section.
+  <Frame caption="Text Search">
+    <img
+      src="/images/search-data.jpg"
+      alt="Text Search"
+    />
+  </Frame>
+</Update>
 
-## 04 Jan 2023
+<Update label="19 March 2024" description="">
+  ### Find and replace
 
-* Added the Japanese language to the importer.
+  Added functionality to find and replace text in the uploaded data.
 
-## 29 Dec 2022
+  <Frame caption="Find and replace button">
+    <img
+      src="/images/button.jpg"
+      alt="Find and replace button"
+    />
+  </Frame>
 
-* Added option to skip Column Mapping screen if there is an exact match of columns.
+  <Frame caption="Find and Replace Popup">
+    <img
+      src="/images/findandreplace.jpg"
+      alt="Find and Replace Popup"
+    />
+  </Frame>
+</Update>
 
-![](/images/map-col-skip.png)
+<Update label="13 March 2024" description="">
+  ### Ignore columns by default
 
-## 26 Dec 2022
+  A new option was added to allow the default selection of columns as [Ignored Columns](/advanced-installation/ignored-columns).
 
-* Added support for delimiters such as "." and "|" for [Multi-select List](/dashboard-settings/validations#multi-select-list) and [Dynamic Multi-select List](/dashboard-settings/validations#dynamic-multi-select-list) column types. 
+  <Frame>
+    <img
+      src="/images/ignore-cols-default-selection.jpg"
+      alt="Default selection of columns as ignored"
+    />
+  </Frame>
+</Update>
 
-## 18 Dec 2022
+<Update label="4 March 2024" description="">
+  ### Azure Blob Storage destination
 
-* Added Slovenian language.
-* Added the option to provide help text in multiple languages.
+  Added Azure Blob Storage as data destination.
+</Update>
 
-![](/images/language-options.jpg)
+<Update label="21 Feb 2024" description="">
+  ### Custom file names for Google Sheets
 
-## 05 Dec 2022
+  Added Google Sheets to the [`target_file_name`](/getting-started/2-install-code#target_file_name) option. You can now provide custom file names for each new import in Google Sheets.
 
-* `csvbox.row["total_rows"]` and `csvbox.row["row_number"]` [data variables](/advanced-installation/virtual-columns#csvboxrow) added to Virtual Columns.
-* [`csvbox.virtual`](/advanced-installation/virtual-columns#csvboxvirtual) object added to Virtual Columns.
+  ### Custom user attributes in the Dynamic List API
 
-## 29 Nov 2022
+  New option to append [custom user attributes](/getting-started/2-install-code#referencing-the-user) to [Dynamic List API](/dashboard-settings/validations#dynamic-list). This helps to identify the user in your app and generate custom list options.
 
-* Added [1-click Resubmit button](/dashboard-settings/sheet-options-1#resubmit-button) to trigger a new import on the recently submitted file.
+  <Frame caption="Custom User Attributes">
+    <img
+      src="/images/custom.jpg"
+      alt="Custom User Attributes"
+    />
+  </Frame>
+</Update>
 
-<Frame caption="Resubmit"><img src="/images/image-18.png" alt="Resubmit" /></Frame>
+<Update label="12 Feb 2024" description="">
+  ### Skip the data validation screen
 
-## 25 Nov 2022
+  Added an option to skip the Data Validation screen if no errors are found.
 
-* Added [Multi-select List](/dashboard-settings/validations#multi-select-list) and [Dynamic Multi-select List](/dashboard-settings/validations#dynamic-multi-select-list) column types. 
+  <Frame>
+    <img
+      src="/images/skip-verify.png"
+      alt="Option to skip the Data Validation screen"
+    />
+  </Frame>
+</Update>
 
-## 21 Nov 2022
+<Update label="02 Feb 2024" description="">
+  ### Personal plan discontinued
 
-* Added option to view and delete [User Keywords](/dashboard-settings/sheet-options#matching-keywords).
+  The \$9 Personal Plan has been discontinued. Existing subscribers to this plan will remain on their current subscription.
+</Update>
 
-![](/images/user-keywords-1.jpg)
+<Update label="18 Jan 2024" description="">
+  ### API keys page
 
-## 16 Nov 2022
+  Added a new page for API keys. Each team has one common set of API and Secret key. Only the Super Admin can generate/regenerate the keys. Admin and Tech roles can view the keys.
 
-* Added a Reset All Mappings button to make it easier for the users to reset and remap the columns. This button is optional and its visibility can be controlled via the Sheet settings page.
+  ### Airtable personal access tokens
 
-<div align="left"><Frame caption="Reset Mappings Button"><img src="/images/reset-mappings.jpg" alt="Reset Mappings Button" /></Frame></div>
+  Updated the Airtable integration to move from the older API key based authentication to the newer Personal Access Token based authentication.
+</Update>
 
-## 14 Nov 2022
+<Update label="20 December 2023" description="">
+  ### Speed and security improvements
 
-* Added the Italian language option for the importer front end.
-* Added option to Copy sheet settings to an existing sheet. The data destination config and license key remain the same in the target sheet.
+  - Added optimizations to improve speed.
+  - Fixed vulnerabilities as per the external pen testing report.
+</Update>
 
-## 29 Oct 2022
+<Update label="27 November 2023" description="">
+  ### Resubmit all rows in server-side validation
 
-* Optimized SQL Server integration code to improve speed.
-* Added **data\_location** initialization parameter for specifying data and server location.
+  Improvements added to [Server Side Validation](/advanced-installation/server-side-validation) functionality. To allow users to re-submit all the rows again (instead of error rows only), we have added the **All Rows** option as shown below:
 
-## 13 Oct 2022
+  <Frame>
+    <img
+      src="/images/ssv.png"
+      alt="All Rows option for server-side validation resubmission"
+    />
+  </Frame>
+</Update>
 
-* Fixed UI buys related to **max\_rows** option.
-* Upgraded infrastructure and added optimizations for improved speed for EU region.
-* Improved performance for imports with many Virtual Columns.
+<Update label="06 November 2023" description="">
+  ### Multiple teams
 
-## 30 Sep 2022
+  Updated the Teams feature to allow users to be part of multiple teams.
+</Update>
 
-* Updated [DPA ](/legal/gdpr/data-processing-addendum)to add Europe Data Residency option.
+<Update label="20 October 2023" description="">
+  ### Skip the FTP header row
 
-## 22 Sep 2022
+  Added option to skip pushing of header row to the FTP data destination.
+</Update>
 
-* Added the option to select Europe (Germany) location for data residency. More info [here](/dashboard-settings/sheet-options-1#server--data-location).
+<Update label="13 October 2023" description="">
+  ### SOC 2 Type 2 certification
 
-## 05 Sep 2022
+  It is official! CSVbox is now SOC 2 Type 2 certified. [Read more](https://csvbox.io/soc-2-type-2).
+</Update>
 
-* Added Hebrew language for importer frontend.
+<Update label="05 October 2023" description="">
+  ### Allow commas in Number columns
 
-## 01 Sep 2022
+  Added the **Allow Commas** option to the **Number** type column.
 
-* Added **Time** Column type validation.
-* The 100 column sheet restriction removed.
+  <Frame caption="Allow Commas">
+    <img
+      src="/images/commas.jpg"
+      alt="Allow Commas"
+    />
+  </Frame>
+</Update>
 
-## 30 Aug 2022
+<Update label="25 September 2023" description="">
+  ### No headers option
 
-* Added [Virtual Columns](/advanced-installation/virtual-columns). Create new columns by applying custom data transformation logic.
+  Added an option **No headers in the sheet** on the Header Row selection page.
 
-## 26 Aug 2022
+  <Frame caption="No headers option">
+    <img
+      src="/images/no-header.jpg"
+      alt="No headers option"
+    />
+  </Frame>
+</Update>
 
-* Added the Romanian language option for the importer frontend
+<Update label="22 September 2023" description="">
+  ### Target file name
 
-## 25 Aug 2022
+  Added the [`target_file_name`](/getting-started/2-install-code#target_file_name) option to control the name of the file that gets pushed to the end destination.
+</Update>
 
-* Added [Import Link disable](/advanced-installation/import-links#activating-import-links) option
+<Update label="20 September 2023" description="">
+  ### Dynamic columns in Validation Functions
 
-## 24 August 2022
+  Added dynamic column support to Validation Functions.
+</Update>
 
-* Added option to control[ import dialog size](/dashboard-settings/sheet-options-1#importer-dialog-size)
-* Added decimal / integer validation
+<Update label="12 September 2023" description="">
+  ### Validation Functions
 
-## 23 August 2022
+  Added [Validation Functions](/advanced-installation/validation-functions). Code your custom validation logic in JavaScript.
+</Update>
 
-* Updated React, Angular and Vuejs libraries for [onSubmit Importer event](/getting-started/2-install-code#events)
+<Update label="11 September 2023" description="">
+  ### Worksheet selection
 
-## 16 August 2022
+  Added support for [worksheet selection](/dashboard-settings/sheet-options-1#worksheet-selection) in Excel files.
+</Update>
 
-* Added [onSubmit Importer event](/getting-started/2-install-code#events)
+<Update label="06 September 2023" description="">
+  ### Team members
 
-## 10 August 2022
+  Deployed the functionality to add multiple [team members](/account/teams) to the CSVbox account.
+</Update>
 
-* You now have the option to specify a default filler value for the column in case the incoming data is blank. 
+<Update label="29 August 2023" description="">
+  ### Max rows options
 
-<div align="left"><img src="/images/defaultval.jpg" alt="Default Value" /></div>
+  Added new options, `max_rows_allow_submit` and `max_rows_custom_message`, for [`max_rows`](/getting-started/2-install-code#max_rows) validation.
+</Update>
 
-## 08 August 2022
+<Update label="02 August 2023" description="">
+  ### Currency column type
 
-* Added [domain authorization](/dashboard-settings/sheet-options-1#domain-authorization) option. You can provide a list of approved _domains/sub-domains_ for embedding the importer. The embedded importer will work on the whitelisted domains only.
+  Added [Currency](/dashboard-settings/validations#currency) Column Type validation.
+</Update>
 
-## 03 August 2022
+<Update label="12 July 2023" description="">
+  ### Raw columns object
 
-* Added functionality to configure custom success or failure messages at import complete. More info [here](/dashboard-settings/sheet-options-1#import-complete-messages).
+  Added the `raw_columns` object to the Import [Complete Webhook](/getting-started/3-receive-data#import-complete-webhook) and the [Data at Client](/getting-started/3-receive-data#data-on-the-client-side). This object contains all the column headers found in the raw spreadsheet file uploaded by the user.
+</Update>
 
-## 01 August 2022
+<Update label="07 July 2023" description="">
+  ### Dynamic sample template
 
-* Added [dynamic column](/advanced-installation/dynamic-columns) support for [Depenedent List](/dashboard-settings/validations#dependent-list) and [Dependent Dynamic List](/dashboard-settings/validations#dependent-dynamic-list) columns.
-* Added the Polish language option for the importer frontend.
+  Added [`sample_template_url`](/getting-started/2-install-code#sample_template_url) and [`sample_template_button_text`](/getting-started/2-install-code#sample_template_button_text) configuration options. With these, you can now configure a dynamic sample template file for each user.
+</Update>
 
-## 29 July 2022
+<Update label="27 June 2023" description="">
+  ### Ignored columns
 
-* Added the Thai language option for the importer frontend.
+  Added [Ignored columns](/advanced-installation/ignored-columns), which allow users to skip columns for data submission.
+</Update>
 
-## 22 July 2022
+<Update label="16 June 2023" description="">
+  ### Infrastructure changes and bug fixes
 
-* Added options for controlling the close of importer dialog after the import is complete. ![](/images/exit-options.jpg)
+  - Infrastructure changes
+  - Bug fixes
+</Update>
 
-## 20 July 2022
+<Update label="15 May 2023" description="">
+  ### Hide the copy-paste option
 
-* Added [Dependent Dynamic List Columns](/dashboard-settings/validations#dependent-dynamic-list).
+  Added functionality to hide copy-paste data option.
 
-## 07 July 2022
+  ### Skip the invalid data confirmation
 
-* Added **column\_mappings** object to the [import complete webhook](/getting-started/3-receive-data#import-complete-webhook) and the [callback function](/getting-started/2-install-code#callback-function). The **column\_mappings** object contains the user-defined mappings between the columns of the sheet (template) and columns in the uploaded CSV file.
-* Added the **Import ID** column in the table on the Imports page of the CSVbox dashboard.
-* The dynamic columns now support multiple date validation.
+  Added option to skip confirmation message when accepting invalid data.
 
-## 01 July 2022
+  ### Performance improvements
 
-* Added an **Export** button that downloads the validation errors and row data in an Excel sheet. More info [here](/dashboard-settings/sheet-options-1#export-button).
-* Updated importer UI to show the truncated row count.
+  - UI enhancements to improve the speed of the admin dashboard.
+  - Enabled multiple importers on the same page for the Bubble plugin.
+  - Performance improvements across all destinations.
+</Update>
 
-## 30 June 2022
+<Update label="12 April 2023" description="">
+  ### Row highlighting
 
-* Added Max Rows option to the importer dashboard. It limits the number of rows per import.
+  Few UI enhancements. Now the entire row gets highlighted when there is a validation issue in any one cell.
+</Update>
 
-<div align="left"><img src="/images/max-rows.jpg" alt="" /></div>
+<Update label="06 April 2023" description="">
+  ### Private Mode
 
-## 29 June 2022
+  Added [Private Mode](/destinations/private-mode) for data processing.
+</Update>
 
-* Added phone number validation based on the [libphonenumber.js library](https://catamphetamine.gitlab.io/libphonenumber-js/).
-* Minor UI changes to the import modal. Changes include:
-  * The importer modal is now full screen across all devices.
-  * The column mapping table & validation error text are center-aligned for better visibility.
+<Update label="27 Mar 2023" description="">
+  ### Server-side validation (beta)
 
-## 27 June 2022
+  Added [Server Side Validation](/advanced-installation/server-side-validation) (Beta) feature.
+</Update>
 
-* New styling options added - upload logo and custom fonts.
+<Update label="09 Mar 2023" description="">
+  ### Danish language
 
-## 24 June 2022
+  Added the Danish language to the importer.
+</Update>
 
-* Added the Arabic language (ltr) support for the importer frontend.
+<Update label="06 Mar 2023" description="">
+  ### Sequential or parallel webhooks
 
-## 23 June 2022
+  Added option to select between Sequential and Parallel sending of data via webhooks. More info [here](/destinations#request-type).
+</Update>
 
-* Added option to allow displaying the import fail error messages to the end-user.
+<Update label="27 Feb 2023" description="">
+  ### New Google Sheets sheet per upload
 
-## 22 June 2022
+  Option to add a new sheet in Google Sheets for each file upload.
 
-* Added **Primary Color** custom theme option. You can stylize the importer with the primary color of your brand. More styling options coming soon.
+  <Frame>
+    <img
+      src="/images/gsheet.jpg"
+      alt="Option to add a new Google Sheets sheet for each upload"
+    />
+  </Frame>
+</Update>
 
-## 10 June 2022
+<Update label="17 Feb 2023" description="">
+  ### onLoadStart event
 
-* The importer will attach the [custom user attributes](/getting-started/2-install-code#referencing-the-user) as query parameters to the [Dynamic List](/dashboard-settings/validations#dynamic-list) API request. **csvbox\_** prefix will be added to the custom user attribute query parameters. This will help you identify the users/environment and return back a relevant list of values.
+  Added the importer event [onLoadStart](/getting-started/2-install-code#onloadstart). It gets triggered when the importer iFrame starts loading.
+</Update>
 
-## 30 May 2022
+<Update label="14 Feb 2023" description="">
+  ### Airtable upsert
 
-* Added **Upsert** operation to MySQL, PostgreSQL and MS SQL data destinations. Instead of directly inserting the file data to the databases, the importer will first check if the record exists. If the record exists, then the row will be updated. Only if the record does not exist then a new row will be added.
+  Added [Upsert](/destinations#2-upsert) operation for Airtable.
+</Update>
 
-## 23 May 2022
+<Update label="09 Feb 2023" description="">
+  ### Disable user keyword mapping
 
-* Added [Dynamic List](/dashboard-settings/validations#dynamic-list) column type to accept valid list values via API, real-time.
+  Option to disable [user keywords](/dashboard-settings/sheet-options#matching-keywords) based column mapping.
 
-## 20 May 2022
+  <Frame>
+    <img
+      src="/images/keywords.jpg"
+      alt="Option to disable user keyword based column mapping"
+    />
+  </Frame>
+</Update>
 
-* New display options for the 'Select Header Row' page of the importer.
+<Update label="06 Feb 2023" description="">
+  ### Dynamic column position
 
-![DIsplay options](/images/display-options.jpg)
+  Added the [`position`](/advanced-installation/dynamic-columns#column-position) parameter to control the display order of the dynamic columns.
+</Update>
 
-1. **Skip this step?** - Hide/Show the 'Select header row' page to the users.
-2. **Show encoding** - Hide/Show the character set selection list to the users.
-3. **Switch Row/Columns** - Hide/Show the option to switch rows and columns to the users.
+<Update label="24 Jan 2023" description="">
+  ### Lazy load
 
-These settings help to remove the non-essential options from the importer and make the user experience cleaner.
+  Added [Lazy Load](/getting-started/2-install-code#lazy-load) option for importer initialization.
 
-## 19 May 2022
+  ### Multi-level dependent lists
 
-* Added the option (DELETE button on Accounts page) to delete and close down the CSVbox account permanently.
+  Added multiple-level List-Dependent List validations.
 
-## 12 May 2022
+  ### Other improvements
 
-* Added 'Multiple' option to Date Type columns. With this, you can provide multiple date formats that are allowed for the incoming data.
+  - Added info icons on the Column Mapping page.
+  - Updated email validation to accept special characters.
+  - Fixed bugs, improved notifications, and made minor UI changes to the admin section.
+</Update>
 
-<div align="left"><img src="/images/multiple-dates.jpg" alt="" /></div>
+<Update label="04 Jan 2023" description="">
+  ### Japanese language
 
-## 11 May 2022
+  Added the Japanese language to the importer.
+</Update>
 
-* Added the option to receive the CSV data in JSON format in the callback function. More info [here](/getting-started/3-receive-data#data-on-the-client-side).
+<Update label="29 Dec 2022" description="">
+  ### Skip column mapping on exact match
 
-## 04 May 2022
+  Added option to skip the Column Mapping screen if there is an exact match of columns.
 
-* Added [Notion Data Destination](/destinations/notion)
-* Fixed a bug for very large file uploads with [REST FileAPI](/advanced-installation/rest-file-api)
+  <Frame>
+    <img
+      src="/images/map-col-skip.png"
+      alt="Option to skip the Column Mapping screen"
+    />
+  </Frame>
+</Update>
 
-## 02 May 2022
+<Update label="26 Dec 2022" description="">
+  ### More multi-select delimiters
 
-### Added
+  Added support for delimiters such as "." and "|" for [Multi-select List](/dashboard-settings/validations#multi-select-list) and [Dynamic Multi-select List](/dashboard-settings/validations#dynamic-multi-select-list) column types.
+</Update>
 
-* [SQL Server Data Destination](/destinations#sql-server)
+<Update label="18 Dec 2022" description="">
+  ### Slovenian language
 
-## 26 April 2022
+  Added Slovenian language.
 
-### Added
+  ### Multilingual help text
 
-* [**allow\_invalid** option](/getting-started/2-install-code#allow_invalid)
+  Added the option to provide help text in multiple languages.
 
-![allow\_invalid option](/images/allow-invalid.jpg)
+  <Frame>
+    <img
+      src="/images/language-options.jpg"
+      alt="Help text language options"
+    />
+  </Frame>
+</Update>
 
-## 22 April 2022
+<Update label="05 Dec 2022" description="">
+  ### Virtual Columns data variables
 
-### Added
+  - `csvbox.row["total_rows"]` and `csvbox.row["row_number"]` [data variables](/advanced-installation/virtual-columns#csvboxrow) added to Virtual Columns.
+  - [`csvbox.virtual`](/advanced-installation/virtual-columns#csvboxvirtual) object added to Virtual Columns.
+</Update>
 
-* Ability to add help texts for each page (header selection, column mapping, data validation) on the importer
+<Update label="29 Nov 2022" description="">
+  ### Resubmit button
 
-![Help text on Select Header page](/images/hs.jpg)
+  Added a [1-click Resubmit button](/dashboard-settings/sheet-options-1#resubmit-button) to trigger a new import on the recently submitted file.
 
-## 13 April 2022
+  <Frame caption="Resubmit">
+    <img
+      src="/images/image-18.png"
+      alt="Resubmit"
+    />
+  </Frame>
+</Update>
 
-### Added
+<Update label="25 Nov 2022" description="">
+  ### Multi-select List column types
 
-* Yearly pricing plans
-* [REST File API](/advanced-installation/rest-file-api) beta
-* New [importer events](/getting-started/2-install-code#events) (onReady, onClose)
-* [request\_headers](/getting-started/2-install-code#request_headers) option to send headers at run-time
-* PATCH request type
-* **total\_rows** parameter to the [API output](/getting-started/3-receive-data#sample-response).
-* **original\_filename** parameter to the [import complete webhook](/getting-started/3-receive-data#import-complete-webhook) and importer [callback function](/getting-started/2-install-code#callback-function).
+  Added [Multi-select List](/dashboard-settings/validations#multi-select-list) and [Dynamic Multi-select List](/dashboard-settings/validations#dynamic-multi-select-list) column types.
+</Update>
 
-### Updated
+<Update label="21 Nov 2022" description="">
+  ### View and delete user keywords
 
-* Fixed issue related to freezing of the importer
-* Updated the code from Laravel 8 to Laravel 9
-* Added new layers of database security
-* Fixed issue related to the downloading of the template files
-* Added custom attribute mapping for Airtable 
-* UI enhancements
+  Added option to view and delete [User Keywords](/dashboard-settings/sheet-options#matching-keywords).
 
-## 07 March 2022
+  <Frame>
+    <img
+      src="/images/user-keywords-1.jpg"
+      alt="User Keywords list"
+    />
+  </Frame>
+</Update>
 
-### Added
+<Update label="16 Nov 2022" description="">
+  ### Reset All Mappings button
 
-* Custom message for regex validation.
+  Added a Reset All Mappings button to make it easier for users to reset and remap the columns. This button is optional and its visibility can be controlled via the Sheet settings page.
 
-<div align="left"><img src="/images/regex-message.jpg" alt="" /></div>
+  <Frame caption="Reset Mappings Button">
+    <img
+      src="/images/reset-mappings.jpg"
+      alt="Reset Mappings Button"
+    />
+  </Frame>
+</Update>
 
-## 01 March 2022
+<Update label="14 Nov 2022" description="">
+  ### Italian language
 
-### Added
+  Added the Italian language option for the importer front end.
 
-* Portuguese language support for the importer frontend.
-* [**language** sheet option](/getting-started/2-install-code#options) to select the frontend language while initializing the importer.
+  ### Copy sheet settings
 
-## 23 February 2022
+  Added option to Copy sheet settings to an existing sheet. The data destination config and license key remain the same in the target sheet.
+</Update>
 
-### Updated
+<Update label="29 Oct 2022" description="">
+  ### Faster SQL Server integration
 
-* You can now view the translated texts for all supported languages and submit suggestions for changes.
+  Optimized SQL Server integration code to improve speed.
 
-![Language Correction](/images/language-corrections.jpg)
+  ### Data location parameter
 
-## 22 February 2022
+  Added the `data_location` initialization parameter for specifying data and server location.
+</Update>
 
-### Added
+<Update label="13 Oct 2022" description="">
+  ### Fixes and performance improvements
 
-* Dutch language support for the importer frontend.
+  - Fixed UI bugs related to the `max_rows` option.
+  - Upgraded infrastructure and added optimizations for improved speed for EU region.
+  - Improved performance for imports with many Virtual Columns.
+</Update>
 
-## 11 February 2022
+<Update label="30 Sep 2022" description="">
+  ### DPA update
 
-### Added
+  Updated the [DPA](/legal/gdpr/data-processing-addendum) to add Europe Data Residency option.
+</Update>
 
-* [Unmapped Columns](/advanced-installation/unmapped-columns): Allowing users to submit columns not included in the sheet template.
+<Update label="22 Sep 2022" description="">
+  ### Europe data residency
 
-## 08 February 2022
+  Added the option to select Europe (Germany) location for data residency. More info [here](/dashboard-settings/sheet-options-1#server--data-location).
+</Update>
 
-### Added
+<Update label="05 Sep 2022" description="">
+  ### Hebrew language
 
-* [FTP Data Destination](/destinations#ftp-server)
+  Added Hebrew language for importer frontend.
+</Update>
 
-## 07 February 2022
+<Update label="01 Sep 2022" description="">
+  ### Time column type
 
-### Added
+  Added **Time** Column type validation.
 
-* Header row selection step in the importer.
+  ### Column limit removed
 
-![](/images/header-select.gif)
+  The 100 column sheet restriction removed.
+</Update>
 
-## 03 February 2022
+<Update label="30 Aug 2022" description="">
+  ### Virtual Columns
 
-### Added
+  Added [Virtual Columns](/advanced-installation/virtual-columns). Create new columns by applying custom data transformation logic.
+</Update>
 
-* Importer internationalization. The importer now supports German, French and Spanish languages.
+<Update label="26 Aug 2022" description="">
+  ### Romanian language
 
-## 17 January 2022
+  Added the Romanian language option for the importer frontend.
+</Update>
 
-### Added
+<Update label="25 Aug 2022" description="">
+  ### Disable import links
 
-* [max\_rows](/getting-started/2-install-code#options) config option to restrict the number of rows uploaded in a single sheet.
+  Added [Import Link disable](/advanced-installation/import-links#activating-import-links) option.
+</Update>
 
-## 10 January 2022
+<Update label="24 August 2022" description="">
+  ### Import dialog size
 
-### Added
+  Added option to control [import dialog size](/dashboard-settings/sheet-options-1#importer-dialog-size).
 
-* [Zapier Data Destination](/destinations/zapier)
+  ### Decimal and integer validation
 
-## 4 January 2022
+  Added decimal / integer validation.
+</Update>
 
-### Updated
+<Update label="23 August 2022" description="">
+  ### onSubmit event in framework libraries
 
-* Included 'Custom' validation option for Date Type columns. Date formatting options available [here](/dashboard-settings/validations#date).
+  Updated React, Angular and Vue.js libraries for [onSubmit Importer event](/getting-started/2-install-code#events).
+</Update>
 
-<div align="left"><img src="/images/date-validation.jpg" alt="" /></div>
+<Update label="16 August 2022" description="">
+  ### onSubmit event
+
+  Added [onSubmit Importer event](/getting-started/2-install-code#events).
+</Update>
+
+<Update label="10 August 2022" description="">
+  ### Default column value
+
+  You now have the option to specify a default filler value for the column in case the incoming data is blank.
+
+  <Frame>
+    <img
+      src="/images/defaultval.jpg"
+      alt="Default Value"
+    />
+  </Frame>
+</Update>
+
+<Update label="08 August 2022" description="">
+  ### Domain authorization
+
+  Added [domain authorization](/dashboard-settings/sheet-options-1#domain-authorization) option. You can provide a list of approved _domains/sub-domains_ for embedding the importer. The embedded importer works on the whitelisted domains only.
+</Update>
+
+<Update label="03 August 2022" description="">
+  ### Import complete messages
+
+  Added functionality to configure custom success or failure messages at import complete. More info [here](/dashboard-settings/sheet-options-1#import-complete-messages).
+</Update>
+
+<Update label="01 August 2022" description="">
+  ### Dynamic columns for dependent lists
+
+  Added [dynamic column](/advanced-installation/dynamic-columns) support for [Dependent List](/dashboard-settings/validations#dependent-list) and [Dependent Dynamic List](/dashboard-settings/validations#dependent-dynamic-list) columns.
+
+  ### Polish language
+
+  Added the Polish language option for the importer frontend.
+</Update>
+
+<Update label="29 July 2022" description="">
+  ### Thai language
+
+  Added the Thai language option for the importer frontend.
+</Update>
+
+<Update label="22 July 2022" description="">
+  ### Importer exit options
+
+  Added options for controlling the close of importer dialog after the import is complete.
+
+  <Frame>
+    <img
+      src="/images/exit-options.jpg"
+      alt="Importer exit options"
+    />
+  </Frame>
+</Update>
+
+<Update label="20 July 2022" description="">
+  ### Dependent Dynamic List columns
+
+  Added [Dependent Dynamic List Columns](/dashboard-settings/validations#dependent-dynamic-list).
+</Update>
+
+<Update label="07 July 2022" description="">
+  ### Column mappings object
+
+  Added the `column_mappings` object to the [import complete webhook](/getting-started/3-receive-data#import-complete-webhook) and the [callback function](/getting-started/2-install-code#callback-function). The `column_mappings` object contains the user-defined mappings between the columns of the sheet (template) and columns in the uploaded CSV file.
+
+  ### Import ID column
+
+  Added the **Import ID** column in the table on the Imports page of the CSVbox dashboard.
+
+  ### Multiple date validation for dynamic columns
+
+  The dynamic columns now support multiple date validation.
+</Update>
+
+<Update label="01 July 2022" description="">
+  ### Export button
+
+  Added an **Export** button that downloads the validation errors and row data in an Excel sheet. More info [here](/dashboard-settings/sheet-options-1#export-button).
+
+  ### Truncated row count
+
+  Updated importer UI to show the truncated row count.
+</Update>
+
+<Update label="30 June 2022" description="">
+  ### Max rows
+
+  Added Max Rows option to the importer dashboard. It limits the number of rows per import.
+
+  <Frame>
+    <img
+      src="/images/max-rows.jpg"
+      alt="Max Rows setting"
+    />
+  </Frame>
+</Update>
+
+<Update label="29 June 2022" description="">
+  ### Phone number validation
+
+  Added phone number validation based on the [libphonenumber.js library](https://catamphetamine.gitlab.io/libphonenumber-js/).
+
+  ### Import modal UI changes
+
+  Minor UI changes to the import modal. Changes include:
+
+  - The importer modal is now full screen across all devices.
+  - The column mapping table & validation error text are center-aligned for better visibility.
+</Update>
+
+<Update label="27 June 2022" description="">
+  ### Logo and custom font styling
+
+  New styling options added: upload logo and custom fonts.
+</Update>
+
+<Update label="24 June 2022" description="">
+  ### Arabic language
+
+  Added the Arabic language (ltr) support for the importer frontend.
+</Update>
+
+<Update label="23 June 2022" description="">
+  ### Show import fail messages
+
+  Added option to allow displaying the import fail error messages to the end-user.
+</Update>
+
+<Update label="22 June 2022" description="">
+  ### Primary color theme
+
+  Added **Primary Color** custom theme option. You can stylize the importer with the primary color of your brand. More styling options coming soon.
+</Update>
+
+<Update label="10 June 2022" description="">
+  ### Custom user attributes in Dynamic List requests
+
+  The importer attaches the [custom user attributes](/getting-started/2-install-code#referencing-the-user) as query parameters to the [Dynamic List](/dashboard-settings/validations#dynamic-list) API request. A `csvbox_` prefix is added to the custom user attribute query parameters. This helps you identify the users/environment and return a relevant list of values.
+</Update>
+
+<Update label="30 May 2022" description="">
+  ### Database upsert
+
+  Added **Upsert** operation to MySQL, PostgreSQL and MS SQL data destinations. Instead of directly inserting the file data to the databases, the importer first checks if the record exists. If the record exists, then the row is updated. Only if the record does not exist is a new row added.
+</Update>
+
+<Update label="23 May 2022" description="">
+  ### Dynamic List column type
+
+  Added [Dynamic List](/dashboard-settings/validations#dynamic-list) column type to accept valid list values via API, real-time.
+</Update>
+
+<Update label="20 May 2022" description="">
+  ### Select Header Row display options
+
+  New display options for the **Select Header Row** page of the importer.
+
+  <Frame>
+    <img
+      src="/images/display-options.jpg"
+      alt="Display options"
+    />
+  </Frame>
+
+  1. **Skip this step?**: Hide/Show the **Select header row** page to the users.
+  2. **Show encoding**: Hide/Show the character set selection list to the users.
+  3. **Switch Row/Columns**: Hide/Show the option to switch rows and columns to the users.
+
+  These settings help to remove the non-essential options from the importer and make the user experience cleaner.
+</Update>
+
+<Update label="19 May 2022" description="">
+  ### Delete account
+
+  Added the option (**DELETE** button on the Accounts page) to delete and close down the CSVbox account permanently.
+</Update>
+
+<Update label="12 May 2022" description="">
+  ### Multiple date formats
+
+  Added the **Multiple** option to Date Type columns. With this, you can provide multiple date formats that are allowed for the incoming data.
+
+  <Frame>
+    <img
+      src="/images/multiple-dates.jpg"
+      alt="Multiple date formats option"
+    />
+  </Frame>
+</Update>
+
+<Update label="11 May 2022" description="">
+  ### JSON data in the callback function
+
+  Added the option to receive the CSV data in JSON format in the callback function. More info [here](/getting-started/3-receive-data#data-on-the-client-side).
+</Update>
+
+<Update label="04 May 2022" description="">
+  ### Notion destination
+
+  Added [Notion Data Destination](/destinations/notion).
+
+  ### Large file fix for the REST File API
+
+  Fixed a bug for very large file uploads with [REST FileAPI](/advanced-installation/rest-file-api).
+</Update>
+
+<Update label="02 May 2022" description="">
+  ### SQL Server destination
+
+  **Added**: [SQL Server Data Destination](/destinations#sql-server).
+</Update>
+
+<Update label="26 April 2022" description="">
+  ### Allow invalid option
+
+  **Added**: [`allow_invalid` option](/getting-started/2-install-code#allow_invalid).
+
+  <Frame>
+    <img
+      src="/images/allow-invalid.jpg"
+      alt="allow_invalid option"
+    />
+  </Frame>
+</Update>
+
+<Update label="22 April 2022" description="">
+  ### Help text for each page
+
+  **Added**: Ability to add help texts for each page (header selection, column mapping, data validation) on the importer.
+
+  <Frame>
+    <img
+      src="/images/hs.jpg"
+      alt="Help text on Select Header page"
+    />
+  </Frame>
+</Update>
+
+<Update label="13 April 2022" description="">
+  ### Added
+
+  - Yearly pricing plans
+  - [REST File API](/advanced-installation/rest-file-api) beta
+  - New [importer events](/getting-started/2-install-code#events) (onReady, onClose)
+  - [`request_headers`](/getting-started/2-install-code#request_headers) option to send headers at run-time
+  - PATCH request type
+  - `total_rows` parameter to the [API output](/getting-started/3-receive-data#sample-response).
+  - `original_filename` parameter to the [import complete webhook](/getting-started/3-receive-data#import-complete-webhook) and importer [callback function](/getting-started/2-install-code#callback-function).
+
+  ### Updated
+
+  - Fixed issue related to freezing of the importer
+  - Updated the code from Laravel 8 to Laravel 9
+  - Added new layers of database security
+  - Fixed issue related to the downloading of the template files
+  - Added custom attribute mapping for Airtable
+  - UI enhancements
+</Update>
+
+<Update label="07 March 2022" description="">
+  ### Custom regex validation message
+
+  **Added**: Custom message for regex validation.
+
+  <Frame>
+    <img
+      src="/images/regex-message.jpg"
+      alt="Custom message for regex validation"
+    />
+  </Frame>
+</Update>
+
+<Update label="01 March 2022" description="">
+  ### Portuguese language
+
+  **Added**: Portuguese language support for the importer frontend.
+
+  ### Language option
+
+  **Added**: [`language` sheet option](/getting-started/2-install-code#options) to select the frontend language while initializing the importer.
+</Update>
+
+<Update label="23 February 2022" description="">
+  ### Translation suggestions
+
+  **Updated**: You can now view the translated texts for all supported languages and submit suggestions for changes.
+
+  <Frame>
+    <img
+      src="/images/language-corrections.jpg"
+      alt="Language Correction"
+    />
+  </Frame>
+</Update>
+
+<Update label="22 February 2022" description="">
+  ### Dutch language
+
+  **Added**: Dutch language support for the importer frontend.
+</Update>
+
+<Update label="11 February 2022" description="">
+  ### Unmapped columns
+
+  **Added**: [Unmapped Columns](/advanced-installation/unmapped-columns), allowing users to submit columns not included in the sheet template.
+</Update>
+
+<Update label="08 February 2022" description="">
+  ### FTP destination
+
+  **Added**: [FTP Data Destination](/destinations#ftp-server).
+</Update>
+
+<Update label="07 February 2022" description="">
+  ### Header row selection
+
+  **Added**: Header row selection step in the importer.
+
+  <Frame>
+    <img
+      src="/images/header-select.gif"
+      alt="Header row selection step in the importer"
+    />
+  </Frame>
+</Update>
+
+<Update label="03 February 2022" description="">
+  ### Importer internationalization
+
+  **Added**: Importer internationalization. The importer now supports German, French and Spanish languages.
+</Update>
+
+<Update label="17 January 2022" description="">
+  ### Max rows option
+
+  **Added**: [`max_rows`](/getting-started/2-install-code#options) config option to restrict the number of rows uploaded in a single sheet.
+</Update>
+
+<Update label="10 January 2022" description="">
+  ### Zapier destination
+
+  **Added**: [Zapier Data Destination](/destinations/zapier).
+</Update>
+
+<Update label="4 January 2022" description="">
+  ### Custom date validation
+
+  **Updated**: Included **Custom** validation option for Date Type columns. Date formatting options available [here](/dashboard-settings/validations#date).
+
+  <Frame>
+    <img
+      src="/images/date-validation.jpg"
+      alt="Custom date validation option"
+    />
+  </Frame>
+</Update>
