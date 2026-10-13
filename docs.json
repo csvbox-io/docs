@@ -115,20 +115,35 @@
             "icon": "database",
             "pages": [
               "destinations",
-              "destinations/bubble-io",
-              "destinations/hasura",
-              "destinations/openapi",
-              "destinations/neon",
-              "destinations/zapier",
-              "destinations/notion",
-              "destinations/webflow",
-              "destinations/softr",
-              "destinations/google-bigquery",
-              "destinations/supabase",
-              "destinations/n8n",
-              "destinations/pipedream",
-              "destinations/automation-platforms",
-              "destinations/private-mode"
+              "destinations/private-mode",
+              {
+                "group": "Databases & Backends",
+                "pages": [
+                  "destinations/supabase",
+                  "destinations/neon",
+                  "destinations/hasura",
+                  "destinations/google-bigquery"
+                ]
+              },
+              {
+                "group": "No-Code Apps",
+                "pages": [
+                  "destinations/bubble-io",
+                  "destinations/notion",
+                  "destinations/webflow",
+                  "destinations/softr"
+                ]
+              },
+              {
+                "group": "Automation & APIs",
+                "pages": [
+                  "destinations/zapier",
+                  "destinations/n8n",
+                  "destinations/pipedream",
+                  "destinations/openapi",
+                  "destinations/automation-platforms"
+                ]
+              }
             ]
           },
           {
