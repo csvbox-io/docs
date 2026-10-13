@@ -1,52 +1,46 @@
 ---
 title: "Supabase"
-description: "Easily import CSV or Excel data directly into your Supabase tables."
+description: "Import CSV and Excel data directly into your Supabase tables."
 ---
 
-### 🧭 Overview
+The Supabase destination pushes uploaded spreadsheet data from CSVbox straight into your Supabase database. It's ideal for SaaS products that already use Supabase as their backend.
 
-The Supabase destination lets you push uploaded spreadsheet data from CSVBox straight into your Supabase database. It’s ideal for SaaS products that already use Supabase as their backend.
+## Set up the destination
 
-***
+<Steps>
+  <Step title="Choose Supabase as the destination">
+    In your **Sheet Settings**, set **Destination Type** to **Supabase**.
+  </Step>
+  <Step title="Connect your database">
+    Provide your Supabase project credentials:
 
-### ⚙️ Setup Instructions
+    - **Project URL**: found in your Supabase project settings.
+    - **Service Role Key**: available under **Project → API → Service Role**.
 
-#### 1. Choose Supabase as the Destination
+    <Note>
+      CSVbox stores credentials securely and uses them only for insert operations.
+    </Note>
+  </Step>
+  <Step title="Set the target table name">
+    Enter the **Table Name** where you want the imported data to be inserted. The table must already exist in your Supabase database.
 
-In your **Sheet Settings**, set **Destination Type** to **Supabase**.
+    Click **Test Connection** to confirm that the connection is successful.
+  </Step>
+  <Step title="Map columns to fields">
+    Match each column in your CSV or Excel sheet to the corresponding field in your Supabase table.
+  </Step>
+  <Step title="Map custom attributes (optional)">
+    You can also map custom attributes from the CSV to specific fields in your table.
+  </Step>
+</Steps>
 
-#### 2. Connect Your Database
+## Data flow
 
-Provide your Supabase project credentials:
+Once setup is complete, every submitted file automatically inserts the processed data into your Supabase table, row by row, without any manual intervention.
 
-* **Project URL** – found in your Supabase project settings
-* **Service Role Key** – available under **Project → API → Service Role**
+## Notes
 
-> 🔒 _CSVBox stores credentials securely and uses them only for insert operations._
-
-#### 3. Set the Target Table Name
-
-Enter the **Table Name** where you want the imported data to be inserted. Ensure that this table already exists in your Supabase database. Click Test Connection to see if it is successful.
-
-#### 4. Map Columns to Fields
-
-Match each column in your CSV or Excel sheet to the corresponding field in your Supabase table.
-
-#### 5. Use Custom Attribute Mapping _(Optional)_
-
-You can also map custom attributes from the CSV to specific fields in your table.
-
-***
-
-### 🚀 Data Flow
-
-Once the setup is complete, every submitted file will automatically insert the processed data into your specified Supabase table — row by row — without any manual intervention.
-
-***
-
-### 🧩 Notes
-
-* Ensure your Supabase table schema matches the uploaded columns (case-sensitive).
-* Insert operations use Supabase’s REST API under the hood.
-* Bulk uploads are optimized for large CSVs.
-* You can combine Supabase with CSVBox features like **validation rules**, **virtual columns**, and **AI Transforms** for advanced workflows.
+* Your Supabase table schema must match the uploaded columns. Column names are case-sensitive.
+* Insert operations use Supabase's REST API under the hood.
+* Bulk uploads are optimized for large CSV files.
+* You can combine Supabase with CSVbox features like **validation rules**, **virtual columns**, and **AI transforms** for advanced workflows.
