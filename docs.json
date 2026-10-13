@@ -247,5 +247,11 @@
   },
   "api": {
     "openapi": "https://app.csvbox.io/docs?api-docs.json"
+  },
+  "metadata": {
+    "timestamp": false
+  },
+  "styling": {
+    "eyebrows": "breadcrumbs"
   }
 }
