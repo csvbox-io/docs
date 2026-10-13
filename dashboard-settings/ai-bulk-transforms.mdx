@@ -1,33 +1,50 @@
 ---
 title: "AI Bulk Transforms"
-description: "Let users modify column data using natural language prompts — directly in the importer."
+description: "Let users modify column data with natural language prompts directly in the importer."
 ---
 
-<Info>
+AI Bulk Transforms let your users clean, format, and enrich entire columns with plain-language prompts during the **Verify Data** step of the import.
 
-Currently in Beta
+<Note>
+  This feature is currently in beta.
+</Note>
 
-</Info>
+## How to enable AI transformations
 
-### How to Enable AI Transformations
+<Steps>
+  <Step title="Open the sheet settings">
+    Go to your **Sheet Settings**.
+  </Step>
+  <Step title="Open the Verify Data tab">
+    Click the **Import Steps** tab, then navigate to the **Verify Data** tab.
+  </Step>
+  <Step title="Turn on AI transformations">
+    Set **Enable AI Transformations?** to **Yes**.
+  </Step>
+  <Step title="Save your settings">
+    Save your settings.
+  </Step>
+</Steps>
 
-To enable this feature for a sheet:
+Once enabled, a new **Bulk Transform** option appears for each column in the Verify step of the import flow.
 
-1. Go to your **Sheet Settings**
-2. Click on the **Import Steps** tab
-3. Navigate to the **Verify Data** tab
-4. Set **"Enable AI Transformations?"** to **Yes**
-5. Save your settings
+<Frame caption="Bulk Transform Button">
+  <img
+    src="/images/sleekshot-8.png"
+    alt="Bulk Transform button in the Verify step"
+  />
+</Frame>
 
-Once enabled, a new **"Bulk Transform"** option will appear in the Verify step of the import flow for each column.
+<Frame caption="AI Bulk Transform Screen">
+  <img
+    src="/images/sleekshot-2.png"
+    alt="AI Bulk Transform screen"
+  />
+</Frame>
 
-<Frame caption="Bulk Transform Button"><img src="/images/sleekshot-8.png" alt="Bulk Transform Button" /></Frame>
+## What can it do
 
-<Frame caption="AI Bulk Transform Screen"><img src="/images/sleekshot-2.png" alt="AI Bulk Transform Screen" /></Frame>
-
-### What Can It Do?
-
-The users can use this tool to clean, format, and enrich the data effortlessly using plain language. It  can:
+Users can clean, format, and enrich their data using plain language. For example, they can:
 
 * Capitalize or lowercase text in `'product_name'`
 * Add a 10% markup to values in `'price'`
@@ -36,13 +53,13 @@ The users can use this tool to clean, format, and enrich the data effortlessly u
 * Extract the domain name from `'email'`
 * Tag rows as `'Yes'` in `'priority'` if `'notes'` mention "urgent"
 
-These are just a few examples — the feature is flexible and can handle a wide range of transformations across different languages.
+These are just a few examples. The feature is flexible and handles a wide range of transformations across different languages.
 
-### Key Features
+## Key features
 
 * Transform entire columns using simple AI prompts.
-* User data never leaves the browser — values are _not_ sent to any external AI models.
+* User data never leaves the browser. Values are _not_ sent to any external AI models.
 * Fix validation issues quickly by modifying problematic fields in bulk.
-* Users can modify or delete rows, but cannot add new rows using AI.
+* Users can modify or delete rows, but can't add new rows using AI.
 * Supports prompts in all languages available in the importer.
 * Users can preview the data before applying changes.

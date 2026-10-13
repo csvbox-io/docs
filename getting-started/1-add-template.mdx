@@ -1,16 +1,36 @@
 ---
 title: "1. Add Template"
-description: "Configure the data model via your Csvbox dashboard."
+description: "Configure the data model for your imports in your CSVbox dashboard."
 ---
 
-Templates (or sheets) define the structure of the data that you want to accept from the users.
+Templates (or sheets) define the structure of the data that you want to accept from your users.
 
-Go to the 'Sheets' page in your dashboard. Add a sheet and specify columns. Configure the validation rules and data format for each column.
+## Create a sheet
 
-<Info>
+<Steps>
+  <Step title="Add a sheet">
+    Go to the **Sheets** page in your dashboard and add a sheet.
+  </Step>
+  <Step title="Specify columns">
+    Add the columns you want to accept, then configure the validation rules and data format for each column.
 
-When users attempt to upload a file, the importer will validate the data for every column and inform the users if there are any errors. Users have to resolve the errors before submitting the file.
+    <Note>
+      When users upload a file, the importer validates the data in every column and tells them about any errors. Users must resolve the errors before they can submit the file.
+    </Note>
+  </Step>
+  <Step title="Configure the destination">
+    On the **Data Destination** tab, configure where you want the data to be pushed. The destination can be an API endpoint, an Amazon S3 bucket, a MySQL database, or any of the other [destinations](/destinations).
+  </Step>
+</Steps>
 
-</Info>
+## Next steps
 
-Under the 'Data Destination' tab, configure the destination where you want the data to be pushed. The destination could be an API endpoint, Amazon S3 bucket, MYSQL database, or any of the other options mentioned [here](/destinations).
+<CardGroup cols={2}>
+  <Card title="2. Install Code" icon="code" href="/getting-started/2-install-code">
+    Add the code snippet to your app to embed the importer.
+  </Card>
+
+  <Card title="Destinations" icon="share-nodes" href="/destinations">
+    Explore every place CSVbox can send your data.
+  </Card>
+</CardGroup>

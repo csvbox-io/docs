@@ -1,46 +1,44 @@
 ---
 title: "Getting Started"
 sidebarTitle: "Overview"
-description: "With csvbox.io you can add a production-ready import feature to your web app in just a few minutes."
+description: "Add a production-ready spreadsheet import feature to your web app in just a few minutes with CSVbox."
 ---
 
-## Key Concepts
+CSVbox gives your web app a production-ready import feature in just a few minutes. Your users upload spreadsheets through an embeddable importer, and CSVbox validates the data and pushes it to the destination you choose.
 
-Here are a few important terms used throughout the application:
+## Key concepts
 
-**User:** Any person who uses your application.
+These terms are used throughout the application:
 
-**File:** The spreadsheet file that the users want to upload to your application.
+| Term | Definition |
+| --- | --- |
+| **User** | Any person who uses your application. |
+| **File** | The spreadsheet file that the users want to upload to your application. Users can upload `.csv`, `.xlsx`, or `.xls` files. |
+| **Sheet (template)** | The data model that specifies the structure of the data you want to accept. You add columns to the sheet and configure validation criteria in your CSVbox dashboard. Users match the headers of their file columns with the sheet columns and clean the data before uploading. |
+| **Import** | The entire process where the user opens the CSVbox importer to select the file, match columns, validate data, and submit the file. |
+| **Destination** | The end location where the CSVbox importer pushes the data uploaded by the user. |
 
-<Info>
+## Quick start
 
-Users can upload .csv, .xlsx or .xls file formats.
+Follow these three steps to install the CSVbox CSV importer widget in your app and start accepting data from your users.
 
-</Info>
+<CardGroup cols={3}>
+  <Card title="1. Add Template" icon="table-columns" href="/getting-started/1-add-template">
+    Define the model of the incoming data.
+  </Card>
 
-**Sheet or Template:** It refers to the data modal that specifies the structure of the data you want to accept. You can add columns to the sheet and configure validation criteria via your csvbox.io dashboard. 
+  <Card title="2. Install Code" icon="code" href="/getting-started/2-install-code">
+    Add the code snippet to your app to embed the widget.
+  </Card>
 
-<Info>
+  <Card title="3. Receive Data" icon="inbox" href="/getting-started/3-receive-data">
+    Accept CSV data into your application.
+  </Card>
+</CardGroup>
 
-Users will be able to match the headers of their file columns with the sheet columns and clean data before uploading.
+## Third-party licenses
 
-</Info>
-
-**Import:** The entire process where the user invokes the csvbox.io importer to select the file, match columns, validate data, and submit the file is called Import.
-
-**Destination:** It is the end location where the csvbox.io importer will push the data uploaded by the user.
-
-<Info>
-
-1. This importer uses the PapaParse library to parse spreadsheet files. © 2014-present Matias Meno. Licensed under the MIT License.
-2. The project also uses the SheetJS Community Edition (XLSX.js), an open-source library for handling spreadsheet files. © 2012-present SheetJS LLC. Licensed under the Apache License, Version 2.0.
-
-</Info>
-
-## Quick Start
-
-The following are the basic steps to install the csvbox.io CSV importer widget into your app and start accepting data from your users.
-
-1. [Add Template](/getting-started/1-add-template) - Define the model of the incoming data.
-2. [Install Code](/getting-started/2-install-code) - Add the code snippet to your app to embed the widget.
-3. [Receive Data](/getting-started/3-receive-data) - Accept CSV data into your application.
+<Note>
+  - This importer uses the PapaParse library to parse spreadsheet files. © 2014-present Matias Meno. Licensed under the MIT License.
+  - The project also uses the SheetJS Community Edition (XLSX.js), an open-source library for handling spreadsheet files. © 2012-present SheetJS LLC. Licensed under the Apache License, Version 2.0.
+</Note>

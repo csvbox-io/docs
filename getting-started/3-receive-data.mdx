@@ -1,11 +1,13 @@
 ---
 title: "3. Receive Data"
-description: "Receive ready-to-use data in your app."
+description: "Receive validated, ready-to-use spreadsheet data in your app through your destination, a webhook, or the client-side callback."
 ---
 
-Once the code is installed the users will be able to submit their files via the csvbox importer. The raw files uploaded by the users will be available on your dashboard's 'Import' page. The data will also be pushed to your app as per the [destination ](/destinations)type configuration of your sheet.
+Once the code is installed, your users can submit their files through the CSVbox importer. The raw files they upload are available on the **Import** page of your dashboard. CSVbox also pushes the data to your app according to the [destination](/destinations) type configured for your sheet. See the [sample response](#sample-response) below for the payload format.
 
-#### Sample JSON response for destination API/Webhook: <a href="#sample-response" id="sample-response"></a>
+## Sample response
+
+This sample JSON response is sent to an API/webhook destination:
 
 ```json
 [
@@ -53,13 +55,13 @@ Once the code is installed the users will be able to submit their files via the 
 
 <Warning>
 
-All import data and RAW files will be retained for one month. You also have the option to bypass storing the files in our data store.
+All import data and raw files are retained for one month. You can also choose to bypass storing the files in our data store.
 
 </Warning>
 
-### Import Complete Webhook
+## Import complete webhook
 
-Optionally, you can subscribe to the import complete event webhook via the sheet settings page. This webhook will fire when the CSVbox completes the import process for any user. Here is some example JSON that could be sent to your webhook endpoint:
+Optionally, subscribe to the import complete event webhook on the sheet settings page. This webhook fires when CSVbox completes the import process for any user. Here is an example of the JSON that could be sent to your webhook endpoint:
 
 ```json
   {
@@ -93,15 +95,22 @@ Optionally, you can subscribe to the import complete event webhook via the sheet
   }
 ```
 
-### Data on the Client Side
+<a id="data-at-client-side" />
 
-You also have the option to receive the entire CSV data in JSON format inside the **`data`** object of the [**`callback`**](/getting-started/2-install-code#callback-function) function.\
-\
-To receive the CSV data in the callback function simply activate this option on the sheet '**Destination**' page.
+## Data on the client side
 
-<div align="left"><img src="/images/client-data.jpg" alt="Send JSON data to client" /></div>
+You can also receive the entire CSV data in JSON format inside the `data` object of the [`callback`](/getting-started/2-install-code#callback-function) function.
 
-You will then receive the JSON data in the **`rows`** property of the **`data`** object. Check the sample below:
+To receive the CSV data in the callback function, activate this option on the sheet **Destination** page.
+
+<Frame>
+  <img
+    src="/images/client-data.jpg"
+    alt="Send JSON data to client option on the sheet Destination page"
+  />
+</Frame>
+
+You then receive the JSON data in the `rows` property of the `data` object. For example:
 
 ```json
 {
@@ -165,3 +174,15 @@ You will then receive the JSON data in the **`rows`** property of the **`data`**
   ]
 }
 ```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Destinations" icon="share-nodes" href="/destinations">
+    Choose where CSVbox sends the imported data.
+  </Card>
+
+  <Card title="2. Install Code" icon="code" href="/getting-started/2-install-code">
+    Review the importer options, events, and callback function.
+  </Card>
+</CardGroup>
