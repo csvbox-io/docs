@@ -73,8 +73,12 @@ If the incoming data doesn't match the column type (and its validation rules), t
 
 The **Required** checkbox indicates whether a column is mandatory. When it's ticked, the importer validates the column for missing or empty data. If any cell in the column is empty, the user sees an error message.
 
+<Note>
+  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) can't be required. Enabling the option switches **Required** off.
+</Note>
+
 ## Read only
 
 `optional`
 
-Enable this option to make the column read-only. The column data stays visible, but end users can't edit it on the **Verify Data** step.
+Enable this option to make the column read-only. The column data stays visible, but end users can't edit it on the **Verify Data** step. For a Boolean column shown as a checkbox, the checkbox is disabled.
