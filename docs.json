@@ -56,6 +56,14 @@
         "icon": "table-list",
         "pages": [
           "sheet-settings/columns",
+          {
+            "group": "Import Steps",
+            "pages": []
+          },
+          "sheet-settings/display",
+          "sheet-settings/security",
+          "sheet-settings/code-snippet",
+          "sheet-settings/sheet-import-export",
           "sheet-settings/data-transforms",
           "sheet-settings/validation-functions",
           "sheet-settings/virtual-columns"

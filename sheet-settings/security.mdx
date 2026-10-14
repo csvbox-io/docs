@@ -1,0 +1,84 @@
+---
+title: "Security"
+description: "Control where user data is stored, whether uploaded files are kept, and which domains can run the importer."
+---
+
+Security settings decide where your users' data lives, whether CSVbox keeps their files, and where the importer is allowed to run.
+
+<a id="server-and-data-location" />
+
+<a id="server--data-location" />
+
+## Server & data location
+
+Choose the geographic location of the servers and database that hold your users' data.
+
+Data residency is the geographical location where data is stored, and it usually matters for regulatory or policy reasons. The US is the default location; the other option is Europe (Germany). Data uploaded by your users then passes through servers, and is stored in a database, in the selected location only.
+
+Go to **Edit Sheets** → **Options** → **Privacy & Security** section and select the location from the dropdown.
+
+<Frame>
+  <img
+    src="/images/locations.png"
+    alt="Data location dropdown in Privacy & Security settings"
+  />
+</Frame>
+
+The selected location doesn't cover long-lived data about the import and the user files. This is mainly supplementary log data that helps with troubleshooting and analyzing import processes, and it doesn't include any original data from inside the user files.
+
+<Note>
+  You can also choose not to store the data at all. See [File delete policy](#file-delete-policy).
+</Note>
+
+The diagram below shows how the data flows when Europe is the data residency location.
+
+<Frame>
+  <img
+    src="/images/data-residency-flow.svg"
+    alt="Data flow with Europe selected as the data residency location"
+  />
+</Frame>
+
+## File delete policy
+
+Decide whether CSVbox stores the files your users upload.
+
+- **Do not store the file**: User-uploaded data isn't stored in the CSVbox datastore.
+- **Store data**: Data is stored on CSVbox storage and auto-deleted after one month.
+
+Choose based on your privacy preferences or the requirements of the sheet.
+
+<Frame>
+  <img
+    src="/images/image-33.png"
+    alt="File delete policy options"
+  />
+</Frame>
+
+<Note>
+  To keep user data off CSVbox servers and data stores entirely, see [Private Mode](/destinations/private-mode).
+</Note>
+
+## Domain authorization
+
+Run the importer on approved domains only.
+
+Go to **Edit Sheets** → **Options** → **Authorized Domains** and add the domains or subdomains where the importer may be embedded.
+
+<Frame>
+  <img
+    src="/images/domains.jpg"
+    alt="Authorized Domains setting"
+  />
+</Frame>
+
+If you don't add any domain, the importer works on all domains. This is the default. Use the `*` wildcard prefix to include every subdomain:
+
+| Entry | Allowed | Not allowed |
+| --- | --- | --- |
+| `exampleco.com` | `exampleco.com` | `www.exampleco.com`, `app.exampleco.com` |
+| `www.exampleco.com` | `www.exampleco.com` | `exampleco.com`, `app.exampleco.com` |
+| `app.exampleco.com` | `app.exampleco.com` | `exampleco.com`, `www.exampleco.com` |
+| `*.exampleco.com` | All `exampleco.com` subdomains |  |
+
+If a domain fails validation, the user sees an **Unauthorized domain** error instead of the importer.
