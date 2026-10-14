@@ -135,6 +135,8 @@
           "destinations/google-bigquery",
           "destinations/supabase",
           "destinations/neon",
+          "destinations/xano",
+          "destinations/xero",
           "destinations/openapi",
           "destinations/n8n",
           "destinations/pipedream",
