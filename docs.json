@@ -54,9 +54,23 @@
         "group": "Sheet Settings",
         "icon": "table-list",
         "pages": [
+          "sheet-settings/columns",
+          {
+            "group": "Import Steps",
+            "pages": [
+              "sheet-settings/import-steps/file-upload",
+              "sheet-settings/import-steps/select-header",
+              "sheet-settings/import-steps/map-columns",
+              "sheet-settings/import-steps/verify-data",
+              "sheet-settings/import-steps/results"
+            ]
+          },
+          "sheet-settings/display",
+          "sheet-settings/security",
           "sheet-settings/data-transforms",
           "sheet-settings/validation-functions",
-          "sheet-settings/virtual-columns"
+          "sheet-settings/virtual-columns",
+          "sheet-settings/code-snippet"
         ]
       },
       {
