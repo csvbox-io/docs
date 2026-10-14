@@ -1,0 +1,26 @@
+---
+title: "Select Header"
+description: "The step where users pick the row that holds their column headers, and how to set the default header row."
+---
+
+After a user adds a file, they select the row that contains the column headers before the importer moves on to [Map Columns](/sheet-settings/import-steps/map-columns). The import flow runs in this order: upload, select the header row, map columns, then [Verify Data](/sheet-settings/import-steps/verify-data).
+
+## Default header row
+
+By default, the importer selects row 1 as the header. If your users' files usually have a title or blank rows above the headers, set the `default_header_row` option so the right row is already selected on the **Header Selection** page. Rows are 1-indexed.
+
+```javascript
+importer.setOptions({
+    default_header_row: 3
+})
+```
+
+See [Options](/getting-started/2-install-code#default_header_row) on the Install the Code page for how to pass this option in each framework.
+
+## Files with complicated headers
+
+If uploaded files have headers the importer can't use as they are, such as two-row merged headers, [AI Pre-Import Transform](/dashboard-settings/ai-pre-import-transform) can restructure the file before it reaches column mapping.
+
+## Track drop-offs
+
+[Import Analytics](/dashboard-settings/import-analytics) shows how many users reach and complete header selection, and how long they spend on it.

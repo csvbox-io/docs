@@ -1,0 +1,59 @@
+---
+title: "Results"
+description: "Control what users see when an import finishes: error text, custom messages, the Resubmit button, and a redirect URL."
+---
+
+These settings control the screen users see when an import completes.
+
+## Show error text
+
+Show import failure messages to your users.
+
+When enabled, users can click the **See Errors** button on the import complete screen to see why the import failed.
+
+<Frame>
+  <img
+    src="/images/error-option.jpg"
+    alt="Show Error Text option in sheet settings"
+  />
+</Frame>
+
+## Import complete messages
+
+Show your own success or failure message when an import finishes. The message can be:
+
+- **Static**: Any fixed text.
+- **Dynamic**: Fetched in real time from an API you provide. The importer appends metadata (`import_id`, `sheet_id`) to the API URL as query parameters, so you can return a message that fits the import.
+
+<Frame>
+  <img
+    src="/images/custom-messages.jpg"
+    alt="Import complete messages settings"
+  />
+</Frame>
+
+## Resubmit button
+
+Push the same file again with one click.
+
+Show or hide the **Resubmit** button on the Import Success screen. It starts a new import that pushes the same file with the same import configuration, so you don't have to upload the file, match columns, and confirm the data again. This is useful during testing and debugging.
+
+<Frame>
+  <img
+    src="/images/resubmit-button.jpg"
+    alt="Resubmit button on the Import Success screen"
+  />
+</Frame>
+
+## Custom redirect URL
+
+Send users to a page of your choice after a successful import.
+
+Specify the URL to redirect users to when an import completes successfully.
+
+<Frame>
+  <img
+    src="/images/redirect-url.jpg"
+    alt="Custom redirect URL setting"
+  />
+</Frame>

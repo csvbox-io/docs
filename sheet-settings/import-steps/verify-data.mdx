@@ -1,0 +1,39 @@
+---
+title: "Verify Data"
+description: "Settings for the screen where users review and correct their data, including the Export button, date correction, and AI bulk edits."
+---
+
+On the Verify Data step, users review their data, fix errors, and submit. Validation rules you set on [Columns](/sheet-settings/columns) are checked here.
+
+## Export button
+
+Let users export their data, with errors highlighted, to Excel.
+
+Enable or disable the **Export** button on the Verify Data screen. The exported Excel file keeps the error highlighting and error messages, so users can fix the errors in Excel and quickly re-upload the file to CSVbox.
+
+<Frame>
+  <img
+    src="/images/export-settings.jpg"
+    alt="Export button setting"
+  />
+</Frame>
+
+<Frame caption="An exported file with error highlighting">
+  <img
+    src="/images/excel1-2.png"
+    alt="Exported Excel file with error highlighting"
+  />
+</Frame>
+
+## Other Verify Data settings
+
+These features are configured under **Import Steps** → **Verify Data**:
+
+- **Date correction**: convert dates and numbers written in different regional formats, and ask users only when a value is unclear. See [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats).
+- **AI Bulk Transforms**: let users modify column data with natural language prompts. See [AI Bulk Transforms](/dashboard-settings/ai-bulk-transforms).
+
+## Related
+
+- [Data Transforms](/sheet-settings/data-transforms) reshape the data before it's validated or pushed.
+- [Validation Functions](/sheet-settings/validation-functions) add custom row and column checks.
+- [Allow invalid](/getting-started/2-install-code#allow_invalid) lets users submit a file even when it has validation errors.
