@@ -51,6 +51,15 @@
         ]
       },
       {
+        "group": "Sheet Settings",
+        "icon": "table-list",
+        "pages": [
+          "sheet-settings/data-transforms",
+          "sheet-settings/validation-functions",
+          "sheet-settings/virtual-columns"
+        ]
+      },
+      {
         "group": "Advanced Installation",
         "icon": "code",
         "pages": [
