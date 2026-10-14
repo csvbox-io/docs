@@ -81,8 +81,7 @@
           {
             "group": "Columns",
             "pages": [
-              "advanced-installation/dynamic-columns",
-              "advanced-installation/ignored-columns"
+              "advanced-installation/dynamic-columns"
             ]
           },
           {
