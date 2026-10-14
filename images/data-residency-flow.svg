@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="664" viewBox="0 0 900 664" role="img" aria-labelledby="title desc" font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title id="title">CSVbox data flow with Europe selected as the data location</title>
+  <desc id="desc">Users upload CSV or Excel files to the CSVbox server in Europe (Germany). The server pushes validated data to your systems and can optionally store the file in a file datastore in Europe, from which your systems can read it. Only import metadata and logs, without file contents, go to the metadata datastore in the United States.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#007BFF"/>
+    </marker>
+    <marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#6B7280"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="664" rx="16" fill="#FFFFFF"/>
+
+  <!-- United States region: metadata only -->
+  <rect x="290" y="16" width="320" height="168" rx="14" fill="#F9FAFB" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="310" y="46" font-size="17" font-weight="700" fill="#374151">United States</text>
+  <text x="310" y="68" font-size="14" fill="#6B7280">Metadata only</text>
+  <path d="M380 96 v58 a70 14 0 0 0 140 0 v-58" fill="#F3F4F6" stroke="#6B7280" stroke-width="2"/>
+  <ellipse cx="450" cy="96" rx="70" ry="14" fill="#FFFFFF" stroke="#6B7280" stroke-width="2"/>
+  <text x="450" y="135" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">Metadata</text>
+  <text x="450" y="155" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">datastore</text>
+
+  <!-- Europe region: selected data location -->
+  <rect x="290" y="240" width="320" height="354" rx="14" fill="#EFF6FF" stroke="#007BFF" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="310" y="562" font-size="17" font-weight="700" fill="#0B4FA8">Europe (Germany)</text>
+  <text x="310" y="582" font-size="14" fill="#3B6FB6">Selected data location</text>
+
+  <!-- CSVbox server -->
+  <rect x="365" y="306" width="170" height="76" rx="12" fill="#007BFF"/>
+  <text x="450" y="339" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">CSVbox</text>
+  <text x="450" y="362" font-size="16" fill="#FFFFFF" text-anchor="middle">server</text>
+
+  <!-- File datastore (optional) -->
+  <path d="M380 460 v58 a70 14 0 0 0 140 0 v-58" fill="#E8F2FF" stroke="#007BFF" stroke-width="2"/>
+  <ellipse cx="450" cy="460" rx="70" ry="14" fill="#FFFFFF" stroke="#007BFF" stroke-width="2"/>
+  <text x="450" y="499" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">File</text>
+  <text x="450" y="519" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">datastore</text>
+
+  <!-- Users' files -->
+  <rect x="28" y="298" width="170" height="84" rx="10" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2"/>
+  <rect x="22" y="304" width="170" height="84" rx="10" fill="#FFFFFF" stroke="#60A5FA" stroke-width="2"/>
+  <rect x="16" y="310" width="170" height="84" rx="10" fill="#FFFFFF" stroke="#007BFF" stroke-width="2"/>
+  <text x="101" y="346" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">Users upload</text>
+  <text x="101" y="366" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">files</text>
+  <text x="101" y="384" font-size="13.5" fill="#6B7280" text-anchor="middle">CSV, Excel</text>
+
+  <!-- Your systems -->
+  <rect x="706" y="302" width="178" height="84" rx="42" fill="#FFFFFF" stroke="#007BFF" stroke-width="2"/>
+  <text x="795" y="339" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">Your systems</text>
+  <text x="795" y="361" font-size="13.5" fill="#6B7280" text-anchor="middle">API, database, apps</text>
+
+  <!-- Upload -->
+  <line x1="192" y1="344" x2="361" y2="344" stroke="#007BFF" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="244" y="332" font-size="15" font-weight="600" fill="#1F2937" text-anchor="middle">Upload</text>
+
+  <!-- Push validated data -->
+  <line x1="535" y1="344" x2="702" y2="344" stroke="#007BFF" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="658" y="314" font-size="15" font-weight="600" fill="#1F2937" text-anchor="middle">Validated</text>
+  <text x="658" y="333" font-size="15" font-weight="600" fill="#1F2937" text-anchor="middle">data</text>
+
+  <!-- Metadata to US -->
+  <line x1="450" y1="306" x2="450" y2="176" stroke="#6B7280" stroke-width="3" marker-end="url(#arrow-muted)"/>
+  <text x="463" y="210" font-size="15" font-weight="600" fill="#374151">Import metadata and logs</text>
+  <text x="463" y="229" font-size="13.5" fill="#6B7280">No file contents</text>
+
+  <!-- Store file (optional) -->
+  <line x1="450" y1="382" x2="450" y2="442" stroke="#007BFF" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+  <text x="463" y="408" font-size="15" font-weight="600" fill="#1F2937">Store file</text>
+  <text x="463" y="426" font-size="13.5" fill="#3B6FB6">Optional</text>
+
+  <!-- Read from CSVbox (optional) -->
+  <path d="M522 490 H795 V390" fill="none" stroke="#007BFF" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+  <text x="704" y="478" font-size="15" font-weight="600" fill="#1F2937" text-anchor="middle">Read from CSVbox</text>
+  <text x="704" y="512" font-size="13.5" fill="#3B6FB6" text-anchor="middle">Optional</text>
+
+  <!-- Legend -->
+  <g font-size="14.5" fill="#374151">
+    <line x1="246" y1="632" x2="290" y2="632" stroke="#007BFF" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="300" y="637">Always</text>
+    <line x1="384" y1="632" x2="428" y2="632" stroke="#007BFF" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+    <text x="438" y="637">Optional</text>
+    <line x1="532" y1="632" x2="576" y2="632" stroke="#6B7280" stroke-width="3" marker-end="url(#arrow-muted)"/>
+    <text x="586" y="637">Metadata</text>
+  </g>
+</svg>
