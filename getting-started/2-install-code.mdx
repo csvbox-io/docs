@@ -568,25 +568,13 @@ The following examples set several of these options:
 
 These additional importer events and properties are available.
 
-### onReady
-
-Triggers when the importer is initialized and ready for use. Users can then click the **Import** button to open the importer modal dialog.
-
-### onLoadStart
-
-Triggers when the importer iframe starts loading.
-
-<Note>
-  In vanilla JavaScript, `onLoadStart` triggers only when [Lazy Load](/getting-started/2-install-code#lazy-load) is activated. Without Lazy Load, the iframe starts loading as soon as the importer is initialized.
-</Note>
-
-### onClose
-
-Triggers when the importer is closed.
-
-### onSubmit
-
-Triggers when the user clicks **Submit** to upload the validated file. The `data` object is available in this event and contains metadata about the import.
+| Event | Angular name | Arguments | When it fires |
+| --- | --- | --- | --- |
+| <span id="onready" />`onReady` | `importerReady` | None | The importer is initialized and ready for use. Users can then click the **Import** button to open the importer modal dialog. |
+| <span id="onloadstart" />`onLoadStart` | `loadStarted` | None | The importer iframe starts loading. In vanilla JavaScript, it fires only when [Lazy Load](#lazy-load) is activated; without Lazy Load, the iframe starts loading as soon as the importer is initialized. |
+| <span id="onclose" />`onClose` | `closed` | None | The importer is closed. |
+| <span id="onsubmit" />`onSubmit` | `submitted` | `data` (object) | The user clicks **Submit** to upload the validated file. `data` contains metadata about the import; see the [sample](#onsubmit-data-object-sample) below. |
+| <span id="onimport" />`onImport` | `imported` | `result` (boolean), `data` (object) | All the data is pushed to the destination. `result` is `true` when the import succeeds and `false` when it fails; `data` contains metadata about the import. |
 
 <Accordion title="onSubmit data object sample">
   ```json
@@ -622,14 +610,7 @@ Triggers when the user clicks **Submit** to upload the validated file. The `data
   ```
 </Accordion>
 
-### onImport
-
-Triggers when all the data is pushed to the destination. Two objects are available in this event:
-
-- **`result`** (boolean): `true` when the import succeeds and `false` when it fails.
-- **`data`** (object): contains metadata about the import.
-
-### Examples
+The following examples listen to these events:
 
 <Tabs>
   <Tab title="JavaScript">
@@ -713,17 +694,7 @@ Triggers when all the data is pushed to the destination. Two objects are availab
     ```
   </Tab>
   <Tab title="Angular">
-    <Note>
-      The events are named slightly differently in Angular.
-    </Note>
-
-    | Event | Angular event |
-    | --- | --- |
-    | `onReady` | `importerReady` |
-    | `onLoadStart` | `loadStarted` |
-    | `onClose` | `closed` |
-    | `onSubmit` | `submitted` |
-    | `onImport` | `imported` |
+    Angular uses the event names in the **Angular name** column of the table above.
 
     ```javascript
     import { Component } from '@angular/core';
