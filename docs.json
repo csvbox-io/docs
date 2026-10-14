@@ -35,6 +35,7 @@
           "dashboard-settings/add-columns-via-csv",
           "dashboard-settings/validations",
           "dashboard-settings/smart-date-and-number-formats",
+          "dashboard-settings/sheet-tags",
           "dashboard-settings/styling",
           "dashboard-settings/import-analytics",
           "dashboard-settings/split-large-csv",
