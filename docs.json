@@ -302,6 +302,16 @@
       "source": "/advanced-installation/virtual-columns",
       "destination": "/sheet-settings/virtual-columns",
       "permanent": true
+    },
+    {
+      "source": "/advanced-installation/validation-functions",
+      "destination": "/sheet-settings/validation-functions",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-installation/data-transforms",
+      "destination": "/sheet-settings/data-transforms",
+      "permanent": true
     }
   ],
   "interaction": {
