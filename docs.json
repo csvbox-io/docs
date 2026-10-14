@@ -55,6 +55,7 @@
         "group": "Sheet Settings",
         "icon": "table-list",
         "pages": [
+          "sheet-settings/columns",
           "sheet-settings/data-transforms",
           "sheet-settings/validation-functions",
           "sheet-settings/virtual-columns"
