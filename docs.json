@@ -31,7 +31,6 @@
         "pages": [
           "dashboard-settings",
           "dashboard-settings/sheet-options-1",
-          "dashboard-settings/sheet-options",
           "dashboard-settings/add-columns-via-csv",
           "dashboard-settings/validations",
           "dashboard-settings/smart-date-and-number-formats",
