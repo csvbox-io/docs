@@ -92,7 +92,6 @@
             "pages": [
               "advanced-installation/validation-functions",
               "advanced-installation/server-side-validation",
-              "advanced-installation/data-transforms",
               "advanced-installation/if-else-builder"
             ]
           },
