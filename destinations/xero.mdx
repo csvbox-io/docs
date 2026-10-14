@@ -3,4 +3,132 @@ title: "Xero"
 description: "Send your CSV or Excel sheet data to your Xero organisation, including contacts, invoices, payments, and bank transactions."
 ---
 
-Placeholder
+The Xero destination sends your users' CSV or Excel data straight into your Xero organisation. You can import contacts, invoices, payments, bank transactions, and any other Xero Accounting object that accepts `POST` or `PUT`.
+
+| Setting | Value |
+| --- | --- |
+| Connection method | OAuth 2.0 (sign in with Xero, no API keys to copy) |
+| Xero API | Accounting API |
+| Supported operations | `POST` (create) and `PUT` (create or update, depending on the Xero endpoint) |
+| Batch size | 100 records per request |
+| Multiple organisations | Supported. The first authorised organisation is selected by default. |
+
+## Before you start
+
+- A Xero account with permission to connect apps to the organisation you want to import into.
+- A CSVbox sheet with its columns defined.
+
+## How it works
+
+<Steps>
+  <Step title="Select Xero as the destination type">
+    Open your sheet, go to **Destination**, and choose **Xero** from the list.
+  </Step>
+  <Step title="Connect your Xero account">
+    Click **Connect to Xero**. You're redirected to Xero's sign-in and consent screen. Select the organisation you want to authorise and click **Allow access**.
+
+    You're returned to CSVbox with the connection marked as valid, and the name of the connected organisation is shown.
+
+    <Note>
+      If you cancel on the Xero consent screen, your sheet keeps its previous destination.
+    </Note>
+  </Step>
+  <Step title="Choose an endpoint">
+    Select the Xero API endpoint that should receive the data, for example `/Contacts`, `/Invoices`, or `/Payments`. The list is built from Xero's official Accounting OpenAPI specification and only includes endpoints that accept `POST` or `PUT`. Each entry shows its HTTP method.
+
+    An endpoint and method are required. You can't save the destination without them.
+  </Step>
+  <Step title="Map sheet columns to Xero fields">
+    Match each column in your sheet to a Xero field. The fields come from the selected endpoint and show their type (string, number, boolean, date, or enum).
+
+    - Use dot notation for nested fields, such as `Phones.PhoneNumber` or `Addresses.AddressLine1`.
+    - Use `[]` for line items on an array field, such as `LineItems[].Description` or `LineItems[].UnitAmount`.
+    - Columns you leave unmapped aren't sent.
+
+    You can also map custom attributes, such as the logged-in user's ID, to a Xero field to send them with every row.
+  </Step>
+  <Step title="Save the destination">
+    Click **Save**. The destination is active for all new uploads.
+  </Step>
+</Steps>
+
+### Permissions CSVbox requests
+
+| Scope | Why it's needed |
+| --- | --- |
+| `accounting.contacts` | Create and update contacts |
+| `accounting.invoices` | Create and update invoices and credit notes |
+| `accounting.payments` | Create payments |
+| `accounting.banktransactions` | Create bank transactions |
+| `accounting.settings` | Read organisation settings and reference data |
+| `offline_access` | Keep the connection alive without asking you to sign in again |
+
+## How data is sent
+
+CSVbox reads each row, converts the mapped columns to the types Xero expects, and groups the rows into batches of 100. Each batch is sent as one request:
+
+```text
+POST https://api.xero.com/api.xro/2.0/Contacts?summarizeErrors=false
+Authorization: Bearer <access token>
+xero-tenant-id: <organisation id>
+
+{ "Contacts": [ { ... }, { ... } ] }
+```
+
+Because `summarizeErrors=false` is set, Xero validates every record on its own. One bad row doesn't block the other 99 in the batch. Progress is streamed live to the importer.
+
+### Type conversion
+
+| Xero type | Accepted values |
+| --- | --- |
+| Boolean | `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off` (case-insensitive) |
+| Integer or number | Any numeric value |
+| Date | Any recognisable date, sent as `YYYY-MM-DD` |
+| Date-time | Any recognisable date-time, sent as ISO 8601 |
+| Enum | Must exactly match one of Xero's allowed values |
+
+- Empty cells are skipped. The field isn't sent.
+- A row that fails conversion isn't sent. It's reported with its row number and field, for example `row 12, field Status: invalid value "Active"; allowed: ACCOUNTS, ...`.
+
+## Import results
+
+| Status | Meaning |
+| --- | --- |
+| Success | Every row was accepted by Xero |
+| Partial | Some rows were accepted and some failed |
+| Failed | No rows were accepted, or the file contained no rows |
+
+Per-row problems, including Xero validation messages and conversion errors, are listed in the import's error log. For example:
+
+```text
+row 4: Email address must be valid; Name must be unique
+```
+
+## Token handling
+
+- Access tokens are refreshed automatically before they expire, so you never have to re-enter anything.
+- If Xero rejects a request with `401`, CSVbox refreshes the token and retries once.
+- If the refresh token itself is no longer valid, the connection is marked as disconnected and the import fails with `Xero refresh token expired — reconnect Xero to continue`. This happens when access was revoked in Xero, or when the connection went unused for 60 days. Click **Connect to Xero** again to fix it.
+
+## Troubleshooting
+
+| Message | Cause | Fix |
+| --- | --- | --- |
+| `Please select a Xero API Endpoint before saving.` | No endpoint is chosen | Pick an endpoint in the destination settings |
+| `Xero refresh token expired — reconnect Xero to continue` | Authorisation was revoked or expired | Click **Connect to Xero** again |
+| `Xero 403: permissions missing — reconnect Xero` | The connection lacks a scope the chosen endpoint needs | Reconnect and approve all requested permissions |
+| `Xero 429: rate limit hit — try again later` | Xero's API rate limit was reached | Wait a minute and re-import the failed rows |
+| `Xero 400: row N: ...` | Xero rejected the batch, usually because a required field is missing | Check that the mapping covers Xero's required fields for that endpoint |
+| `row N, field X: cannot cast "..." to ...` | A cell value doesn't match the field's type | Fix the value in the file, or add a validation or transform on the column |
+| The endpoint list is empty | Xero's spec couldn't be loaded when you connected | Reopen the destination settings. The list loads again automatically. |
+
+## Disconnecting
+
+Click **Disconnect** in the destination settings to remove the stored Xero tokens and mapping from the sheet. To also revoke CSVbox's access on Xero's side, remove the app under **Xero** → **Settings** → **Connected apps**.
+
+## Good to know
+
+- Each sheet connects to one Xero organisation at a time.
+- Credentials are stored per sheet and aren't shared between sheets.
+- Only endpoints that accept `POST` or `PUT` are offered. Read-only endpoints aren't available.
+- A single file is limited by your plan's row limit. Rows beyond the limit aren't sent.
