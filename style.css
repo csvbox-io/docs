@@ -1,0 +1,8 @@
+/* Give screenshots a subtle border so white UI images don't blend into the page. */
+.frame img:not([data-path$=".svg"]) {
+  border: 1px solid rgb(156 163 175);
+}
+
+.dark .frame img:not([data-path$=".svg"]) {
+  border-color: rgb(55 65 81);
+}
