@@ -3,4 +3,466 @@ title: "Validation Functions"
 description: "Validate imported data with custom JavaScript row and column functions."
 ---
 
-Placeholder
+If the built-in [data type validations](/dashboard-settings/validations) in CSVbox don't cover the validations you need, write your own custom validation functions in JavaScript.
+
+There are two types of validation functions:
+
+- **Row Functions**: run validation on each row of data and return an error message (if any) for the user. They run at the beginning of the "validate" step, and again whenever row data is updated during the "validate" step. For example, use a row function to mark a cell as "mandatory" based on a specific value in another cell in the same row.
+- **Column Functions**: run validation on a set of selected columns when the user clicks the **Submit** button on the "validate" step. They're best for cases where the entire column's data is required for validation. For example, to find duplicate entries in a column, grab all the values in the column, find the duplicates, and display a message to the user.
+
+<Frame caption="Validation Functions">
+  <img
+    src="/images/validation-functions.svg"
+    alt="How row functions and column functions run during the validate step"
+  />
+</Frame>
+
+<Tip>
+  Prefer not to write code? Use the [If / Else Builder](/advanced-installation/if-else-builder) to create validation rules visually with IF / ELSE IF / ELSE conditions.
+</Tip>
+
+## Row functions
+
+### Adding row functions
+
+<Steps>
+  <Step title="Open the Columns tab">
+    Go to the edit sheet page → **Columns** tab, and click the **Add Functions** button.
+  </Step>
+  <Step title="Name the function">
+    Add a **Function Name**.
+  </Step>
+  <Step title="Select the Row function type">
+    Select **Row** under **Function Type**.
+  </Step>
+  <Step title="Provide the JavaScript code">
+    Enter the **Javascript** code.
+  </Step>
+  <Step title="Save the function">
+    Click **Save**.
+  </Step>
+</Steps>
+
+<Frame caption="Adding Row Functions">
+  <img
+    src="/images/row-function.jpg"
+    alt="Add Functions dialog with the Row function type selected"
+  />
+</Frame>
+
+### Example row functions
+
+#### Dependent columns
+
+Column 5 is mandatory only if column 4 is not null.
+
+```javascript
+//replace "col4" and "col5" with actual column names
+
+if(csvbox.row["col4"] != "" && csvbox.row["col5"] == "") {
+  let err = [
+  {
+    "column": "col5",
+    "message": "Column 5 is mandatory if Column 4 is not empty"
+  }];
+  return err;
+}
+```
+
+#### Mandatory column combination
+
+Either column 2 or column 3 needs to have data.
+
+```javascript
+//replace "col2" and "col3" with actual column names
+
+if(csvbox.row["col2"] == "" && csvbox.row["col3"] == ""){
+  let err = [
+    {
+      "column": "col2",
+      "message": "Columns 2 OR 3 need to have data"
+    },
+    {
+      "column": "col3",
+      "message": "Columns 2 OR 3 need to have data"
+    }
+  ];
+  return err;
+}
+```
+
+### Variables in the row function
+
+You have access to data variables in the `csvbox` object. The following data is available:
+
+#### `csvbox.row`
+
+Contains the row data. Access each cell in the row by providing the column name. Examples:
+
+```javascript
+csvbox.row["first_name"]
+csvbox.row["order_id"]
+csvbox.row["price"]
+```
+
+<Warning>
+  The column name must exist on the sheet, or an error is thrown.
+</Warning>
+
+#### `csvbox.user`
+
+Contains the [custom user attributes](/getting-started/2-install-code#referencing-the-user) defined while initializing the importer. Examples:
+
+```javascript
+csvbox.user["user_id"]
+csvbox.user["team_id"]
+csvbox.user["isAuthenticated"]
+```
+
+#### `csvbox.import`
+
+Contains data specific to the current import. The following data is available:
+
+```javascript
+csvbox.import["sheet_id"]
+csvbox.import["sheet_name"]
+csvbox.import["original_filename"]
+csvbox.import["import_start_time"]
+csvbox.import["destination_type"]
+csvbox.import["total_rows"]
+csvbox.import["row_number"] //current row number starting with 1
+```
+
+#### `csvbox.columns`
+
+Contains the column metadata (name, type).
+
+```javascript
+//Example usage
+let column = csvbox.columns['birthdate'];
+
+if(column.type == 'date') {
+
+   // code
+
+}
+
+if(column.isDynamic) {
+
+   // this is a dynamic column
+   // code
+
+}
+
+if(column.isUnmapped) {
+
+   // this is an unmapped column
+   // code
+
+}
+```
+
+<a id="csvboxenvironment" />
+
+#### `csvbox.environment`
+
+Contains the [environment variables](/advanced-installation/environment-variables) passed during importer initialization.
+
+```javascript
+// Example Usage
+if(csvbox.environment["user_id"] && csvbox.environment["user_id"] == "abc123") {
+
+ // code
+
+}
+```
+
+<Tip>
+  Use `console.log(csvbox);` to print all the available variables in the debugging console.
+</Tip>
+
+### Error response JSON format for row functions
+
+CSVbox expects the row function to return an array of errors. Each error specifies the `column` the error appeared in and a `message` to display in the UI.
+
+#### JSON response schema
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `column` | string | The [column name](/sheet-settings/columns#column-name) of the error. It is case-sensitive. |
+| `message` | string | The message displayed to the user on the validation screen of the importer. |
+
+#### Example row function JSON response
+
+```json
+[
+  {
+    "column": "employee_id",
+    "message": "Invalid Emp ID"
+  },
+  {
+    "column": "dept",
+    "message": "Department does not exist"
+  },
+  {
+    "column": "employee_name",
+    "message": "Employee's name has changed"
+  }
+]
+```
+
+## Column functions
+
+### Adding column functions
+
+<Steps>
+  <Step title="Open the Columns tab">
+    Go to the edit sheet page → **Columns** tab, and click the **Add Functions** button.
+  </Step>
+  <Step title="Name the function">
+    Add a **Function Name**.
+  </Step>
+  <Step title="Select the Column function type">
+    Select **Column** under **Function Type**.
+  </Step>
+  <Step title="Add the columns">
+    Add the columns you need in the function.
+  </Step>
+  <Step title="Provide the JavaScript code">
+    Enter the **Javascript** code.
+  </Step>
+  <Step title="Attach dependencies (optional)">
+    Attach **Dependent** libraries.
+  </Step>
+  <Step title="Save the function">
+    Click **Save**.
+  </Step>
+</Steps>
+
+<Frame caption="Adding Column Functions">
+  <img
+    src="/images/column-function-add.png"
+    alt="Add Functions dialog with the Column function type selected"
+  />
+</Frame>
+
+<Note>
+  You can also enter [dynamic column](/advanced-installation/dynamic-columns) names to access them in validation functions.
+</Note>
+
+### Example column functions
+
+<Tabs>
+  <Tab title="Detect Duplicates">
+    Check whether a column has duplicate entries.
+
+    ```javascript
+    //replace "col4" with actual column name
+    
+    function findRepeatingIndices(arr) {
+      const repeatingIndices = {};
+    
+      for (let i = 0; i < arr.length; i++) {
+        const element = arr[i];
+        if (repeatingIndices[element] === undefined) {
+          repeatingIndices[element] = [i];
+        } else {
+          repeatingIndices[element].push(i);
+        }
+      }
+    
+      const result = [];
+    
+      for (const key in repeatingIndices) {
+        if (repeatingIndices[key].length > 1) {
+          result.push(...repeatingIndices[key]);
+        }
+      }
+    
+      return result;
+    }
+    
+    const arr = csvbox.column["col4"];
+    const repeatingIndices = findRepeatingIndices(arr);
+    
+    let errs = [];
+    
+    repeatingIndices.forEach(index => {
+      errs.push({
+        "row_id": (index + 1),
+        "column": "col4",
+        "message": "Duplicate entry."
+      });
+    });
+    
+    return errs;
+    ```
+  </Tab>
+  <Tab title="Multi Column Duplicates">
+    Find duplicate entries across multiple columns.
+
+    ```javascript
+    //Find duplicate entries in multiple columns.
+    
+    function findDuplicateIndices(arr1, arr2) {
+      const seen = new Map();
+      const duplicates = [];
+      arr1.forEach((value1, index) => {
+        const value2 = arr2[index];
+        const pair = `${value1},${value2}`;
+        if (seen.has(pair)) {
+          duplicates.push(seen.get(pair), index);
+        } else {
+          seen.set(pair, index);
+        }
+      });
+      return [...new Set(duplicates)];
+    }
+    
+    const duplicates = findDuplicateIndices(csvbox.column.col1, csvbox.column.col2);
+    
+    let errs = [];
+    
+    duplicates.forEach(index => {
+      errs.push({
+        "row_id": (index + 1),
+        "column": "col1",
+        "message": "Duplicate entry."
+      });
+      errs.push({
+        "row_id": (index + 1),
+        "column": "col2",
+        "message": "Duplicate entry."
+      });
+    });
+    
+    return errs;
+    ```
+  </Tab>
+</Tabs>
+
+### Dependencies
+
+In the column function JavaScript snippet, you can use an external library hosted on a CDN. You can also call any external API endpoint to fetch real-time data. Add the library script tag and any custom scripts to the **Dependencies** section, then use them in the main JavaScript snippet.
+
+### Variables in the column function
+
+You have access to data variables in the `csvbox` object. The following data is available:
+
+#### `csvbox.column`
+
+Contains the entire column's data. Access each cell in the column by providing the column name and the row number. The row number starts with 1. Examples:
+
+```javascript
+csvbox.column["first_name"][1]
+csvbox.column["order_id"][12]
+csvbox.column["price"][10001]
+```
+
+<Warning>
+  Only the selected columns are available in the column function.
+</Warning>
+
+#### `csvbox.user`
+
+Contains the [custom user attributes](/getting-started/2-install-code#referencing-the-user) defined while initializing the importer. Examples:
+
+```javascript
+csvbox.user["user_id"]
+csvbox.user["team_id"]
+csvbox.user["isAuthenticated"]
+```
+
+#### `csvbox.import`
+
+Contains data specific to the current import. The following data is available:
+
+```javascript
+csvbox.import["sheet_id"]
+csvbox.import["sheet_name"]
+csvbox.import["original_filename"]
+csvbox.import["import_start_time"]
+csvbox.import["destination_type"]
+csvbox.import["total_rows"]
+csvbox.import["row_number"] //current row number starting with 1
+```
+
+#### `csvbox.environment`
+
+Contains the [environment variables](/advanced-installation/environment-variables) passed during importer initialization.
+
+```javascript
+// Example Usage
+if(csvbox.environment["user_id"] && csvbox.environment["user_id"] == "abc123") {
+
+ // code
+
+}
+```
+
+#### `csvbox.columns`
+
+Contains the column metadata (name, type).
+
+```javascript
+//Example usage
+let column = csvbox.columns['birthdate'];
+
+if(column.type == 'date') {
+
+   // code
+
+}
+
+if(column.isDynamic) {
+
+   // this is a dynamic column
+   // code
+
+}
+
+if(column.isUnmapped) {
+
+   // this is an unmapped column
+   // code
+
+}
+```
+
+<Tip>
+  Use `console.log(csvbox);` to print all the available variables in the debugging console.
+</Tip>
+
+### Error response JSON format for column functions
+
+CSVbox expects the column function to return an array of errors. Each error specifies the `row_id`, the `column` the error appeared in, and a `message` to display in the UI.
+
+#### JSON response schema for column functions
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `row_id` | integer | The row number of the error. Starts with 1. |
+| `column` | string | The [column name](/sheet-settings/columns#column-name) of the error. It is case-sensitive. |
+| `message` | string | The message displayed to the user on the validation screen of the importer. |
+
+#### Example column function JSON response
+
+```json
+[
+  {
+    "row_id": 1,
+    "column": "employee_id",
+    "message": "Invalid Emp ID"
+  },
+  {
+    "row_id": 2,
+    "column": "dept",
+    "message": "Department does not exist"
+  },
+  {
+    "row_id": 3,
+    "column": "employee_name",
+    "message": "Employee's name has changed"
+  }
+]
+```
