@@ -1,0 +1,24 @@
+---
+title: "Test API"
+description: "Validate your CSVbox setup with a unique testing endpoint before wiring up your own backend."
+---
+
+A lightweight destination that helps you validate your CSVbox setup quickly, before wiring up your own backend.
+
+When selected, every successful import posts the parsed spreadsheet data to a **unique HTTPS URL** hosted at [https://webhooks.csvbox.io/](https://webhooks.csvbox.io/). Example:
+
+```html
+https://webhooks.csvbox.io/b/5f3b0901-1c32-4d83-9fdd-a454e56e1938
+```
+
+Use it to confirm payload shape, headers, and delivery behavior during initial integration.
+
+<Warning>
+  The Test API is designed **for initial testing only**. Do not use it for production data flows.
+</Warning>
+
+## When to use it
+
+- You're integrating CSVbox for the first time and want to **see the JSON** CSVbox sends.
+- You need to **confirm columns, data types, and null handling** after the mapper and validators run.
+- You want a **no-setup** endpoint to verify end-to-end delivery before connecting your real destination.

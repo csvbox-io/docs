@@ -1,0 +1,56 @@
+---
+title: "Airtable"
+description: "Import CSV files and Excel sheets directly into your Airtable tables."
+---
+
+Import CSV files and Excel sheets directly into your [Airtable](https://airtable.com/).
+
+<Steps>
+  <Step title="Select Airtable as the destination">
+    Select **Airtable** as the destination type.
+  </Step>
+  <Step title="Connect your Airtable">
+    Connect your Airtable by providing the credentials.
+
+    <Note>
+      Steps to get the Airtable API Key are described [here](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-). Steps to get the Base ID are described [here](https://support.airtable.com/docs/finding-airtable-ids#finding-ids-in-airtable-api).
+    </Note>
+  </Step>
+  <Step title="Set the target table">
+    Specify the table name where you want the data to be pushed.
+  </Step>
+  <Step title="Map columns">
+    Map the sheet columns to the Airtable table columns. You can also map custom attributes to table columns.
+  </Step>
+</Steps>
+
+Your users' CSV data is then appended directly to the Airtable table.
+
+<Warning>
+  The data fields from Airtable are available in the Map Column modal only if they have **data in the first row**. Add dummy data for each data field in the first row so that they appear in the Map Column modal.
+</Warning>
+
+## Operations
+
+There are 2 operations available for Airtable.
+
+### 1. Insert
+
+Creates a new row in the table.
+
+<a id="2-upsert" />
+
+### 2. Upsert
+
+Updates an existing row if a specified value already exists in the table, and inserts a new row if it doesn't. Select the column to check for uniqueness in the **Column Mapping** popup.
+
+<Frame>
+  <img
+    src="/images/upset-airtable.jpg"
+    alt="Select the unique column for an Airtable upsert"
+  />
+</Frame>
+
+- If zero matches are found, a new row is created.
+- If one match is found, that row is updated.
+- **If multiple matches are found, the request fails.**

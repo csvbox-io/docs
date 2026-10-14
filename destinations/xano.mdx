@@ -1,0 +1,157 @@
+---
+title: "Xano"
+description: "Send your CSV or Excel sheet data to a Xano API endpoint, with columns mapped to the endpoint's input fields."
+---
+
+The Xano destination sends your users' CSV or Excel data to one of your own [Xano](https://www.xano.com) API endpoints. CSVbox reads your API group's OpenAPI (Swagger) specification, so you pick an endpoint and map sheet columns to its input fields, with no manual URL or payload building.
+
+| Setting | Value |
+| --- | --- |
+| Connection method | Xano API group OpenAPI (Swagger) spec URL |
+| Supported methods | `POST`, `PUT`, `PATCH` |
+| Send modes | One request per row, or one request per file |
+| Authentication | Token in the spec URL, or a Bearer token |
+| Retries | Up to 3 retries on server errors (HTTP 5xx) |
+
+## Before you start
+
+- A Xano workspace with an API endpoint that accepts the data you want to import, for example `POST /customers`.
+- **Swagger documentation** turned on for the API group that contains the endpoint. In Xano, open the API group → **Settings** and set **Swagger documentation** to **Public** or **Private (with token)**. It must not be **Disabled**.
+- The full spec URL for the API group. For a private group, copy the URL including `?token=...`.
+
+<Note>
+  The spec URL must be publicly reachable. Private and internal network addresses are rejected.
+</Note>
+
+## How it works
+
+<Steps>
+  <Step title="Select Xano as the destination type">
+    Open your sheet, go to **Destination**, and choose **Xano** from the list.
+  </Step>
+  <Step title="Load your API spec">
+    Paste your Xano spec URL, for example:
+
+    ```text
+    https://x8ki-letl-twmt.n7.xano.io/apispec:abc123?type=json&token=eyJ...
+    ```
+
+    Click **Load Endpoints**. CSVbox downloads the spec and lists every endpoint that accepts `POST`, `PUT`, or `PATCH`.
+
+    If the URL has no `token=` parameter and your docs are protected, add a **Docs Auth** token. You can use a Bearer token, or a custom header name and value.
+  </Step>
+  <Step title="Select the endpoint">
+    Pick the endpoint that should receive the data. CSVbox loads its input fields (name, type, required, and allowed values) and detects whether the endpoint expects a single object or an array of objects.
+  </Step>
+  <Step title="Test the connection (optional)">
+    Click **Test Connection**. This is a read-only check: it fetches your spec URL and confirms that it contains a valid `paths` object. It doesn't call your endpoint or create any data.
+
+    | Result | Meaning |
+    | --- | --- |
+    | `Spec verified — found N path(s).` | The URL and token are valid |
+    | `Authentication failed (HTTP 401/403)` | The token is missing or wrong |
+    | `Response is not a valid OpenAPI spec` | The URL doesn't point to a Swagger JSON spec |
+    | `Spec URL resolves to a private or reserved IP address` | Not allowed for security reasons |
+  </Step>
+  <Step title="Map sheet columns to the endpoint fields">
+    Match each column in your sheet to an input field of the endpoint. You can also map custom attributes, such as `user_id`, to send them with every row.
+
+    - Use dot notation for nested objects, such as `address.city`.
+    - Use brackets for arrays, such as `tags[0]` or `items[0].sku`.
+    - Columns you leave unmapped aren't sent.
+    - Required fields from the spec are highlighted. Map all of them, or Xano rejects the request.
+
+    CSVbox rebuilds nested and array fields into proper JSON before sending:
+
+    ```json
+    { "address": { "city": "Pune" }, "tags": ["a"], "items": [ { "sku": "X1" } ] }
+    ```
+  </Step>
+  <Step title="Save the destination">
+    Click **Save**. The destination is active for all new uploads.
+  </Step>
+</Steps>
+
+## How data is sent
+
+### One request per row
+
+By default, each row becomes one request. Progress is updated after every row.
+
+```text
+POST https://<your-instance>.xano.io/api:abc123/customers
+Authorization: Bearer <token>        (only if a token is configured)
+Accept: application/json
+
+{ "name": "Asha", "email": "asha@example.com", "age": 31 }
+```
+
+### One request per file
+
+If the request body of the selected endpoint is an **array**, CSVbox sends all rows in a single request:
+
+```json
+[ { "name": "Asha" }, { "name": "Ravi" } ]
+```
+
+CSVbox detects this automatically from your spec. In this mode, a failure affects the whole file, because Xano answers the request as a whole.
+
+### Type conversion
+
+CSVbox converts each value to the type declared in your Xano input before sending it.
+
+| Xano type | Accepted values |
+| --- | --- |
+| `integer` | Whole numbers only (`12` is accepted, `12.5` is not) |
+| `number` / `decimal` | Any numeric value |
+| `boolean` | `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off` (case-insensitive) |
+| `string` | Sent as-is |
+| Enum | Must match one of the allowed values |
+
+- Empty cells are sent as `null`.
+- A row that fails conversion isn't sent. It's logged with the reason, for example `field age: cannot coerce 'abc' to integer`.
+
+## Error handling
+
+| Response from Xano | What CSVbox does |
+| --- | --- |
+| `2xx` | The row is counted as imported |
+| `400` or `422` | The row is marked failed with Xano's message (first 300 characters), and the import continues |
+| `401` or `403` | The import is aborted because authentication failed |
+| `429` | The import is aborted immediately, with no retry |
+| `5xx` | The request is retried up to 3 times. If it still fails, the row is marked failed and the import continues |
+| Network error or timeout (30 seconds) | The row is marked failed and the import continues |
+
+<Warning>
+  Xano plans enforce request limits. Because one-request-per-row mode makes one call per row, large files on low-limit plans can hit a `429`. For large imports, use an endpoint that accepts an array, or raise the limit on your Xano plan.
+</Warning>
+
+## Import results
+
+| Status | Meaning |
+| --- | --- |
+| Success | All rows were accepted |
+| Partial | Some rows were accepted and some failed |
+| Failed | No rows were accepted, or the import was aborted before anything succeeded |
+
+Row-level errors appear in the import's error log with the row number, the field (when known), the HTTP status, and the message.
+
+## Troubleshooting
+
+| Message | Cause | Fix |
+| --- | --- | --- |
+| `Spec requires a token. Copy the full URL from Xano (it includes &token=...)` | A private API group with no token in the URL | Paste the complete URL, or fill in Docs Auth |
+| `Spec URL not reachable — confirm Swagger is enabled` | Swagger is disabled for the API group | Enable it in the API group settings in Xano |
+| `Spec URL returned an HTML page` | You pasted the Xano dashboard URL instead of the spec URL | Use the `apispec:` URL from the Swagger settings |
+| `This spec has no endpoints` | The API group has no endpoints, or the URL is for the wrong group | Check the group in Xano |
+| `Please load the OpenAPI spec and select an endpoint.` | You tried to save before choosing an endpoint | Click **Load Endpoints**, then pick one |
+| `Authentication failed — import aborted (HTTP 401/403)` | The endpoint needs a token that is missing or expired | Update the token in Docs Auth and test again |
+| `Row rejected (HTTP 422): ...` | Xano's input validation failed for that row | Fix the data or the mapping for that field |
+| `Rate limit hit (HTTP 429) — import aborted.` | The Xano request limit was reached | Use an array endpoint or upgrade your Xano plan, then re-import |
+
+## Good to know
+
+- The spec URL and token are stored per sheet. If you regenerate the token in Xano, reload the spec and save again.
+- Switching to a different endpoint resets the available fields, so check your mapping again.
+- Only `POST`, `PUT`, and `PATCH` endpoints are listed.
+- A single file is limited by your plan's row limit. Rows beyond the limit aren't sent.

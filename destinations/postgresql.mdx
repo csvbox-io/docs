@@ -1,0 +1,41 @@
+---
+title: "PostgreSQL"
+description: "Import CSV files and Excel sheets directly into your PostgreSQL tables."
+---
+
+Import CSV files and Excel sheets directly into your PostgreSQL tables.
+
+<Steps>
+  <Step title="Select PostgreSQL as the destination">
+    Select **PostgreSQL** as the destination type.
+  </Step>
+  <Step title="Connect your database">
+    Connect your PostgreSQL database by providing the credentials.
+  </Step>
+  <Step title="Set the target table">
+    Specify the table name where you want the data to be pushed.
+
+    <Frame>
+      <img
+        src="/images/postgresql-settings.jpg"
+        alt="PostgreSQL data destination settings"
+      />
+    </Frame>
+  </Step>
+  <Step title="Map columns">
+    Map the sheet columns to the table columns. You can also map custom attributes to table columns.
+
+    <Frame>
+      <img
+        src="/images/map-columns.jpg"
+        alt="Map sheet columns to table columns"
+      />
+    </Frame>
+  </Step>
+</Steps>
+
+Your users' CSV data is then appended directly to the PostgreSQL table.
+
+<Note>
+  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) are pushed as `true` or `false`, which PostgreSQL accepts for boolean columns.
+</Note>

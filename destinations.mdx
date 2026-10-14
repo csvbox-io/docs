@@ -14,382 +14,87 @@ A destination is where the importer pushes the data your users upload. You choos
 
 | Destination | Category |
 | --- | --- |
-| [None](/destinations#none) | No delivery; files stay downloadable in CSVbox |
-| [Test API](/destinations#test-api) | Testing endpoint |
-| [API](/destinations#api--webhook) | Webhook |
-| [Amazon S3](/destinations#amazon-s3) | File storage |
-| [FTP Server](/destinations#ftp-server) | File storage |
-| [MySQL](/destinations#mysql) | Database |
-| [PostgreSQL](/destinations#postgresql) | Database |
-| [SQL Server](/destinations#sql-server) | Database |
-| [MongoDB](/destinations#mongodb) | Database |
-| [Google Sheet](/destinations#google-sheets) | Spreadsheet |
-| [Airtable](/destinations#airtable) | Spreadsheet database |
-| [Bubble.io](/destinations#bubble) | No-code app |
-| [Notion](/destinations#notion) | Workspace database |
-| [Zapier](/destinations#zapier) | Automation platform |
-| [Webflow](/destinations#webflow) | CMS |
+| [None](/destinations/none) | No delivery; files stay downloadable in CSVbox |
+| [Test API](/destinations/test-api) | Testing endpoint |
+| [API / Webhook](/destinations/api-webhook) | Webhook |
+| [Amazon S3](/destinations/amazon-s3) | File storage |
+| [FTP Server](/destinations/ftp-server) | File storage |
+| [MySQL](/destinations/mysql) | Database |
+| [PostgreSQL](/destinations/postgresql) | Database |
+| [SQL Server](/destinations/sql-server) | Database |
+| [MongoDB](/destinations/mongodb) | Database |
+| [Google Sheets](/destinations/google-sheets) | Spreadsheet |
+| [Airtable](/destinations/airtable) | Spreadsheet database |
+| [Bubble.io](/destinations/bubble-io) | No-code app |
+| [Notion](/destinations/notion) | Workspace database |
+| [Zapier](/destinations/zapier) | Automation platform |
+| [Webflow](/destinations/webflow) | CMS |
 | [Hasura](/destinations/hasura) | GraphQL API |
 | [Softr](/destinations/softr) | No-code app |
 | [Google BigQuery](/destinations/google-bigquery) | Data warehouse |
 | [Supabase](/destinations/supabase) | Database |
 | [Neon](/destinations/neon) | Database |
+| [Xano](/destinations/xano) | No-code backend |
+| [Xero](/destinations/xero) | Accounting |
 | [Open API](/destinations/openapi) | Any OpenAPI-described API |
 | [n8n](/destinations/n8n) | Automation platform |
 | [Pipedream](/destinations/pipedream) | Automation platform |
 | [Automation Platforms](/destinations/automation-platforms) | Make, Workato, and other automation tools |
 | [Private Mode](/destinations/private-mode) | Client-side only processing |
 
-Connector destinations such as [Bubble](#bubble), [Notion](#notion), [Zapier](#zapier), and [Webflow](#webflow) are summarized below, and each has a full setup guide on its own page.
+Each destination has a full setup guide on its own page. The sections below summarize the destinations that are built into the sheet settings.
 
 ## None
 
-The user-uploaded data isn't pushed anywhere. The files are, however, available for download via the CSVbox admin.
+The user-uploaded data isn't pushed anywhere. The files are, however, available for download via the CSVbox admin. More information [here](/destinations/none).
 
 ## Test API
 
-A lightweight destination that helps you validate your CSVbox setup quickly, before wiring up your own backend.
+A lightweight destination that posts every successful import to a unique `webhooks.csvbox.io` URL, so you can validate your setup before wiring up your own backend. For initial testing only. More information [here](/destinations/test-api).
 
-When selected, every successful import posts the parsed spreadsheet data to a **unique HTTPS URL** hosted at [https://webhooks.csvbox.io/](https://webhooks.csvbox.io/). Example:
+<a id="api--webhook" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
 
-```html
-https://webhooks.csvbox.io/b/5f3b0901-1c32-4d83-9fdd-a454e56e1938
-```
+<a id="request-type" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
 
-Use it to confirm payload shape, headers, and delivery behavior during initial integration.
-
-<Warning>
-  The Test API is designed **for initial testing only**. Do not use it for production data flows.
-</Warning>
-
-### When to use it
-
-- You're integrating CSVbox for the first time and want to **see the JSON** CSVbox sends.
-- You need to **confirm columns, data types, and null handling** after the mapper and validators run.
-- You want a **no-setup** endpoint to verify end-to-end delivery before connecting your real destination.
-
-<a id="api--webhook" />
+<a id="sample-json-post-to-your-api" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
 
 ## API / Webhook
 
-The data is pushed to a webhook endpoint configured in the sheet settings. You can receive the data at your webhook as JSON, XML, or FORM Data.
-
-The data is pushed in chunks of rows. You can configure the number of rows per chunk in the sheet settings.
-
-### Sample JSON POST to your API
-
-```javascript
-[
-  {
-    "import_id": 79418895,
-    "sheet_id": 55,
-    "sheet_name": "Products",
-    "row_number": 1,
-    "total_rows": 5,
-    "env_name": "default", 
-    "original_filename": "products01_24.csv",
-    "row_data": {
-          "Name": "TP-Link TL-WN822N Wireless N300 High Gain USB Adapter",
-          "SKU": "AS-100221",
-          "Price": "33.00",
-          "Quantity": "3",
-          "Image URL": "https://cdn.shopify.com/s/files/1/1491/9536/products/31jJOj1DS5L_070b4893-b7af-482f-8a15-d40f5e06760d.jpg?v=1521803806"
-    },
-    "custom_fields": {
-      "user_id": "1a2b3c4d5e6f",
-      "team_id": "sales2"
-    }
-  },
-  {
-    "import_id": 79418895,
-    "sheet_id": 55,
-    "sheet_name": "Products",
-    "row_number": 2,
-    "total_rows": 5,
-    "env_name": "default", 
-    "original_filename": "products01_24.csv",
-    "row_data":{
-          "Name": "EPower Technology EP-600PM Power Supply 600W ATX12V 2.3 Single 120mm Cooling Fan Bare",
-          "SKU": "AS-103824",
-          "Price": "95.35",
-          "Quantity": "8",
-          "Image URL": "https://cdn.shopify.com/s/files/1/1491/9536/products/71pRC5VjF-L_8f840eb9-6a47-407f-999c-490f7814159d.jpg?v=1521803806"
-        },
-    "custom_fields": {
-      "user_id": "1a2b3c4d5e6f",
-      "team_id": "sales2"
-    }
-  },
-]
-```
-
-<Note>
-  The data arrives as HTTP POST requests. Each request contains an array of rows based on the chunk size defined in the sheet settings. Set the chunk size to 1 to receive one record per HTTP request.
-
-  If the row count is greater than 10,000, the chunk size defaults to 1000. A large row count with a small chunk size increases the processing time significantly.
-</Note>
-
-<Note>
-  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) arrive as a real boolean (`true` or `false`) in JSON and XML, and as the text `"true"` or `"false"` in FORM Data.
-</Note>
-
-### Request type
-
-The webhook can be called in two modes to push the data to the destination:
-
-- **Sequential**: webhook APIs are invoked in sequential order, one after another.
-- **Parallel** (default): multiple webhook APIs are invoked concurrently, so your application receives chunks of rows in parallel. This reduces overall import time. However, your application needs to manage the order of data based on the `row_number` attribute.
-
-<Tip>
-  To get started quickly, test with [webhook.site](https://webhook.site) to get a webhook URL. For testing on your local machine, use [ngrok](https://ngrok.com/).
-</Tip>
+Push the data to a webhook endpoint of your own as JSON, XML, or FORM Data, in chunks of rows. More information [here](/destinations/api-webhook).
 
 ## Amazon S3
 
-The files your users upload can be pushed to the AWS S3 bucket of your choice. Select **Amazon S3** as the destination type and provide the AWS credentials, the bucket/folder name, and the access policy for storing the files.
-
-<Note>
-  The data is stored as S3 objects named `{{import_id}}_{{user_id}}.csv`, where `user_id` is the custom user attribute you reference via the `setUser` method while installing the importer code. The other 4 custom user attributes are saved as the [user-defined metadata](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingMetadata.html) of the S3 object.
-</Note>
-
-The AWS credentials need the following 3 minimum policies for uploading files to S3:
-
-- `ListBucket`: required for testing the connection.
-- `PutObject`: required to add objects to S3.
-- `PutObjectTagging`: required to add the tags (metadata) to the uploaded objects.
-
-### S3 data type
-
-You can store the data in S3 in either CSV or JSON format.
+Push the files your users upload to the AWS S3 bucket of your choice, in CSV or JSON format. More information [here](/destinations/amazon-s3).
 
 ## FTP Server
 
-The files your users upload can be pushed to your FTP server. Select **FTP** as the destination type and provide the connection details and the folder name for storing the files.
-
-<Note>
-  The data is stored as CSV files named `{{import_id}}_{{user_id}}.csv`, where `user_id` is the custom user attribute you reference via the `setUser` method while installing the importer code.
-</Note>
+Push the files your users upload to your FTP server. More information [here](/destinations/ftp-server).
 
 ## MySQL
 
-Import CSV files and Excel sheets directly into your MySQL tables.
-
-<Steps>
-  <Step title="Select MySQL as the destination">
-    Select **MySQL Database** as the destination type.
-  </Step>
-  <Step title="Connect your database">
-    Connect your MySQL database by providing the credentials.
-  </Step>
-  <Step title="Set the target table">
-    Specify the table name where you want the data to be pushed.
-
-    <Frame>
-      <img
-        src="/images/mysql.jpg"
-        alt="CSV to MySQL destination settings"
-      />
-    </Frame>
-  </Step>
-  <Step title="Map columns">
-    Map the sheet columns to the table columns. You can also map custom attributes to table columns.
-
-    <Frame>
-      <img
-        src="/images/map-columns.jpg"
-        alt="Map sheet columns to table columns"
-      />
-    </Frame>
-  </Step>
-</Steps>
-
-Your users' CSV data is then appended directly to the MySQL table.
-
-<Note>
-  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) are pushed as `1` or `0`, which fits a `TINYINT(1)` column.
-</Note>
+Import CSV files and Excel sheets directly into your MySQL tables. More information [here](/destinations/mysql).
 
 ## PostgreSQL
 
-Import CSV files and Excel sheets directly into your PostgreSQL tables.
-
-<Steps>
-  <Step title="Select PostgreSQL as the destination">
-    Select **PostgreSQL** as the destination type.
-  </Step>
-  <Step title="Connect your database">
-    Connect your PostgreSQL database by providing the credentials.
-  </Step>
-  <Step title="Set the target table">
-    Specify the table name where you want the data to be pushed.
-
-    <Frame>
-      <img
-        src="/images/postgresql-settings.jpg"
-        alt="PostgreSQL data destination settings"
-      />
-    </Frame>
-  </Step>
-  <Step title="Map columns">
-    Map the sheet columns to the table columns. You can also map custom attributes to table columns.
-
-    <Frame>
-      <img
-        src="/images/map-columns.jpg"
-        alt="Map sheet columns to table columns"
-      />
-    </Frame>
-  </Step>
-</Steps>
-
-Your users' CSV data is then appended directly to the PostgreSQL table.
-
-<Note>
-  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) are pushed as `true` or `false`, which PostgreSQL accepts for boolean columns. SQL Server receives the same values.
-</Note>
+Import CSV files and Excel sheets directly into your PostgreSQL tables. More information [here](/destinations/postgresql).
 
 ## SQL Server
 
-Import CSV files and Excel sheets directly into your SQL Server tables.
-
-<Steps>
-  <Step title="Select SQL Server as the destination">
-    Select **SQL Server Database** as the destination type.
-  </Step>
-  <Step title="Connect your database">
-    Connect your SQL Server database by providing the credentials.
-  </Step>
-  <Step title="Set the target table">
-    Specify the table name where you want the data to be pushed.
-  </Step>
-  <Step title="Test the connection">
-    Click **Test Connection**.
-  </Step>
-  <Step title="Map columns">
-    If the connection is successful, click **Map Columns** and match the sheet template columns to the SQL Server table columns. You can also map custom attributes to table columns.
-  </Step>
-  <Step title="Choose the operation">
-    Select one of the following 2 operations:
-
-    - **Insert**: the importer always pushes the incoming CSV data as new records in the database.
-    - **Upsert**: the importer checks whether the record exists in the database. If it exists, it's updated with the incoming data from the CSV. If it doesn't, a new record is inserted. The record check is based on the index keys specified in the mapping modal.
-
-    <Frame>
-      <img
-        src="/images/unique-1.jpg"
-        alt="Define unique key for upsert operation"
-      />
-    </Frame>
-  </Step>
-</Steps>
-
-<Warning>
-  The **Upsert** operation is significantly slower than the **Insert** operation. With **Insert**, records can be pushed in chunks, whereas **Upsert** processes only one record at a time and requires multiple queries.
-</Warning>
+Import CSV files and Excel sheets directly into your SQL Server tables, with Insert and Upsert operations. More information [here](/destinations/sql-server).
 
 ## MongoDB
 
-Import CSV files or Excel sheets into your MongoDB collections.
-
-<Steps>
-  <Step title="Choose MongoDB as the destination">
-    Select **MongoDB** as your destination type.
-  </Step>
-  <Step title="Connect your database">
-    Enter your MongoDB credentials to establish a secure connection.
-  </Step>
-  <Step title="Set the target collection">
-    Specify the name of the collection where the data should be inserted.
-  </Step>
-  <Step title="Map columns to fields">
-    Match the columns in your sheet to the corresponding fields in your MongoDB collection.
-  </Step>
-  <Step title="Define field data types">
-    Assign appropriate data types to each field to ensure accurate data import.
-  </Step>
-  <Step title="Map custom attributes (optional)">
-    You can also map custom attributes from the CSV to specific fields in your collection.
-  </Step>
-</Steps>
-
-Once set up, all submitted CSV data is automatically inserted into your MongoDB collection.
+Import CSV files or Excel sheets into your MongoDB collections. More information [here](/destinations/mongodb).
 
 ## Google Sheets
 
-Import CSV files and Excel sheets directly into [Google Sheets](https://www.google.co.in/sheets/about/).
+Import CSV files and Excel sheets directly into Google Sheets. More information [here](/destinations/google-sheets).
 
-<Steps>
-  <Step title="Select Google Sheets as the destination">
-    Select **Google Sheets** as the destination type.
-  </Step>
-  <Step title="Connect your Google account">
-    Click the Google button and accept the relevant permissions.
-
-    <Note>
-      The importer requires permission to view the list of Google sheets in your account and to edit sheet data.
-    </Note>
-  </Step>
-  <Step title="Set the target sheet">
-    Provide the Google sheet name, and specify the worksheet name where you want the data to be pushed.
-  </Step>
-  <Step title="Map columns">
-    Map the template columns to the Google sheet columns. You can also map custom attributes to sheet columns.
-  </Step>
-</Steps>
-
-Your users' CSV data is then added directly to the Google sheet.
+<a id="2-upsert" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
 
 ## Airtable
 
-Import CSV files and Excel sheets directly into your [Airtable](https://airtable.com/).
-
-<Steps>
-  <Step title="Select Airtable as the destination">
-    Select **Airtable** as the destination type.
-  </Step>
-  <Step title="Connect your Airtable">
-    Connect your Airtable by providing the credentials.
-
-    <Note>
-      Steps to get the Airtable API Key are described [here](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-). Steps to get the Base ID are described [here](https://support.airtable.com/docs/finding-airtable-ids#finding-ids-in-airtable-api).
-    </Note>
-  </Step>
-  <Step title="Set the target table">
-    Specify the table name where you want the data to be pushed.
-  </Step>
-  <Step title="Map columns">
-    Map the sheet columns to the Airtable table columns. You can also map custom attributes to table columns.
-  </Step>
-</Steps>
-
-Your users' CSV data is then appended directly to the Airtable table.
-
-<Warning>
-  The data fields from Airtable are available in the Map Column modal only if they have **data in the first row**. Add dummy data for each data field in the first row so that they appear in the Map Column modal.
-</Warning>
-
-### Operations
-
-There are 2 operations available for Airtable.
-
-#### 1. Insert
-
-Creates a new row in the table.
-
-#### 2. Upsert
-
-Updates an existing row if a specified value already exists in the table, and inserts a new row if it doesn't. Select the column to check for uniqueness in the **Column Mapping** popup.
-
-<Frame>
-  <img
-    src="/images/upset-airtable.jpg"
-    alt="Select the unique column for an Airtable upsert"
-  />
-</Frame>
-
-- If zero matches are found, a new row is created.
-- If one match is found, that row is updated.
-- **If multiple matches are found, the request fails.**
+Import CSV files and Excel sheets directly into your Airtable tables, with Insert and Upsert operations. More information [here](/destinations/airtable).
 
 ## Bubble
 
@@ -406,3 +111,11 @@ Import user CSV files and Excel sheets to Zapier. More information [here](/desti
 ## Webflow
 
 Import user CSV files and Excel sheets to Webflow. More information [here](/destinations/webflow).
+
+## Xano
+
+Send your users' CSV and Excel data to a Xano API endpoint, using your API group's Swagger spec to map columns to the endpoint's input fields. More information [here](/destinations/xano).
+
+## Xero
+
+Import user CSV files and Excel sheets into your Xero organisation, including contacts, invoices, payments, and bank transactions. More information [here](/destinations/xero).

@@ -116,35 +116,33 @@
         "icon": "database",
         "pages": [
           "destinations",
-          "destinations/private-mode",
-          {
-            "group": "Databases & Backends",
-            "pages": [
-              "destinations/supabase",
-              "destinations/neon",
-              "destinations/hasura",
-              "destinations/google-bigquery"
-            ]
-          },
-          {
-            "group": "No-Code Apps",
-            "pages": [
-              "destinations/bubble-io",
-              "destinations/notion",
-              "destinations/webflow",
-              "destinations/softr"
-            ]
-          },
-          {
-            "group": "Automation & APIs",
-            "pages": [
-              "destinations/zapier",
-              "destinations/n8n",
-              "destinations/pipedream",
-              "destinations/openapi",
-              "destinations/automation-platforms"
-            ]
-          }
+          "destinations/none",
+          "destinations/test-api",
+          "destinations/api-webhook",
+          "destinations/amazon-s3",
+          "destinations/ftp-server",
+          "destinations/mysql",
+          "destinations/postgresql",
+          "destinations/sql-server",
+          "destinations/mongodb",
+          "destinations/google-sheets",
+          "destinations/airtable",
+          "destinations/bubble-io",
+          "destinations/notion",
+          "destinations/zapier",
+          "destinations/webflow",
+          "destinations/hasura",
+          "destinations/softr",
+          "destinations/google-bigquery",
+          "destinations/supabase",
+          "destinations/neon",
+          "destinations/xano",
+          "destinations/xero",
+          "destinations/openapi",
+          "destinations/n8n",
+          "destinations/pipedream",
+          "destinations/automation-platforms",
+          "destinations/private-mode"
         ]
       },
       {
