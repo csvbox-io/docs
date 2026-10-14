@@ -5,7 +5,15 @@ description: "A record of all notable changes made to the application."
 
 This page lists notable CSVbox releases, newest first. Each entry links to the documentation for the feature it adds or changes.
 
-<Update label="October 2026" description="Smart date and number formats, If / Else Builder">
+<Update label="October 2026" description="Checkbox display for Boolean columns, Sheet Tags, smart date and number formats, If / Else Builder">
+  ### Checkbox display for Boolean columns
+
+  **Added**: [Checkbox Display for Boolean Columns](/dashboard-settings/checkbox-boolean-columns). Turn on **Display as checkbox** for a Boolean column to show a checkbox in each cell on the Verify Data screen. Every value is converted to `true` or `false` before it is sent to your destination, so the column never shows a validation error. Also available in the Sheet API as `render_as_checkbox`.
+
+  ### Sheet Tags
+
+  **Added**: [Sheet Tags](/dashboard-settings/sheet-tags). Attach color-coded tags to your sheets to group them, and filter the Sheets page by one or more tags. Add tags with **\+ Tag** on any sheet, and manage them from the **Tags** page. Tags are kept per account and are not copied when a sheet is copied to another team or account.
+
   ### Smart date and number formats
 
   **Added**: [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats). CSVbox now converts dates and numbers written in different regional formats into the format your column expects, and asks the user once when a value such as `04/05/2024` or `1,234` could be read two ways. Turn it on with **Date correction?** under **Import Steps** → **Verify Data**.

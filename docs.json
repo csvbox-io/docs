@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "palm",
+  "theme": "mint",
   "name": "CSVbox Docs",
   "colors": {
     "primary": "#007BFF",
@@ -35,6 +35,8 @@
           "dashboard-settings/add-columns-via-csv",
           "dashboard-settings/validations",
           "dashboard-settings/smart-date-and-number-formats",
+          "dashboard-settings/sheet-tags",
+          "dashboard-settings/checkbox-boolean-columns",
           "dashboard-settings/styling",
           "dashboard-settings/import-analytics",
           "dashboard-settings/split-large-csv",
@@ -271,5 +273,11 @@
   },
   "api": {
     "openapi": "https://app.csvbox.io/docs?api-docs.json"
+  },
+  "metadata": {
+    "timestamp": false
+  },
+  "styling": {
+    "eyebrows": "breadcrumbs"
   }
 }
