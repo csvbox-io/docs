@@ -1,0 +1,41 @@
+---
+title: "MySQL"
+description: "Import CSV files and Excel sheets directly into your MySQL tables."
+---
+
+Import CSV files and Excel sheets directly into your MySQL tables.
+
+<Steps>
+  <Step title="Select MySQL as the destination">
+    Select **MySQL Database** as the destination type.
+  </Step>
+  <Step title="Connect your database">
+    Connect your MySQL database by providing the credentials.
+  </Step>
+  <Step title="Set the target table">
+    Specify the table name where you want the data to be pushed.
+
+    <Frame>
+      <img
+        src="/images/mysql.jpg"
+        alt="CSV to MySQL destination settings"
+      />
+    </Frame>
+  </Step>
+  <Step title="Map columns">
+    Map the sheet columns to the table columns. You can also map custom attributes to table columns.
+
+    <Frame>
+      <img
+        src="/images/map-columns.jpg"
+        alt="Map sheet columns to table columns"
+      />
+    </Frame>
+  </Step>
+</Steps>
+
+Your users' CSV data is then appended directly to the MySQL table.
+
+<Note>
+  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) are pushed as `1` or `0`, which fits a `TINYINT(1)` column.
+</Note>

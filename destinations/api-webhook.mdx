@@ -1,0 +1,79 @@
+---
+title: "API / Webhook"
+sidebarTitle: "API / Webhook"
+description: "Receive uploaded data at your own webhook endpoint as JSON, XML, or FORM Data."
+---
+
+The data is pushed to a webhook endpoint configured in the sheet settings. You can receive the data at your webhook as JSON, XML, or FORM Data.
+
+The data is pushed in chunks of rows. You can configure the number of rows per chunk in the sheet settings.
+
+## Sample JSON POST to your API
+
+```javascript
+[
+  {
+    "import_id": 79418895,
+    "sheet_id": 55,
+    "sheet_name": "Products",
+    "row_number": 1,
+    "total_rows": 5,
+    "env_name": "default", 
+    "original_filename": "products01_24.csv",
+    "row_data": {
+          "Name": "TP-Link TL-WN822N Wireless N300 High Gain USB Adapter",
+          "SKU": "AS-100221",
+          "Price": "33.00",
+          "Quantity": "3",
+          "Image URL": "https://cdn.shopify.com/s/files/1/1491/9536/products/31jJOj1DS5L_070b4893-b7af-482f-8a15-d40f5e06760d.jpg?v=1521803806"
+    },
+    "custom_fields": {
+      "user_id": "1a2b3c4d5e6f",
+      "team_id": "sales2"
+    }
+  },
+  {
+    "import_id": 79418895,
+    "sheet_id": 55,
+    "sheet_name": "Products",
+    "row_number": 2,
+    "total_rows": 5,
+    "env_name": "default", 
+    "original_filename": "products01_24.csv",
+    "row_data":{
+          "Name": "EPower Technology EP-600PM Power Supply 600W ATX12V 2.3 Single 120mm Cooling Fan Bare",
+          "SKU": "AS-103824",
+          "Price": "95.35",
+          "Quantity": "8",
+          "Image URL": "https://cdn.shopify.com/s/files/1/1491/9536/products/71pRC5VjF-L_8f840eb9-6a47-407f-999c-490f7814159d.jpg?v=1521803806"
+        },
+    "custom_fields": {
+      "user_id": "1a2b3c4d5e6f",
+      "team_id": "sales2"
+    }
+  },
+]
+```
+
+<Note>
+  The data arrives as HTTP POST requests. Each request contains an array of rows based on the chunk size defined in the sheet settings. Set the chunk size to 1 to receive one record per HTTP request.
+
+  If the row count is greater than 10,000, the chunk size defaults to 1000. A large row count with a small chunk size increases the processing time significantly.
+</Note>
+
+<Note>
+  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) arrive as a real boolean (`true` or `false`) in JSON and XML, and as the text `"true"` or `"false"` in FORM Data.
+</Note>
+
+<a id="request-type" />
+
+## Request type
+
+The webhook can be called in two modes to push the data to the destination:
+
+- **Sequential**: webhook APIs are invoked in sequential order, one after another.
+- **Parallel** (default): multiple webhook APIs are invoked concurrently, so your application receives chunks of rows in parallel. This reduces overall import time. However, your application needs to manage the order of data based on the `row_number` attribute.
+
+<Tip>
+  To get started quickly, test with [webhook.site](https://webhook.site) to get a webhook URL. For testing on your local machine, use [ngrok](https://ngrok.com/).
+</Tip>

@@ -115,18 +115,29 @@
         "icon": "database",
         "pages": [
           "destinations",
+          "destinations/none",
           "destinations/private-mode",
           {
             "group": "File Storage",
-            "pages": []
+            "pages": [
+              "destinations/amazon-s3",
+              "destinations/ftp-server"
+            ]
           },
           {
             "group": "Spreadsheets",
-            "pages": []
+            "pages": [
+              "destinations/google-sheets",
+              "destinations/airtable"
+            ]
           },
           {
             "group": "Databases & Backends",
             "pages": [
+              "destinations/mysql",
+              "destinations/postgresql",
+              "destinations/sql-server",
+              "destinations/mongodb",
               "destinations/supabase",
               "destinations/neon",
               "destinations/hasura",
@@ -145,6 +156,8 @@
           {
             "group": "Automation & APIs",
             "pages": [
+              "destinations/api-webhook",
+              "destinations/test-api",
               "destinations/zapier",
               "destinations/n8n",
               "destinations/pipedream",

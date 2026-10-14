@@ -1,0 +1,20 @@
+---
+title: "Amazon S3"
+description: "Push uploaded files to the AWS S3 bucket of your choice."
+---
+
+The files your users upload can be pushed to the AWS S3 bucket of your choice. Select **Amazon S3** as the destination type and provide the AWS credentials, the bucket/folder name, and the access policy for storing the files.
+
+<Note>
+  The data is stored as S3 objects named `{{import_id}}_{{user_id}}.csv`, where `user_id` is the custom user attribute you reference via the `setUser` method while installing the importer code. The other 4 custom user attributes are saved as the [user-defined metadata](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingMetadata.html) of the S3 object.
+</Note>
+
+The AWS credentials need the following 3 minimum policies for uploading files to S3:
+
+- `ListBucket`: required for testing the connection.
+- `PutObject`: required to add objects to S3.
+- `PutObjectTagging`: required to add the tags (metadata) to the uploaded objects.
+
+## S3 data type
+
+You can store the data in S3 in either CSV or JSON format.

@@ -1,0 +1,45 @@
+---
+title: "SQL Server"
+description: "Import CSV files and Excel sheets directly into your SQL Server tables."
+---
+
+Import CSV files and Excel sheets directly into your SQL Server tables.
+
+<Steps>
+  <Step title="Select SQL Server as the destination">
+    Select **SQL Server Database** as the destination type.
+  </Step>
+  <Step title="Connect your database">
+    Connect your SQL Server database by providing the credentials.
+  </Step>
+  <Step title="Set the target table">
+    Specify the table name where you want the data to be pushed.
+  </Step>
+  <Step title="Test the connection">
+    Click **Test Connection**.
+  </Step>
+  <Step title="Map columns">
+    If the connection is successful, click **Map Columns** and match the sheet template columns to the SQL Server table columns. You can also map custom attributes to table columns.
+  </Step>
+  <Step title="Choose the operation">
+    Select one of the following 2 operations:
+
+    - **Insert**: the importer always pushes the incoming CSV data as new records in the database.
+    - **Upsert**: the importer checks whether the record exists in the database. If it exists, it's updated with the incoming data from the CSV. If it doesn't, a new record is inserted. The record check is based on the index keys specified in the mapping modal.
+
+    <Frame>
+      <img
+        src="/images/unique-1.jpg"
+        alt="Define unique key for upsert operation"
+      />
+    </Frame>
+  </Step>
+</Steps>
+
+<Warning>
+  The **Upsert** operation is significantly slower than the **Insert** operation. With **Insert**, records can be pushed in chunks, whereas **Upsert** processes only one record at a time and requires multiple queries.
+</Warning>
+
+<Note>
+  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) are pushed as `true` or `false`, which SQL Server accepts for boolean columns.
+</Note>
