@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500" role="img" aria-labelledby="title desc" font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title id="title">CSVbox Standard Mode data flow</title>
+  <desc id="desc">Users upload CSV or Excel files from the client browser to the CSVbox servers. The servers push the data to your system and store a copy in the CSVbox datastore on AWS S3, which is auto-deleted after one month. Your system can optionally read the stored copy at any time during that month. Data is encrypted in transit and at rest.</desc>
+
+  <defs>
+    <marker id="sm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#007BFF"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="500" rx="16" fill="#FFFFFF"/>
+
+  <!-- Columns -->
+  <rect x="16" y="20" width="220" height="400" rx="14" fill="#F9FAFB" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="126" y="52" font-size="17" font-weight="700" fill="#374151" text-anchor="middle">Client browser</text>
+
+  <rect x="340" y="20" width="220" height="400" rx="14" fill="#EFF6FF" stroke="#007BFF" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="450" y="52" font-size="17" font-weight="700" fill="#0B4FA8" text-anchor="middle">CSVbox</text>
+
+  <rect x="664" y="20" width="220" height="400" rx="14" fill="#F0FDF4" stroke="#16A34A" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="774" y="52" font-size="17" font-weight="700" fill="#166534" text-anchor="middle">Your system</text>
+
+  <!-- Users' files -->
+  <rect x="53" y="118" width="170" height="84" rx="10" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2"/>
+  <rect x="47" y="124" width="170" height="84" rx="10" fill="#FFFFFF" stroke="#60A5FA" stroke-width="2"/>
+  <rect x="41" y="130" width="170" height="84" rx="10" fill="#FFFFFF" stroke="#007BFF" stroke-width="2"/>
+  <text x="126" y="167" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">User files</text>
+  <text x="126" y="189" font-size="13.5" fill="#6B7280" text-anchor="middle">CSV, Excel</text>
+
+  <!-- CSVbox servers -->
+  <rect x="365" y="134" width="170" height="76" rx="12" fill="#007BFF"/>
+  <text x="450" y="167" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">CSVbox</text>
+  <text x="450" y="190" font-size="16" fill="#FFFFFF" text-anchor="middle">servers</text>
+
+  <!-- Datastore -->
+  <path d="M380 296 v58 a70 14 0 0 0 140 0 v-58" fill="#E8F2FF" stroke="#007BFF" stroke-width="2"/>
+  <ellipse cx="450" cy="296" rx="70" ry="14" fill="#FFFFFF" stroke="#007BFF" stroke-width="2"/>
+  <text x="450" y="335" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">Datastore</text>
+  <text x="450" y="355" font-size="13.5" fill="#6B7280" text-anchor="middle">AWS S3</text>
+  <text x="450" y="398" font-size="13.5" font-weight="600" fill="#0B4FA8" text-anchor="middle">Copy auto-deleted after 1 month</text>
+
+  <!-- Your system -->
+  <rect x="685" y="130" width="178" height="84" rx="42" fill="#FFFFFF" stroke="#16A34A" stroke-width="2"/>
+  <text x="774" y="167" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">API, app,</text>
+  <text x="774" y="188" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">database</text>
+
+  <!-- Upload -->
+  <line x1="217" y1="172" x2="361" y2="172" stroke="#007BFF" stroke-width="3" marker-end="url(#sm-arrow)"/>
+  <text x="288" y="160" font-size="15" font-weight="600" fill="#1F2937" text-anchor="middle">Upload</text>
+
+  <!-- Push data -->
+  <line x1="535" y1="172" x2="681" y2="172" stroke="#007BFF" stroke-width="3" marker-end="url(#sm-arrow)"/>
+  <text x="612" y="160" font-size="15" font-weight="600" fill="#1F2937" text-anchor="middle">Push data</text>
+
+  <!-- Store a copy -->
+  <line x1="450" y1="210" x2="450" y2="278" stroke="#007BFF" stroke-width="3" marker-end="url(#sm-arrow)"/>
+  <text x="463" y="249" font-size="15" font-weight="600" fill="#1F2937">Store a copy</text>
+
+  <!-- Read the copy (optional) -->
+  <path d="M522 326 H774 V218" fill="none" stroke="#007BFF" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#sm-arrow)"/>
+  <text x="700" y="292" font-size="15" font-weight="600" fill="#1F2937" text-anchor="middle">Read anytime</text>
+  <text x="700" y="350" font-size="13.5" fill="#3B6FB6" text-anchor="middle">Optional</text>
+
+  <!-- Legend -->
+  <g font-size="14.5" fill="#374151">
+    <line x1="150" y1="462" x2="194" y2="462" stroke="#007BFF" stroke-width="3" marker-end="url(#sm-arrow)"/>
+    <text x="204" y="467">Always</text>
+    <line x1="290" y1="462" x2="334" y2="462" stroke="#007BFF" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#sm-arrow)"/>
+    <text x="344" y="467">Optional</text>
+    <text x="470" y="467" font-weight="600" fill="#0B4FA8">Encrypted in transit and at rest</text>
+  </g>
+</svg>

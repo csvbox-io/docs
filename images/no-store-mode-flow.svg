@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500" role="img" aria-labelledby="title desc" font-family="Inter, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title id="title">CSVbox No Store Mode data flow</title>
+  <desc id="desc">Users upload CSV or Excel files from the client browser to the CSVbox servers, which push the data directly to your system. The file data is not stored in the CSVbox datastore; only metadata that describes the import is kept.</desc>
+
+  <defs>
+    <marker id="ns-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#007BFF"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="500" rx="16" fill="#FFFFFF"/>
+
+  <!-- Columns -->
+  <rect x="16" y="20" width="220" height="400" rx="14" fill="#F9FAFB" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="126" y="52" font-size="17" font-weight="700" fill="#374151" text-anchor="middle">Client browser</text>
+
+  <rect x="340" y="20" width="220" height="400" rx="14" fill="#EFF6FF" stroke="#007BFF" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="450" y="52" font-size="17" font-weight="700" fill="#0B4FA8" text-anchor="middle">CSVbox</text>
+
+  <rect x="664" y="20" width="220" height="400" rx="14" fill="#F0FDF4" stroke="#16A34A" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="774" y="52" font-size="17" font-weight="700" fill="#166534" text-anchor="middle">Your system</text>
+
+  <!-- Users' files -->
+  <rect x="53" y="118" width="170" height="84" rx="10" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2"/>
+  <rect x="47" y="124" width="170" height="84" rx="10" fill="#FFFFFF" stroke="#60A5FA" stroke-width="2"/>
+  <rect x="41" y="130" width="170" height="84" rx="10" fill="#FFFFFF" stroke="#007BFF" stroke-width="2"/>
+  <text x="126" y="167" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">User files</text>
+  <text x="126" y="189" font-size="13.5" fill="#6B7280" text-anchor="middle">CSV, Excel</text>
+
+  <!-- CSVbox servers -->
+  <rect x="365" y="134" width="170" height="76" rx="12" fill="#007BFF"/>
+  <text x="450" y="167" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">CSVbox</text>
+  <text x="450" y="190" font-size="16" fill="#FFFFFF" text-anchor="middle">servers</text>
+
+  <!-- Datastore -->
+  <path d="M380 296 v58 a70 14 0 0 0 140 0 v-58" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="6 4"/>
+  <ellipse cx="450" cy="296" rx="70" ry="14" fill="#FFFFFF" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="450" y="335" font-size="16" font-weight="600" fill="#6B7280" text-anchor="middle">Datastore</text>
+  <text x="450" y="355" font-size="13.5" fill="#9CA3AF" text-anchor="middle">AWS S3</text>
+  <text x="450" y="398" font-size="13.5" font-weight="600" fill="#374151" text-anchor="middle">Only import metadata is kept</text>
+
+  <!-- Your system -->
+  <rect x="685" y="130" width="178" height="84" rx="42" fill="#FFFFFF" stroke="#16A34A" stroke-width="2"/>
+  <text x="774" y="167" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">API, app,</text>
+  <text x="774" y="188" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">database</text>
+
+  <!-- Upload -->
+  <line x1="217" y1="172" x2="361" y2="172" stroke="#007BFF" stroke-width="3" marker-end="url(#ns-arrow)"/>
+  <text x="288" y="160" font-size="15" font-weight="600" fill="#1F2937" text-anchor="middle">Upload</text>
+
+  <!-- Push data -->
+  <line x1="535" y1="172" x2="681" y2="172" stroke="#007BFF" stroke-width="3" marker-end="url(#ns-arrow)"/>
+  <text x="612" y="160" font-size="15" font-weight="600" fill="#1F2937" text-anchor="middle">Push data</text>
+
+  <!-- File not stored -->
+  <line x1="450" y1="210" x2="450" y2="280" stroke="#9CA3AF" stroke-width="3" stroke-dasharray="6 5"/>
+  <circle cx="450" cy="245" r="13" fill="#FFFFFF" stroke="#DC2626" stroke-width="2.5"/>
+  <path d="M444 239 L456 251 M456 239 L444 251" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="472" y="250" font-size="15" font-weight="600" fill="#B91C1C">Not stored</text>
+
+  <!-- Legend -->
+  <g font-size="14.5" fill="#374151">
+    <line x1="250" y1="462" x2="294" y2="462" stroke="#007BFF" stroke-width="3" marker-end="url(#ns-arrow)"/>
+    <text x="304" y="467">Data flow</text>
+    <circle cx="440" cy="462" r="11" fill="#FFFFFF" stroke="#DC2626" stroke-width="2.5"/>
+    <path d="M435 457 L445 467 M445 457 L435 467" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="460" y="467">Not stored in CSVbox</text>
+  </g>
+</svg>

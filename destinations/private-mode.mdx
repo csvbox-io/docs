@@ -12,7 +12,7 @@ CSVbox offers three configurations for handling user data. Choose the one that m
 
 ## Standard mode
 
-<Frame caption="Standard Mode"><img src="/images/standard-mode.svg" alt="Standard Mode" /></Frame>
+<Frame caption="Standard Mode"><img src="/images/standard-mode-flow.svg" alt="Standard Mode: files go from the browser to CSVbox servers, which push data to your system and store a copy in the CSVbox datastore" /></Frame>
 
 This is the default configuration. User data is encrypted in transit and at rest. The data is pushed to your system, and a copy of it is stored in the CSVbox database.
 
@@ -20,7 +20,7 @@ The copy is auto-deleted after one month. Your system can access the data from t
 
 ## No store mode
 
-<Frame caption="No Store Mode"><img src="/images/no-store-mode.svg" alt="No Store Mode" /></Frame>
+<Frame caption="No Store Mode"><img src="/images/no-store-mode-flow.svg" alt="No Store Mode: files go from the browser to CSVbox servers, which push data straight to your system without storing the file" /></Frame>
 
 In this mode, the user data isn't stored in the CSVbox database. It's pushed directly to your system. Optionally, the data is also available in the client browser.
 
@@ -41,7 +41,7 @@ To activate this mode, go to your CSVbox dashboard → **Edit Sheet** → **Secu
 
 ## Private mode
 
-<Frame caption="Private Mode"><img src="/images/private-mode.svg" alt="Private Mode" /></Frame>
+<Frame caption="Private Mode"><img src="/images/private-mode-flow.svg" alt="Private Mode: files are processed in the browser and your code sends the data straight to your system, bypassing CSVbox servers" /></Frame>
 
 In Private Mode, the user data doesn't transit CSVbox servers and isn't stored in our databases. The data is processed in the client browser and is available for consumption there. You can then push the data to your system by implementing custom code.
 
