@@ -90,7 +90,6 @@
           {
             "group": "Validation & Transforms",
             "pages": [
-              "advanced-installation/validation-functions",
               "advanced-installation/server-side-validation",
               "advanced-installation/if-else-builder"
             ]
