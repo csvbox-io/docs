@@ -30,7 +30,6 @@
         "icon": "sliders",
         "pages": [
           "dashboard-settings",
-          "dashboard-settings/sheet-options-1",
           "dashboard-settings/add-columns-via-csv",
           "dashboard-settings/validations",
           "dashboard-settings/smart-date-and-number-formats",
@@ -272,6 +271,36 @@
     {
       "source": "/changelog",
       "destination": "/change-log",
+      "permanent": true
+    },
+    {
+      "source": "/dashboard-settings/sheet-options",
+      "destination": "/sheet-settings/columns",
+      "permanent": true
+    },
+    {
+      "source": "/dashboard-settings/sheet-options-1",
+      "destination": "/sheet-settings/import-steps/file-upload",
+      "permanent": true
+    },
+    {
+      "source": "/dashboard-settings/styling",
+      "destination": "/sheet-settings/display",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-installation/unmapped-columns",
+      "destination": "/sheet-settings/import-steps/map-columns",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-installation/ignored-columns",
+      "destination": "/sheet-settings/import-steps/map-columns",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-installation/virtual-columns",
+      "destination": "/sheet-settings/virtual-columns",
       "permanent": true
     }
   ],
