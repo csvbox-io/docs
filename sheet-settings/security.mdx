@@ -3,4 +3,85 @@ title: "Security"
 description: "Control where user data is stored, which domains can embed the importer, and how files are retained."
 ---
 
-Placeholder
+The **Security** tab controls where your users' data is stored, where the importer can run, and how long files are kept. The settings below appear in the same order as in the dashboard.
+
+## Server and data storage location
+
+Select the geographic location of the servers and database for the user data.
+
+Data residency refers to the geographical location where data is stored. The location is usually important for regulatory or policy reasons. You can select the storage location of the data uploaded by your users.
+
+Select the location from the **Server & Data Storage Location** dropdown.
+
+<Frame>
+  <img
+    src="/images/locations.png"
+    alt="Data location dropdown in Privacy & Security settings"
+  />
+</Frame>
+
+The US is the default location. The other option is Europe (Germany). The data uploaded by users then passes through servers and is stored in the database situated in the selected location only.
+
+<Note>
+  You also have the option to not store the data at all.
+</Note>
+
+The long-lived data about the import and the user files isn't covered by the selected location. It mainly consists of supplementary log data that helps with troubleshooting and analyzing the import processes. This data doesn't include any original data from inside the user files.
+
+The image below shows how the data flows if you select Europe as the data residency location.
+
+<Frame>
+  <img
+    src="/images/data-flow-location-1.svg"
+    alt="Data flow with Europe selected as the data residency location"
+  />
+</Frame>
+
+## Authorized domains
+
+Run the importer on select domains only.
+
+Provide a list of authorized _domains/subdomains_ for embedding the importer. The embedded importer works on the whitelisted domains only.
+
+<Frame>
+  <img
+    src="/images/domains.jpg"
+    alt="Authorized Domains setting"
+  />
+</Frame>
+
+- If you don't whitelist any domain, the importer embed works on all domains. This is the default configuration.
+- You can use the `*` wildcard prefix to include any subdomain. A few examples:
+
+| Text | Valid | Invalid |
+| --- | --- | --- |
+| `exampleco.com` | `exampleco.com` | `www.exampleco.com`, `app.exampleco.com` |
+| `www.exampleco.com` | `www.exampleco.com` | `exampleco.com`, `app.exampleco.com` |
+| `app.exampleco.com` | `app.exampleco.com` | `exampleco.com`, `www.exampleco.com` |
+| `*.exampleco.com` | All `exampleco.com` subdomains |  |
+
+If a domain fails validation, the user sees an **Unauthorized domain** error instead of the importer.
+
+## Import links
+
+Import Links let you accept files from your users without a website or an app. Create an import page in a few clicks and share the link with your users, with no code required. It's an alternative to the import button that you set up by adding the integration code.
+
+You can turn the sheet's import link on or off with the **Import Links** setting. If import links are deactivated, users see a **File imports disabled** message instead of the importer.
+
+To find the import link and add custom user attributes to it, see [Code Snippet](/sheet-settings/code-snippet).
+
+## File delete policy
+
+Manage user data storage in CSVbox.
+
+Enable or disable the storage of user-uploaded data in CSVbox. You can decide based on privacy preferences or specific sheet requirements.
+
+<Frame>
+  <img
+    src="/images/image-33.png"
+    alt="File delete policy options"
+  />
+</Frame>
+
+- **Do not store the file**: When enabled, user-uploaded data isn't stored in the CSVbox datastore.
+- **Store data**: Data is stored on CSVbox storage and auto-deleted after one month.

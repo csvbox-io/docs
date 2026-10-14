@@ -3,4 +3,186 @@ title: "Map Columns"
 description: "Settings for the column mapping step."
 ---
 
-Placeholder
+Map Columns is the third tab under **Sheet Settings** → **Import Steps**. On this step, users match the columns in their file to your template fields.
+
+## Skip this step
+
+Skip the Column Mapping screen if there is an exact match of columns.
+
+## Help text
+
+Add help text to the column mapping page, separately for each language. The help text supports Markdown formatting for bold, italics, and links.
+
+## Mapping choice
+
+Let customers map file columns to template fields, or template fields to file columns.
+
+### How it works
+
+By default, on the column mapping screen:
+
+- **Template Fields** are static and displayed on the left.
+- **Uploaded File Columns** appear on the right in a dropdown, so users can map them to the corresponding template fields.
+
+With the **Mapping Choice** option, users can **reverse this mapping direction**. Selecting **Template Fields** as the Mapping Choice flips the layout.
+
+<Frame>
+  <img
+    src="/images/image-36.png"
+    alt="Template Fields selected as the Mapping Choice"
+  />
+</Frame>
+
+**File Columns** become static on the left, while **Template Fields** appear in the dropdown on the right, so users can match them accordingly.
+
+This added flexibility accommodates different file structures and user preferences, making the mapping process more intuitive.
+
+<Warning>
+  The **Template Fields** Mapping Choice is **not compatible** with the [Ignore Columns](#allow-column-to-be-ignored) functionality.
+</Warning>
+
+## Bulk actions dropdown
+
+Show the **Bulk Actions** menu on the Column Mapping screen. It lets users reset all mappings or mark all columns as ignored in a single action, and it includes AI-powered auto column mapping to map file columns to template fields automatically.
+
+<Frame>
+  <img
+    src="/images/image-3.png"
+    alt="Bulk Actions menu on the Column Mapping screen"
+  />
+</Frame>
+
+## Column data preview
+
+Show sample values from the uploaded file on the column mapping screen.
+
+## Accept unmapped columns
+
+Sometimes each of your users has unique columns in their sheets that they want to upload. You don't know these columns beforehand, so you can't configure them as part of the sheet template. They can be discovered only after the user uploads the file, so you can't configure them as [dynamic columns](/advanced-installation/dynamic-columns#basic-installation) either. CSVbox calls these columns **Unmapped Columns**, and you can choose to accept them.
+
+To start accepting data from unmapped columns, select **Yes** for the **Accept Unmapped Columns?** field and save the sheet.
+
+### Receiving data from unmapped columns
+
+Data from unmapped columns is available in the data destinations along with the data from the regular columns. Currently, unmapped columns are supported only by the following destinations:
+
+- [API/Webhook](/destinations#api--webhook)
+- [Amazon S3](/destinations#amazon-s3)
+
+#### API/Webhook data destination
+
+In the API response JSON object, the dynamic data appears inside the `_unmapped_data` object, as shown below. The `_unmapped_data` object is visible only if unmapped columns are activated.
+
+```json
+[
+  {
+    "import_id": 79418895,
+    "sheet_id": 55,
+    "sheet_name": "Products",
+    "row_number": 1,
+    "row_data": {
+          "Name": "TP-Link TL-WN822N Wireless N300 High Gain USB Adapter",
+          "SKU": "AS-100221",
+          "Price": "33.00",
+          "Quantity": "3",
+          "_unmapped_data":{
+		"Barcode": "7832748937489",
+		"_empty_header_1": "TP-Link",
+		"Tags": "electronics, networking"
+           }
+    },
+    "custom_fields": {
+      "user_id": "1002"
+    }
+  }
+]
+```
+
+<Note>
+  If any unmapped column has no header in the user's uploaded file, the app auto-inserts the column names `_empty_header_1`, `_empty_header_2`, and so on.
+</Note>
+
+#### S3 data destination
+
+In the AWS S3 file store, unmapped columns are added as new columns in the uploaded file.
+
+## Allow zero template columns
+
+Accept file submissions without requiring any predefined template columns.
+
+This is useful when you want users to upload files with their own structure, without enforcing a strict column format.
+
+### How it works
+
+- By default, CSVbox requires at least one template column for mapping.
+- Setting **Allow Zero Template Columns** to **Yes** lets users submit files **without any predefined template columns**, providing complete flexibility.
+- You can combine this setting with the [Unmapped Columns](#accept-unmapped-columns) feature, so users can upload files with **any set of columns** without a predefined template structure.
+
+<Frame>
+  <img
+    src="/images/sleekshot-5.png"
+    alt="Allow Zero Template Columns setting"
+  />
+</Frame>
+
+### When to use this feature
+
+- When you want to **fully accommodate user-defined file formats**.
+- When you prefer **not to enforce a rigid template**, giving users the freedom to submit files as they are.
+
+<Note>
+  For this feature to work effectively, set **Allow Unmapped Columns** to **Yes** along with the **Show Unmapped Columns on Validation Screen** selection. This lets users review and verify file columns before submission.
+</Note>
+
+## Allow column to be ignored
+
+Users sometimes want to skip a column during data submission. This is especially useful when you use the importer to update existing data: to avoid overwriting existing columns, users can mark those columns as **Ignored** and the importer skips them.
+
+Select **Yes** for the **Allow Columns to be Ignored** field and save the sheet. The importer then shows the option to mark columns as ignored on the Column Mapping screen.
+
+Columns marked as ignored aren't visible on the Verify Data screen.
+
+<Note>
+  The Ignore Column option isn't available for columns marked as **Required**.
+</Note>
+
+### Default selection
+
+When the **Default Selection** option is set to **Yes**, all unmapped columns default to Ignore Column.
+
+### Data from ignored columns
+
+Ignored columns aren't pushed to any destination. Only the metadata (the list of ignored columns) is pushed to the following destinations:
+
+- [API/Webhook](/destinations#api--webhook)
+- [Zapier](/destinations/zapier)
+- [Client Side](/getting-started/3-receive-data#data-on-the-client-side)
+
+In the API response JSON object, the list of ignored columns appears inside the `ignored_columns` object. The `ignored_columns` object is visible only if ignored columns are activated.
+
+```json
+[
+  {
+    "import_id": 79418895,
+    "sheet_id": 55,
+    "sheet_name": "Products",
+    "row_number": 1,
+    "row_data": {
+          "Name": "TP-Link TL-WN822N Wireless N300 High Gain USB Adapter",
+          "SKU": "AS-100221",
+          "Price": "33.00",
+          "Quantity": "3"        
+    },
+    "custom_fields": {
+      "user_id": "1002"
+    },
+    "ignored_columns": ["qualification", "experience"]
+  }
+]
+```
+
+## User keywords for column mapping
+
+Apart from Matching Keywords, CSVbox auto-maps columns via continuous learning. The importer remembers the columns mapped by users and uses these historical mappings to automatically map columns for new uploads.
+
+You can disable User Keywords-based column mapping completely by selecting **Disable** for **User Keywords for Column Mapping**. To view and delete the keywords already collected, open the column's settings. See [Columns](/sheet-settings/columns#user-keywords).
