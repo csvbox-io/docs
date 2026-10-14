@@ -122,7 +122,7 @@ The column must be formatted as a date. Select a `Date Format` from the dropdown
 | **Unix Timestamp** | X | 1360013296 |
 | **Unix Millisecond Timestamp** | x | 1360013296123 |
 
-For example, the token string `dddd, MMMM Do YYYY, h:mm:ss` requires the date to be in the format `Sunday, February 14th 2010, 3:25:50 pm`.
+For example, the token string `dddd, MMMM Do YYYY, h:mm:ss a` requires the date to be in the format `Sunday, February 14th 2010, 3:25:50 pm`.
 
 <Note>
   If your users upload files from different regions, turn on [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats) to convert dates into your `Date Format` and ask the user when a date such as `04/05/2024` could be read two ways.
@@ -154,7 +154,7 @@ The column must be formatted as a time. Select a `Time Format` from the dropdown
 |  | Z | -07:00 -06:00 ... +06:00 +07:00 |
 |  | ZZ | -0700 -0600 ... +0600 +0700 |
 | **Unix Timestamp** | X | 1360013296 |
-| **Unix Millisecond Timestamp** | x | 360013296123 |
+| **Unix Millisecond Timestamp** | x | 1360013296123 |
 
 ### IANA timezone
 
@@ -365,7 +365,7 @@ To create conditional lists using the example above:
        {"value": "USA", "display_label": "USA", "dependents": [
           {"value": "ny", "display_label": "New York"},
           {"value": "ch", "display_label": "Chicago"},
-          {"value": "se", "display_label": "Seatle"},
+          {"value": "se", "display_label": "Seattle"},
           {"value": "mi", "display_label": "Miami"}
        ]},
        {"value": "Canada", "display_label": "Canada", "dependents": [

@@ -126,7 +126,7 @@ Two prompts hand schema generation to your AI client's own model instead of the 
 
 Generation resolves through three tiers, in order:
 
-1. **Server LLM**: if `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` is set, the server calls the model directly. Uses your own API usage.
+1. **Server LLM**: if `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` is set, the server calls the model directly. Usage is billed to your own API key.
 2. **MCP prompt**: with no server key, the host client (Cursor, Claude Desktop, Cline, etc.) runs generation with its own model, then calls `validate_schema` and `create_sheet`. Free.
 3. **None**: with no LLM anywhere, the server returns a structured error pointing at the MCP prompt. The CSVbox API is never called.
 

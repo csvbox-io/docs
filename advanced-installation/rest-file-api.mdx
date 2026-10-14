@@ -13,14 +13,15 @@ curl --location --request POST 'https://api.csvbox.io/1.1/file' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "import": {
-        "public_file_url": "https: //some-domain.com/file/3434as.csv",
+        "public_file_url": "https://some-domain.com/file/3434as.csv",
         "sheet_license_key": "jhkjsahjkhkjhkjhkjasdasd",
         "user": {
-            "user_id": "1a2b3c4d5e6f",           
+            "user_id": "1a2b3c4d5e6f"           
         },
          "options": {           
             "has_header": 1
         }    
+    }
 }'
 ```
 
@@ -92,7 +93,7 @@ HTTP/1.1 200 OK
     "has_header": 1,
     "auto_map": true
   },
-  "dynamic_olumns": [
+  "dynamic_columns": [
      {
       "column_name": "qualification",
       "display_label": "Highest Qualification",
@@ -131,7 +132,7 @@ curl --location --request POST 'https://api.csvbox.io/1.1/file' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "import": {
-        "public_file_url": "https: //some-domain.com/admin/download-csv/UXOR2MphpEu2sSAIISpY7AKmOIzAKygLNy8eviEr",
+        "public_file_url": "https://some-domain.com/admin/download-csv/UXOR2MphpEu2sSAIISpY7AKmOIzAKygLNy8eviEr",
         "sheet_license_key": "jhkjsahjkhkjhkjhkjasdasd",
         "user": {
             "user_id": "1a2b3c4d5e6f",
@@ -140,7 +141,8 @@ curl --location --request POST 'https://api.csvbox.io/1.1/file' \
         },
         "options": {
             "max_rows": 150,
-            "has_header": 1
+            "has_header": 1,
+            "auto_map": true
         },
         "dynamic_columns": [
             {
@@ -163,13 +165,13 @@ curl --location --request POST 'https://api.csvbox.io/1.1/file' \
                 "type": "number",
                 "validators": {
                     "min_value": 0,
-                    "max_value": 100,
-                    "auto_map": true
+                    "max_value": 100
                 },
                 "required": false
             }
         ]
-    }'
+    }
+}'
 ```
 
 ```javascript jQuery
@@ -181,7 +183,7 @@ var settings = {
     "x-csvbox-api-key": "CSBxRLHgIZv3bqMlrJiVKXhKwtcHSv",
     "Content-Type": "application/json"
   },
-  "data": "{\r\n    \"import\": {\r\n        \"public_file_url\": \"https: //some-domain.com/admin/download-csv/UXOR2MphpEu2sSAIISpY7AKmOIzAKygLNy8eviEr\",\r\n        \"sheet_license_key\": \"jhkjsahjkhkjhkjhkjasdasd\",\r\n        \"user\": {\r\n            \"user_id\": \"1a2b3c4d5e6f\",\r\n            \"team_id\": \"sales2\",\r\n            \"permissionLevel\": \"admin\"\r\n        },\r\n        \"options\": {\r\n            \"max_rows\": 150,\r\n            \"has_header\": \"1\"\r\n        },\r\n        \"dynamic_columns\": [\r\n            {\r\n                \"column_name\": \"qualification\",\r\n                \"display_label\": \"HighestQualification\",\r\n                \"info_hint\": \"Whatisyourhighesteducationaldegree\",\r\n                \"matching_keywords\": \"degree,   education\",\r\n                \"type\": \"text\",\r\n                \"validators\": {\r\n                    \"min_length\": 2,\r\n                    \"max_length\": 50\r\n                },\r\n                \"required\": true\r\n            },\r\n            {\r\n                \"column_name\": \"experience\",\r\n                \"display_label\": \"WorkExperience\",\r\n                \"info_hint\": \"Yearsofworkexperience\",\r\n                \"matching_keywords\": \"\",\r\n                \"type\": \"number\",\r\n                \"validators\": {\r\n                    \"min_value\": 0,\r\n                    \"max_value\": 100\r\n                },\r\n                \"required\": false\r\n            }\r\n        ]\r\n    }",
+  "data": "{\r\n    \"import\": {\r\n        \"public_file_url\": \"https://some-domain.com/admin/download-csv/UXOR2MphpEu2sSAIISpY7AKmOIzAKygLNy8eviEr\",\r\n        \"sheet_license_key\": \"jhkjsahjkhkjhkjhkjasdasd\",\r\n        \"user\": {\r\n            \"user_id\": \"1a2b3c4d5e6f\",\r\n            \"team_id\": \"sales2\",\r\n            \"permissionLevel\": \"admin\"\r\n        },\r\n        \"options\": {\r\n            \"max_rows\": 150,\r\n            \"has_header\": \"1\"\r\n        },\r\n        \"dynamic_columns\": [\r\n            {\r\n                \"column_name\": \"qualification\",\r\n                \"display_label\": \"HighestQualification\",\r\n                \"info_hint\": \"Whatisyourhighesteducationaldegree\",\r\n                \"matching_keywords\": \"degree,   education\",\r\n                \"type\": \"text\",\r\n                \"validators\": {\r\n                    \"min_length\": 2,\r\n                    \"max_length\": 50\r\n                },\r\n                \"required\": true\r\n            },\r\n            {\r\n                \"column_name\": \"experience\",\r\n                \"display_label\": \"WorkExperience\",\r\n                \"info_hint\": \"Yearsofworkexperience\",\r\n                \"matching_keywords\": \"\",\r\n                \"type\": \"number\",\r\n                \"validators\": {\r\n                    \"min_value\": 0,\r\n                    \"max_value\": 100\r\n                },\r\n                \"required\": false\r\n            }\r\n        ]\r\n    }\r\n}",
 };
 
 $.ajax(settings).done(function (response) {
@@ -205,7 +207,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_POSTFIELDS =>'{
     "import": {
-        "public_file_url": "https: //some-domain.com/admin/download-csv/UXOR2MphpEu2sSAIISpY7AKmOIzAKygLNy8eviEr",
+        "public_file_url": "https://some-domain.com/admin/download-csv/UXOR2MphpEu2sSAIISpY7AKmOIzAKygLNy8eviEr",
         "sheet_license_key": "jhkjsahjkhkjhkjhkjasdasd",
         "user": {
             "user_id": "1a2b3c4d5e6f",
@@ -242,7 +244,8 @@ curl_setopt_array($curl, array(
                 "required": false
             }
         ]
-    }',
+    }
+}',
   CURLOPT_HTTPHEADER => array(
     'x-csvbox-api-key: CSBxRLHgIZv3bqMlrJiVKXhKwtcHSv',
     'Content-Type: application/json'
@@ -257,7 +260,7 @@ echo $response;
 
 ```javascript NodeJS
 var axios = require('axios');
-var data = '{\r\n    "import": {\r\n        "public_file_url": "https: //some-domain.com/admin/download-csv/UXOR2MphpEu2sSAIISpY7AKmOIzAKygLNy8eviEr",\r\n        "sheet_license_key": "jhkjsahjkhkjhkjhkjasdasd",\r\n        "user": {\r\n            "user_id": "1a2b3c4d5e6f",\r\n            "team_id": "sales2",\r\n            "permissionLevel": "admin"\r\n        },\r\n        "options": {\r\n            "max_rows": 150,\r\n            "has_header": "1"\r\n        },\r\n        "dynamic_columns": [\r\n            {\r\n                "column_name": "qualification",\r\n                "display_label": "HighestQualification",\r\n                "info_hint": "Whatisyourhighesteducationaldegree",\r\n                "matching_keywords": "degree,   education",\r\n                "type": "text",\r\n                "validators": {\r\n                    "min_length": 2,\r\n                    "max_length": 50\r\n                },\r\n                "required": true\r\n            },\r\n            {\r\n                "column_name": "experience",\r\n                "display_label": "WorkExperience",\r\n                "info_hint": "Yearsofworkexperience",\r\n                "matching_keywords": "",\r\n                "type": "number",\r\n                "validators": {\r\n                    "min_value": 0,\r\n                    "max_value": 100\r\n                },\r\n                "required": false\r\n            }\r\n        ]\r\n    }';
+var data = '{\r\n    "import": {\r\n        "public_file_url": "https://some-domain.com/admin/download-csv/UXOR2MphpEu2sSAIISpY7AKmOIzAKygLNy8eviEr",\r\n        "sheet_license_key": "jhkjsahjkhkjhkjhkjasdasd",\r\n        "user": {\r\n            "user_id": "1a2b3c4d5e6f",\r\n            "team_id": "sales2",\r\n            "permissionLevel": "admin"\r\n        },\r\n        "options": {\r\n            "max_rows": 150,\r\n            "has_header": "1"\r\n        },\r\n        "dynamic_columns": [\r\n            {\r\n                "column_name": "qualification",\r\n                "display_label": "HighestQualification",\r\n                "info_hint": "Whatisyourhighesteducationaldegree",\r\n                "matching_keywords": "degree,   education",\r\n                "type": "text",\r\n                "validators": {\r\n                    "min_length": 2,\r\n                    "max_length": 50\r\n                },\r\n                "required": true\r\n            },\r\n            {\r\n                "column_name": "experience",\r\n                "display_label": "WorkExperience",\r\n                "info_hint": "Yearsofworkexperience",\r\n                "matching_keywords": "",\r\n                "type": "number",\r\n                "validators": {\r\n                    "min_value": 0,\r\n                    "max_value": 100\r\n                },\r\n                "required": false\r\n            }\r\n        ]\r\n    }\r\n}';
 
 var config = {
   method: 'post',
@@ -303,7 +306,7 @@ curl --location --request POST 'https://api.csvbox.io/1.1/file' \
 -F 'import={
         "sheet_license_key": "jhkjsahjkhkjhkjhkjasdasd",
         "user": {
-            "user_id": "1a2b3c4d5e6f",           
+            "user_id": "1a2b3c4d5e6f"           
         },
          "options": {           
              "max_rows": 150,
@@ -315,7 +318,7 @@ curl --location --request POST 'https://api.csvbox.io/1.1/file' \
 
 ## Rate limits
 
-The REST Admin API supports a limit of 30 requests per minute. This allotment replenishes at a rate of 2 requests per second. 
+The REST File API supports a limit of 30 requests per minute. This allotment replenishes at a rate of 2 requests per second. 
 
 Past the limit, the API returns a `429 Too Many Requests` error.
 
@@ -423,5 +426,5 @@ The following additional configuration options are available with the File API.
 ### auto_map
 
 - **Type**: Boolean
-- **Default**: Null
-- **Description**: Enable automatic column mapping in cases where an exact match is not found. The `auto_map` default value is `false`.
+- **Default**: `false`
+- **Description**: Enable automatic column mapping in cases where an exact match is not found.

@@ -170,8 +170,8 @@ Embed the CSVbox importer in your app with a short code snippet. Go to the **Cod
           [licenseKey]="licenseKey"
           [user]="user"
           [dynamicColumns]="dynamicColumns"
-          [imported]="Imported.bind(this)"
-          class=“csvbox-btn”
+          [imported]="imported.bind(this)"
+          class="csvbox-btn"
           >
           Import
         </csvbox-button>
@@ -183,6 +183,7 @@ Embed the CSVbox importer in your app with a short code snippet. Go to the **Cod
             border-radius: 3px;
           }
       `],
+    })
     export class AppComponent {
         //...
     }
@@ -347,7 +348,7 @@ Once the user uploads a file, the importer returns the status of the import alon
     "import_id": 79418895,
     "sheet_id": 575,
     "sheet_name": "Products Import",
-    "destination_type": "webhook"
+    "destination_type": "webhook",
     "row_count": 100,
     "row_success": 98,
     "row_fail": 2,
@@ -393,18 +394,19 @@ You can write custom code to handle the success or failure conditions on the cli
     ```
   </Tab>
   <Tab title="React">
-    Pass additional options as an object to the `user` property of the `CSVBoxButton` component. The custom user attributes are pushed to your destination along with the uploaded data.
-
-    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
+    The `onImport` property of the `CSVBoxButton` component provides access to the `result` and `data` variables.
 
     ```javascript
-      user={{
-                  user_id: "1a2b3c4d5e6f",
-                  team_id: "sales2",
-                  isAuthenticated: "true",
-                  permissionLevel: "admin",
-                  email: "abc@example.com"
-      }}
+    onImport={(result, data) => {
+      if (result) {
+        console.log("success");
+        console.log(data.row_success + " rows uploaded");
+        //custom code
+      } else {
+        console.log("fail");
+        //custom code
+      }
+    }}
     ```
   </Tab>
   <Tab title="Angular">
