@@ -265,6 +265,30 @@
       "source": "/changelog",
       "destination": "/change-log",
       "permanent": true
+    },
+    {
+      "source": "/advanced-installation/csvbox-mcp-server",
+      "destination": "/advanced-installation/mcp-server"
+    },
+    {
+      "source": "/dashboard-settings/advanced-options",
+      "destination": "/dashboard-settings/sheet-options-1"
+    },
+    {
+      "source": "/validations",
+      "destination": "/dashboard-settings/validations"
+    },
+    {
+      "source": "/getting-started/add-columns-via-csv",
+      "destination": "/dashboard-settings/add-columns-via-csv"
+    },
+    {
+      "source": "/getting-started/dynamic-columns",
+      "destination": "/advanced-installation/dynamic-columns"
+    },
+    {
+      "source": "/advanced-installation/multipart-uploads",
+      "destination": "/advanced-installation/rest-file-api#direct-file-upload"
     }
   ],
   "interaction": {
