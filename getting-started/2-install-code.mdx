@@ -445,22 +445,22 @@ These additional configuration options are available with the CSVbox importer.
 
 | Option | Type | Default | What it does |
 | --- | --- | --- | --- |
-| <span id="max_rows" />`max_rows` | `number` | `null` | Maximum number of data rows a single file can import. Headers are not counted: a file with 101 rows whose first row is the header has 100 data rows. |
-| <span id="max_rows_allow_submit" />`max_rows_allow_submit` | `boolean` | `true` | When a file has more rows than `max_rows`: if `true`, the user can submit the first `max_rows` rows; if `false`, the user can't submit any rows. |
-| <span id="max_rows_custom_message" />`max_rows_custom_message` | `string` | `null` | Custom message shown when a file has more rows than `max_rows`. Shown only when `max_rows_allow_submit` is `false`. |
-| <span id="min_rows" />`min_rows` | `number` | `null` | Minimum number of rows required for a single upload. |
-| <span id="min_rows_custom_message" />`min_rows_custom_message` | `string` | `null` | Custom message shown when a file has fewer rows than `min_rows`. |
-| <span id="language" />`language` | `string` | `null` | Importer frontend language. Overrides the default language set in the CSVbox dashboard. See [supported language codes](#supported-language-codes). |
-| <span id="allow_invalid" />`allow_invalid` | `boolean` | `0` | Whether users can submit the file even if it has validation errors. |
-| <span id="request_headers" />`request_headers` | `object` | `null` | Additional headers passed with each HTTP request, as `{ "Header-Name": "value" }` pairs. |
-| <span id="dynamic_list_request_headers" />`dynamic_list_request_headers` | `object` | `null` | Additional headers passed with each request to the [dynamic list API](/dashboard-settings/validations#dynamic-list). |
-| <span id="sample_template_url" />`sample_template_url` | `string` | `null` | URL from which end users download the sample CSV file. Use with `sample_template_button_text` to give each user a customized sample file. |
-| <span id="sample_template_button_text" />`sample_template_button_text` | `string` | `null` | Text on the button that downloads the sample CSV file. |
-| <span id="target_file_name" />`target_file_name` | `string` | `null` | Name of the file pushed to your destination. Applies only to the S3, FTP Server, and Google Sheets destinations. |
-| <span id="upload_file_url" />`upload_file_url` | `string` | `null` | URL of a file to preload into the importer, so users don't have to upload one. The importer loads the data when the user clicks **Import**. |
-| <span id="upload_file_worksheet_name" />`upload_file_worksheet_name` | `string` | `null` | Worksheet to load when the `upload_file_url` file has multiple tabs. |
-| <span id="theme" />`theme` | `string` | `null` | Theme applied at runtime: `light`, `light-custom`, `dark`, or `dark-custom`. If not set, the theme from the sheet dashboard is used. |
-| <span id="default_header_row" />`default_header_row` | `number` | `1` | Row auto-selected as the header on the **Header Selection** page. Rows are 1-indexed. |
+| <span id="max_rows" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`max_rows` | `number` | `null` | Maximum number of data rows a single file can import. Headers are not counted: a file with 101 rows whose first row is the header has 100 data rows. |
+| <span id="max_rows_allow_submit" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`max_rows_allow_submit` | `boolean` | `true` | When a file has more rows than `max_rows`: if `true`, the user can submit the first `max_rows` rows; if `false`, the user can't submit any rows. |
+| <span id="max_rows_custom_message" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`max_rows_custom_message` | `string` | `null` | Custom message shown when a file has more rows than `max_rows`. Shown only when `max_rows_allow_submit` is `false`. |
+| <span id="min_rows" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`min_rows` | `number` | `null` | Minimum number of rows required for a single upload. |
+| <span id="min_rows_custom_message" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`min_rows_custom_message` | `string` | `null` | Custom message shown when a file has fewer rows than `min_rows`. |
+| <span id="language" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`language` | `string` | `null` | Importer frontend language. Overrides the default language set in the CSVbox dashboard. See [supported language codes](#supported-language-codes). |
+| <span id="allow_invalid" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`allow_invalid` | `boolean` | `0` | Whether users can submit the file even if it has validation errors. |
+| <span id="request_headers" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`request_headers` | `object` | `null` | Additional headers passed with each HTTP request, as `{ "Header-Name": "value" }` pairs. |
+| <span id="dynamic_list_request_headers" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`dynamic_list_request_headers` | `object` | `null` | Additional headers passed with each request to the [dynamic list API](/dashboard-settings/validations#dynamic-list). |
+| <span id="sample_template_url" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`sample_template_url` | `string` | `null` | URL from which end users download the sample CSV file. Use with `sample_template_button_text` to give each user a customized sample file. |
+| <span id="sample_template_button_text" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`sample_template_button_text` | `string` | `null` | Text on the button that downloads the sample CSV file. |
+| <span id="target_file_name" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`target_file_name` | `string` | `null` | Name of the file pushed to your destination. Applies only to the S3, FTP Server, and Google Sheets destinations. |
+| <span id="upload_file_url" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`upload_file_url` | `string` | `null` | URL of a file to preload into the importer, so users don't have to upload one. The importer loads the data when the user clicks **Import**. |
+| <span id="upload_file_worksheet_name" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`upload_file_worksheet_name` | `string` | `null` | Worksheet to load when the `upload_file_url` file has multiple tabs. |
+| <span id="theme" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`theme` | `string` | `null` | Theme applied at runtime: `light`, `light-custom`, `dark`, or `dark-custom`. If not set, the theme from the sheet dashboard is used. |
+| <span id="default_header_row" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`default_header_row` | `number` | `1` | Row auto-selected as the header on the **Header Selection** page. Rows are 1-indexed. |
 
 <Accordion title="Supported language codes">
   | Value | Language |
@@ -570,11 +570,11 @@ These additional importer events and properties are available.
 
 | Event | Angular name | Arguments | When it fires |
 | --- | --- | --- | --- |
-| <span id="onready" />`onReady` | `importerReady` | None | The importer is initialized and ready for use. Users can then click the **Import** button to open the importer modal dialog. |
-| <span id="onloadstart" />`onLoadStart` | `loadStarted` | None | The importer iframe starts loading. In vanilla JavaScript, it fires only when [Lazy Load](#lazy-load) is activated; without Lazy Load, the iframe starts loading as soon as the importer is initialized. |
-| <span id="onclose" />`onClose` | `closed` | None | The importer is closed. |
-| <span id="onsubmit" />`onSubmit` | `submitted` | `data` (object) | The user clicks **Submit** to upload the validated file. `data` contains metadata about the import; see the [sample](#onsubmit-data-object-sample) below. |
-| <span id="onimport" />`onImport` | `imported` | `result` (boolean), `data` (object) | All the data is pushed to the destination. `result` is `true` when the import succeeds and `false` when it fails; `data` contains metadata about the import. |
+| <span id="onready" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`onReady` | `importerReady` | None | The importer is initialized and ready for use. Users can then click the **Import** button to open the importer modal dialog. |
+| <span id="onloadstart" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`onLoadStart` | `loadStarted` | None | The importer iframe starts loading. In vanilla JavaScript, it fires only when [Lazy Load](#lazy-load) is activated; without Lazy Load, the iframe starts loading as soon as the importer is initialized. |
+| <span id="onclose" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`onClose` | `closed` | None | The importer is closed. |
+| <span id="onsubmit" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`onSubmit` | `submitted` | `data` (object) | The user clicks **Submit** to upload the validated file. `data` contains metadata about the import; see the [sample](#onsubmit-data-object-sample) below. |
+| <span id="onimport" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />`onImport` | `imported` | `result` (boolean), `data` (object) | All the data is pushed to the destination. `result` is `true` when the import succeeds and `false` when it fails; `data` contains metadata about the import. |
 
 <Accordion title="onSubmit data object sample">
   ```json
