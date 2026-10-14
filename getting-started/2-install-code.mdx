@@ -441,28 +441,7 @@ You can write custom code to handle the success or failure conditions on the cli
 
 ## Options
 
-These additional configuration options are available with the CSVbox importer.
-
-| Option | Type | Default | What it does |
-| --- | --- | --- | --- |
-| [`max_rows`](#max_rows) | `number` | `null` | Maximum data rows per file |
-| [`max_rows_allow_submit`](#max_rows_allow_submit) | `boolean` | `true` | Allow submitting the first `max_rows` rows when the file is larger |
-| [`max_rows_custom_message`](#max_rows_custom_message) | `string` | `null` | Message shown when a file exceeds `max_rows` |
-| [`min_rows`](#min_rows) | `number` | `null` | Minimum data rows per file |
-| [`min_rows_custom_message`](#min_rows_custom_message) | `string` | `null` | Message shown when a file is below `min_rows` |
-| [`language`](#language) | `string` | `null` | Importer language, overriding the dashboard setting |
-| [`allow_invalid`](#allow_invalid) | `boolean` | `0` | Allow submitting rows that have validation errors |
-| [`request_headers`](#request_headers) | `object` | `null` | Extra headers sent with each HTTP request |
-| [`dynamic_list_request_headers`](#dynamic_list_request_headers) | `object` | `null` | Extra headers sent with each Dynamic List API request |
-| [`sample_template_url`](#sample_template_url) | `string` | `null` | URL of the sample CSV file users can download |
-| [`sample_template_button_text`](#sample_template_button_text) | `string` | `null` | Label of the sample file download button |
-| [`target_file_name`](#target_file_name) | `string` | `null` | Name of the file pushed to S3, FTP, or Google Sheets |
-| [`upload_file_url`](#upload_file_url) | `string` | `null` | URL of a file to preload into the importer |
-| [`upload_file_worksheet_name`](#upload_file_worksheet_name) | `string` | `null` | Worksheet to load from a multi-tab `upload_file_url` file |
-| [`theme`](#theme) | `string` | `null` | Importer theme applied at runtime |
-| [`default_header_row`](#default_header_row) | `number` | `1` | Row preselected as the header |
-
-The following examples set several of these options:
+These additional configuration options are available with the CSVbox importer. Pass them when you initialize the importer, as in the following examples:
 
 <Tabs>
   <Tab title="JavaScript">
