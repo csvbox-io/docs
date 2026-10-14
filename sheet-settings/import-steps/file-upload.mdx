@@ -1,0 +1,213 @@
+---
+title: "File Upload"
+description: "Settings for the first import step: language, file types, size limits, upload options, and Excel formatting."
+---
+
+File Upload is the first tab under **Sheet Settings** → **Import Steps**. The settings below appear in the same order as in the dashboard.
+
+## Default language
+
+This is the language for the importer frontend. CSVbox supports many languages, including English, German, French, Spanish, Hindi, Japanese, and Chinese (Simplified and Traditional). You can also view the translated texts for all supported languages and submit suggestions for changes.
+
+You can also set the language at runtime with the [`language`](/getting-started/2-install-code#options) option when you initialize the importer.
+
+## Title and help text
+
+Set a **Title** and **Help Text** for the upload page, separately for each language. The help text supports Markdown formatting for bold, italics, and links.
+
+## Sample CSV template
+
+Upload a sample file that users can download to see the format your importer expects. To give each user a different sample file, use the [`sample_template_url`](/getting-started/2-install-code#sample_template_url) and [`sample_template_button_text`](/getting-started/2-install-code#sample_template_button_text) options instead.
+
+## Split large files
+
+Automatically split large CSV files into smaller parts for faster, more reliable imports with improved browser performance.
+
+| Setting | Options | Default |
+| --- | --- | --- |
+| Split Large Files | Yes / No | No |
+
+When it's enabled, a CSV file that exceeds the **Rows per Import** limit is processed in parts, and each part reuses the same column mappings. When it's disabled, the entire CSV file is processed as a single upload.
+
+See [Split Large CSV](/dashboard-settings/split-large-csv) for the rows per import limit, user confirmation between parts, and how multipart imports appear on the Imports page.
+
+## File size limit
+
+The maximum file size, in MB, that a user can upload.
+
+## Custom validation message
+
+Set a custom message in each language. The message supports Markdown formatting for bold, italics, and links.
+
+## Allowed file types
+
+Choose which file types users can upload: **CSV**, **XLS**, and **XLSX**.
+
+With [AI Document Import](/dashboard-settings/ai-document-import), you can also accept **PDF**, **DOCX**, and image files (`.jpg`, `.jpeg`, `.png`) and extract tables from them using AI.
+
+### Page count limit
+
+The maximum number of pages per import for AI document imports. Leave it blank for no limit.
+
+### Skip tables
+
+Skip tables from an AI import by row or column count, using **Min Rows**, **Max Rows**, **Min Cols**, and **Max Cols**. Leave any field blank to ignore that condition.
+
+### Document metadata fields
+
+Define which document metadata fields to capture on each import, across any supported file type (PDF, DOCX, images). Captured values are available as `csvbox.metadata` in virtual columns, validation functions, and data transform functions. See [Document Metadata Fields](/dashboard-settings/ai-document-import/document-metadata-fields).
+
+## Show copy-paste data option
+
+Show or hide the option that lets users paste data instead of uploading a file. Hide it when you want users to upload files only.
+
+## Excel output type
+
+Choose how numeric values from Excel files are imported:
+
+- **Formatted**: imports values as shown in Excel, such as `$1,200.00` or `15%`.
+- **Raw**: strips the formatting and imports the core value, such as `1200` or `0.15`.
+
+See [Formatting in Excel files](#formatting-in-excel-files) below.
+
+## Default delimiter
+
+Set the default delimiter for manual data entry: **Auto**, **Comma**, **Tab**, **Semicolon**, **Pipe**, **Space**, **Colon**, or **Equals Sign**.
+
+## Show file upload box
+
+Enable or disable the ability to upload spreadsheet files.
+
+You may need to disable user file uploads and allow only copy-pasting of data in CSVbox. In that case, hide the File Upload Box and show users only the Copy-Paste data option.
+
+To hide the File Upload Box, select **No** for the **Show File Upload Box?** option.
+
+## Allow worksheet selection
+
+Allow users to select a worksheet for upload.
+
+An uploaded Excel file can contain multiple worksheets. You can let users select which worksheet to upload.
+
+To activate worksheet selection, select **Yes** for the **Allow Worksheet Selection** option.
+
+If **Allow Worksheet Selection** is set to **No**, the first worksheet is picked by default.
+
+## Show import description
+
+Allow users to provide a name or description of the file they're uploading.
+
+File names like `contacts.csv` or `Import 123.xlsx` lack context. More descriptive labels such as "Texas Customers" or "Parts from 2022 Catalog" improve the clarity and usefulness of the import. When enabled, the description input box appears after the user selects the file.
+
+The description is pushed along with the row data to the destination, in the `import_description` property:
+
+```text
+    "import_id": 79418895,
+    "sheet_id": 575,
+    "sheet_name": "Products234248",
+    "import_description": "Product Catalogue Jan 2024", 
+    "env_name": "default", 
+    "destination_type": "webhook",
+```
+
+The following destinations are supported:
+
+- API/Webhook
+- Zapier
+- [Data at Client](/getting-started/3-receive-data#data-on-the-client-side)
+- [Import Complete Webhook](/getting-started/3-receive-data#import-complete-webhook)
+
+To enable the description input box, select **Yes** for **Show import description option?**.
+
+<Frame>
+  <img
+    src="/images/import-description-option.jpg"
+    alt="Show import description option"
+  />
+</Frame>
+
+<Note>
+  This feature is turned off by default. The description requires a minimum of 3 characters and a maximum of 100 characters.
+</Note>
+
+## Formatting in Excel files
+
+Handle Excel file formatting for dates, times, and numbers.
+
+When importing data from Excel files, you may run into unexpected issues because of the way Excel internally stores and formats values, especially **Dates**, **Times**, and **Numbers**. Unlike CSV files, Excel files can retain formatting, formulas, and cell types, which can lead to inconsistencies or misinterpretation during import.
+
+<Note>
+  To handle dates and numbers written in different regional styles in an uploaded file (for example, a day-first `04/05/2024` or a European `1.234,56`), see [Smart Date and Number Formats](/dashboard-settings/smart-date-and-number-formats).
+</Note>
+
+### Date formatting issues in Excel
+
+Excel stores dates in one of two ways:
+
+- **As formatted text**: e.g., `"03/04/2024"`
+- **As numeric serial values**: e.g., `45025`, which represents the number of days since January 1, 1900.
+
+This dual nature can lead to problems during import, especially with international date formats. For example:
+
+- `"03/04/2024"` might be **March 4** in the U.S. (MM/DD/YYYY)
+- ...or **April 3** in Europe (DD/MM/YYYY)
+
+If Excel stores the date as a number (`45025`) and the importer misinterprets the format, the final result could be completely off. To address this, CSVbox lets you explicitly define how Excel date values are interpreted.
+
+#### Date handling options
+
+- **Default**: Uses Excel's built-in logic to interpret the cell as a date. Best for files with consistent formatting and locale.
+- **MM/DD/YYYY**: Forces interpretation using the **Month-Day-Year** format. Example: `"03/04/2024"` → March 4, 2024
+- **DD/MM/YYYY**: Forces interpretation using the **Day-Month-Year** format. Example: `"03/04/2024"` → April 3, 2024
+- **YYYY-MM-DD** and **YYYY/MM/DD**: Force interpretation using the **Year-Month-Day** format.
+- **Custom**: Define a custom format like `YYYY-MM-DD`, `DD-MMM-YYYY`, or any other pattern based on how your Excel file stores the date. Example: `"12-Mar-2024"` → use custom format `DD-MMM-YYYY`
+
+<Tip>
+  If your dates are inconsistently formatted or include a mix of text and numeric formats, consider cleaning them in Excel first, or use the **Custom** option for better accuracy.
+</Tip>
+
+### Number formatting issues in Excel
+
+Excel often applies formatting to numeric values that changes how they appear:
+
+- A raw value of `0.15` could be displayed as `15%`
+- A value of `1200` might appear as `$1,200.00`
+- A long number like `1234567890123` may be auto-converted to scientific notation (`1.23E+12`)
+
+These formatted displays can mislead the importer if you're expecting clean numbers. Number formatting is controlled at the **individual column level**. See [Values for Excel setting](/dashboard-settings/validations#values-for-excel-setting) for the options.
+
+### How to configure date formatting
+
+<Steps>
+  <Step title="Open the File Upload tab">
+    Go to **Sheet Settings** → **Import Steps** → **File Upload** tab in your CSVbox dashboard.
+  </Step>
+  <Step title="Find the Excel formatting section">
+    Scroll to the **Formatting in Excel Files** section.
+  </Step>
+  <Step title="Choose a date format">
+    Choose your preferred option for **Date Format**.
+  </Step>
+  <Step title="Save the configuration">
+    Save the configuration.
+  </Step>
+</Steps>
+
+## Hide cancel button
+
+Hide the **Cancel** button located at the bottom-right corner of the importer.
+
+The **X (close)** button at the top-right corner of the importer remains unaffected. Enabling this feature helps prevent users from accidentally canceling the import process and keeps their attention on completing the import with the **Submit** button.
+
+- **Use case**: Ideal for workflows where you want to guide users toward submission without distractions or potential interruptions.
+- **Default value**: `No`
+
+<Frame>
+  <img
+    src="/images/image-4.png"
+    alt="Hide Cancel Button setting"
+  />
+</Frame>
+
+## AI pre-import transform
+
+Use AI to transform the uploaded file before it's imported. Turn the option on and enter **Transform Instructions** in plain language. See [AI Pre-Import Transform](/dashboard-settings/ai-pre-import-transform).

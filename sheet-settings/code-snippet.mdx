@@ -1,0 +1,377 @@
+---
+title: "Code Snippet"
+description: "Install the importer with your sheet's code snippet."
+---
+
+The **Code Snippet** tab gives you everything you need to add the importer to your app: the integration code, the sheet license key, and the sheet's import link.
+
+## Install the importer
+
+Embed the CSVbox importer in your app with a short code snippet. Open the **Code Snippet** tab of the sheet, find the integration code, and place it in your application where you want the import button to appear.
+
+<Tabs>
+  <Tab title="JavaScript">
+    Sample code with basic usage:
+
+    ```javascript
+    <button class="btn btn-primary" data-csvbox disabled onclick="importer.openModal();">Import</button>
+    <script type="text/javascript" src="https://js.csvbox.io/script.js"></script>
+    <script type="text/javascript">
+        function callback(result, data) {
+            if(result){
+                console.log("success");
+                console.log(data.row_success + " rows uploaded");
+                //custom code
+            }else{
+                console.log("fail");
+                //custom code
+            }
+        }
+        let importer = new CSVBoxImporter("YOUR_LICENSE_KEY_HERE",{
+        }, callback);
+    
+        importer.setUser({
+            user_id: "default123"
+        })
+    </script>
+    ```
+
+    <Note>
+      Each sheet has a unique license key. Find it on the **Code Snippet** tab of the sheet page and pass it to the `CSVBoxImporter` function.
+    </Note>
+  </Tab>
+  <Tab title="React">
+    Install using npm:
+
+    ```javascript
+    npm install @csvbox/react
+    ```
+
+    This gives you access to the `CSVBoxButton` component, which has the basic functionality of the importer. Import the `CSVBoxButton` component into your project.
+
+    ```javascript
+    import { CSVBoxButton } from '@csvbox/react'
+    ```
+
+    Basic usage:
+
+    ```javascript
+    <CSVBoxButton
+      licenseKey="YOUR_LICENSE_KEY_HERE"
+      user={{
+        user_id: "default123"
+      }}
+      onImport={(result, data) => {
+        if(result){
+          console.log("success");
+          console.log(data.row_success + " rows uploaded");
+          //custom code
+        }else{
+          console.log("fail");
+          //custom code
+        }
+      }}
+      render={(launch, isLoading)=>{
+              return <button disabled={isLoading} onClick={launch}>Upload file</button>;
+          }}
+    >
+      Import
+    </CSVBoxButton>
+    ```
+
+    <Note>
+      Each sheet has a unique license key. Find it on the **Code Snippet** tab of the sheet page and attach it to the `licenseKey` property of the `CSVBoxButton` component.
+
+      The optional `render` property lets you pass in your own button to use in place of the standard CSVbox element.
+    </Note>
+  </Tab>
+  <Tab title="Angular">
+    Install using npm:
+
+    ```javascript
+    npm install @csvbox/angular
+    ```
+
+    <Note>
+      For Angular versions below 12, use `@csvbox/angular_8`. For Angular 12 and above, use `@csvbox/angular`.
+    </Note>
+
+    **Import**
+
+    Add `CSVBoxAngularModule` to your module imports.
+
+    ```javascript
+    import { CSVBoxAngularModule } from "@csvbox/angular";
+    
+    @NgModule({
+      ...
+      imports: [
+        ...
+        CSVBoxAngularModule
+      ]
+    })
+    ```
+
+    Once this is set up, you can import and access the `CSVBoxMethods` module in your app component file.
+
+    It brings the `csvbox-button` component into your project. Example:
+
+    ```text
+    <csvbox-button [licenseKey]="licenseKey" [imported]="imported.bind(this)" [user]="user">Import</csvbox-button>
+    ```
+
+    Basic usage:
+
+    ```javascript
+    @Component({
+      selector: 'app-root',
+      template: `
+        <csvbox-button
+          [licenseKey]="licenseKey"
+          [user]="user"
+          [imported]="imported.bind(this)">
+          Import
+        </csvbox-button>
+      `
+    })
+    
+    export class AppComponent {
+    
+      title = 'example';
+      licenseKey = 'YOUR_LICENSE_KEY_HERE';
+      user = { user_id: 'default123' };
+    
+      imported(result: boolean, data: any) {
+        if(result) {
+          console.log("Sheet uploaded successfully");
+          console.log(data.row_success + " rows uploaded");
+        }else{
+          console.log("There was some problem uploading the sheet");
+        }
+      }
+    }
+    ```
+
+    <Note>
+      Each sheet has a unique license key. Find it on the **Code Snippet** tab of the sheet page and attach it to the `licenseKey` property of the `AppComponent`.
+    </Note>
+
+    **Styling the button**
+
+    To style `<csvbox-button>` from within your parent component, make sure the parent component has `ViewEncapsulation.None`, then pass a class down to `<csvbox-button>`. You can then style the `button` one level down.
+
+    ```javascript
+    import { Component, ViewEncapsulation } from '@angular/core';
+    ```
+
+    ```javascript
+    @Component({
+      selector: 'app-root',
+      template: `
+        <csvbox-button
+          [licenseKey]="licenseKey"
+          [user]="user"
+          [dynamicColumns]="dynamicColumns"
+          [imported]="imported.bind(this)"
+          class="csvbox-btn"
+          >
+          Import
+        </csvbox-button>
+      `,
+      encapsulation: ViewEncapsulation.None,
+      styles: [`
+        .csvbox-btn button {
+            background: #007bff;
+            border-radius: 3px;
+          }
+      `],
+    })
+    export class AppComponent {
+        //...
+    }
+    ```
+  </Tab>
+  <Tab title="Vue.js">
+    Install using npm:
+
+    ```javascript
+    npm install @csvbox/vuejs
+    ```
+
+    This gives you access to the `CSVBoxButton` component. Import the `CSVBoxButton` component into your project.
+
+    ```javascript
+    import { CSVBoxButton } from '@csvbox/vuejs'
+    ```
+
+    Include `CSVBoxButton` in your Vue `components`, and you're ready to get started.
+
+    Basic usage:
+
+    ```javascript
+    <template>
+      <div id="app">
+        <CSVBoxButton
+          :licenseKey="licenseKey"
+          :user="user"
+          :onImport="onImport">
+          Upload File
+        </CSVBoxButton>
+      </div>
+    </template>
+    
+    <script>
+    import { CSVBoxButton } from '@csvbox/vuejs';
+    
+    export default {
+      name: 'App',
+      components: {
+        CSVBoxButton,
+      },
+      data: () => ({
+        licenseKey: 'YOUR_LICENSE_KEY_HERE',
+        user: {
+          user_id: 'default123',
+        },
+      }),
+      methods: {
+        onImport: function (result, data) {
+           if(result){
+              console.log("success");
+              console.log(data.row_success + " rows uploaded");
+              //custom code
+          }else{
+              console.log("fail");
+              //custom code
+          }
+        }
+      },
+    }
+    </script>
+    ```
+
+    <Note>
+      Each sheet has a unique license key. Find it on the **Code Snippet** tab of the sheet page and attach it to the `licenseKey` property of the `CSVBoxButton` component.
+    </Note>
+
+    **Implementation demos**
+
+    - Vue2: [https://codesandbox.io/s/csvbox-vue2-plzl0q](https://codesandbox.io/s/csvbox-vue2-plzl0q)
+    - Vue3: [https://codesandbox.io/s/csvbox-vue3-vuselr](https://codesandbox.io/s/csvbox-vue3-vuselr)
+  </Tab>
+</Tabs>
+
+<Warning>
+  If your app or database restricts access to an IP allowlist, you need to manually add CSVbox's addresses to use the importer. Allowlist all of the following IP addresses:
+
+  - `18.233.84.183`
+  - `18.213.249.53`
+  - `3.73.26.144`
+
+  Only one of these addresses is in use at any time, but the active address can change at any time. Add them all to your allowlist to avoid interruptions in service.
+</Warning>
+
+## Referencing the user
+
+Configure **custom user attributes** in the installation code to identify the users on your platform and match them with their imports.
+
+<Tabs>
+  <Tab title="JavaScript">
+    Pass custom user attributes as input parameters to the `setUser` method. The custom user attributes are pushed to your destination along with the uploaded data.
+
+    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
+
+    ```javascript
+     importer.setUser({
+            user_id: "1a2b3c4d5e6f",
+            team_id: "sales2",
+            isAuthenticated: "true",
+            permissionLevel: "admin",
+            email: "abc@example.com"
+        })
+    ```
+  </Tab>
+  <Tab title="React">
+    Pass custom user attributes as an object to the `user` property of the `CSVBoxButton` component. The custom user attributes are pushed to your destination along with the uploaded data.
+
+    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
+
+    ```javascript
+      user={{
+                  user_id: "1a2b3c4d5e6f",
+                  team_id: "sales2",
+                  isAuthenticated: "true",
+                  permissionLevel: "admin",
+                  email: "abc@example.com"
+      }}
+    ```
+  </Tab>
+  <Tab title="Angular">
+    Pass custom user attributes as an object to the `user` property of the `AppComponent`. The custom user attributes are pushed to your destination along with the uploaded data.
+
+    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
+
+    ```javascript
+      user={
+                  user_id: "1a2b3c4d5e6f",
+                  team_id: "sales2",
+                  isAuthenticated: "true",
+                  permissionLevel: "admin",
+                  email: "abc@example.com"
+     }
+    ```
+  </Tab>
+  <Tab title="Vue.js">
+    Pass custom user attributes as an object to the `user` property of the `CSVBoxButton` component. The custom user attributes are pushed to your destination along with the uploaded data.
+
+    `user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `<key>: <value>` format. Example:
+
+    ```javascript
+      user: {
+                  user_id: "1a2b3c4d5e6f",
+                  team_id: "sales2",
+                  isAuthenticated: "true",
+                  permissionLevel: "admin",
+                  email: "abc@example.com"
+      },
+    ```
+  </Tab>
+</Tabs>
+
+## Share an import link
+
+Import Links let you accept files from your users without a website or an app. Create an import page in a few clicks and share the link with your users, with no code required. It's an alternative to the import button that you set up by adding the integration code.
+
+After you create a sheet, the sheet's import link appears on the **Code Snippet** tab below the integration code. It looks like this:
+
+```javascript
+https://app.csvbox.io/upload/2gzJa5YO3QPLYK6Bj7Qmq5bpbFqXno?user_id=default123
+```
+
+Share this link with your users to start collecting spreadsheets.
+
+### Referencing the user in the import links
+
+Configure the query parameters in the link to identify users and match them with their imports. Add up to 5 query parameters with custom user attributes that identify the users in your platform. The custom user attributes are pushed to your destination along with the uploaded data.
+
+`user_id` is the only mandatory custom attribute. Apart from `user_id`, you can add up to 4 custom attributes in the `&key=value` format. For example:
+
+```javascript
+https://app.csvbox.io/upload/2gzJa5YO3QPLYK6Bj7Qmq5bpbFqXno?user_id=1a2b3c4d5e6f&team_id=sales2&isAuthenticated=true&permissionLevel=admin&email=abc@example.com
+```
+
+<Note>
+  You can turn the import link on or off under **Security** → **Import Links**. See [Security](/sheet-settings/security#import-links).
+</Note>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Install the Code" icon="code" href="/getting-started/2-install-code">
+    Callbacks, options, events, and lazy loading.
+  </Card>
+
+  <Card title="Receive Data" icon="inbox" href="/getting-started/3-receive-data">
+    Receive the imported data in your app.
+  </Card>
+</CardGroup>
