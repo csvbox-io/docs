@@ -443,120 +443,24 @@ You can write custom code to handle the success or failure conditions on the cli
 
 These additional configuration options are available with the CSVbox importer.
 
-### max_rows
-
-- **Type**: `number`
-- **Default**: `null`
-
-Specify the maximum number of rows that a single file can import. This value excludes the file headers. If a sheet has 101 rows and the first row is the header, the file is considered to have 100 data rows.
-
-### max_rows_allow_submit
-
-- **Type**: `boolean`
-- **Default**: `true`
-
-Allow or disallow submitting the permissible number of rows when the overall row count exceeds the limit. For example, suppose the row limit (`max_rows`) is set to 5:
-
-- If `max_rows_allow_submit` is `true`, the user can upload the top 5 rows of their file.
-- If `max_rows_allow_submit` is `false`, the user can't submit even 1 row if the overall row count exceeds `max_rows`.
-
-### max_rows_custom_message
-
-- **Type**: `string`
-- **Default**: `null`
-
-Display a custom message to the user when the file row count is greater than `max_rows`. This message shows only when `max_rows_allow_submit` is set to `false`.
-
-### min_rows
-
-- **Type**: `number`
-- **Default**: `null`
-
-The minimum number of rows required for a single upload.
-
-### min_rows_custom_message
-
-- **Type**: `string`
-- **Default**: `null`
-
-Display a custom message when the file row count is less than `min_rows`.
-
-### language
-
-- **Type**: `string`
-- **Default**: `null`
-
-Specify the importer frontend language. This value overrides the default language configured in the CSVbox dashboard. Acceptable values:
-
-| Value | Language |
-| --- | --- |
-| `en` | English |
-| `de` | German |
-| `fr` | French |
-| `es` | Spanish |
-| `nl` | Dutch |
-| `pt` | Portuguese |
-| `th` | Thai |
-| `pl` | Polish |
-| `ro` | Romanian |
-| `he` | Hebrew |
-| `ja` | Japanese |
-| `da` | Danish |
-| `tr` | Turkish |
-| `sk` | Slovak |
-| `hi` | Hindi |
-| `ms` | Bahasa Malaysia (Malay) |
-| `ru` | Russian |
-| `vi` | Vietnamese |
-| `ko` | Korean |
-| `id` | Bahasa Indonesia |
-| `ar-EG` | Egyptian Arabic |
-| `ur` | Urdu |
-| `zh-CN` | Chinese (Simplified) |
-| `zh-TW` | Chinese (Traditional) |
-| `bg` | Bulgarian |
-| `cs` | Czech |
-| `hu` | Hungarian |
-| `uk` | Ukrainian |
-
-### allow_invalid
-
-- **Type**: `boolean`
-- **Default**: `0`
-
-Specifies whether users can continue to submit the file even if there are validation errors.
-
-### request_headers
-
-- **Type**: `{ key: value, key: value, ... }`
-- **Default**: `null`
-
-Defines additional headers that are passed with each HTTP request.
-
-### dynamic_list_request_headers
-
-- **Type**: `{ key: value, key: value, ... }`
-- **Default**: `null`
-
-Defines additional headers that are passed with each HTTP request for the [dynamic list API](/dashboard-settings/validations#dynamic-list).
-
-### sample_template_url
-
-- **Type**: `String`
-- **Default**: `null`
-
-The URL from which end users download the sample CSV file.
-
-### sample_template_button_text
-
-- **Type**: `String`
-- **Default**: `null`
-
-The text on the button for downloading the sample CSV file.
-
-<Note>
-  Use the `sample_template_url` and `sample_template_button_text` options together to give end users a customized, dynamic sample CSV file.
-</Note>
+| Option | Type | Default | What it does |
+| --- | --- | --- | --- |
+| [`max_rows`](#max_rows) | `number` | `null` | Maximum data rows per file |
+| [`max_rows_allow_submit`](#max_rows_allow_submit) | `boolean` | `true` | Allow submitting the first `max_rows` rows when the file is larger |
+| [`max_rows_custom_message`](#max_rows_custom_message) | `string` | `null` | Message shown when a file exceeds `max_rows` |
+| [`min_rows`](#min_rows) | `number` | `null` | Minimum data rows per file |
+| [`min_rows_custom_message`](#min_rows_custom_message) | `string` | `null` | Message shown when a file is below `min_rows` |
+| [`language`](#language) | `string` | `null` | Importer language, overriding the dashboard setting |
+| [`allow_invalid`](#allow_invalid) | `boolean` | `0` | Allow submitting rows that have validation errors |
+| [`request_headers`](#request_headers) | `object` | `null` | Extra headers sent with each HTTP request |
+| [`dynamic_list_request_headers`](#dynamic_list_request_headers) | `object` | `null` | Extra headers sent with each Dynamic List API request |
+| [`sample_template_url`](#sample_template_url) | `string` | `null` | URL of the sample CSV file users can download |
+| [`sample_template_button_text`](#sample_template_button_text) | `string` | `null` | Label of the sample file download button |
+| [`target_file_name`](#target_file_name) | `string` | `null` | Name of the file pushed to S3, FTP, or Google Sheets |
+| [`upload_file_url`](#upload_file_url) | `string` | `null` | URL of a file to preload into the importer |
+| [`upload_file_worksheet_name`](#upload_file_worksheet_name) | `string` | `null` | Worksheet to load from a multi-tab `upload_file_url` file |
+| [`theme`](#theme) | `string` | `null` | Importer theme applied at runtime |
+| [`default_header_row`](#default_header_row) | `number` | `1` | Row preselected as the header |
 
 The following examples set several of these options:
 
@@ -569,8 +473,8 @@ The following examples set several of these options:
         max_rows: 50,
         language: 'de',
         request_headers: {
-                "Content-Type": "application/json",
-                "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
+            "Content-Type": "application/json",
+            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
         },
         sample_template_url: 'https://files.myapp.com/user-18768',
         sample_template_button_text: 'Starter Template'
@@ -581,88 +485,185 @@ The following examples set several of these options:
     Pass the additional options as an object to the `options` property of the `CSVBoxButton` component.
 
     ```javascript
-      options={{
-                  max_rows: 50,
-                  language: 'de',
-                  request_headers: {
-                            "Content-Type": "application/json",
-                            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
-                      },
-                  sample_template_url: 'https://files.myapp.com/user-18768',
-                  sample_template_button_text: 'Starter Template'
-      }}
+    options={{
+        max_rows: 50,
+        language: 'de',
+        request_headers: {
+            "Content-Type": "application/json",
+            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
+        },
+        sample_template_url: 'https://files.myapp.com/user-18768',
+        sample_template_button_text: 'Starter Template'
+    }}
     ```
   </Tab>
   <Tab title="Angular">
     Pass the additional options as an object to the `options` property of the `AppComponent`.
 
     ```javascript
-      options={
-                  max_rows: 50,
-                  language: 'de',
-                  request_headers: {
-                            "Content-Type": "application/json",
-                            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
-                    },
-                  sample_template_url: 'https://files.myapp.com/user-18768',
-                  sample_template_button_text: 'Starter Template'
-     }
+    options = {
+        max_rows: 50,
+        language: 'de',
+        request_headers: {
+            "Content-Type": "application/json",
+            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
+        },
+        sample_template_url: 'https://files.myapp.com/user-18768',
+        sample_template_button_text: 'Starter Template'
+    }
     ```
   </Tab>
   <Tab title="Vue.js">
     Pass the additional options as an object to the `options` property of the `CSVBoxButton` component.
 
     ```javascript
-      options: {
-                  max_rows: 50,
-                  language: 'de',
-                  request_headers: {
-                            "Content-Type": "application/json",
-                            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
-                    },
-                  sample_template_url: 'https://files.myapp.com/user-18768',
-                  sample_template_button_text: 'Starter Template'
-      },
+    options: {
+        max_rows: 50,
+        language: 'de',
+        request_headers: {
+            "Content-Type": "application/json",
+            "X-Access-Token": "71ab1d73a4d1319b260e9a0sdbdbc1c"
+        },
+        sample_template_url: 'https://files.myapp.com/user-18768',
+        sample_template_button_text: 'Starter Template'
+    },
     ```
   </Tab>
 </Tabs>
 
+### max_rows
+
+**Type** `number` · **Default** `null`
+
+Specify the maximum number of rows that a single file can import. This value excludes the file headers. If a sheet has 101 rows and the first row is the header, the file is considered to have 100 data rows.
+
+### max_rows_allow_submit
+
+**Type** `boolean` · **Default** `true`
+
+Allow or disallow submitting the permissible number of rows when the overall row count exceeds the limit. For example, suppose the row limit (`max_rows`) is set to 5:
+
+- If `max_rows_allow_submit` is `true`, the user can upload the top 5 rows of their file.
+- If `max_rows_allow_submit` is `false`, the user can't submit even 1 row if the overall row count exceeds `max_rows`.
+
+### max_rows_custom_message
+
+**Type** `string` · **Default** `null`
+
+Display a custom message to the user when the file row count is greater than `max_rows`. This message shows only when `max_rows_allow_submit` is set to `false`.
+
+### min_rows
+
+**Type** `number` · **Default** `null`
+
+The minimum number of rows required for a single upload.
+
+### min_rows_custom_message
+
+**Type** `string` · **Default** `null`
+
+Display a custom message when the file row count is less than `min_rows`.
+
+### language
+
+**Type** `string` · **Default** `null`
+
+Specify the importer frontend language. This value overrides the default language configured in the CSVbox dashboard.
+
+<Accordion title="Supported language codes">
+  | Value | Language |
+  | --- | --- |
+  | `en` | English |
+  | `de` | German |
+  | `fr` | French |
+  | `es` | Spanish |
+  | `nl` | Dutch |
+  | `pt` | Portuguese |
+  | `th` | Thai |
+  | `pl` | Polish |
+  | `ro` | Romanian |
+  | `he` | Hebrew |
+  | `ja` | Japanese |
+  | `da` | Danish |
+  | `tr` | Turkish |
+  | `sk` | Slovak |
+  | `hi` | Hindi |
+  | `ms` | Bahasa Malaysia (Malay) |
+  | `ru` | Russian |
+  | `vi` | Vietnamese |
+  | `ko` | Korean |
+  | `id` | Bahasa Indonesia |
+  | `ar-EG` | Egyptian Arabic |
+  | `ur` | Urdu |
+  | `zh-CN` | Chinese (Simplified) |
+  | `zh-TW` | Chinese (Traditional) |
+  | `bg` | Bulgarian |
+  | `cs` | Czech |
+  | `hu` | Hungarian |
+  | `uk` | Ukrainian |
+</Accordion>
+
+### allow_invalid
+
+**Type** `boolean` · **Default** `0`
+
+Specifies whether users can continue to submit the file even if there are validation errors.
+
+### request_headers
+
+**Type** `object` · **Default** `null`
+
+Defines additional headers that are passed with each HTTP request, as `{ "Header-Name": "value" }` pairs.
+
+### dynamic_list_request_headers
+
+**Type** `object` · **Default** `null`
+
+Defines additional headers that are passed with each HTTP request for the [dynamic list API](/dashboard-settings/validations#dynamic-list), as `{ "Header-Name": "value" }` pairs.
+
+### sample_template_url
+
+**Type** `string` · **Default** `null`
+
+The URL from which end users download the sample CSV file.
+
+### sample_template_button_text
+
+**Type** `string` · **Default** `null`
+
+The text on the button for downloading the sample CSV file.
+
+<Tip>
+  Use `sample_template_url` and `sample_template_button_text` together to give end users a customized, dynamic sample CSV file.
+</Tip>
+
 ### target_file_name
 
-- **Type**: `String`
-- **Default**: `null`
+**Type** `string` · **Default** `null`
 
-Specifies the name of the file that is pushed to your destination. This applies only to the following destinations:
-
-- S3
-- FTP Server
-- Google Sheets
+Specifies the name of the file that is pushed to your destination. This applies only to the S3, FTP Server, and Google Sheets destinations.
 
 ### upload_file_url
 
-- **Type**: `String`
-- **Default**: `null`
+**Type** `string` · **Default** `null`
 
 The URL of the file to import. Use it when you want the data preloaded into the importer without asking users to upload a file. Provide the file location, and the importer loads the data when the user clicks the **Import** button.
 
 ### upload_file_worksheet_name
 
-- **Type**: `String`
-- **Default**: `null`
+**Type** `string` · **Default** `null`
 
-The name of the worksheet to upload when you upload a file with multiple tabs through the [`upload_file_url`](/getting-started/2-install-code#upload_file_url) option.
+The name of the worksheet to upload when you upload a file with multiple tabs through the [`upload_file_url`](#upload_file_url) option.
 
 ### theme
 
-- **Type**: `String`
-- **Default**: `null`
+**Type** `string` · **Default** `null`
 
 Initializes the importer with the specified theme. Supported values: `light`, `light-custom`, `dark`, `dark-custom`. If not specified, the theme set in the sheet dashboard is used by default.
 
 ### default_header_row
 
-- **Type**: `number`
-- **Default**: `1`
+**Type** `number` · **Default** `1`
 
 The row to auto-select as the header on the **Header Selection** page. Rows are 1-indexed.
 
