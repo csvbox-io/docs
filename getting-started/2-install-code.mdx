@@ -450,13 +450,6 @@ These additional configuration options are available with the CSVbox importer.
 
 Specify the maximum number of rows that a single file can import. This value excludes the file headers. If a sheet has 101 rows and the first row is the header, the file is considered to have 100 data rows.
 
-<Frame caption="Max Limit Message">
-  <img
-    src="/images/max-limit.jpg"
-    alt="Max Limit Message"
-  />
-</Frame>
-
 ### max_rows_allow_submit
 
 - **Type**: `boolean`
@@ -473,13 +466,6 @@ Allow or disallow submitting the permissible number of rows when the overall row
 - **Default**: `null`
 
 Display a custom message to the user when the file row count is greater than `max_rows`. This message shows only when `max_rows_allow_submit` is set to `false`.
-
-<Frame caption="Custom Message for Max Row Limit">
-  <img
-    src="/images/custom-message.jpg"
-    alt="Custom Message for Max Row Limit"
-  />
-</Frame>
 
 ### min_rows
 
@@ -570,13 +556,6 @@ The text on the button for downloading the sample CSV file.
 
 <Note>
   Use the `sample_template_url` and `sample_template_button_text` options together to give end users a customized, dynamic sample CSV file.
-
-  <Frame>
-    <img
-      src="/images/sample-template-file.jpg"
-      alt="Importer showing a custom sample template download button"
-    />
-  </Frame>
 </Note>
 
 The following examples set several of these options:

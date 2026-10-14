@@ -41,13 +41,6 @@ Server-side validation checks incoming data against your own business rules on y
     - **Validation succeeds (no errors found)**: your API returns a `200` HTTP response code, and the user sees the success screen.
     - **Validation fails (one or more errors found)**: your API returns a `211` HTTP response code along with the validation errors in JSON format. See the [error response format](/advanced-installation/server-side-validation#error-types).
 
-    <Frame caption="Success Screen">
-      <img
-        src="/images/image-16.png"
-        alt="Import success screen"
-      />
-    </Frame>
-
     <Warning>
       Your API must return the `211` HTTP response status code to tell the CSVbox importer that there are one or more server-side validation errors.
 
@@ -63,23 +56,9 @@ Server-side validation checks incoming data against your own business rules on y
   </Step>
   <Step title="Users see the validation fail screen">
     If there are one or more server-side validation errors, users see the fail screen with a button to view the errors.
-
-    <Frame>
-      <img
-        src="/images/table.png"
-        alt="Validation fail screen with a button to view errors"
-      />
-    </Frame>
   </Step>
   <Step title="Users view the validation errors">
     Clicking the **Errors** button takes users to the Verify Data screen with all the server-side errors displayed.
-
-    <Frame>
-      <img
-        src="/images/sleekshot.png"
-        alt="Verify Data screen showing server-side errors"
-      />
-    </Frame>
   </Step>
   <Step title="Users fix the errors and re-submit the data">
     On re-submit, the process repeats: the importer pushes the data to your API endpoint via `POST` requests and looks for errors in the response.
@@ -114,13 +93,6 @@ CSVbox server-side validation supports the following error types:
 * **Row errors** highlight the row index with a red badge. Clicking the badge opens a pop-over containing your `message`.
 * **Column errors** highlight the column name with a red badge. Clicking the badge opens a pop-over containing your `message`.
 * **Cell errors** continue to highlight individual cells with inline messages as before.
-
-<Frame>
-  <img
-    src="/images/error-type-examples.png"
-    alt="Examples of table, row, column, and cell errors in the importer grid"
-  />
-</Frame>
 
 ### When to use each type
 

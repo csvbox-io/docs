@@ -18,13 +18,6 @@ Display the import fail error messages back to end users.
 
 To see the errors, users click the **See Errors** button on the import complete screen.
 
-<Frame>
-  <img
-    src="/images/errorlist.jpg"
-    alt="Error list shown to the user after import"
-  />
-</Frame>
-
 ## Export button
 
 Export validation errors in Excel.
@@ -35,13 +28,6 @@ Enable or disable the **Export** button on the verify data screen. Your users ca
   <img
     src="/images/export-settings.jpg"
     alt="Export button setting"
-  />
-</Frame>
-
-<Frame>
-  <img
-    src="/images/export-button.jpg"
-    alt="Export button on the verify data screen"
   />
 </Frame>
 
@@ -113,14 +99,7 @@ Go to **Edit Sheets** → **Options** → **Authorized Domains** and add the dom
 | `app.exampleco.com` | `app.exampleco.com` | `exampleco.com`, `www.exampleco.com` |
 | `*.exampleco.com` | All `exampleco.com` subdomains |  |
 
-If a domain fails validation, the user sees the error screen below:
-
-<Frame>
-  <img
-    src="/images/udo.jpg"
-    alt="Unauthorized domain error screen"
-  />
-</Frame>
+If a domain fails validation, the user sees an **Unauthorized domain** error instead of the importer.
 
 ## File delete policy
 
@@ -173,26 +152,7 @@ This is useful during testing and debugging. You don't have to upload the file, 
 
 Control the size of the import dialog box on large screens.
 
-Based on your import data structure (number of columns), pick between two import dialog sizes:
-
-<Tabs>
-  <Tab title="Medium">
-    <Frame caption="Medium size">
-      <img
-        src="/images/medium-screen.jpg"
-        alt="Medium size"
-      />
-    </Frame>
-  </Tab>
-  <Tab title="Large">
-    <Frame caption="Large size">
-      <img
-        src="/images/large-screen.jpg"
-        alt="Large size"
-      />
-    </Frame>
-  </Tab>
-</Tabs>
+Based on your import data structure (number of columns), pick between two import dialog sizes: **Medium** or **Large**.
 
 To change the size, go to sheet settings → **Display** → **Importer Dialog Size**.
 
@@ -214,13 +174,6 @@ Allow users to select a worksheet for upload.
 An uploaded Excel file can contain multiple worksheets. You can let users select which worksheet to upload.
 
 To activate worksheet selection, go to sheet settings → **Display** → **File Upload** and select **Yes** for the **Allow Worksheet Selection** option.
-
-<Frame>
-  <img
-    src="/images/multi-selection.jpg"
-    alt="Worksheet selection in the importer"
-  />
-</Frame>
 
 If **Allow Worksheet Selection** is set to **No**, the first worksheet is picked by default.
 
@@ -250,13 +203,6 @@ To hide the File Upload Box, go to sheet settings → **Display** → **File Upl
 Allow users to provide a name or description of the file they're uploading.
 
 File names like `contacts.csv` or `Import 123.xlsx` lack context. More descriptive labels such as "Texas Customers" or "Parts from 2022 Catalog" improve the clarity and usefulness of the import. When enabled, the description input box appears after the user selects the file.
-
-<Frame>
-  <img
-    src="/images/file-description-1.png"
-    alt="Import description input box in the importer"
-  />
-</Frame>
 
 The description is pushed along with the row data to the destination, in the `import_description` property:
 
@@ -300,13 +246,6 @@ By default, on the column mapping screen:
 - **Template Fields** are static and displayed on the left.
 - **Uploaded File Columns** appear on the right in a dropdown, so users can map them to the corresponding template fields.
 
-<Frame>
-  <img
-    src="/images/image-34.png"
-    alt="Default mapping with template fields on the left"
-  />
-</Frame>
-
 With the **Mapping Choice** option, users can **reverse this mapping direction**. Selecting **Template Fields** as the Mapping Choice flips the layout.
 
 <Frame>
@@ -317,13 +256,6 @@ With the **Mapping Choice** option, users can **reverse this mapping direction**
 </Frame>
 
 **File Columns** become static on the left, while **Template Fields** appear in the dropdown on the right, so users can match them accordingly.
-
-<Frame>
-  <img
-    src="/images/image-35.png"
-    alt="Reversed mapping with file columns on the left"
-  />
-</Frame>
 
 This added flexibility accommodates different file structures and user preferences, making the mapping process more intuitive.
 
@@ -502,13 +434,6 @@ The **X (close)** button at the top-right corner of the importer remains unaffec
   <img
     src="/images/image-4.png"
     alt="Hide Cancel Button setting"
-  />
-</Frame>
-
-<Frame>
-  <img
-    src="/images/image-5.png"
-    alt="Importer without the Cancel button"
   />
 </Frame>
 
