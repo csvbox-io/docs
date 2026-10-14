@@ -139,27 +139,7 @@
           "destinations/n8n",
           "destinations/pipedream",
           "destinations/automation-platforms",
-          "destinations/private-mode",
-          {
-            "group": "File Storage",
-            "pages": []
-          },
-          {
-            "group": "Spreadsheets",
-            "pages": []
-          },
-          {
-            "group": "Databases & Backends",
-            "pages": []
-          },
-          {
-            "group": "No-Code Apps",
-            "pages": []
-          },
-          {
-            "group": "Automation & APIs",
-            "pages": []
-          }
+          "destinations/private-mode"
         ]
       },
       {
