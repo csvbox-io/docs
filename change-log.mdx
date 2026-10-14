@@ -169,7 +169,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="January 2026" description="Reusable importer styling CSS and richer import metadata">
   ### Download and reuse importer styling
 
-  **Added**: Custom styling Download and Upload functionality. You can now download your customized importer styling as a CSS file and upload it to another importer to instantly apply the same design. Perfect for maintaining consistent branding across multiple sheets, with no re-styling required. More info [here](/dashboard-settings/styling#download--reuse-importer-styling-css).
+  **Added**: Custom styling Download and Upload functionality. You can now download your customized importer styling as a CSS file and upload it to another importer to instantly apply the same design. Perfect for maintaining consistent branding across multiple sheets, with no re-styling required. More info [here](/sheet-settings/display#download--reuse-importer-styling-css).
 
   ### Import metadata in the admin dashboard
 
@@ -237,7 +237,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 
   ### Execution time for Data Transforms
 
-  **Added**: [Execution Time](/advanced-installation/data-transforms#execution-time) option to Data Transforms. You can now choose to run each transform **before** or **after** the Data Validation stage.
+  **Added**: [Execution Time](/sheet-settings/data-transforms#execution-time) option to Data Transforms. You can now choose to run each transform **before** or **after** the Data Validation stage.
 
   <Frame>
     <img
@@ -397,7 +397,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="14 April 2025" description="">
   ### Unmapped column property
 
-  **Introduced the `column.isUnmapped` property** in the [`csvbox.columns`](/advanced-installation/data-transforms#csvboxcolumns) object to identify Unmapped Columns. This is now available in Data Transforms and Validation Functions.
+  **Introduced the `column.isUnmapped` property** in the [`csvbox.columns`](/sheet-settings/data-transforms#csvboxcolumns) object to identify Unmapped Columns. This is now available in Data Transforms and Validation Functions.
 
   ### Unmapped columns in server-side validation
 
@@ -413,7 +413,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="26 March 2025" description="">
   ### Dynamic column property
 
-  **Introduced the `column.isDynamic` property** in the [`csvbox.columns`](/advanced-installation/data-transforms#csvboxcolumns) object to identify Dynamic Columns. This is now available in Data Transforms and Validation Functions.
+  **Introduced the `column.isDynamic` property** in the [`csvbox.columns`](/sheet-settings/data-transforms#csvboxcolumns) object to identify Dynamic Columns. This is now available in Data Transforms and Validation Functions.
 
   ### Restrict adding rows
 
@@ -463,7 +463,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="11 February 2025" description="">
   ### Environment variables in column logic
 
-  Support for [Environment Variables](/advanced-installation/environment-variables) is now available in [Validation Functions](/advanced-installation/validation-functions#csvboxenvironment), [Data Transforms](/advanced-installation/data-transforms#csvboxenvironment), and [Virtual Columns](/advanced-installation/virtual-columns#csvboxenvironment).
+  Support for [Environment Variables](/advanced-installation/environment-variables) is now available in [Validation Functions](/sheet-settings/validation-functions#csvboxenvironment), [Data Transforms](/sheet-settings/data-transforms#csvboxenvironment), and [Virtual Columns](/sheet-settings/virtual-columns#csvboxenvironment).
 </Update>
 
 <Update label="24 January 2025" description="">
@@ -475,7 +475,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="14 January 2025" description="">
   ### Columns object
 
-  Introduced the [`csvbox.columns`](/advanced-installation/data-transforms#csvboxcolumns) object for use in Data Transforms and Validation Functions.
+  Introduced the [`csvbox.columns`](/sheet-settings/data-transforms#csvboxcolumns) object for use in Data Transforms and Validation Functions.
 </Update>
 
 <Update label="06 January 2025" description="">
@@ -493,7 +493,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="14 November 2024" description="">
   ### Data Transforms
 
-  Introduced Data Transforms, enabling a new method for bulk editing datasets before pushing them to your app. Learn more here: [Data Transforms Guide](/advanced-installation/data-transforms).
+  Introduced Data Transforms, enabling a new method for bulk editing datasets before pushing them to your app. Learn more here: [Data Transforms Guide](/sheet-settings/data-transforms).
 </Update>
 
 <Update label="23 October 2024" description="">
@@ -525,7 +525,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="19 September 2024" description="">
   ### Show unmapped columns
 
-  Added the option to show [Unmapped Columns](/advanced-installation/unmapped-columns) on the Validation Screen.
+  Added the option to show [Unmapped Columns](/sheet-settings/import-steps/map-columns) on the Validation Screen.
 
   <Frame caption="Show Unmapped Columns">
     <img
@@ -550,7 +550,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="06 August 2024" description="">
   ### Read-only columns
 
-  Added the functionality to make columns [**Read Only**](/dashboard-settings/sheet-options#read-only).
+  Added the functionality to make columns [**Read Only**](/sheet-settings/columns#read-only).
 </Update>
 
 <Update label="01 August 2024" description="">
@@ -672,7 +672,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="13 March 2024" description="">
   ### Ignore columns by default
 
-  A new option was added to allow the default selection of columns as [Ignored Columns](/advanced-installation/ignored-columns).
+  A new option was added to allow the default selection of columns as [Ignored Columns](/sheet-settings/import-steps/map-columns).
 
   <Frame>
     <img
@@ -806,7 +806,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="12 September 2023" description="">
   ### Validation Functions
 
-  Added [Validation Functions](/advanced-installation/validation-functions). Code your custom validation logic in JavaScript.
+  Added [Validation Functions](/sheet-settings/validation-functions). Code your custom validation logic in JavaScript.
 </Update>
 
 <Update label="11 September 2023" description="">
@@ -848,7 +848,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="27 June 2023" description="">
   ### Ignored columns
 
-  Added [Ignored columns](/advanced-installation/ignored-columns), which allow users to skip columns for data submission.
+  Added [Ignored columns](/sheet-settings/import-steps/map-columns), which allow users to skip columns for data submission.
 </Update>
 
 <Update label="16 June 2023" description="">
@@ -932,7 +932,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="09 Feb 2023" description="">
   ### Disable user keyword mapping
 
-  Option to disable [user keywords](/dashboard-settings/sheet-options#matching-keywords) based column mapping.
+  Option to disable [user keywords](/sheet-settings/columns#matching-keywords) based column mapping.
 
   <Frame>
     <img
@@ -1009,8 +1009,8 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="05 Dec 2022" description="">
   ### Virtual Columns data variables
 
-  - `csvbox.row["total_rows"]` and `csvbox.row["row_number"]` [data variables](/advanced-installation/virtual-columns#csvboxrow) added to Virtual Columns.
-  - [`csvbox.virtual`](/advanced-installation/virtual-columns#csvboxvirtual) object added to Virtual Columns.
+  - `csvbox.row["total_rows"]` and `csvbox.row["row_number"]` [data variables](/sheet-settings/virtual-columns#csvboxrow) added to Virtual Columns.
+  - [`csvbox.virtual`](/sheet-settings/virtual-columns#csvboxvirtual) object added to Virtual Columns.
 </Update>
 
 <Update label="29 Nov 2022" description="">
@@ -1035,7 +1035,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="21 Nov 2022" description="">
   ### View and delete user keywords
 
-  Added an option to view and delete [User Keywords](/dashboard-settings/sheet-options#matching-keywords).
+  Added an option to view and delete [User Keywords](/sheet-settings/columns#matching-keywords).
 
   <Frame>
     <img
@@ -1110,7 +1110,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="30 Aug 2022" description="">
   ### Virtual Columns
 
-  Added [Virtual Columns](/advanced-installation/virtual-columns). Create new columns by applying custom data transformation logic.
+  Added [Virtual Columns](/sheet-settings/virtual-columns). Create new columns by applying custom data transformation logic.
 </Update>
 
 <Update label="26 Aug 2022" description="">
@@ -1444,7 +1444,7 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
 <Update label="11 February 2022" description="">
   ### Unmapped columns
 
-  **Added**: [Unmapped Columns](/advanced-installation/unmapped-columns), allowing users to submit columns not included in the sheet template.
+  **Added**: [Unmapped Columns](/sheet-settings/import-steps/map-columns), allowing users to submit columns not included in the sheet template.
 </Update>
 
 <Update label="08 February 2022" description="">

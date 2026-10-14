@@ -5,13 +5,17 @@ description: "Control where user data is stored, which domains can embed the imp
 
 The **Security** tab controls where your users' data is stored, where the importer can run, and how long files are kept. The settings below appear in the same order as in the dashboard.
 
+<a id="server-and-data-location" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
+
+<a id="server--data-location" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
+
 ## Server and data storage location
 
 Select the geographic location of the servers and database for the user data.
 
 Data residency refers to the geographical location where data is stored. The location is usually important for regulatory or policy reasons. You can select the storage location of the data uploaded by your users.
 
-Select the location from the **Server & Data Storage Location** dropdown.
+Go to **Edit Sheets** → **Options** → **Privacy & Security** section and select the location from the **Server & Data Storage Location** dropdown.
 
 <Frame>
   <img
@@ -23,7 +27,7 @@ Select the location from the **Server & Data Storage Location** dropdown.
 The US is the default location. The other option is Europe (Germany). The data uploaded by users then passes through servers and is stored in the database situated in the selected location only.
 
 <Note>
-  You also have the option to not store the data at all.
+  You also have the option to not store the data at all. See [File delete policy](#file-delete-policy).
 </Note>
 
 The long-lived data about the import and the user files isn't covered by the selected location. It mainly consists of supplementary log data that helps with troubleshooting and analyzing the import processes. This data doesn't include any original data from inside the user files.
@@ -41,7 +45,7 @@ The image below shows how the data flows if you select Europe as the data reside
 
 Run the importer on select domains only.
 
-Provide a list of authorized _domains/subdomains_ for embedding the importer. The embedded importer works on the whitelisted domains only.
+Go to **Edit Sheets** → **Options** → **Authorized Domains** and provide a list of authorized _domains/subdomains_ for embedding the importer. The embedded importer works on the whitelisted domains only.
 
 <Frame>
   <img
@@ -85,3 +89,7 @@ Enable or disable the storage of user-uploaded data in CSVbox. You can decide ba
 
 - **Do not store the file**: When enabled, user-uploaded data isn't stored in the CSVbox datastore.
 - **Store data**: Data is stored on CSVbox storage and auto-deleted after one month.
+
+<Note>
+  To keep user data off CSVbox servers and data stores entirely, see [Private Mode](/destinations/private-mode).
+</Note>

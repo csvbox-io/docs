@@ -1,9 +1,9 @@
 ---
 title: "Verify Data"
-description: "Settings for the data review step: row display, search, export, validation limits, and invalid data handling."
+description: "Settings for the data review step: row display, search, export, date correction, AI bulk edits, validation limits, and invalid data handling."
 ---
 
-Verify Data is the fourth tab under **Sheet Settings** → **Import Steps**. On this step, users review their data, fix validation errors, and submit.
+Verify Data is the fourth tab under **Sheet Settings** → **Import Steps**. On this step, users review their data, fix validation errors, and submit. Validation rules you set on [Columns](/sheet-settings/columns) are checked here.
 
 ## Skip this step
 
@@ -30,7 +30,7 @@ Enable or disable the **Export** button on the Verify Data screen. Your users ca
   />
 </Frame>
 
-<Frame>
+<Frame caption="An exported file with error highlighting">
   <img
     src="/images/excel1-2.png"
     alt="Exported Excel file with error highlighting"
@@ -76,3 +76,9 @@ Show your own message when the max rows limit is crossed.
 ## Min rows
 
 Require a minimum number of rows in a single file. Leave it blank to remove the restriction. See [`min_rows`](/getting-started/2-install-code#min_rows).
+
+## Related
+
+- [Data Transforms](/sheet-settings/data-transforms) reshape the data before it's validated or pushed.
+- [Validation Functions](/sheet-settings/validation-functions) add custom row and column checks.
+- [Allow invalid](/getting-started/2-install-code#allow_invalid) lets users submit a file even when it has validation errors.

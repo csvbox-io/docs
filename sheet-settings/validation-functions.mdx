@@ -162,7 +162,7 @@ if(column.isUnmapped) {
 }
 ```
 
-<a id="csvboxenvironment" />
+<a id="csvboxenvironment" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
 
 #### `csvbox.environment`
 
@@ -189,7 +189,7 @@ CSVbox expects the row function to return an array of errors. Each error specifi
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `column` | string | The [column name](/dashboard-settings/sheet-options#column-name) of the error. It is case-sensitive. |
+| `column` | string | The [column name](/sheet-settings/columns#column-name) of the error. It is case-sensitive. |
 | `message` | string | The message displayed to the user on the validation screen of the importer. |
 
 #### Example row function JSON response
@@ -442,7 +442,7 @@ CSVbox expects the column function to return an array of errors. Each error spec
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `row_id` | integer | The row number of the error. Starts with 1. |
-| `column` | string | The [column name](/dashboard-settings/sheet-options#column-name) of the error. It is case-sensitive. |
+| `column` | string | The [column name](/sheet-settings/columns#column-name) of the error. It is case-sensitive. |
 | `message` | string | The message displayed to the user on the validation screen of the importer. |
 
 #### Example column function JSON response

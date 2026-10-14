@@ -1,9 +1,11 @@
 ---
 title: "Select Header"
-description: "Settings for the header row selection step."
+description: "Settings for the step where users pick the row that holds their column headers, including how to set the default header row."
 ---
 
 Select Header is the second tab under **Sheet Settings** → **Import Steps**. On this step, users confirm which row of their file holds the column headers.
+
+After a user adds a file, they select the row that contains the column headers before the importer moves on to [Map Columns](/sheet-settings/import-steps/map-columns). The import flow runs in this order: upload, select the header row, map columns, then [Verify Data](/sheet-settings/import-steps/verify-data).
 
 ## Skip this step
 
@@ -17,7 +19,15 @@ Add help text to the header selection page, separately for each language. The he
 
 Choose which row is pre-selected on the header selection step. If you leave it empty, the first row is selected.
 
-Also available as an installation parameter: [`default_header_row`](/getting-started/2-install-code#default_header_row).
+If your users' files usually have a title or blank rows above the headers, set the `default_header_row` option so the right row is already selected on the **Header Selection** page. Rows are 1-indexed.
+
+```javascript
+importer.setOptions({
+    default_header_row: 3
+})
+```
+
+Also available as an installation parameter: [`default_header_row`](/getting-started/2-install-code#default_header_row). See [Options](/getting-started/2-install-code#default_header_row) on the Install the Code page for how to pass this option in each framework.
 
 ## Show encoding option
 
@@ -30,3 +40,11 @@ Show or hide the option that lets users switch rows and columns.
 <Tip>
   Hiding the options you don't need removes non-essential choices from the importer and makes the experience cleaner for your users.
 </Tip>
+
+## Files with complicated headers
+
+If uploaded files have headers the importer can't use as they are, such as two-row merged headers, [AI Pre-Import Transform](/dashboard-settings/ai-pre-import-transform) can restructure the file before it reaches column mapping.
+
+## Track drop-offs
+
+[Import Analytics](/dashboard-settings/import-analytics) shows how many users reach and complete header selection, and how long they spend on it.

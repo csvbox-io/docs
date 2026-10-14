@@ -31,12 +31,10 @@
         "pages": [
           "dashboard-settings",
           "dashboard-settings/sheet-options-1",
-          "dashboard-settings/sheet-options",
           "dashboard-settings/add-columns-via-csv",
           "dashboard-settings/validations",
           "dashboard-settings/smart-date-and-number-formats",
           "dashboard-settings/sheet-tags",
-          "dashboard-settings/styling",
           "dashboard-settings/import-analytics",
           "dashboard-settings/split-large-csv",
           {
@@ -68,10 +66,11 @@
           },
           "sheet-settings/display",
           "sheet-settings/security",
+          "sheet-settings/code-snippet",
+          "sheet-settings/sheet-import-export",
           "sheet-settings/data-transforms",
           "sheet-settings/validation-functions",
-          "sheet-settings/virtual-columns",
-          "sheet-settings/code-snippet"
+          "sheet-settings/virtual-columns"
         ]
       },
       {
@@ -82,18 +81,13 @@
           {
             "group": "Columns",
             "pages": [
-              "advanced-installation/dynamic-columns",
-              "advanced-installation/virtual-columns",
-              "advanced-installation/unmapped-columns",
-              "advanced-installation/ignored-columns"
+              "advanced-installation/dynamic-columns"
             ]
           },
           {
             "group": "Validation & Transforms",
             "pages": [
-              "advanced-installation/validation-functions",
               "advanced-installation/server-side-validation",
-              "advanced-installation/data-transforms",
               "advanced-installation/if-else-builder"
             ]
           },
@@ -261,7 +255,7 @@
     },
     {
       "source": "/getting-started/sheet-options",
-      "destination": "/dashboard-settings/sheet-options"
+      "destination": "/sheet-settings/columns"
     },
     {
       "source": "/getting-started/sheet-options-1",
@@ -273,7 +267,7 @@
     },
     {
       "source": "/getting-started/styling",
-      "destination": "/dashboard-settings/styling"
+      "destination": "/sheet-settings/display"
     },
     {
       "source": "/changelog",
@@ -303,6 +297,41 @@
     {
       "source": "/advanced-installation/multipart-uploads",
       "destination": "/advanced-installation/rest-file-api#direct-file-upload"
+    },
+    {
+      "source": "/dashboard-settings/sheet-options",
+      "destination": "/sheet-settings/columns",
+      "permanent": true
+    },
+    {
+      "source": "/dashboard-settings/styling",
+      "destination": "/sheet-settings/display",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-installation/unmapped-columns",
+      "destination": "/sheet-settings/import-steps/map-columns",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-installation/ignored-columns",
+      "destination": "/sheet-settings/import-steps/map-columns",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-installation/virtual-columns",
+      "destination": "/sheet-settings/virtual-columns",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-installation/validation-functions",
+      "destination": "/sheet-settings/validation-functions",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-installation/data-transforms",
+      "destination": "/sheet-settings/data-transforms",
+      "permanent": true
     }
   ],
   "interaction": {

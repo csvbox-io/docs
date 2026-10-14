@@ -1,15 +1,17 @@
 ---
 title: "Display"
-description: "Control the importer dialog size, theme, logo, and custom styling."
+description: "Control the importer dialog size, theme, logo, custom styling, and Cancel button, and reuse the same styling across sheets."
 ---
 
-The **Display** tab controls how the importer looks. The settings below appear in the same order as in the dashboard.
+The **Display** tab controls how the importer looks: its colors and fonts, your logo, the size of the dialog, and whether users can cancel. The settings below appear in the same order as in the dashboard.
 
 ## Importer dialog size
 
 Control the size of the import dialog box on large screens.
 
 Based on your import data structure (number of columns), pick between two import dialog sizes: **Medium** or **Large**.
+
+Go to sheet settings → **Display** → **Importer Dialog Size**.
 
 <Frame>
   <img
@@ -73,7 +75,9 @@ If you need design tweaks beyond the provided options, [contact us](https://shar
 
 Reset every styling field to its default value.
 
-### Download and reuse importer styling (CSS)
+<a id="download-and-reuse-importer-styling-css" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
+
+### Download & reuse importer styling (CSS)
 
 You can reuse the same importer styling across multiple sheets or projects. After customizing the look and feel of your importer, download the styling as a CSS file, then upload it to another importer to instantly apply the same design with no rework.
 
@@ -99,6 +103,8 @@ This is especially useful when you want consistent branding across multiple impo
   />
 </Frame>
 
+<a id="reuse-the-styling-on-another-importer" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
+
 #### Reusing the styling on another importer
 
 <Steps>
@@ -116,9 +122,26 @@ This is especially useful when you want consistent branding across multiple impo
   </Step>
 </Steps>
 
+<a id="notes--best-practices" style={{ scrollMarginTop: "var(--scroll-mt, 7rem)" }} />
+
 #### Notes and best practices
 
 - Uploading a CSS file **overwrites the current styling** of the importer.
 - You can still make further adjustments after uploading.
 - Always preview before saving to make sure everything looks correct.
 - Keep a backup of your CSS files if you maintain multiple themes.
+
+## Hide cancel button
+
+Hide the **Cancel** button at the bottom-right corner of the importer.
+
+The **X (close)** button at the top-right corner stays. Hiding **Cancel** helps prevent users from abandoning the import by accident and keeps them focused on the **Submit** button, which suits workflows where you want to guide users toward submission.
+
+**Default**: `No`
+
+<Frame>
+  <img
+    src="/images/image-4.png"
+    alt="Hide Cancel Button setting"
+  />
+</Frame>
