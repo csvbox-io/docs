@@ -164,9 +164,24 @@ The column must contain a valid IANA timezone. CSVbox validates the timezone and
 
 The column must be castable as a boolean. Accepted inputs are `true`, `false`, `TRUE`, `FALSE`, `1`, `0`, `yes`, `no`, `y`, `n`, `on`, `off`, `enabled`, and `disabled`.
 
-<Info>
-  To show this column as a checkbox on the Verify Data screen and always send `true` or `false`, see [Checkbox Display for Boolean Columns](/dashboard-settings/checkbox-boolean-columns).
-</Info>
+#### Display as checkbox
+
+Turn on **Display as checkbox** to show a checkbox in each cell of the column on the **Verify Data** step. Instead of validating against the accepted values above, the importer converts every value to `true` or `false`, so users tick or untick boxes and the column never shows a validation error.
+
+| Value in the file | Result |
+| --- | --- |
+| Blank, `0`, `off`, `n`, `no`, `false`, `disabled` | Unchecked (`false`) |
+| Anything else, such as `1`, `yes`, `true`, or `on` | Checked (`true`) |
+
+Matching ignores capital letters and surrounding spaces. The destination receives the converted `true` or `false` value. See [Data Destinations](/destinations) for how each destination handles it.
+
+<Warning>
+  Any text that isn't in the unchecked list is treated as checked, so a value such as `maybe` or `N/A` becomes `true`. To reject unexpected values, keep this option off.
+</Warning>
+
+On the **Verify Data** step, a click selects a cell and a second click on the selected cell flips the checkbox. Double-clicking or pressing **Space** also flips it. Sorting groups checked rows together, and search, filter, and Find and Replace match by meaning, so searching for `y` finds every checked cell. When Find and Replace is set to **All columns**, it matches the literal text instead.
+
+**Default value:** Off
 
 ### Regex
 
@@ -431,3 +446,7 @@ To authenticate the requests, pass the authorization headers via the [`dynamic_l
 ### Column required
 
 Check or uncheck the `Required` checkbox in the **Column Settings** window. When it's ticked, the column data must be present and not empty.
+
+<Note>
+  **Required** isn't available for Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox). A blank value is a valid `false` there.
+</Note>

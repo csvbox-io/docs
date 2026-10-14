@@ -129,6 +129,10 @@ The data is pushed in chunks of rows. You can configure the number of rows per c
   If the row count is greater than 10,000, the chunk size defaults to 1000. A large row count with a small chunk size increases the processing time significantly.
 </Note>
 
+<Note>
+  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) arrive as a real boolean (`true` or `false`) in JSON and XML, and as the text `"true"` or `"false"` in FORM Data.
+</Note>
+
 ### Request type
 
 The webhook can be called in two modes to push the data to the destination:
@@ -201,6 +205,10 @@ Import CSV files and Excel sheets directly into your MySQL tables.
 
 Your users' CSV data is then appended directly to the MySQL table.
 
+<Note>
+  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) are pushed as `1` or `0`, which fits a `TINYINT(1)` column.
+</Note>
+
 ## PostgreSQL
 
 Import CSV files and Excel sheets directly into your PostgreSQL tables.
@@ -235,6 +243,10 @@ Import CSV files and Excel sheets directly into your PostgreSQL tables.
 </Steps>
 
 Your users' CSV data is then appended directly to the PostgreSQL table.
+
+<Note>
+  Boolean columns that use [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) are pushed as `true` or `false`, which PostgreSQL accepts for boolean columns. SQL Server receives the same values.
+</Note>
 
 ## SQL Server
 

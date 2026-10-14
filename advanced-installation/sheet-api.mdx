@@ -19,6 +19,20 @@ All Sheet API requests require both of these headers. You can find the keys on t
   Never expose your secret key in browser-side code. Call the Sheet API from your backend.
 </Warning>
 
+## Checkbox display for Boolean columns
+
+To show a Boolean column as a checkbox on the **Verify Data** step, set `render_as_checkbox` in the column's `validators`:
+
+```json
+{
+  "column_name": "Is Active",
+  "data_type": "Boolean",
+  "validators": { "render_as_checkbox": true }
+}
+```
+
+The setting is returned when you get a sheet, so you can read a sheet and send it back without losing it. The values `"false"`, `"0"`, and `"off"` count as off. `required` is always set to `false` for a checkbox column, even if you send `true`. See [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) for how values are converted.
+
 ## Endpoints
 
 <CardGroup cols={2}>
