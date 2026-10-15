@@ -339,7 +339,7 @@
   },
   "seo": {
     "metatags": {
-      "canonical": "https://csvbox-io.mintlify.site",
+      "canonical": "https://help.csvbox.io",
       "og:image": "https://csvbox.io/og/default.png",
       "twitter:site": "@csvboxio"
     }
