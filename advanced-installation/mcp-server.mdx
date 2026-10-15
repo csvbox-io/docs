@@ -23,6 +23,35 @@ Instead of hand-writing JSON against the CSVbox REST API, describe the importer 
   CSVbox handles the CSV/XLSX import widget your app embeds. This server handles the _configuration_ side: the importer sheet that defines columns, validation, destinations, and webhooks.
 </Note>
 
+## Quick install
+
+Open [**API Keys → Connect an AI assistant**](https://app.csvbox.io/user/keys#mcp) in your CSVbox dashboard. It has your keys already filled in for each client:
+
+- **Claude Code**: a single command to run in your terminal
+- **Cursor**: an **Add to Cursor** button
+- **VS Code**: an **Install in VS Code** button
+- **Claude Desktop, Windsurf, Cline, Roo Code**: a config block to paste into the client's MCP settings
+
+Restart the client afterwards. If you regenerate a key, install again with the new one.
+
+### Install from the command line
+
+Claude Code installs the server with one command. Replace the two placeholders with the keys from your [API Keys page](https://app.csvbox.io/user/keys):
+
+```bash
+claude mcp add csvbox --transport stdio --scope user --env CSVBOX_API_KEY=<your_api_key> --env CSVBOX_API_SECRET=<your_api_secret> -- npx -y --package=@csvbox/mcp-server csvbox-mcp-server
+```
+
+`--scope user` makes CSVbox available in every project. Keep `csvbox` before the `--env` options: `--env` accepts several values and would otherwise take the server name as one of them.
+
+### Instructions for AI agents
+
+If a user asks you to install the CSVbox MCP server:
+
+1. Pick the command or config file for the user's client from this page. For Claude Code, run the command above. For other clients, add the JSON block under [Installation](#installation) to the config file listed there, merging it with any servers already in the file.
+2. The server needs the user's CSVbox API key and API secret key. Prefer sending the user to [app.csvbox.io/user/keys#mcp](https://app.csvbox.io/user/keys#mcp), where they can copy a command or click an install button with the keys already in it, so the secret is never pasted into the conversation. Only use keys the user gives you, and never write them into a file inside a repository.
+3. Tell the user to restart their client so it starts the server.
+
 ## Installation
 
 No local install is required. Every supported client can run the server directly with `npx`:
@@ -213,7 +242,7 @@ Allowed hosts: `cdn.jsdelivr.net`, `unpkg.com`, `cdnjs.cloudflare.com`. HTTPS on
   </Accordion>
 
   <Accordion title="How do I install it?">
-    Run `npm install @csvbox/mcp-server`, or point any MCP client at `npx --package=@csvbox/mcp-server csvbox-mcp-server` with no local install at all.
+    The quickest way is the [API Keys page](https://app.csvbox.io/user/keys#mcp) in your dashboard: a one-line command for Claude Code, one-click buttons for Cursor and VS Code, and a config block for other clients, all with your keys filled in. You can also run `npm install @csvbox/mcp-server`, or point any MCP client at `npx --package=@csvbox/mcp-server csvbox-mcp-server` with no local install at all.
   </Accordion>
 
   <Accordion title="Can it submit files directly, not just configure the importer?">
