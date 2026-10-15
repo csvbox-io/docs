@@ -352,8 +352,6 @@
   },
   "styling": {
     "eyebrows": "breadcrumbs",
-    "codeblocks": {
-      "theme": "github-light"
-    }
+    "codeblocks": "dark"
   }
 }
