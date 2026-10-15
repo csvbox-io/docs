@@ -351,6 +351,9 @@
     "timestamp": false
   },
   "styling": {
-    "eyebrows": "breadcrumbs"
+    "eyebrows": "breadcrumbs",
+    "codeblocks": {
+      "theme": "github-light"
+    }
   }
 }
