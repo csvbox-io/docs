@@ -6,6 +6,17 @@ description: "A record of all notable changes made to the application."
 This page lists notable CSVbox releases, newest first. Each entry links to the documentation for the feature it adds or changes.
 
 <Update label="October 2026" description="Checkbox display for Boolean columns, Sheet Tags, smart date and number formats, If / Else Builder">
+  ### Security update: PHP dependency vulnerability fixed
+
+  **October 22, 2026 · 10:00 AM IST**
+
+  We've fixed a security vulnerability in the PHP framework and libraries that run the CSVBox platform. We updated the affected components to patched versions and deployed them across the platform.
+
+  - **No action needed.** Your importers, API keys, and destination settings are unchanged and keep working as before.
+  - **No impact found.** We found no sign that this vulnerability was exploited.
+
+  If you have questions about this update, contact us at [support@csvbox.io](mailto:support@csvbox.io).
+
   ### Checkbox display for Boolean columns
 
   **Added**: [Display as checkbox](/dashboard-settings/validations#display-as-checkbox) for Boolean columns. Turn on **Display as checkbox** for a Boolean column to show a checkbox in each cell on the Verify Data screen. Every value is converted to `true` or `false` before it is sent to your destination, so the column never shows a validation error. Also available in the Sheet API as `render_as_checkbox`.
