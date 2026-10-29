@@ -1,10 +1,9 @@
 ---
 title: "Google Cloud Storage"
-description: "Send every import to a bucket in your own Google Cloud Storage as a single CSV or JSON file, using a service account key to connect."
-keywords: ["google cloud storage", "gcs", "bucket", "service account", "csv", "json"]
+description: "Send every import to a bucket in your own Google Cloud Storage as a single CSV or JSON file."
 ---
 
-Send every import to a bucket in your own Google Cloud Storage as a single file, in CSV or JSON format.
+The Google Cloud Storage destination sends every import to a bucket in your own Google Cloud Storage as a single file, in CSV or JSON format.
 
 Each import produces one file in your bucket. Importing again with the same file name replaces the earlier file.
 
@@ -24,9 +23,10 @@ You need:
   </Step>
   <Step title="Download a JSON key">
     Open the service account, go to **Keys > Add key > Create new key**, choose **JSON** and download the file.
-  </Step>
-  <Step title="Store the key safely">
-    Keep the file safe. It gives access to your bucket.
+
+    <Warning>
+      Keep the file safe. It gives access to your bucket.
+    </Warning>
   </Step>
 </Steps>
 
@@ -44,34 +44,36 @@ The service account does not need access to anything else in your project.
 ## Set up the destination
 
 <Steps>
-  <Step title="Choose the destination">
+  <Step title="Select Google Cloud Storage as the destination">
     Open your importer, go to the **Destination** tab and choose **Google Cloud Storage**.
   </Step>
   <Step title="Add the key file">
-    **JSON Key File**: choose the key file you downloaded.
+    For **JSON Key File**, choose the key file you downloaded.
   </Step>
-  <Step title="Enter the bucket name">
-    **Bucket Name**: the bucket name only, for example `my-bucket`. Do not include `gs://`.
+  <Step title="Set the bucket and path">
+    Enter the **Bucket Name**: the bucket name only, for example `my-bucket`. Do not include `gs://`.
+
+    Optionally, enter a **Path**: a folder inside the bucket, for example `imports/2026`. Folders are created automatically.
   </Step>
-  <Step title="Set a path (optional)">
-    **Path** (optional): a folder inside the bucket, for example `imports/2026`. Folders are created automatically.
+  <Step title="Set the file name and data type">
+    Optionally, enter a **File Name**: the name of the file, without the extension. See [File names](#file-names).
+
+    Then choose the **Data Type**: **CSV** or **JSON**.
   </Step>
-  <Step title="Set a file name (optional)">
-    **File Name** (optional): the name of the file, without the extension. See [File names](#file-names).
-  </Step>
-  <Step title="Choose the data type">
-    **Data Type**: **CSV** or **JSON**.
-  </Step>
-  <Step title="Test and save">
+  <Step title="Test the connection">
     Click **Test Connection**, then **Save**.
+
+    <Note>
+      Test Connection checks the key, finds the bucket and confirms the service account can write to it. Nothing is stored until Google accepts the key.
+    </Note>
   </Step>
 </Steps>
 
-Test Connection checks the key, finds the bucket and confirms the service account can write to it. Nothing is stored until Google accepts the key.
-
 When the destination is connected, the key file and its service account email are shown and the bucket, path and data type are locked. To change them, click **Disconnect** and set the destination up again. Disconnecting deletes the stored key.
 
-If Google rejects a key, it is discarded and the file picker comes back so you can choose another file.
+<Note>
+  If Google rejects a key, it is discarded and the file picker comes back so you can choose another file.
+</Note>
 
 ## File names
 
@@ -124,9 +126,11 @@ Each file also carries your CSVBox user ID as custom metadata (`user_id`).
 - Google allows objects up to 5 TiB.
 - The number of rows imported is still limited by your CSVBox plan.
 
-Large imports take longer, because the whole file is sent when the import finishes. Wait for the import to show as complete.
+<Note>
+  Large imports take longer, because the whole file is sent when the import finishes. Wait for the import to show as complete.
+</Note>
 
-## When something goes wrong
+## Troubleshooting
 
 Failed imports show a message on the import. The common ones:
 
