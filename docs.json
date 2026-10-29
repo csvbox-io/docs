@@ -127,6 +127,7 @@
           "destinations/none",
           "destinations/test-api",
           "destinations/api-webhook",
+          "destinations/google-cloud-storage",
           "destinations/amazon-s3",
           "destinations/ftp-server",
           "destinations/mysql",

@@ -1,0 +1,158 @@
+---
+title: "Google Cloud Storage"
+description: "Send every import to a bucket in your own Google Cloud Storage as a single CSV or JSON file, using a service account key to connect."
+keywords: ["google cloud storage", "gcs", "bucket", "service account", "csv", "json"]
+---
+
+Send every import to a bucket in your own Google Cloud Storage as a single file, in CSV or JSON format.
+
+Each import produces one file in your bucket. Importing again with the same file name replaces the earlier file.
+
+## Before you start
+
+You need:
+
+- A Google Cloud project with a Cloud Storage bucket.
+- A **service account** in that project, with a JSON key file.
+- The service account allowed to write to the bucket (see [Permissions](#permissions)).
+
+### Create the service account and key
+
+<Steps>
+  <Step title="Create or pick a service account">
+    In the Google Cloud console, open **IAM & Admin > Service Accounts** and create a service account (or pick an existing one).
+  </Step>
+  <Step title="Download a JSON key">
+    Open the service account, go to **Keys > Add key > Create new key**, choose **JSON** and download the file.
+  </Step>
+  <Step title="Store the key safely">
+    Keep the file safe. It gives access to your bucket.
+  </Step>
+</Steps>
+
+### Permissions
+
+Open your bucket in the console, go to **Permissions**, and grant the service account one of these roles on the bucket:
+
+| Role | What it allows |
+| --- | --- |
+| **Storage Object Admin** (recommended) | Create files and replace existing ones. |
+| **Storage Object Creator** | Create new files only. It cannot replace an existing file, so an import that reuses a file name fails. |
+
+The service account does not need access to anything else in your project.
+
+## Set up the destination
+
+<Steps>
+  <Step title="Choose the destination">
+    Open your importer, go to the **Destination** tab and choose **Google Cloud Storage**.
+  </Step>
+  <Step title="Add the key file">
+    **JSON Key File**: choose the key file you downloaded.
+  </Step>
+  <Step title="Enter the bucket name">
+    **Bucket Name**: the bucket name only, for example `my-bucket`. Do not include `gs://`.
+  </Step>
+  <Step title="Set a path (optional)">
+    **Path** (optional): a folder inside the bucket, for example `imports/2026`. Folders are created automatically.
+  </Step>
+  <Step title="Set a file name (optional)">
+    **File Name** (optional): the name of the file, without the extension. See [File names](#file-names).
+  </Step>
+  <Step title="Choose the data type">
+    **Data Type**: **CSV** or **JSON**.
+  </Step>
+  <Step title="Test and save">
+    Click **Test Connection**, then **Save**.
+  </Step>
+</Steps>
+
+Test Connection checks the key, finds the bucket and confirms the service account can write to it. Nothing is stored until Google accepts the key.
+
+When the destination is connected, the key file and its service account email are shown and the bucket, path and data type are locked. To change them, click **Disconnect** and set the destination up again. Disconnecting deletes the stored key.
+
+If Google rejects a key, it is discarded and the file picker comes back so you can choose another file.
+
+## File names
+
+The file is saved as `<path>/<file name>.<csv or json>`. The extension is added for you, and never doubled: `report.csv` in the File Name field still produces `report.csv`.
+
+The name is chosen in this order:
+
+1. A file name passed with the import itself, if there is one.
+2. The **File Name** setting on the destination.
+3. The default, `<import id>_<user id>`, for example `9368_default123`.
+
+The **File Name** setting accepts these placeholders:
+
+| Placeholder | Replaced with |
+| --- | --- |
+| `{IMPORT_ID}` | The ID of the import. Different for every import. |
+| `{UNIQUE_ID}` | A timestamp. |
+| `{{variable}}` | A value you pass with the import, such as a user field. |
+
+A name can be up to 200 characters and cannot contain slashes or line breaks. Use the **Path** field for folders. Leading and trailing spaces are removed, and control characters are stripped.
+
+### Replacing and keeping files
+
+- **A fixed name** (for example `customers`) means every import replaces the previous file. Use it when you always want the latest data in one place.
+- **A name with `{IMPORT_ID}` or `{UNIQUE_ID}`** means every import creates a new file. Use it to keep a history.
+
+<Warning>
+  If the service account has only the Storage Object Creator role, a repeated name fails with a permission error. The destination shows a warning when it detects this.
+</Warning>
+
+## What is written to the bucket
+
+**CSV**
+
+- UTF-8 with a byte order mark, so Excel opens it correctly.
+- The first row holds the column headers; the remaining rows hold the data.
+- Content type `text/csv`.
+
+**JSON**
+
+- A single JSON array with one object per row, keyed by column name.
+- Content type `application/json`.
+
+Each file also carries your CSVBox user ID as custom metadata (`user_id`).
+
+## File size and large imports
+
+- An import is written as **one file**, no matter how many rows it has.
+- Large files are supported. A test import of 1,000,000 rows (about 146 MB as CSV) completed and stored as one file.
+- Google allows objects up to 5 TiB.
+- The number of rows imported is still limited by your CSVBox plan.
+
+Large imports take longer, because the whole file is sent when the import finishes. Wait for the import to show as complete.
+
+## When something goes wrong
+
+Failed imports show a message on the import. The common ones:
+
+| Message | What to do |
+| --- | --- |
+| Google rejected the service account key | The key was deleted, disabled or is not a service account key. Create a new key and reconnect. |
+| Bucket not found | Check the bucket name. Use the name only, without `gs://`. |
+| Service account cannot write to the bucket | Grant it Storage Object Creator or Storage Object Admin on the bucket. |
+| Service account cannot overwrite an existing file | Grant Storage Object Admin, or use a file name that changes every import. |
+| Google Cloud Storage API is not enabled | Enable the Cloud Storage API for the project that owns the service account. |
+| Rate limit, Google is unavailable, or the network dropped | CSVBox retries a failed upload up to 3 times with short pauses. If it still fails, import again later. |
+| The connection dropped, and Google then refused the retry | The file may already be in the bucket. Check the bucket before importing again. |
+| CSVBox Import Error. It has been notified to the team and will be resolved soon. | A problem on the CSVBox side. The team is notified automatically. |
+
+If the destination is disconnected, imports to it fail instead of writing with an old key.
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="Can I send to more than one bucket?">
+    Each importer has one Google Cloud Storage destination. Create another importer, or use a different destination, for a second bucket.
+  </Accordion>
+  <Accordion title="Is my key safe?">
+    The key is stored encrypted. It is never sent back to your browser; only its file name and the service account email are shown. Disconnecting deletes it.
+  </Accordion>
+  <Accordion title="Can I use the same key for several importers?">
+    Yes. Choose the key file in each importer.
+  </Accordion>
+</AccordionGroup>
