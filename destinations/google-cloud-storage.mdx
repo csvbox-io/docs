@@ -53,7 +53,7 @@ The service account does not need access to anything else in your project.
   <Step title="Set the bucket and path">
     Enter the **Bucket Name**: the bucket name only, for example `my-bucket`. Do not include `gs://`.
 
-    Optionally, enter a **Path**: a folder inside the bucket, for example `imports/2026`. Folders are created automatically.
+    Optionally, enter a **Path**: a folder inside the bucket, for example `imports/2026`. Folders are created automatically. See [Path placeholders](#path-placeholders) for values that change with each import.
   </Step>
   <Step title="Set the file name and data type">
     Optionally, enter a **File Name**: the name of the file, without the extension. See [File names](#file-names).
@@ -69,7 +69,7 @@ The service account does not need access to anything else in your project.
   </Step>
 </Steps>
 
-When the destination is connected, the key file and its service account email are shown and the bucket, path and data type are locked. To change them, click **Disconnect** and set the destination up again. Disconnecting deletes the stored key.
+When the destination is connected, the key file and its service account email are shown and the bucket, path and data type are locked. To change them, click **Disconnect** and set the destination up again. Disconnecting deletes the stored key and clears the bucket name. The path, file name and data type are kept. Imports fail with a "not connected" error until you reconnect.
 
 <Note>
   If Google rejects a key, it is discarded and the file picker comes back so you can choose another file.
@@ -95,6 +95,19 @@ The **File Name** setting accepts these placeholders:
 
 A name can be up to 200 characters and cannot contain slashes or line breaks. Use the **Path** field for folders. Leading and trailing spaces are removed, and control characters are stripped.
 
+### Path placeholders
+
+The **Path** setting accepts these placeholders:
+
+| Placeholder | Replaced with |
+| --- | --- |
+| `{UNIQUE_ID}` | A timestamp. |
+| `{{variable}}` | A value from the [environment variables](/advanced-installation/environment-variables) of the embedded importer, or from `import.environment` in the REST File API. |
+
+For example, the path `imports/{{tenant}}` writes to `imports/acme/` when `tenant` is `acme`.
+
+Each value becomes one folder name. Slashes (`/` and `\`) are removed from the value, and a value of `.` or `..` is dropped, so one value cannot create nested folders or step outside the folder. For example, `a/b` becomes `imports/ab/`, and `../x` becomes `imports/..x/`.
+
 ### Replacing and keeping files
 
 - **A fixed name** (for example `customers`) means every import replaces the previous file. Use it when you always want the latest data in one place.
@@ -116,8 +129,18 @@ A name can be up to 200 characters and cannot contain slashes or line breaks. Us
 
 - A single JSON array with one object per row, keyed by column name.
 - Content type `application/json`.
+- If two columns share a name, the repeats are numbered `_2`, `_3` and so on. A blank column name becomes `column_<position>`. An [unmapped column](/sheet-settings/import-steps/map-columns#accept-unmapped-columns) named like a mapped one also gets a suffix. No value is overwritten. For example, `col1, col1` becomes `col1`, `col1_2`.
+- Text that is not valid UTF-8 is replaced with the replacement character (`�`), so the file stays valid JSON. For example, `Caf\xE9` becomes `Caf�`.
 
 Each file also carries your CSVBox user ID as custom metadata (`user_id`).
+
+## Changing the bucket or key
+
+If you save a new bucket or key and Google rejects it, the path, file name and data type are still saved, but imports pause with a "not connected" error until **Test Connection** succeeds.
+
+## Copying a sheet
+
+A copied sheet keeps the bucket, path, file name and data type, but not the service account key. The copy starts disconnected: choose the key file on the copy to resume imports.
 
 ## File size and large imports
 

@@ -70,6 +70,7 @@ Data from unmapped columns is available in the data destinations along with the 
 
 - [API/Webhook](/destinations#api--webhook)
 - [Amazon S3](/destinations#amazon-s3)
+- [Google Cloud Storage](/destinations/google-cloud-storage)
 
 #### API/Webhook data destination
 
@@ -127,6 +128,10 @@ In the API response JSON object, the dynamic data appears inside the `_unmapped_
 #### S3 data destination
 
 In the AWS S3 file store, unmapped columns are added as new columns in the uploaded file.
+
+#### Google Cloud Storage data destination
+
+In Google Cloud Storage, unmapped columns are added after the mapped columns in the CSV file, or as extra keys on every object in the JSON file.
 
 ## Allow zero template columns
 
