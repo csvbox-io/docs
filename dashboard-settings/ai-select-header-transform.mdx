@@ -34,7 +34,7 @@ Common uses include splitting names, addresses, or date and time into separate c
 
 A callout appears at the top right of the Select Header step: **"Noticed something off in your data? Let AI transform it for you."** with a **Transform with AI** button.
 
-The button becomes active once the file's rows have loaded. It's shown by default, so you don't need to turn anything on in the sheet settings. To hide it, see [Turn it off for a sheet](#turn-it-off-for-a-sheet).
+The button becomes active once the file's rows have loaded. It's shown by default, so you don't need to turn anything on in the sheet settings. To hide it, see [Turn it off for a sheet](#turn-it-off-for-a-sheet). If [Skip this step](/sheet-settings/import-steps/select-header#skip-this-step) is on, users don't see the Select Header step, so they don't see the button either.
 
 ## How users transform their table
 
@@ -43,7 +43,7 @@ The button becomes active once the file's rows have loaded. It's shown by defaul
     Click **Transform with AI**. The **Transform Table with AI** window opens.
   </Step>
   <Step title="Describe the change to the table">
-    Type an instruction of up to 1,000 characters under **Describe the transformation**, or click one of the **Example prompts** to fill it in. When the selected header row has column names, the examples use them. **Transform** stays disabled until there's an instruction.
+    Type an instruction of up to 1,000 characters under **Describe the transformation**, or click one of the **Example Prompts** to fill it in. When the selected header row has column names, the examples use them. **Transform** stays disabled until there's an instruction.
   </Step>
   <Step title="Apply the transform">
     Click **Transform**. The AI works from the header row the user selected. When it finishes, the window closes and the Select Header step shows the rebuilt table with its new header row selected. The user then continues to column mapping as usual.
@@ -76,10 +76,10 @@ With the [Sheet API](/advanced-installation/sheet-api), set `steps.select_header
 
 ## How it works
 
-- Only the selected header row and the first 10 other rows are sent to the AI (OpenAI, listed as a [subprocessor](/legal/gdpr/data-processing-addendum#sub-processors)). The rest of the file isn't sent.
+- Only the selected header row and the first 10 other rows are sent to the AI (OpenAI, listed as a [subprocessor](/legal/gdpr/data-processing-addendum#sub-processors)). The rest of the file isn't sent to the AI.
 - The AI returns the new headers and a small function that rewrites one row. CSVbox checks this function on the server, then the user's browser runs it on every row of the table.
 - Before applying the change, the importer tests the function on the first 3 rows. If the test fails, the table is left unchanged and an error is shown.
-- Rows the function can't transform keep their original values, with empty cells added to fill the new column count. No message is shown for these rows.
+- Rows the function can't transform keep their original values. If the new table has more columns, empty cells are added to those rows. No message is shown for these rows.
 - If the user repeats the same instruction on the same headers in the same browser tab, the saved result is reused without a new AI request.
 
 ## Messages users may see
