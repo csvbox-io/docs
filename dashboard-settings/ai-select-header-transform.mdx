@@ -1,0 +1,105 @@
+---
+title: "AI Table Transform"
+sidebarTitle: "AI Table Transform"
+description: "Let users change the structure of their table, such as its columns, headers and values, with a plain-English instruction on the Select Header step."
+keywords:
+  - "ai table transform"
+  - "transform with ai"
+  - "select header"
+  - "table structure"
+  - "split column"
+  - "merge columns"
+  - "rename columns"
+---
+
+AI Table Transform lets the person uploading a file change how their table is built before it reaches [column mapping](/sheet-settings/import-steps/map-columns). On the [Select Header](/sheet-settings/import-steps/select-header) step, they describe the change in plain English, and the AI reshapes the whole table: its columns, headers, column order, and cell values. Their file doesn't have to match your template's layout exactly.
+
+<Note>
+  This is different from [AI Pre-Import Transform](/dashboard-settings/ai-pre-import-transform), where you set one instruction in the sheet settings that runs on every upload. AI Table Transform is used by your users, one upload at a time.
+</Note>
+
+## What users can change in the table
+
+| Table characteristic | Example changes | Example instruction |
+| --- | --- | --- |
+| Column names | Rename a header | _Rename the "Name" column to "Name (Updated)"_ |
+| Number of columns | Split one column into several, merge columns, add a column, or remove one | _Split the "Name" column into two separate columns_ |
+| Column order | Move columns to a new position | _Move the last column to be the first column_ |
+| Cell values | Change case, reformat, or trim values in a column | _Change all values in the last column to uppercase_ |
+| New values | Add a column with a fixed or calculated value | _Add a "Status" column with the value "Pending"_ |
+
+Common uses include splitting names, addresses, or date and time into separate columns, and merging columns that your template expects as one.
+
+## Where it appears
+
+A callout appears at the top right of the Select Header step: **"Noticed something off in your data? Let AI transform it for you."** with a **Transform with AI** button.
+
+The button becomes active once the file's rows have loaded. It's shown by default, so you don't need to turn anything on in the sheet settings. To hide it, see [Turn it off for a sheet](#turn-it-off-for-a-sheet).
+
+## How users transform their table
+
+<Steps>
+  <Step title="Open the transform window">
+    Click **Transform with AI**. The **Transform Table with AI** window opens.
+  </Step>
+  <Step title="Describe the change to the table">
+    Type an instruction of up to 1,000 characters under **Describe the transformation**, or click one of the **Example prompts** to fill it in. When the selected header row has column names, the examples use them. **Transform** stays disabled until there's an instruction.
+  </Step>
+  <Step title="Apply the transform">
+    Click **Transform**. The AI works from the header row the user selected. When it finishes, the window closes and the Select Header step shows the rebuilt table with its new header row selected. The user then continues to column mapping as usual.
+  </Step>
+</Steps>
+
+Users can run it again to make more changes to the table. Clicking **Cancel** or closing the window stops a request that is still running.
+
+## Turn it off for a sheet
+
+<Steps>
+  <Step title="Open the Select Header settings">
+    Open your sheet's **Sheet Settings** → **Import Steps** and click the **Select Header** tab.
+  </Step>
+  <Step title="Hide the option">
+    Set **Show Table transform option?** to **No**.
+  </Step>
+  <Step title="Save the settings">
+    Click **Save Changes**.
+  </Step>
+</Steps>
+
+The **Transform with AI** button and its callout no longer appear on the Select Header step of that sheet's importer, in every language.
+
+With the [Sheet API](/advanced-installation/sheet-api), set `steps.select_header.table_transform` to `false`. It defaults to `true`.
+
+<Note>
+  Users who already have the importer open keep seeing the button until the importer reloads. If they click **Transform**, the request is refused, the table is left unchanged, and they see "Table transform is turned off for this importer." A result already saved in their browser tab, for the same instruction on the same headers, can still be reused.
+</Note>
+
+## How it works
+
+- Only the selected header row and the first 10 other rows are sent to the AI (OpenAI, listed as a [subprocessor](/legal/gdpr/data-processing-addendum#sub-processors)). The rest of the file isn't sent.
+- The AI returns the new headers and a small function that rewrites one row. CSVbox checks this function on the server, then the user's browser runs it on every row of the table.
+- Before applying the change, the importer tests the function on the first 3 rows. If the test fails, the table is left unchanged and an error is shown.
+- Rows the function can't transform keep their original values, with empty cells added to fill the new column count. No message is shown for these rows.
+- If the user repeats the same instruction on the same headers in the same browser tab, the saved result is reused without a new AI request.
+
+## Messages users may see
+
+Messages appear under the instruction box in the **Transform Table with AI** window.
+
+| Situation | Message |
+| --- | --- |
+| The instruction is unclear or doesn't apply to the table | "No changes were made. Please rephrase your instruction and try again." |
+| The AI's response can't be read | "The AI returned an unexpected response. Please rephrase and try again." |
+| The generated function fails on the first 3 rows | "AI returned an unexpected response. Please rephrase and try again." |
+| The generated function fails the server's safety check | "Generated code failed compliance validation. Please rephrase and try again." |
+| The AI service is busy | "AI service is temporarily busy. Please try again in a moment." |
+| The AI service fails | "AI service error. Please try again." |
+| The user sent too many requests | "Transform failed (HTTP 429). Please try again." |
+| You turned the option off after the user opened the importer | "Table transform is turned off for this importer." |
+
+## Limits
+
+- Instructions can be up to 1,000 characters.
+- Tables can have up to 200 columns.
+- Each IP address can send up to 12 transform requests a minute.
+- The change applies only to the current upload. It doesn't change your importer's settings.
