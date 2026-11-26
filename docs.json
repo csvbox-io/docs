@@ -41,6 +41,7 @@
             "group": "AI Features",
             "pages": [
               "dashboard-settings/ai-pre-import-transform",
+              "dashboard-settings/ai-select-header-transform",
               "dashboard-settings/ai-bulk-transforms",
               "dashboard-settings/ai-function-generator",
               "dashboard-settings/ai-document-import",
