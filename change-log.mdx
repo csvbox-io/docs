@@ -5,10 +5,14 @@ description: "A record of all notable changes made to the application."
 
 This page lists notable CSVbox releases, newest first. Each entry links to the documentation for the feature it adds or changes.
 
-<Update label="November 2026" description="GitHub destination, Finnish, Italian, Norwegian, and Swedish languages">
+<Update label="November 2026" description="GitHub destination, bulk File Delete Policy, Finnish, Italian, Norwegian, and Swedish languages">
   ### GitHub destination
 
   **Added**: [GitHub](/destinations/github) as a data destination. Commit every import to a GitHub repository as a single CSV file. Connect with a personal access token, choose the repository owner, name and branch, an optional folder path and file name, and whether to overwrite an existing file. Use **Test Connection** to confirm access before saving. Imports should stay under about 75 MB, because GitHub rejects files over 100 MB.
+
+  ### Change the File Delete Policy on all sheets
+
+  **Added**: [Bulk actions → File delete policy…](/sheet-settings/security#change-the-policy-on-all-sheets) on the Sheets list. Set the File Delete Policy on every sheet in your workspace in one step, instead of changing each sheet separately. Sheets that would lose data with **Do not store the file** are skipped unless you choose to include them.
 
   ### New languages
 

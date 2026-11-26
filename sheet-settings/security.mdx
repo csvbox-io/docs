@@ -20,7 +20,7 @@ Go to **Edit Sheets** → **Options** → **Privacy & Security** section and sel
 <Frame>
   <img
     src="/images/locations.png"
-    alt="Data location dropdown in Privacy & Security settings"
+    alt={"Data location dropdown in Privacy & Security settings"}
   />
 </Frame>
 
@@ -88,8 +88,51 @@ Enable or disable the storage of user-uploaded data in CSVbox. You can decide ba
 </Frame>
 
 - **Do not store the file**: When enabled, user-uploaded data isn't stored in the CSVbox datastore.
-- **Store data**: Data is stored on CSVbox storage and auto-deleted after one month.
+- **Delete one month after file upload**: Data is stored on CSVbox storage and auto-deleted one month after upload.
+
+The policy applies to future uploads only. Changing it doesn't delete files that are already stored.
 
 <Note>
   To keep user data off CSVbox servers and data stores entirely, see [Private Mode](/destinations/private-mode).
 </Note>
+
+### Change the policy on all sheets
+
+Instead of opening each sheet's settings, you can set the File Delete Policy on every sheet in your workspace in one step.
+
+<Steps>
+  <Step title="Open the bulk action">
+    Open the **Sheets** list. Click **Bulk actions** (next to **Tags**), then **File delete policy…**.
+  </Step>
+  <Step title="Review the counts">
+    The dialog shows how many sheets the change covers and how many are already on each policy.
+  </Step>
+  <Step title="Choose a policy">
+    Select **Do not store the file** or **Delete one month after file upload**. No policy is preselected, and **Apply** stays disabled until you choose one.
+  </Step>
+  <Step title="Apply the change">
+    Click **Apply**. A message reports how many sheets were changed, how many were skipped, and how many couldn't be updated.
+  </Step>
+</Steps>
+
+#### Which sheets change
+
+- **Every sheet in the current workspace.** The change ignores any search or tag filter on the Sheets list.
+- In your **personal workspace**, only your own sheets change. In a **team workspace**, only that team's sheets change. Other users' and other teams' sheets are never changed.
+- Sheets already on the chosen policy are left as they are.
+- Deleted sheets are not included.
+- If a sheet's settings can't be updated, it's reported as "could not be updated". Change the policy on that sheet from its own settings.
+
+#### Sheets that would lose data
+
+When a sheet has no destination and doesn't send a copy of the data to the client, its uploaded file is the only copy of the imported data. Setting such a sheet to **Do not store the file** means the imported data is saved nowhere.
+
+When you choose **Do not store the file**:
+
+- **These sheets are skipped by default.** The dialog shows a warning with the number of sheets that will be skipped.
+- To change them anyway, select **Include them anyway** in the warning. The checkbox is cleared every time you open the dialog.
+- Sheets with no destination that do send a copy of the data to the client are changed. Their data then reaches only your page's JavaScript callback, and can't be downloaded from the dashboard.
+
+#### Who can use it
+
+Only users with permission to edit sheets see the **Bulk actions** button. If a user without this permission reaches the action, CSVbox blocks it with "You do not have permission to change sheet settings."
