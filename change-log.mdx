@@ -5,7 +5,7 @@ description: "A record of all notable changes made to the application."
 
 This page lists notable CSVbox releases, newest first. Each entry links to the documentation for the feature it adds or changes.
 
-<Update label="November 2026" description="GitHub destination, bulk File Delete Policy, Finnish, Italian, Norwegian, and Swedish languages">
+<Update label="November 2026" description="GitHub destination, bulk File Delete Policy, import completion email alerts, Finnish, Italian, Norwegian, and Swedish languages">
   ### GitHub destination
 
   **Added**: [GitHub](/destinations/github) as a data destination. Commit every import to a GitHub repository as a single CSV file. Connect with a personal access token, choose the repository owner, name and branch, an optional folder path and file name, and whether to overwrite an existing file. Use **Test Connection** to confirm access before saving. Imports should stay under about 75 MB, because GitHub rejects files over 100 MB.
@@ -13,6 +13,17 @@ This page lists notable CSVbox releases, newest first. Each entry links to the d
   ### Change the File Delete Policy on all sheets
 
   **Added**: [Bulk actions → File delete policy…](/sheet-settings/security#change-the-policy-on-all-sheets) on the Sheets list. Set the File Delete Policy on every sheet in your workspace in one step, instead of changing each sheet separately. Sheets that would lose data with **Do not store the file** are skipped unless you choose to include them.
+
+  ### Import completion email alerts
+
+  **Added**: Email alerts when an import finishes. Set them up for each importer in the sheet's **Notifications** tab:
+
+  - **When to send**: choose any of **Success**, **Partial** and **Failed**. Leave all three unticked to turn alerts off.
+  - **Recipients**: the account owner (included by default, can be turned off), verified members of your team, and up to 10 extra email addresses.
+
+  Each recipient gets a separate email showing the importer name, the import status, total rows, valid rows, rows with errors, columns with errors, the completion time (UTC), and a link to the importer's imports in the dashboard. You get one email per import, even if the import is retried or reprocessed. A split import sends a single email after every part has finished.
+
+  Email alerts are available on the Pro plan and above.
 
   ### New languages
 
