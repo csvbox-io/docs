@@ -41,7 +41,7 @@
             "group": "AI Features",
             "pages": [
               "dashboard-settings/ai-pre-import-transform",
-              "dashboard-settings/ai-select-header-transform",
+              "dashboard-settings/ai-table-transform",
               "dashboard-settings/ai-bulk-transforms",
               "dashboard-settings/ai-function-generator",
               "dashboard-settings/ai-document-import",
@@ -334,6 +334,11 @@
     {
       "source": "/advanced-installation/data-transforms",
       "destination": "/sheet-settings/data-transforms",
+      "permanent": true
+    },
+    {
+      "source": "/dashboard-settings/ai-select-header-transform",
+      "destination": "/dashboard-settings/ai-table-transform",
       "permanent": true
     }
   ],
