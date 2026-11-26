@@ -1,0 +1,134 @@
+---
+title: "GitHub"
+description: "Commit every import to a GitHub repository as a single CSV file, in the branch and folder you choose."
+keywords:
+  - "github"
+  - "repository"
+  - "git"
+  - "commit"
+  - "csv"
+  - "destination"
+---
+
+The GitHub destination commits every import to a GitHub repository as a single CSV file. You choose the repository, the branch, and optionally the folder and file name.
+
+Each import produces one commit with one file.
+
+## Before you start
+
+You need:
+
+- A GitHub repository, owned by your user account or by an organization.
+- The branch the files should be committed to, for example `main`. The branch must already exist.
+- A GitHub **personal access token** that can write to the repository's contents.
+
+### Create a personal access token
+
+<Steps>
+  <Step title="Open the token settings">
+    In GitHub, go to **Settings > Developer settings > Personal access tokens**.
+  </Step>
+  <Step title="Create the token">
+    Create a token that can write to the repository:
+
+    - **Fine-grained token**: give it access to the repository and set the **Contents** permission to **Read and write**.
+    - **Classic token**: select the `repo` scope.
+
+    If the repository belongs to an organization, the organization may need to approve the token before it works.
+  </Step>
+  <Step title="Copy the token">
+    Copy the token. GitHub shows it only once.
+
+    <Warning>
+      Keep the token safe. It gives write access to your repository.
+    </Warning>
+  </Step>
+</Steps>
+
+## Set up the destination
+
+<Steps>
+  <Step title="Select GitHub as the destination">
+    Open your importer, go to the **Destination** tab and choose **GitHub**.
+  </Step>
+  <Step title="Enter the token and repository">
+    Fill in the required fields:
+
+    | Field | Example | Notes |
+    | --- | --- | --- |
+    | **Personal Access Token** | | The token you created. |
+    | **Repository Owner** | `octocat` | The user or organization that owns the repository. |
+    | **Repository Name** | `my-repo` | The repository name only, without the owner. |
+    | **Branch** | `main` | The branch to commit to. |
+  </Step>
+  <Step title="Set the folder and file name (optional)">
+    | Field | Example | Notes |
+    | --- | --- | --- |
+    | **Folder Path** | `data/imports` | A folder inside the repository. Leave it empty to commit to the repository root. |
+    | **File Name** | `customers` | The file name without `.csv`. See [File names](#file-names). |
+    | **Overwrite existing file** | On / Off | What happens when a file with the same name already exists. See [Replacing and keeping files](#replacing-and-keeping-files). |
+  </Step>
+  <Step title="Test the connection">
+    Click **Test Connection**, then **Save**.
+
+    <Note>
+      Test Connection checks the token, the repository and the branch. When it succeeds, the form shows **Connected to owner/repo (branch)**, and the connected state stays after you save.
+    </Note>
+  </Step>
+</Steps>
+
+To use a different token or repository, click **Disconnect** and set the destination up again.
+
+## File names
+
+The file is saved as `<folder path>/<file name>.csv`. Enter the name without the `.csv` extension; it is added for you.
+
+If **File Name** is empty, CSVbox generates a name from the import ID and your user ID, so every import creates a new file.
+
+### Replacing and keeping files
+
+When a file with the same name already exists in the folder:
+
+| Overwrite existing file | Result |
+| --- | --- |
+| **On** | The existing file is replaced with the new import. Use it when you always want the latest data in one file. |
+| **Off** | The existing file is kept, and the new import is saved beside it as `<file name>_<import id>.csv`. For example, `customers.csv` is kept and the new file is `customers_9368.csv`. |
+
+Either way, GitHub keeps the earlier versions in the repository's commit history.
+
+## File size limit
+
+GitHub rejects files larger than **100 MB**. CSVbox encodes the file before sending it to GitHub, which makes it larger, so keep each import under about **75 MB** of CSV.
+
+- An import is committed as **one file**. It is not split into parts.
+- An import over the limit fails with an error that says the file is too large. Nothing is committed.
+
+For larger data, split the file before importing. See [Split Large CSV](/dashboard-settings/split-large-csv), and GitHub's [About large files on GitHub](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github).
+
+## Troubleshooting
+
+Failed imports show a message on the import. The common causes:
+
+| Problem | What to do |
+| --- | --- |
+| Test Connection fails | Check that the token has not expired or been revoked, that it can write to the repository's contents, and that the owner, repository and branch names are spelled correctly. |
+| The branch is not found | Create the branch in GitHub first. CSVbox does not create branches. |
+| The organization blocks the token | Ask an organization owner to approve the token, or allow personal access tokens for the organization. |
+| The file is too large | Keep the import under about 75 MB. See [File size limit](#file-size-limit). |
+| The branch is protected | Commits that break the branch's protection rules are rejected by GitHub. Use a branch that allows direct commits. |
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="Is my token safe?">
+    The token is stored encrypted. It is never shown again in the dashboard or returned by the API; it is always masked.
+  </Accordion>
+
+  <Accordion title="Can I commit to more than one repository?">
+    Each importer has one GitHub destination. Create another importer for a second repository.
+  </Accordion>
+
+  <Accordion title="Can I send JSON instead of CSV?">
+    No. The GitHub destination commits CSV files only.
+  </Accordion>
+</AccordionGroup>
