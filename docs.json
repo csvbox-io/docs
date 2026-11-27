@@ -161,7 +161,8 @@
         "icon": "user",
         "pages": [
           "account",
-          "account/teams"
+          "account/teams",
+          "account/single-sign-on"
         ]
       },
       {

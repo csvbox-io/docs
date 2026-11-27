@@ -1,0 +1,198 @@
+---
+title: "Single Sign-On (SAML)"
+sidebarTitle: "Single Sign-On"
+description: "Let your team sign in to CSVbox through your identity provider, such as Okta, Microsoft Entra ID, OneLogin or Google Workspace."
+---
+
+Single sign-on (SSO) lets your team sign in to the CSVbox dashboard with their work account from your identity provider (IdP). CSVbox supports SAML 2.0, so it works with Okta, Microsoft Entra ID (Azure AD), OneLogin, Google Workspace and any other SAML 2.0 identity provider.
+
+The team's Super Admin sets up SSO from the [Teams](https://app.csvbox.io/user/teams) page.
+
+<Note>
+  SSO is available on the **Growth** plan and above. See [pricing](https://csvbox.io/#pricing) to upgrade.
+</Note>
+
+| Setting | Value |
+| --- | --- |
+| Protocol | SAML 2.0 |
+| Who can set it up | The team's Super Admin |
+| Domain proof | DNS TXT record |
+| NameID format | Email address |
+| Sign-in flows | SP-initiated (from CSVbox), and optionally IdP-initiated (from your IdP's app portal) |
+| Signing | Responses or assertions must be signed with RSA-SHA256 |
+
+## Before you start
+
+- Your team is on the Growth plan or above.
+- You're the team's Super Admin, and the team you want to set up is the one you have open.
+- You can add DNS records for your company domain.
+- You can create a SAML app in your identity provider, or you have someone who can.
+
+## Set up SSO
+
+<Steps>
+  <Step title="Add and verify your company domain">
+    Go to **Teams** → **Single sign-on (SAML)** → **Company domains**. Enter your domain, for example `acme.com`, and click **Add domain**.
+
+    CSVbox shows a TXT record. Add it at your DNS provider:
+
+    | Type | Name / host | Value |
+    | --- | --- | --- |
+    | `TXT` | `_csvbox-sso.acme.com` | `csvbox-sso-verification=<your token>` |
+
+    Then click **Verify**. When CSVbox finds the record, the domain is marked as verified.
+
+    <Warning>
+      The record must be a **TXT** record. A CNAME record with the same name and value doesn't work. See [Domain verification](#domain-verification) if verification fails.
+    </Warning>
+
+    Only people whose email address is on a verified domain can sign in with SSO. Add and verify each domain you use. Subdomains are separate: `acme.com` doesn't cover `eu.acme.com`.
+  </Step>
+  <Step title="Turn on SSO">
+    Click **Turn on SSO**. This only opens the setup. Nobody's sign-in changes until you require SSO in the last step.
+  </Step>
+  <Step title="Add CSVbox to your identity provider">
+    Create a new SAML app in your identity provider. Use the values shown under **1. Add CSVbox to your identity provider**:
+
+    | CSVbox field | Where it goes in your IdP |
+    | --- | --- |
+    | **SP Entity ID (Audience)** | Audience URI / Identifier / SP Entity ID |
+    | **ACS (Consumer) URL** | Assertion Consumer Service URL / Reply URL (HTTP-POST binding) |
+    | **Login URL** | Sign-on URL / app tile URL (optional) |
+
+    Set the **NameID format** to **Email** so the IdP sends the user's email address.
+
+    Instead of entering the values by hand, you can click **Download SP metadata XML** and upload that file to your IdP.
+
+    <Tip>
+      In OneLogin, add a **SAML Custom Connector (Advanced)** app. In Microsoft Entra ID, create an **Enterprise application** and choose **SAML** as the single sign-on method. In Okta, create a **SAML 2.0** app integration.
+    </Tip>
+
+    Assign the app to the people who should have access to CSVbox.
+  </Step>
+  <Step title="Add your identity provider's details to CSVbox">
+    Under **2. Enter your identity provider's details**, click **Import IdP metadata XML** and upload your IdP's metadata file. CSVbox fills in the fields for you. Check them and click **Save identity provider**.
+
+    To enter the details by hand instead:
+
+    | Field | Where to find it in your IdP |
+    | --- | --- |
+    | **IdP Entity ID (Issuer URL)** | Issuer / Identity Provider Identifier / Microsoft Entra Identifier |
+    | **IdP SSO URL** | SAML 2.0 endpoint / Login URL / Single Sign-On URL. It must start with `https://`. |
+    | **X.509 certificate** | The IdP's signing certificate, in PEM format (`-----BEGIN CERTIFICATE-----`) |
+    | **Secondary certificate** | Optional. Use it when you rotate certificates. See [Rotate certificates](#rotate-certificates). |
+  </Step>
+  <Step title="Choose your options">
+    Under **3. Options**, set:
+
+    - **Role for people who join through SSO**: the role new members get. Choose **Tech**, **Admin** or **Finance**. See [Teams](/account/teams) for what each role can access.
+    - **Automatically add people from your verified domains on their first SSO sign-in**: on by default. When it's off, only people you've already invited can sign in with SSO.
+    - **Allow sign-in from the identity provider's app portal (IdP-initiated)**: off by default. Turn it on to let people start from the CSVbox tile in your IdP.
+
+    Click **Save options**.
+  </Step>
+  <Step title="Test the connection">
+    Under **4. Test and require SSO**, click **Test SSO**. You're sent to your identity provider to sign in, then back to a test result page.
+
+    The page shows whether the test succeeded and exactly what your IdP sent: the NameID, its format, the email address CSVbox used, and every attribute. If the test fails, it lists the problems.
+
+    Testing doesn't sign anyone in or change anything for your team.
+  </Step>
+  <Step title="Require SSO (optional)">
+    After a successful test, turn on **Require SSO for this team**. Team members must then sign in through your identity provider before they can open this team, however they signed in to CSVbox.
+
+    You can't turn this on until a test has succeeded. If you change the IdP details later, run the test again.
+  </Step>
+</Steps>
+
+## How your team signs in
+
+On the CSVbox login page, a team member enters their work email. If their domain uses SSO, **Continue with SSO** appears. They click it and sign in with your identity provider.
+
+They can also use the **Login URL** shown in your SSO settings, or the CSVbox tile in your IdP's portal if IdP-initiated sign-in is allowed.
+
+### First sign-in
+
+| Situation | What happens |
+| --- | --- |
+| The person already has a CSVbox account and is on your team | They're signed in, and their account is linked to your IdP. |
+| The person was invited but hasn't accepted yet | The invitation is accepted with the role it was sent with. |
+| The person has no CSVbox account | With automatic joining on, an account is created and they join your team with the default role. With it off, they're asked to get an invitation from the Super Admin. |
+| The person was removed from the team | They can't sign in through SSO. The Super Admin has to add them back on the Teams page. |
+| Your team is at its member limit | New people can't join until a seat is freed or the plan is upgraded. |
+
+CSVbox takes the person's name from the IdP's display name, or first and last name attributes. If neither is sent, it uses the part of the email address before the `@`.
+
+## Super Admin access
+
+The Super Admin can always sign in with their password, even when SSO is required. That way an IdP outage or an expired certificate can't lock you out.
+
+<Tip>
+  Turn on two-factor authentication for the Super Admin account.
+</Tip>
+
+## What SSO doesn't change
+
+- **API keys** keep working. API requests don't use SSO.
+- **The embedded importer** works the same. SSO only controls sign-in to the CSVbox dashboard.
+- **Other teams**: SSO applies to one team. If someone belongs to several teams, they only need SSO for the teams that require it.
+
+## Rotate certificates
+
+When your IdP is about to rotate its signing certificate:
+
+1. Paste the new certificate into **Secondary certificate** and click **Save identity provider**. CSVbox accepts responses signed with either certificate.
+2. Switch your IdP to the new certificate.
+3. Move the new certificate into **X.509 certificate**, clear **Secondary certificate**, and save.
+4. Click **Test SSO** again.
+
+Each certificate's expiry date is shown under its field and turns red during its last 30 days.
+
+<Note>
+  If your IdP metadata lists more than two signing certificates, CSVbox uses the first two and shows a warning.
+</Note>
+
+## Turn off SSO
+
+Click **Turn off SSO** and confirm. Members go back to signing in with their password or Google. **Require SSO** is switched off at the same time, and you need to test again before requiring it in future.
+
+Removing your last verified domain also turns SSO off.
+
+## Troubleshooting
+
+### Domain verification
+
+| Message or symptom | Cause | Fix |
+| --- | --- | --- |
+| `The TXT record for <domain> was not found yet.` | The record is missing, has the wrong type or name, or hasn't propagated yet | Check the points below, then wait a few minutes and click **Verify** again. |
+| A lookup tool shows a **CNAME** at `_csvbox-sso.<domain>` | The record was created as a CNAME | Delete the CNAME, then add the same name and value as a **TXT** record. DNS doesn't allow a TXT record on a name that has a CNAME. |
+| The record exists at `_csvbox-sso.acme.com.acme.com` | Your DNS provider adds the domain to the host name automatically | Enter just `_csvbox-sso` as the host. |
+| `<domain> is a public email provider.` | Free email domains such as gmail.com or outlook.com can't be used | Use your company's own domain. |
+| `Another CSVbox team already uses SSO for <domain>.` | Each domain can belong to only one CSVbox team | [Contact us](https://share.hsforms.com/1ubpg6RBoQgKOISkRMEViwg5auur). |
+| `Too many checks. Try again in a minute.` | You clicked **Verify** more than 10 times in a minute | Wait a minute. |
+
+To check your record yourself, run `nslookup -type=TXT _csvbox-sso.acme.com` or use an online DNS lookup tool. The answer must include `csvbox-sso-verification=<your token>`.
+
+### Sign-in and testing
+
+| Message | Cause | Fix |
+| --- | --- | --- |
+| `No email address was found in the NameID or in an email attribute.` | The IdP isn't sending the user's email | Set NameID format to **Email**, or send an `email` attribute. |
+| `The email domain "<domain>" is not one of this team's verified domains.` | The person's email is on a domain you haven't verified | Verify that domain, or sign in with an account on a verified domain. |
+| `Single sign-on isn't available for this email address.` | The email's domain doesn't use SSO, or SSO isn't fully set up | Sign in with your password or Google, or ask your Super Admin. |
+| `Ask your team owner to invite you to CSVbox.` | Automatic joining is off and the person has no invitation | Invite them from the Teams page, or turn on automatic joining. |
+| `You were removed from this team.` | The Super Admin removed this person | The Super Admin can add them back on the Teams page. |
+| `Your team has reached its member limit.` | No free seats on the plan | Free a seat or upgrade the plan. |
+| `This CSVbox account is already linked to a different sign-in identity.` | The account is linked to another user in your IdP | [Contact us](https://share.hsforms.com/1ubpg6RBoQgKOISkRMEViwg5auur). |
+| `We could not verify your sign-in with your identity provider.` | The response failed a check, for example a wrong certificate, Entity ID or ACS URL | Click **Test SSO** to see the reason. Check the IdP details and the values you entered in your IdP. |
+| `The SSO URL must be a valid https:// address.` | The IdP SSO URL isn't HTTPS | Use the HTTPS endpoint from your IdP. |
+
+Error pages show a reference code. Include it when you [contact us](https://share.hsforms.com/1ubpg6RBoQgKOISkRMEViwg5auur).
+
+## Good to know
+
+- Only the Super Admin can see and change SSO settings.
+- Removing someone in your IdP stops their SSO sign-in, but doesn't remove them from your CSVbox team. Remove them on the [Teams](https://app.csvbox.io/user/teams) page too.
+- Each SAML response can be used only once, and must be signed by your IdP.
+- Your IdP certificates are stored encrypted.
+- CSVbox doesn't support SCIM provisioning, single logout (SLO) or mapping IdP groups to roles yet.
